@@ -1,0 +1,1 @@
+{"version":"2.2.0","expected_revision":"dee8fe877d63","acceptance":["statuses","bootstrap","currency","calendar","period","ledger","accounts","unbalanced_rejection","balanced_journal","separation_of_duties","posting","trial_balance","regression"]}
