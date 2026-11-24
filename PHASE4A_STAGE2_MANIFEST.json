@@ -1,0 +1,29 @@
+{
+  "version": "4.0.2",
+  "tables": [
+    "work_schedules",
+    "schedule_assignments",
+    "time_entries",
+    "leave_types",
+    "leave_balances",
+    "leave_requests",
+    "pay_groups",
+    "pay_periods"
+  ],
+  "files": [
+    "PHASE4A_STAGE2_MANIFEST.json",
+    "scripts/Install-Phase4A-Stage2.ps1",
+    "scripts/Run-Phase4A-Stage2-Acceptance.ps1",
+    "scripts/Verify-Phase4A-Stage2.ps1",
+    "src/flowforge/phase4a_stage2/__init__.py",
+    "src/flowforge/phase4a_stage2/models.py",
+    "src/flowforge/phase4a_stage2/router.py",
+    "src/flowforge/phase4a_stage2/routes.py",
+    "src/flowforge/phase4a_stage2/schemas.py",
+    "src/flowforge/phase4a_stage2/service.py",
+    "tests/phase4a_stage2/__init__.py",
+    "tests/phase4a_stage2/test_models.py",
+    "tests/phase4a_stage2/test_openapi.py",
+    "tests/phase4a_stage2/test_schemas.py"
+  ]
+}

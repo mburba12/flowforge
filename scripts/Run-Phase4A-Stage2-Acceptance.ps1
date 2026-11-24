@@ -1,0 +1,1 @@
+$ErrorActionPreference="Stop";$S=Invoke-RestMethod "http://127.0.0.1:8000/phase4a/stage2/status";if($S.status-ne "implemented"){throw "Stage 2 status failed"};& ".\.venv\Scripts\python.exe" -m pytest -q tests/phase4a tests/phase4a_stage2;if($LASTEXITCODE-ne 0){throw "Regression failed"};Write-Host "FLOWFORGE PHASE 4A STAGE 2 ACCEPTANCE PASSED" -ForegroundColor Green
