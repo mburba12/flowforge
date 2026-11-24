@@ -1,0 +1,37 @@
+{
+  "version": "3.1.0",
+  "tables": [
+    "customer_profiles",
+    "units_of_measure",
+    "products",
+    "warehouses",
+    "warehouse_locations",
+    "inventory_balances",
+    "inventory_movements",
+    "sales_orders",
+    "sales_order_lines",
+    "inventory_reservations",
+    "shipments",
+    "customer_invoices",
+    "ar_open_items",
+    "customer_receipts",
+    "receipt_allocations"
+  ],
+  "files": [
+    "PHASE3B_MANIFEST.json",
+    "scripts/Install-Phase3B.ps1",
+    "scripts/Run-Phase3B-Acceptance.ps1",
+    "scripts/Verify-Phase3B.ps1",
+    "src/flowforge/phase3b/__init__.py",
+    "src/flowforge/phase3b/enums.py",
+    "src/flowforge/phase3b/models.py",
+    "src/flowforge/phase3b/router.py",
+    "src/flowforge/phase3b/routes.py",
+    "src/flowforge/phase3b/schemas.py",
+    "src/flowforge/phase3b/service.py",
+    "tests/phase3b/__init__.py",
+    "tests/phase3b/test_models.py",
+    "tests/phase3b/test_openapi.py",
+    "tests/phase3b/test_schemas.py"
+  ]
+}
