@@ -1,0 +1,40 @@
+{
+  "version": "1.2.0",
+  "capabilities": [
+    "document versioning and tenant storage",
+    "legal hold",
+    "notification preferences and retries",
+    "encrypted integration credentials",
+    "webhook signatures",
+    "tenant and permission filtered search",
+    "tenant analytics",
+    "health checks",
+    "rate limiting",
+    "security headers"
+  ],
+  "files": [
+    "PHASE1B_MANIFEST.json",
+    "infrastructure/azure/phase1b/key-vault.bicep",
+    "infrastructure/azure/phase1b/monitoring.bicep",
+    "infrastructure/azure/phase1b/storage.bicep",
+    "migrations/phase1b/001_documents_notifications.sql",
+    "migrations/phase1b/002_integrations_search_analytics.sql",
+    "scripts/Install-Phase1B.ps1",
+    "scripts/Verify-Phase1B.ps1",
+    "src/flowforge/phase1b/__init__.py",
+    "src/flowforge/phase1b/analytics.py",
+    "src/flowforge/phase1b/documents.py",
+    "src/flowforge/phase1b/integrations.py",
+    "src/flowforge/phase1b/notifications.py",
+    "src/flowforge/phase1b/operations.py",
+    "src/flowforge/phase1b/routes.py",
+    "src/flowforge/phase1b/search.py",
+    "tests/phase1b/__init__.py",
+    "tests/phase1b/test_analytics.py",
+    "tests/phase1b/test_documents.py",
+    "tests/phase1b/test_integrations.py",
+    "tests/phase1b/test_notifications.py",
+    "tests/phase1b/test_operations.py",
+    "tests/phase1b/test_search.py"
+  ]
+}

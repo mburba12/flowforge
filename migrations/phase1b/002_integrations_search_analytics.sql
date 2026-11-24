@@ -1,0 +1,1 @@
+-- Convert to Alembic: connector jobs, OAuth tokens, search index and analytics metric tables.
