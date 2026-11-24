@@ -1,0 +1,30 @@
+{
+  "version": "4.0.3",
+  "tables": [
+    "payroll_runs",
+    "payroll_run_workers",
+    "payroll_earnings",
+    "payroll_deductions",
+    "payroll_tax_lines",
+    "payroll_liabilities",
+    "payroll_payments",
+    "payroll_reconciliation_runs"
+  ],
+  "files": [
+    "PHASE4A_STAGE3_MANIFEST.json",
+    "scripts/Install-Phase4A-Stage3.ps1",
+    "scripts/Run-Phase4A-Stage3-Acceptance.ps1",
+    "scripts/Verify-Phase4A-Stage3.ps1",
+    "src/flowforge/phase4a_stage3/__init__.py",
+    "src/flowforge/phase4a_stage3/calculator.py",
+    "src/flowforge/phase4a_stage3/models.py",
+    "src/flowforge/phase4a_stage3/router.py",
+    "src/flowforge/phase4a_stage3/routes.py",
+    "src/flowforge/phase4a_stage3/schemas.py",
+    "src/flowforge/phase4a_stage3/service.py",
+    "tests/phase4a_stage3/__init__.py",
+    "tests/phase4a_stage3/test_calculator.py",
+    "tests/phase4a_stage3/test_models.py",
+    "tests/phase4a_stage3/test_openapi.py"
+  ]
+}

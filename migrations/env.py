@@ -14,6 +14,7 @@ from flowforge.phase3a import models as phase3a_models  # noqa: F401
 from flowforge.phase3b import models as phase3b_models  # noqa: F401
 from flowforge.phase4a import models as phase4a_models  # noqa: F401
 from flowforge.phase4a_stage2 import models as phase4a_stage2_models  # noqa: F401
+from flowforge.phase4a_stage3 import models as phase4a_stage3_models  # noqa: F401
 from flowforge.platform import models  # noqa:F401
 
 config = context.config
