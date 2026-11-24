@@ -1,0 +1,1 @@
+$ErrorActionPreference="Stop";$S=Invoke-RestMethod -Uri "http://127.0.0.1:8000/phase3a/status";if($S.status-ne "implemented"){throw "Phase 3A status failed"};Write-Host "PHASE 3A LIVE STATUS PASSED" -ForegroundColor Green

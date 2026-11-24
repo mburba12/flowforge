@@ -1,0 +1,34 @@
+{
+  "version": "3.0.0",
+  "tables": [
+    "vendor_profiles",
+    "purchase_orders",
+    "purchase_order_lines",
+    "goods_receipts",
+    "goods_receipt_lines",
+    "vendor_invoices",
+    "vendor_invoice_lines",
+    "ap_match_policies",
+    "invoice_matches",
+    "ap_open_items"
+  ],
+  "files": [
+    "PHASE3A_MANIFEST.json",
+    "scripts/Install-Phase3A.ps1",
+    "scripts/Run-Phase3A-Acceptance.ps1",
+    "scripts/Verify-Phase3A.ps1",
+    "src/flowforge/phase3a/__init__.py",
+    "src/flowforge/phase3a/enums.py",
+    "src/flowforge/phase3a/matching.py",
+    "src/flowforge/phase3a/models.py",
+    "src/flowforge/phase3a/router.py",
+    "src/flowforge/phase3a/routes.py",
+    "src/flowforge/phase3a/schemas.py",
+    "src/flowforge/phase3a/service.py",
+    "tests/phase3a/__init__.py",
+    "tests/phase3a/test_matching.py",
+    "tests/phase3a/test_models.py",
+    "tests/phase3a/test_openapi.py",
+    "tests/phase3a/test_schemas.py"
+  ]
+}
