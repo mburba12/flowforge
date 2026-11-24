@@ -1,9 +1,11 @@
 from fastapi import APIRouter
 
+from .integration_routes import router as integration_router
 from .routes import router as routes
 
 router = APIRouter()
 router.include_router(routes)
+router.include_router(integration_router)
 
 
 @router.get("/phase3a/status", tags=["phase3a"])
@@ -18,6 +20,7 @@ async def status() -> dict[str, object]:
             "receiving",
             "vendor_invoices",
             "matching",
+            "ap_posting",
             "ap_open_items",
         ],
     }

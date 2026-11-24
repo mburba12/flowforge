@@ -1,3 +1,4 @@
+from flowforge.phase3a import integration_models  # noqa: F401
 import asyncio
 
 from alembic import context
@@ -5,9 +6,10 @@ from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from flowforge.db.base import Base
-from flowforge.integration import models as integration_models  # noqa: F401
+from flowforge.integration import models as phase1_integration_models  # noqa: F401
 from flowforge.phase2a import models as phase2a_models  # noqa: F401
 from flowforge.phase2b import models as phase2b_models  # noqa: F401
+from flowforge.phase3a import integration_models as phase3a_integration_models  # noqa: F401
 from flowforge.phase3a import models as phase3a_models  # noqa: F401
 from flowforge.platform import models  # noqa:F401
 

@@ -1,0 +1,21 @@
+{
+  "version": "3.0.1",
+  "tables": [
+    "vendor_payments",
+    "vendor_payment_allocations",
+    "ap_reconciliation_runs"
+  ],
+  "routes": [
+    "/api/v3/vendor-invoices/{invoice_id}/match",
+    "/api/v3/vendor-invoices/{invoice_id}/post"
+  ],
+  "files": [
+    "PHASE3A_INTEGRATION_MANIFEST.json",
+    "scripts/Integrate-Phase3A.ps1",
+    "src/flowforge/phase3a/integration.py",
+    "src/flowforge/phase3a/integration_models.py",
+    "src/flowforge/phase3a/integration_routes.py",
+    "tests/phase3a/test_integration_models.py",
+    "tests/phase3a/test_integration_openapi.py"
+  ]
+}
