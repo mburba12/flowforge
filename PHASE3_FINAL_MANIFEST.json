@@ -1,0 +1,27 @@
+{
+  "version": "3.2.0",
+  "revision": "f6d88fb6e3eb",
+  "routes": [
+    "/phase3/status",
+    "/api/v3/final/reconcile"
+  ],
+  "acceptance": [
+    "phase status",
+    "revision",
+    "75 tables",
+    "phase3 regression",
+    "ap ar inventory reconciliation"
+  ],
+  "files": [
+    "PHASE3_FINAL_MANIFEST.json",
+    "scripts/Build-Phase3-Final.ps1",
+    "scripts/Run-Phase3-Final-Acceptance.ps1",
+    "src/flowforge/phase3final/__init__.py",
+    "src/flowforge/phase3final/reconciliation.py",
+    "src/flowforge/phase3final/router.py",
+    "src/flowforge/phase3final/routes.py",
+    "tests/phase3final/__init__.py",
+    "tests/phase3final/test_openapi.py",
+    "tests/phase3final/test_reconciliation_contract.py"
+  ]
+}
