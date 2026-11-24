@@ -1,0 +1,29 @@
+{
+  "version": "1.3.0",
+  "tables": [
+    "auth_sessions",
+    "auth_invitations",
+    "workflow_tasks",
+    "event_outbox",
+    "document_versions",
+    "notification_deliveries",
+    "integration_jobs"
+  ],
+  "routes": [
+    "/phase1/status",
+    "/phase1a/status",
+    "/phase1b/health"
+  ],
+  "files": [
+    "PHASE1_INTEGRATION_MANIFEST.json",
+    "scripts/Integrate-Phase1.ps1",
+    "scripts/Verify-Phase1-Integration.ps1",
+    "src/flowforge/integration/__init__.py",
+    "src/flowforge/integration/models.py",
+    "src/flowforge/integration/router.py",
+    "tests/integration/__init__.py",
+    "tests/integration/test_models_registered.py",
+    "tests/integration/test_openapi_integration.py",
+    "tests/integration/test_tenant_columns.py"
+  ]
+}

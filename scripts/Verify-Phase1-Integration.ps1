@@ -1,0 +1,3 @@
+$ErrorActionPreference="Stop";Set-Location (Split-Path -Parent $PSScriptRoot);$P=".\.venv\Scripts\python.exe"
+function Gate($N,$C){Write-Host "RUNNING: $N" -ForegroundColor Cyan;& $C;if($LASTEXITCODE-ne 0){throw "$N failed"};Write-Host "PASSED: $N" -ForegroundColor Green}
+Gate "Compile" {& $P -m compileall -q src tests};Gate "Ruff" {& $P -m ruff check src tests};Gate "Format" {& $P -m ruff format --check src tests};Gate "MyPy integration" {& $P -m mypy src/flowforge/integration};Gate "Integration contract tests" {& $P -m pytest -q tests/integration};Gate "Phase 1A" {& $P -m pytest -q tests/phase1a};Gate "Phase 1B" {& $P -m pytest -q tests/phase1b};Write-Host "PHASE 1 INTEGRATION VERIFICATION PASSED" -ForegroundColor Green
