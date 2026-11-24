@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,6 +15,9 @@ async def record_change(
     resource_id: str,
     payload: dict[str, object] | None = None,
 ) -> None:
+    event_payload = payload or {}
+    occurred_at = datetime.now(UTC)
+
     db.add(
         AuditEntry(
             tenant_id=tenant_id,
@@ -21,15 +25,18 @@ async def record_change(
             action=action,
             resource_type=resource_type,
             resource_id=resource_id,
-            payload=payload or {},
+            payload=event_payload,
+            occurred_at=occurred_at,
         )
     )
+
     db.add(
         DomainEvent(
             tenant_id=tenant_id,
             event_type=f"{resource_type}.{action}",
             aggregate_type=resource_type,
             aggregate_id=resource_id,
-            payload=payload or {},
+            payload=event_payload,
+            occurred_at=occurred_at,
         )
     )
