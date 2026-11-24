@@ -1,0 +1,22 @@
+{
+  "version": "3.0.2",
+  "routes": [
+    "/api/v3/ap/open-items/{open_item_id}/pay",
+    "/api/v3/ap/reconcile"
+  ],
+  "acceptance": [
+    "payment allocation",
+    "open item clearing",
+    "balanced payment journal",
+    "ap-to-gl reconciliation",
+    "regression"
+  ],
+  "files": [
+    "PHASE3A_FINAL_MANIFEST.json",
+    "scripts/Build-Phase3A-Final.ps1",
+    "scripts/Run-Phase3A-Final-Acceptance.ps1",
+    "src/flowforge/phase3a/payment_routes.py",
+    "src/flowforge/phase3a/payment_service.py",
+    "tests/phase3a/test_final_openapi.py"
+  ]
+}

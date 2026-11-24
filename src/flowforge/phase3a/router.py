@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from .integration_routes import router as integration_router
+from .payment_routes import router as payment_router
 from .routes import router as routes
 
 router = APIRouter()
@@ -24,3 +25,6 @@ async def status() -> dict[str, object]:
             "ap_open_items",
         ],
     }
+
+
+router.include_router(payment_router)
