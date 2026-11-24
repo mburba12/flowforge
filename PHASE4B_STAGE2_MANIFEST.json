@@ -1,0 +1,28 @@
+{
+  "version": "4.1.1",
+  "tables": [
+    "tax_liabilities",
+    "tax_filing_calendars",
+    "tax_returns",
+    "tax_return_lines",
+    "tax_remittances",
+    "tax_remittance_allocations",
+    "tax_notices",
+    "tax_reconciliation_runs"
+  ],
+  "files": [
+    "PHASE4B_STAGE2_MANIFEST.json",
+    "scripts/Install-Phase4B-Stage2.ps1",
+    "scripts/Run-Phase4B-Stage2-Acceptance.ps1",
+    "scripts/Verify-Phase4B-Stage2.ps1",
+    "src/flowforge/phase4b_stage2/__init__.py",
+    "src/flowforge/phase4b_stage2/models.py",
+    "src/flowforge/phase4b_stage2/router.py",
+    "src/flowforge/phase4b_stage2/routes.py",
+    "src/flowforge/phase4b_stage2/schemas.py",
+    "src/flowforge/phase4b_stage2/service.py",
+    "tests/phase4b_stage2/__init__.py",
+    "tests/phase4b_stage2/test_models.py",
+    "tests/phase4b_stage2/test_openapi.py"
+  ]
+}
