@@ -1,0 +1,28 @@
+{
+  "version": "4.1.0",
+  "tables": [
+    "tax_jurisdictions",
+    "tax_authorities",
+    "tax_registrations",
+    "tax_rules",
+    "worker_tax_elections",
+    "payroll_tax_calculations"
+  ],
+  "files": [
+    "PHASE4B_MANIFEST.json",
+    "scripts/Install-Phase4B.ps1",
+    "scripts/Run-Phase4B-Acceptance.ps1",
+    "scripts/Verify-Phase4B.ps1",
+    "src/flowforge/phase4b/__init__.py",
+    "src/flowforge/phase4b/calculator.py",
+    "src/flowforge/phase4b/models.py",
+    "src/flowforge/phase4b/router.py",
+    "src/flowforge/phase4b/routes.py",
+    "src/flowforge/phase4b/schemas.py",
+    "src/flowforge/phase4b/service.py",
+    "tests/phase4b/__init__.py",
+    "tests/phase4b/test_calculator.py",
+    "tests/phase4b/test_models.py",
+    "tests/phase4b/test_openapi.py"
+  ]
+}
