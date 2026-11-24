@@ -1,0 +1,1 @@
+-- Convert to Alembic: sessions, refresh token families, invitations, MFA factors, recovery codes, API keys.
