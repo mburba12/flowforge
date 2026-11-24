@@ -7,6 +7,7 @@ from flowforge.phase2b.router import router as phase2b_router
 from flowforge.phase3a.router import router as phase3a_router
 from flowforge.phase3b.router import router as phase3b_router
 from flowforge.phase3final.router import router as phase3_final_router
+from flowforge.phase4a.router import router as phase4a_router
 
 app = FastAPI(
     title="FlowForge API",
@@ -26,3 +27,5 @@ app.include_router(phase3a_router)
 app.include_router(phase3b_router)
 
 app.include_router(phase3_final_router)
+
+app.include_router(phase4a_router)
