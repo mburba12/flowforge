@@ -1,0 +1,34 @@
+{
+  "version": "2.1.0",
+  "tables": [
+    "currencies",
+    "exchange_rates",
+    "fiscal_calendars",
+    "accounting_periods",
+    "ledgers",
+    "accounts",
+    "financial_dimensions",
+    "dimension_values",
+    "journal_entries",
+    "journal_lines",
+    "account_balances"
+  ],
+  "files": [
+    "PHASE2B_MANIFEST.json",
+    "scripts/Install-Phase2B.ps1",
+    "scripts/Run-Phase2B-Acceptance.ps1",
+    "scripts/Verify-Phase2B.ps1",
+    "src/flowforge/phase2b/__init__.py",
+    "src/flowforge/phase2b/enums.py",
+    "src/flowforge/phase2b/models.py",
+    "src/flowforge/phase2b/posting.py",
+    "src/flowforge/phase2b/router.py",
+    "src/flowforge/phase2b/routes.py",
+    "src/flowforge/phase2b/schemas.py",
+    "src/flowforge/phase2b/service.py",
+    "tests/phase2b/__init__.py",
+    "tests/phase2b/test_models.py",
+    "tests/phase2b/test_openapi.py",
+    "tests/phase2b/test_schemas.py"
+  ]
+}
