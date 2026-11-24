@@ -1,0 +1,2 @@
+-- Phase 1 migration plan: search_analytics
+-- Convert to an Alembic revision after reviewing the current database head.

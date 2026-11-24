@@ -1,0 +1,70 @@
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
+
+class TenantCreate(BaseModel):
+    name: str = Field(min_length=2, max_length=200)
+    slug: str = Field(pattern=r"^[a-z0-9-]+$")
+
+
+class TenantRead(TenantCreate):
+    model_config = ConfigDict(from_attributes=True)
+    id: UUID
+    status: str
+
+
+class BootstrapRequest(BaseModel):
+    tenant: TenantCreate
+    email: EmailStr
+    password: str = Field(min_length=12)
+    display_name: str = Field(min_length=1, max_length=200)
+
+
+class LoginRequest(BaseModel):
+    tenant_slug: str
+    email: EmailStr
+    password: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class UserRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: UUID
+    tenant_id: UUID
+    email: EmailStr
+    display_name: str
+    is_active: bool
+
+
+class RoleCreate(BaseModel):
+    name: str = Field(min_length=2, max_length=100)
+    description: str | None = None
+
+
+class WorkflowCreate(BaseModel):
+    name: str
+    definition: dict[str, object] = Field(default_factory=dict)
+
+
+class DocumentCreate(BaseModel):
+    filename: str
+    content_type: str
+    storage_key: str
+    metadata: dict[str, object] = Field(default_factory=dict)
+
+
+class NotificationCreate(BaseModel):
+    subject: str
+    body: str
+    channel: str = "in_app"
+
+
+class IntegrationCreate(BaseModel):
+    provider: str
+    name: str
+    config: dict[str, object] = Field(default_factory=dict)

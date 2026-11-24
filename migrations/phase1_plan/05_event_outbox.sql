@@ -1,0 +1,2 @@
+-- Phase 1 migration plan: event_outbox
+-- Convert to an Alembic revision after reviewing the current database head.
