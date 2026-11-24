@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tables": [
+    "parties",
+    "party_organizations",
+    "party_people",
+    "party_role_assignments",
+    "party_contact_methods",
+    "party_addresses",
+    "party_identifiers",
+    "party_relationships",
+    "payment_terms",
+    "party_external_references",
+    "organization_units",
+    "party_duplicate_candidates",
+    "party_merge_history"
+  ],
+  "endpoints": [
+    "/phase2a/status",
+    "/api/v2/organizations",
+    "/api/v2/people",
+    "/api/v2/parties/{party_id}",
+    "/api/v2/parties/search",
+    "/api/v2/organization-units"
+  ],
+  "files": [
+    "PHASE2A_MANIFEST.json",
+    "scripts/Install-Phase2A.ps1",
+    "scripts/Run-Phase2A-Acceptance.ps1",
+    "scripts/Verify-Phase2A.ps1",
+    "src/flowforge/phase2a/__init__.py",
+    "src/flowforge/phase2a/duplicates.py",
+    "src/flowforge/phase2a/enums.py",
+    "src/flowforge/phase2a/models.py",
+    "src/flowforge/phase2a/normalization.py",
+    "src/flowforge/phase2a/router.py",
+    "src/flowforge/phase2a/routes.py",
+    "src/flowforge/phase2a/schemas.py",
+    "src/flowforge/phase2a/service.py",
+    "tests/phase2a/__init__.py",
+    "tests/phase2a/test_duplicates.py",
+    "tests/phase2a/test_models.py",
+    "tests/phase2a/test_normalization.py",
+    "tests/phase2a/test_openapi.py",
+    "tests/phase2a/test_schemas.py"
+  ]
+}
