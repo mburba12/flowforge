@@ -1,14 +1,16 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/phase4/4h", tags=["phase4-4h"])
+router = APIRouter()
 
 
-@router.get("/status")
+@router.get("/phase4/4h/status", tags=["phase4-4h"])
 async def status() -> dict[str, object]:
     return {
         "phase": "4H",
-        "module": "enterprise_controls",
         "status": "implemented",
-        "table_count": 6,
+        "raw_secrets_stored": False,
+        "restore_drill_required": True,
+        "rpo_minutes": 15,
+        "rto_hours": 4,
         "production_writes": False,
     }

@@ -1,0 +1,2 @@
+# FlowForge continuous Phase 4E-4J overlay
+This overlay implements local reconciliation, AI/document governance, workflow controls, enterprise health controls, activation policies, and release gates. Production Copilot, Azure Key Vault, and provider credentials remain disabled until externally configured. Run the orchestrator without switches first. Migration/checkpoint mode is intentionally separate.
