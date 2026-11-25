@@ -1,3 +1,13 @@
-import type { ApiError,Session } from "./types"; import {tenantHeaders} from "./session";
-const BASE=process.env.NEXT_PUBLIC_FLOWFORGE_API_URL??"http://127.0.0.1:8000";
-export async function api<T>(session:Session,path:string,init:RequestInit={}):Promise<T>{const response=await fetch(`${BASE}${path}`,{...init,headers:{"Content-Type":"application/json",...tenantHeaders(session),...init.headers},cache:"no-store"});if(!response.ok){let detail:Partial<ApiError>={};try{detail=await response.json()}catch{}throw {status:response.status,code:detail.code??"request_failed",message:detail.message??`Request failed: ${response.status}`,requestId:response.headers.get("x-request-id")??undefined} satisfies ApiError}return response.status===204?undefined as T:await response.json() as T}
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
+export class ApiError extends Error { constructor(public status:number,message:string){super(message)} }
+export async function apiGet<T>(path:string):Promise<T>{
+ const response=await fetch(`${API_BASE}${path}`,{cache:"no-store",headers:{Accept:"application/json"}});
+ if(!response.ok) throw new ApiError(response.status,await response.text());
+ return response.json() as Promise<T>;
+}
+export async function apiPost<T>(path:string,body:unknown):Promise<T>{
+ const response=await fetch(`${API_BASE}${path}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+ if(!response.ok) throw new ApiError(response.status,await response.text());
+ return response.json() as Promise<T>;
+}
+export const endpoints={phase5a:"/phase5a/status",phase5b:"/phase5b/status",openapi:"/openapi.json"};

@@ -1,1 +1,1 @@
-import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Accounts Receivable" capabilities={["Customers", "Invoices", "Receipts", "Collections and aging"]}/>}
+import {WorkspacePage} from "@/components/workspace-page";import {workspaces} from "@/lib/demo-data";export default function Page(){return <WorkspacePage config={workspaces.ar}/>}

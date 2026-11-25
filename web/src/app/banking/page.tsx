@@ -1,1 +1,1 @@
-import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Banking & Treasury" capabilities={["Accounts", "Transactions", "Cash position", "Transfer proposals"]}/>}
+import {WorkspacePage} from "@/components/workspace-page";import {workspaces} from "@/lib/demo-data";export default function Page(){return <WorkspacePage config={workspaces.banking}/>}

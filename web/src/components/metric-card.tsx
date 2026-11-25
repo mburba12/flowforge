@@ -1,0 +1,1 @@
+import type {Metric} from "@/lib/types";export function MetricCard({metric}:{metric:Metric}){return <article className="metric"><div className="metriclabel">{metric.label}</div><div className="metricvalue">{metric.value}</div><div className={`delta ${metric.tone}`}>{metric.delta}</div></article>}

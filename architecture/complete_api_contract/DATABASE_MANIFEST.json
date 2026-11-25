@@ -1,0 +1,12 @@
+{
+  "resource_tables": 307,
+  "migration_revision": "ff_all_apis_001",
+  "down_revision": "f174aad30e21",
+  "forced_rls_tables": 307,
+  "files": [
+    "database/models.py",
+    "database/schemas.py",
+    "database/schema.sql",
+    "migrations/ff_all_apis_001_create_flowforge_all_api_tables.py"
+  ]
+}

@@ -1,0 +1,26 @@
+import type { NavItem } from "./types";
+
+export const navigation: NavItem[] = [
+  { label: "Dashboard", href: "/dashboard", icon: "dashboard", group: "Overview" },
+  { label: "Approvals", href: "/approvals", icon: "approvals", group: "Overview", badge: 8 },
+  { label: "Work queue", href: "/work-queue", icon: "work-queue", group: "Overview", badge: 14 },
+  { label: "Accounts payable", href: "/ap", icon: "ap", group: "Finance" },
+  { label: "Accounts receivable", href: "/ar", icon: "ar", group: "Finance" },
+  { label: "General ledger", href: "/finance", icon: "ledger", group: "Finance" },
+  { label: "Banking & treasury", href: "/banking", icon: "banking", group: "Finance" },
+  { label: "Tax", href: "/tax", icon: "tax", group: "Finance" },
+  { label: "Orders", href: "/orders", icon: "orders", group: "Operations" },
+  { label: "Inventory", href: "/inventory", icon: "inventory", group: "Operations" },
+  { label: "Shipping", href: "/shipping", icon: "shipping", group: "Operations" },
+  { label: "Payroll", href: "/payroll", icon: "payroll", group: "People" },
+  { label: "Workforce", href: "/workforce", icon: "workforce", group: "People" },
+  { label: "Documents", href: "/documents", icon: "documents", group: "Intelligence" },
+  { label: "Reconciliation", href: "/reconciliation", icon: "reconciliation", group: "Intelligence", badge: 5 },
+  { label: "Entities", href: "/entities", icon: "entities", group: "Intelligence" },
+  { label: "Reports", href: "/reports", icon: "reports", group: "Insights" },
+  { label: "Audit", href: "/audit", icon: "audit", group: "Insights" },
+  { label: "Integrations", href: "/integrations", icon: "integrations", group: "Admin" },
+  { label: "Billing", href: "/billing", icon: "billing", group: "Admin" },
+  { label: "Settings", href: "/settings", icon: "settings", group: "Admin" },
+  { label: "Support", href: "/support", icon: "support", group: "Admin" },
+];

@@ -56,3 +56,8 @@ web/.next/
 web/test-results/
 web/playwright-report/
 web/npm-install-phase5a.log
+var/backups/
+var/ff_all_apis_delta_001.sql
+var/generate_one_big_migration.py
+var/audit_one_big_migration.py
+var/complete_api_database_install_report.json

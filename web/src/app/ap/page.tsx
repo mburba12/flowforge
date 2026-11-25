@@ -1,1 +1,1 @@
-import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Accounts Payable" capabilities={["Vendors", "Bills", "Purchase orders", "Three-way matching"]}/>}
+import {WorkspacePage} from "@/components/workspace-page";import {workspaces} from "@/lib/demo-data";export default function Page(){return <WorkspacePage config={workspaces.ap}/>}

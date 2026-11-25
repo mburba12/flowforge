@@ -28,6 +28,7 @@ from flowforge.phase4i.router import router as phase4i_router
 from flowforge.phase4j.router import router as phase4j_router
 from flowforge.phase5a.router import router as phase5a_router
 from flowforge.phase5b.router import router as phase5b_router
+from flowforge.support_feedback import router as support_feedback_router
 
 app = FastAPI(
     title="FlowForge API",
@@ -62,3 +63,5 @@ app.include_router(phase4i_router)
 app.include_router(phase4j_router)
 app.include_router(phase5a_router)
 app.include_router(phase5b_router)
+
+app.include_router(support_feedback_router)
