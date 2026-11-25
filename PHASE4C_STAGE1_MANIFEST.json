@@ -1,0 +1,31 @@
+{
+  "version": "4.2.0",
+  "tables": [
+    "bank_connections",
+    "connected_bank_accounts",
+    "bank_account_gl_mappings",
+    "bank_transactions",
+    "bank_balance_snapshots",
+    "bank_sync_runs",
+    "bank_webhook_events"
+  ],
+  "provider": "sandbox adapter; production Plaid adapter requires credentials",
+  "files": [
+    "PHASE4C_STAGE1_MANIFEST.json",
+    "scripts/Install-Phase4C-Stage1.ps1",
+    "scripts/Run-Phase4C-Stage1-Acceptance.ps1",
+    "scripts/Verify-Phase4C-Stage1.ps1",
+    "src/flowforge/phase4c/__init__.py",
+    "src/flowforge/phase4c/models.py",
+    "src/flowforge/phase4c/provider.py",
+    "src/flowforge/phase4c/providers.py",
+    "src/flowforge/phase4c/router.py",
+    "src/flowforge/phase4c/routes.py",
+    "src/flowforge/phase4c/schemas.py",
+    "src/flowforge/phase4c/service.py",
+    "tests/phase4c/__init__.py",
+    "tests/phase4c/test_models.py",
+    "tests/phase4c/test_openapi.py",
+    "tests/phase4c/test_provider.py"
+  ]
+}
