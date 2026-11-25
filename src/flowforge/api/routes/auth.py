@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import create_access_token, hash_password, verify_password
@@ -28,7 +29,13 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
     role = Role(tenant_id=tenant.id, name="Owner", description="Tenant owner")
     db.add(role)
     await db.flush()
-    db.add(UserRole(user_id=user.id, role_id=role.id))
+    db.add(
+        UserRole(
+            user_id=user.id,
+            role_id=role.id,
+            tenant_id=tenant.id,
+        )
+    )
     for code in [
         "tenant.manage",
         "users.manage",
@@ -43,9 +50,22 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
             permission = Permission(code=code, description=code)
             db.add(permission)
             await db.flush()
-        db.add(RolePermission(role_id=role.id, permission_id=permission.id))
+        db.add(
+            RolePermission(
+                role_id=role.id,
+                permission_id=permission.id,
+                tenant_id=tenant.id,
+            )
+        )
     await record_change(db, tenant.id, user.id, "created", "tenant", str(tenant.id))
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as exc:
+        await db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Tenant slug or owner email already exists",
+        ) from exc
     return TokenResponse(access_token=create_access_token(str(user.id), str(tenant.id)))
 
 
