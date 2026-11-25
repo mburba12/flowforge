@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
-from flowforge.db.session import get_db
+from flowforge.db.session import get_tenant_db
 
 from .schemas import (
     CustomerCreate,
@@ -27,12 +27,12 @@ PrincipalDependency = Annotated[
 ]
 DatabaseDependency = Annotated[
     AsyncSession,
-    Depends(get_db),
+    Depends(get_tenant_db),
 ]
 ServiceDependency = Annotated[
     CommerceService,
     Depends(
-        lambda principal=Depends(current_principal), db=Depends(get_db): CommerceService(
+        lambda principal=Depends(current_principal), db=Depends(get_tenant_db): CommerceService(
             db, principal.tenant_id, principal.user_id
         )
     ),

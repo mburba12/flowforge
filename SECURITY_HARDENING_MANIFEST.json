@@ -1,0 +1,14 @@
+{
+  "version": "4.0-security.1",
+  "scope": "all tenant-owned FlowForge tables and modules",
+  "gate": "FLOWFORGE TENANT ISOLATION SECURITY GATE PASSED",
+  "controls": [
+    "server-verified tenant context",
+    "forced PostgreSQL row-level security",
+    "transaction-local tenant settings",
+    "provider-neutral Key Vault encryption boundary",
+    "sensitive log redaction",
+    "tenant storage namespaces",
+    "tenant cache and queue namespaces"
+  ]
+}

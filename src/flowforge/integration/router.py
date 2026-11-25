@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flowforge.db.session import get_db
+from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.routes import router as phase1a_router
 from flowforge.phase1b.routes import router as phase1b_router
 
@@ -12,7 +12,7 @@ router = APIRouter()
 router.include_router(phase1a_router)
 router.include_router(phase1b_router)
 
-DatabaseSession = Annotated[AsyncSession, Depends(get_db)]
+DatabaseSession = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 @router.get("/phase1/status", tags=["phase1"])

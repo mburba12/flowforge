@@ -1,7 +1,17 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import JSON, Boolean, DateTime, ForeignKey, String, Text, UniqueConstraint, func
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    DateTime,
+    ForeignKey,
+    ForeignKeyConstraint,
+    String,
+    Text,
+    UniqueConstraint,
+    func,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from flowforge.db.base import AuditMixin, Base, IdMixin, TenantMixin
@@ -16,7 +26,18 @@ class Tenant(Base, IdMixin, AuditMixin):
 
 class User(Base, IdMixin, TenantMixin, AuditMixin):
     __tablename__ = "users"
-    __table_args__ = (UniqueConstraint("tenant_id", "email"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "tenant_id",
+            "email",
+            name="uq_users_tenant_id",
+        ),
+        UniqueConstraint(
+            "tenant_id",
+            "id",
+            name="uq_users_tenant_id_id",
+        ),
+    )
     email: Mapped[str] = mapped_column(String(320), index=True)
     password_hash: Mapped[str] = mapped_column(String(255))
     display_name: Mapped[str] = mapped_column(String(200))
@@ -25,7 +46,18 @@ class User(Base, IdMixin, TenantMixin, AuditMixin):
 
 class Role(Base, IdMixin, TenantMixin, AuditMixin):
     __tablename__ = "roles"
-    __table_args__ = (UniqueConstraint("tenant_id", "name"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "tenant_id",
+            "name",
+            name="uq_roles_tenant_id",
+        ),
+        UniqueConstraint(
+            "tenant_id",
+            "id",
+            name="uq_roles_tenant_id_id",
+        ),
+    )
     name: Mapped[str] = mapped_column(String(100))
     description: Mapped[str | None] = mapped_column(Text)
 
@@ -36,23 +68,75 @@ class Permission(Base, IdMixin):
     description: Mapped[str | None] = mapped_column(Text)
 
 
-class UserRole(Base):
+class UserRole(Base, TenantMixin):
     __tablename__ = "user_roles"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["tenant_id", "user_id"],
+            ["users.tenant_id", "users.id"],
+            name="fk_user_roles_tenant_user",
+            ondelete="CASCADE",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "role_id"],
+            ["roles.tenant_id", "roles.id"],
+            name="fk_user_roles_tenant_role",
+            ondelete="CASCADE",
+        ),
+        UniqueConstraint(
+            "tenant_id",
+            "user_id",
+            "role_id",
+            name=("uq_user_roles_tenant_user_role"),
+        ),
+    )
+
     user_id: Mapped[UUID] = mapped_column(
-        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE",
+        ),
+        primary_key=True,
     )
     role_id: Mapped[UUID] = mapped_column(
-        ForeignKey("roles.id", ondelete="CASCADE"), primary_key=True
+        ForeignKey(
+            "roles.id",
+            ondelete="CASCADE",
+        ),
+        primary_key=True,
     )
 
 
-class RolePermission(Base):
+class RolePermission(Base, TenantMixin):
     __tablename__ = "role_permissions"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["tenant_id", "role_id"],
+            ["roles.tenant_id", "roles.id"],
+            name=("fk_role_permissions_tenant_role"),
+            ondelete="CASCADE",
+        ),
+        UniqueConstraint(
+            "tenant_id",
+            "role_id",
+            "permission_id",
+            name=("uq_role_permissions_tenant_role_permission"),
+        ),
+    )
+
     role_id: Mapped[UUID] = mapped_column(
-        ForeignKey("roles.id", ondelete="CASCADE"), primary_key=True
+        ForeignKey(
+            "roles.id",
+            ondelete="CASCADE",
+        ),
+        primary_key=True,
     )
     permission_id: Mapped[UUID] = mapped_column(
-        ForeignKey("permissions.id", ondelete="CASCADE"), primary_key=True
+        ForeignKey(
+            "permissions.id",
+            ondelete="CASCADE",
+        ),
+        primary_key=True,
     )
 
 

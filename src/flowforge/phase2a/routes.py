@@ -6,7 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
-from flowforge.db.session import get_db
+from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
 from .models import Party
@@ -21,7 +21,7 @@ from .service import PartyService
 
 router = APIRouter(prefix="/api/v2", tags=["phase2a"])
 P = Annotated[Principal, Depends(current_principal)]
-D = Annotated[AsyncSession, Depends(get_db)]
+D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 def service(p: P, db: D) -> PartyService:

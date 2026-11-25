@@ -13,7 +13,7 @@ from flowforge.core.security import (
     Principal,
     current_principal,
 )
-from flowforge.db.session import get_db
+from flowforge.db.session import get_tenant_db
 
 from .schemas import (
     TaxLiabilityCreate,
@@ -37,7 +37,7 @@ PrincipalDependency = Annotated[
 ]
 DatabaseDependency = Annotated[
     AsyncSession,
-    Depends(get_db),
+    Depends(get_tenant_db),
 ]
 
 

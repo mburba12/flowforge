@@ -5,14 +5,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
-from flowforge.db.session import get_db
+from flowforge.db.session import get_tenant_db
 
 from .schemas import PayrollCalculate, PayrollPaymentCreate, PayrollPostAccounts, PayrollRunCreate
 from .service import PayrollError, PayrollService
 
 router = APIRouter(prefix="/api/v4a/payroll", tags=["phase4a-payroll"])
 P = Annotated[Principal, Depends(current_principal)]
-D = Annotated[AsyncSession, Depends(get_db)]
+D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 def service(principal: P, db: D) -> PayrollService:

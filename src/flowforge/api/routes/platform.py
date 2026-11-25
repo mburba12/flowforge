@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
-from flowforge.db.session import get_db
+from flowforge.db.session import get_tenant_db
 from flowforge.platform.models import (
     AuditEntry,
     Document,
@@ -25,7 +25,7 @@ from flowforge.platform.services import record_change
 
 router = APIRouter(tags=["platform"])
 P = Annotated[Principal, Depends(current_principal)]
-D = Annotated[AsyncSession, Depends(get_db)]
+D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 @router.get("/me")

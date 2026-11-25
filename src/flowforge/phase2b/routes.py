@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
-from flowforge.db.session import get_db
+from flowforge.db.session import get_tenant_db
 
 from .posting import PostingEngine
 from .schemas import (
@@ -20,7 +20,7 @@ from .service import LedgerService
 
 router = APIRouter(prefix="/api/v2", tags=["phase2b"])
 P = Annotated[Principal, Depends(current_principal)]
-D = Annotated[AsyncSession, Depends(get_db)]
+D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 def service(principal: P, db: D) -> LedgerService:
