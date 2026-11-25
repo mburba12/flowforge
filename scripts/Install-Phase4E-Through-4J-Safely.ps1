@@ -40,12 +40,70 @@ function Get-ManifestTables {
 
 function Set-IsolatedAlembicMetadata {
     param([string]$Code)
-    $Full = [System.IO.File]::ReadAllText((Resolve-Path $BackupPath))
-    $Lines = @($Full -split "`r?`n" | Where-Object {
-        $_ -notmatch '^from flowforge\.phase4[e-j] import models as phase4[e-j]_models'
-    })
-    $Import = "from flowforge.phase$Code import models as phase${Code}_models # noqa: F401"
-    [System.IO.File]::WriteAllText((Resolve-Path $AlembicPath), ($Import + "`r`n" + ($Lines -join "`r`n")), $Utf8NoBom)
+
+    $Full = [System.IO.File]::ReadAllText(
+        (Resolve-Path $BackupPath)
+    )
+
+    $BaseLines = @(
+        $Full -split "`r?`n" |
+            Where-Object {
+                $_ -notmatch (
+                    '^from flowforge\.phase4[e-j] ' +
+                    'import models as phase4[e-j]_models'
+                )
+            }
+    )
+
+    $WaveOrder = @(
+        "4e",
+        "4f",
+        "4g",
+        "4h",
+        "4i",
+        "4j"
+    )
+
+    $CurrentIndex = [Array]::IndexOf(
+        $WaveOrder,
+        $Code
+    )
+
+    if ($CurrentIndex -lt 0) {
+        throw "Unknown Phase 4 wave: $Code"
+    }
+
+    $CumulativeWaves = @(
+        $WaveOrder[0..$CurrentIndex]
+    )
+
+    $Imports = @(
+        foreach ($WaveCode in $CumulativeWaves) {
+            (
+                "from flowforge.phase$WaveCode " +
+                "import models as " +
+                "phase${WaveCode}_models " +
+                "# noqa: F401"
+            )
+        }
+    )
+
+    $MetadataText = (
+        ($Imports -join "`r`n") +
+        "`r`n" +
+        ($BaseLines -join "`r`n")
+    )
+
+    [System.IO.File]::WriteAllText(
+        (Resolve-Path $AlembicPath),
+        $MetadataText,
+        $Utf8NoBom
+    )
+
+    Write-Host (
+        "CUMULATIVE METADATA: " +
+        ($CumulativeWaves -join ", ")
+    ) -ForegroundColor Cyan
 }
 
 function Test-MigrationAst {
@@ -105,6 +163,47 @@ try {
         $Code = $Wave.Code
         $Upper = $Code.ToUpper()
         $Tables = Get-ManifestTables $Code
+
+        $QuotedInstalledTables = (
+            $Tables |
+                ForEach-Object {
+                    "'$_'"
+                }
+        ) -join ","
+
+        $InstalledTableCount = docker compose exec -T postgres psql `
+            -P pager=off `
+            -U flowforge `
+            -d flowforge `
+            -tAc "SELECT COUNT(*) FROM information_schema.tables W*ERE table_schema = 'public' AND ta*le_name IN ($QuotedInstalledTables);"
+
+        if ($LASTEXITCODE -ne 0) {
+            throw "Phase $Upper installation-state query failed."
+        }
+
+        $InstalledTableCount = (
+            "$InstalledTableCount"
+        ).Trim()
+
+        if (
+            $InstalledTableCount -eq
+            "$($Tables.Count)"
+        ) {
+            Write-Host (
+                "SKIPPING PHASE ${Upper}: " +
+                "all expected tables are installed."
+            ) -ForegroundColor Yellow
+
+            continue
+        }
+
+        if ($InstalledTableCount -ne "0") {
+            throw (
+                "Phase $Upper is partially installed: " +
+                "$InstalledTableCount of " +
+                "$($Tables.Count) tables."
+            )
+        }
         if ($Tables.Count -ne $Wave.Tables) { throw "$Upper manifest expected $($Wave.Tables) tables, found $($Tables.Count)" }
         Write-Host "`n===== INSTALLING PHASE $Upper =====" -ForegroundColor Yellow
         Set-IsolatedAlembicMetadata $Code
@@ -150,10 +249,27 @@ finally {
     Restore-Alembic
 }
 
-Invoke-Gate "Final Ruff" { & $Python -m ruff check .\src .\tests .\migrations }
-Invoke-Gate "Final format" { & $Python -m ruff format --check .\src .\tests .\migrations }
-Invoke-Gate "Final compile" { & $Python -m compileall -q .\src .\tests }
-Invoke-Gate "Final tests" { & $Python -m pytest -q }
+$FinalCheckPaths = @(
+    ".\src",
+    ".\tests",
+    ".\migrations\env.py"
+)
+
+Invoke-Gate "Final Ruff" {
+    & $Python -m ruff check $FinalCheckPaths
+}
+
+Invoke-Gate "Final format" {
+    & $Python -m ruff format --check $FinalCheckPaths
+}
+
+Invoke-Gate "Final compile" {
+    & $Python -m compileall -q ".\src" ".\tests"
+}
+
+Invoke-Gate "Final tests" {
+    & $Python -m pytest -q
+}
 
 if ($CreateCheckpoints) {
     $FinalTag = "v4.9.0-phase4-complete"
