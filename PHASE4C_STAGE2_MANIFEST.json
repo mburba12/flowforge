@@ -1,0 +1,38 @@
+{
+  "version": "4.2.1",
+  "scope": "Stripe and Square sandbox payment processor and terminal connections",
+  "tables": [
+    "payment_connections",
+    "merchant_locations",
+    "payment_terminals",
+    "processor_payments",
+    "processor_fees",
+    "processor_refunds",
+    "processor_payouts",
+    "payment_webhook_events"
+  ],
+  "security": [
+    "tenant_id on every table",
+    "get_tenant_db only",
+    "sandbox credentials not persisted",
+    "production providers disabled",
+    "money movement disabled"
+  ],
+  "files": [
+    "PHASE4C_STAGE2_MANIFEST.json",
+    "scripts/Run-Phase4C-Stage2-Acceptance.ps1",
+    "scripts/Verify-Phase4C-Stage2.ps1",
+    "src/flowforge/phase4c_stage2/__init__.py",
+    "src/flowforge/phase4c_stage2/models.py",
+    "src/flowforge/phase4c_stage2/provider.py",
+    "src/flowforge/phase4c_stage2/providers.py",
+    "src/flowforge/phase4c_stage2/router.py",
+    "src/flowforge/phase4c_stage2/routes.py",
+    "src/flowforge/phase4c_stage2/schemas.py",
+    "src/flowforge/phase4c_stage2/service.py",
+    "tests/phase4c_stage2/__init__.py",
+    "tests/phase4c_stage2/test_models.py",
+    "tests/phase4c_stage2/test_openapi.py",
+    "tests/phase4c_stage2/test_provider.py"
+  ]
+}
