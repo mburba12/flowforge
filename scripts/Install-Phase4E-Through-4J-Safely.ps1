@@ -1,4 +1,4 @@
-param(
+﻿param(
     [switch]$CreateCheckpoints
 )
 
@@ -175,7 +175,7 @@ try {
             -P pager=off `
             -U flowforge `
             -d flowforge `
-            -tAc "SELECT COUNT(*) FROM information_schema.tables W*ERE table_schema = 'public' AND ta*le_name IN ($QuotedInstalledTables);"
+            -tAc "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name IN ($QuotedInstalledTables);"
 
         if ($LASTEXITCODE -ne 0) {
             throw "Phase $Upper installation-state query failed."
@@ -277,3 +277,4 @@ if ($CreateCheckpoints) {
     if ($LASTEXITCODE -ne 0) { throw "Final Phase 4 tag failed" }
 }
 Write-Host "FLOWFORGE PHASE 4E-4J CONTINUOUS INSTALLATION PASSED" -ForegroundColor Green
+
