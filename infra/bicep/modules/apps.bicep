@@ -5,6 +5,24 @@ param apiImage string
 param workerImage string
 param webImage string
 param identityId string
+
+@allowed([
+  'student'
+  'production'
+])
+param deploymentProfile string = 'production'
+
+var isProduction = deploymentProfile == 'production'
+var containerCpu = isProduction
+  ? json('1.0')
+  : json('0.5')
+var containerMemory = isProduction
+  ? '2Gi'
+  : '1Gi'
+var apiWebMinimumReplicas = isProduction ? 2 : 0
+var workerMinimumReplicas = isProduction ? 1 : 0
+var maximumReplicas = isProduction ? 20 : 1
+var maximumWorkerReplicas = isProduction ? 50 : 1
 param logAnalyticsCustomerId string
 
 @secure()
@@ -50,14 +68,14 @@ resource api 'Microsoft.App/containerApps@2024-03-01' = {
           name: 'api'
           image: '${apiImage}:${imageTag}'
           resources: {
-            cpu: json('1.0')
-            memory: '2Gi'
+            cpu: containerCpu
+            memory: containerMemory
           }
         }
       ]
       scale: {
-        minReplicas: 2
-        maxReplicas: 20
+        minReplicas: apiWebMinimumReplicas
+        maxReplicas: maximumReplicas
       }
     }
   }
@@ -89,14 +107,14 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = {
           name: 'web'
           image: '${webImage}:${imageTag}'
           resources: {
-            cpu: json('1.0')
-            memory: '2Gi'
+            cpu: containerCpu
+            memory: containerMemory
           }
         }
       ]
       scale: {
-        minReplicas: 2
-        maxReplicas: 20
+        minReplicas: apiWebMinimumReplicas
+        maxReplicas: maximumReplicas
       }
     }
   }
@@ -122,14 +140,14 @@ resource worker 'Microsoft.App/containerApps@2024-03-01' = {
           name: 'worker'
           image: '${workerImage}:${imageTag}'
           resources: {
-            cpu: json('1.0')
-            memory: '2Gi'
+            cpu: containerCpu
+            memory: containerMemory
           }
         }
       ]
       scale: {
-        minReplicas: 1
-        maxReplicas: 50
+        minReplicas: workerMinimumReplicas
+        maxReplicas: maximumWorkerReplicas
       }
     }
   }

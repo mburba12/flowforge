@@ -3,6 +3,31 @@ param environmentName string
 param dataSubnetId string
 param postgresAdminLogin string
 
+@allowed([
+  'student'
+  'production'
+])
+param deploymentProfile string = 'production'
+
+var isProduction = deploymentProfile == 'production'
+var databaseSku = isProduction
+  ? 'Standard_D4ds_v5'
+  : 'Standard_B2ats_v2'
+var databaseTier = isProduction
+  ? 'GeneralPurpose'
+  : 'Burstable'
+var backupRetentionDays = isProduction ? 35 : 7
+var geoRedundantBackup = isProduction
+  ? 'Enabled'
+  : 'Disabled'
+var databaseHighAvailability = isProduction
+  ? 'ZoneRedundant'
+  : 'Disabled'
+var databaseStorageSizeGb = isProduction ? 256 : 32
+var storageSkuName = isProduction
+  ? 'Standard_ZRS'
+  : 'Standard_LRS'
+
 @secure()
 param postgresAdminPassword string
 
@@ -26,7 +51,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: take('stflowforge${environmentName}${uniqueString(resourceGroup().id)}', 24)
   location: location
   sku: {
-    name: 'Standard_ZRS'
+    name: storageSkuName
   }
   kind: 'StorageV2'
   properties: {
@@ -41,26 +66,26 @@ resource postgres 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
   name: 'psql-flowforge-${environmentName}'
   location: location
   sku: {
-    name: 'Standard_D4ds_v5'
-    tier: 'GeneralPurpose'
+    name: databaseSku
+    tier: databaseTier
   }
   properties: {
     administratorLogin: postgresAdminLogin
     administratorLoginPassword: postgresAdminPassword
     version: '16'
     backup: {
-      backupRetentionDays: 35
-      geoRedundantBackup: 'Enabled'
+      backupRetentionDays: backupRetentionDays
+      geoRedundantBackup: geoRedundantBackup
     }
     highAvailability: {
-      mode: 'ZoneRedundant'
+      mode: databaseHighAvailability
     }
     network: {
       delegatedSubnetResourceId: dataSubnetId
       publicNetworkAccess: 'Disabled'
     }
     storage: {
-      storageSizeGB: 256
+      storageSizeGB: databaseStorageSizeGb
       autoGrow: 'Enabled'
     }
   }

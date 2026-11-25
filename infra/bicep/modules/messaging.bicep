@@ -1,18 +1,30 @@
 ﻿param location string
 param environmentName string
 
+@allowed([
+  'student'
+  'production'
+])
+param deploymentProfile string = 'production'
+
+var isProduction = deploymentProfile == 'production'
+var serviceBusSkuName = isProduction
+  ? 'Premium'
+  : 'Standard'
+var serviceBusSkuTier = isProduction
+  ? 'Premium'
+  : 'Standard'
+
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
   name: 'sb-flowforge-${environmentName}'
   location: location
   sku: {
-    name: 'Premium'
-    tier: 'Premium'
-    capacity: 1
+    name: serviceBusSkuName
+    tier: serviceBusSkuTier
   }
   properties: {
     minimumTlsVersion: '1.2'
     publicNetworkAccess: 'Disabled'
-    zoneRedundant: true
   }
 }
 
@@ -32,7 +44,6 @@ resource queues 'Microsoft.ServiceBus/namespaces/queues@2024-01-01' = [for queue
     lockDuration: 'PT5M'
     maxDeliveryCount: 10
     deadLetteringOnMessageExpiration: true
-    enablePartitioning: true
     requiresDuplicateDetection: true
     duplicateDetectionHistoryTimeWindow: 'P1D'
   }

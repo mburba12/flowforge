@@ -2,6 +2,12 @@
 
 param location string = resourceGroup().location
 param environmentName string
+
+@allowed([
+  'student'
+  'production'
+])
+param deploymentProfile string = 'production'
 param imageTag string
 param apiImage string
 param workerImage string
@@ -32,6 +38,7 @@ module observability 'modules/observability.bicep' = {
   params: {
     location: location
     environmentName: environmentName
+    deploymentProfile: deploymentProfile
   }
 }
 
@@ -43,6 +50,7 @@ module data 'modules/data.bicep' = {
     dataSubnetId: network.outputs.dataSubnetId
     postgresAdminLogin: postgresAdminLogin
     postgresAdminPassword: postgresAdminPassword
+    deploymentProfile: deploymentProfile
   }
 }
 
@@ -51,6 +59,7 @@ module messaging 'modules/messaging.bicep' = {
   params: {
     location: location
     environmentName: environmentName
+    deploymentProfile: deploymentProfile
   }
 }
 
@@ -66,6 +75,7 @@ module apps 'modules/apps.bicep' = {
     identityId: identity.outputs.identityId
     logAnalyticsCustomerId: observability.outputs.customerId
     logAnalyticsSharedKey: observability.outputs.sharedKey
+    deploymentProfile: deploymentProfile
   }
 }
 
