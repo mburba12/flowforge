@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Finance" capabilities={["General ledger", "Journals", "Accounting periods", "Financial statements"]}/>}

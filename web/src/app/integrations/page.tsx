@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Integrations" capabilities={["Connection health", "Sync history", "Webhook failures", "Activation levels"]}/>}

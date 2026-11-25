@@ -1,0 +1,2 @@
+from flowforge.phase5a.router import router as phase5a_router
+app.include_router(phase5a_router)

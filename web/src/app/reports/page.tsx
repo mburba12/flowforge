@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Reports" capabilities={["Operational reports", "Financial reports", "Exports", "Scheduled delivery"]}/>}

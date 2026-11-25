@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Dashboard" capabilities={["Cash position", "Work requiring attention", "Integration health", "Operational scorecards"]}/>}

@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Accounts Receivable" capabilities={["Customers", "Invoices", "Receipts", "Collections and aging"]}/>}

@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Reconciliation" capabilities={["Commerce to cash", "Procure to pay", "Payroll to funding", "Exceptions and resolution"]}/>}

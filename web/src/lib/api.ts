@@ -1,0 +1,3 @@
+import type { ApiError,Session } from "./types"; import {tenantHeaders} from "./session";
+const BASE=process.env.NEXT_PUBLIC_FLOWFORGE_API_URL??"http://127.0.0.1:8000";
+export async function api<T>(session:Session,path:string,init:RequestInit={}):Promise<T>{const response=await fetch(`${BASE}${path}`,{...init,headers:{"Content-Type":"application/json",...tenantHeaders(session),...init.headers},cache:"no-store"});if(!response.ok){let detail:Partial<ApiError>={};try{detail=await response.json()}catch{}throw {status:response.status,code:detail.code??"request_failed",message:detail.message??`Request failed: ${response.status}`,requestId:response.headers.get("x-request-id")??undefined} satisfies ApiError}return response.status===204?undefined as T:await response.json() as T}

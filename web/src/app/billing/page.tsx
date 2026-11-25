@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Billing & Entitlements" capabilities={["Plans", "Module entitlements", "Usage meters", "Tenant lifecycle"]}/>}

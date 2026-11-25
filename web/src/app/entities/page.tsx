@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Canonical Entities" capabilities={["Match candidates", "Lineage", "Merge and unmerge", "Product crosswalks"]}/>}

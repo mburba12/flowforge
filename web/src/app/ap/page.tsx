@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Accounts Payable" capabilities={["Vendors", "Bills", "Purchase orders", "Three-way matching"]}/>}

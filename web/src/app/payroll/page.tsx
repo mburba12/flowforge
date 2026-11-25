@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Payroll" capabilities={["Payroll runs", "Earnings and deductions", "Taxes", "Funding reconciliation"]}/>}

@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Inventory" capabilities={["Products", "Warehouses", "Balances", "Reservations and movements"]}/>}

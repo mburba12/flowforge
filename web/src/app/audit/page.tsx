@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Audit" capabilities={["Immutable events", "Evidence packages", "Security events", "Exports"]}/>}

@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Banking & Treasury" capabilities={["Accounts", "Transactions", "Cash position", "Transfer proposals"]}/>}

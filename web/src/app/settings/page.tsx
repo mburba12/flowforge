@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Settings" capabilities={["Company", "Legal entities", "Roles and permissions", "Feature flags"]}/>}

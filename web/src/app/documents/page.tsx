@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Documents" capabilities={["Upload", "Extraction", "Human review", "Business-record proposals"]}/>}

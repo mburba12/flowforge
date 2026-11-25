@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Approvals" capabilities={["Sequential approvals", "Parallel approvals", "Separation of duties", "Simulation and rollback"]}/>}

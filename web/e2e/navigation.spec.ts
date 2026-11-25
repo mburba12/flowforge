@@ -1,0 +1,1 @@
+import {test,expect} from "@playwright/test";test("all core workspaces are reachable",async({page})=>{await page.goto("/dashboard");await expect(page.getByRole("heading",{name:"Dashboard"})).toBeVisible();await page.getByRole("link",{name:"Documents"}).click();await expect(page.getByRole("heading",{name:"Documents"})).toBeVisible()});

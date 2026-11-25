@@ -1,0 +1,1 @@
+import {ModulePage} from "@/components/ModulePage";export default function Page(){return <ModulePage title="Copilot" capabilities={["Grounded answers", "Record citations", "Data freshness", "Proposed actions only"]}/>}
