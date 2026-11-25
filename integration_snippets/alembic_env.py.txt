@@ -1,1 +1,1 @@
-from flowforge.phase5a import models as phase5a_models  # noqa: F401
+from flowforge.phase5b import models as phase5b_models  # noqa: F401

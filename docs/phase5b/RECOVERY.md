@@ -1,0 +1,2 @@
+# Recovery runbook
+Targets: RPO <= 15 minutes, RTO <= 4 hours. Quarterly drills: PostgreSQL PITR into an isolated server, object restore, Service Bus dead-letter replay, webhook replay, connector cursor recovery, document reprocessing, worker crash, credential revocation, provider uncertainty, and regional tabletop. Record timestamps, operators, evidence URIs, data-integrity checks, tenant-isolation checks, and remediation.

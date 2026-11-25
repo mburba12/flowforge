@@ -1,0 +1,2 @@
+# Security and compliance
+Required before launch: threat model, SAST, DAST, dependency/container/secret scans, independent penetration test, remediation of all critical/high findings, audit immutability review, privacy impact assessment, retention/deletion validation, incident exercise, vendor risk review, SOC 2 control mapping, PCI scope analysis, HIPAA assessment when PHI is enabled, and ISO 13485 controls for medical-device workflows.

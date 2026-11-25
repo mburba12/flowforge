@@ -1,0 +1,13 @@
+{
+  "production_credentials": false,
+  "provider_writes": false,
+  "high_risk_execution": false,
+  "default_transaction_limit": "0.00",
+  "two_person_approval": true,
+  "step_up_authentication": true,
+  "trusted_beneficiary": true,
+  "simulation_required": true,
+  "provider_confirmation_required": true,
+  "post_execution_reconciliation": true,
+  "incident_lockout": true
+}

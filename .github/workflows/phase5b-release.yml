@@ -1,0 +1,41 @@
+name: phase5b-release
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options: [staging, production]
+        required: true
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -e '.[dev]'
+      - run: ruff check src tests
+      - run: mypy src/flowforge/phase5b
+      - run: pytest -q
+      - uses: actions/setup-node@v4
+        with: {node-version: '22', cache: npm, cache-dependency-path: web/package-lock.json}
+      - run: npm ci
+        working-directory: web
+      - run: npm audit --audit-level=high
+        working-directory: web
+      - run: npm run typecheck && npm test && npm run build
+        working-directory: web
+      - run: az bicep build --file infra/bicep/main.bicep
+  deploy:
+    needs: verify
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with: {client-id: '${{ vars.AZURE_CLIENT_ID }}', tenant-id: '${{ vars.AZURE_TENANT_ID }}', subscription-id: '${{ vars.AZURE_SUBSCRIPTION_ID }}'}
+      - run: az deployment group what-if --resource-group '${{ vars.AZURE_RESOURCE_GROUP }}' --template-file infra/bicep/main.bicep --parameters infra/bicep/parameters/${{ inputs.environment }}.bicepparam
+      - run: az deployment group create --resource-group '${{ vars.AZURE_RESOURCE_GROUP }}' --template-file infra/bicep/main.bicep --parameters infra/bicep/parameters/${{ inputs.environment }}.bicepparam

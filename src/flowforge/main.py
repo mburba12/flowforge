@@ -27,6 +27,7 @@ from flowforge.phase4h.router import router as phase4h_router
 from flowforge.phase4i.router import router as phase4i_router
 from flowforge.phase4j.router import router as phase4j_router
 from flowforge.phase5a.router import router as phase5a_router
+from flowforge.phase5b.router import router as phase5b_router
 
 app = FastAPI(
     title="FlowForge API",
@@ -34,41 +35,23 @@ app = FastAPI(
     description="Complete Phase 1 platform foundation",
 )
 app.include_router(api_router)
-
 app.include_router(phase1_router)
-
 app.include_router(phase2a_router)
-
 app.include_router(phase2b_router)
-
 app.include_router(phase3a_router)
-
 app.include_router(phase3b_router)
-
 app.include_router(phase3_final_router)
-
 app.include_router(phase4a_router)
-
 app.include_router(phase4a_stage2_router)
-
 app.include_router(phase4a_stage3_router)
-
 app.include_router(phase4b_router)
-
 app.include_router(phase4b_stage2_router)
-
 app.include_router(phase4c_router)
-
 app.include_router(phase4c_stage2_router)
-
 app.include_router(phase4c_stage3_router)
-
 app.include_router(phase4c_stage4_router)
-
 app.include_router(phase4c_stage5_router)
-
 app.include_router(phase4c_stage6_router)
-
 app.include_router(phase4c_stage7_router)
 app.include_router(phase4d_router)
 app.include_router(phase4e_router)
@@ -78,3 +61,4 @@ app.include_router(phase4h_router)
 app.include_router(phase4i_router)
 app.include_router(phase4j_router)
 app.include_router(phase5a_router)
+app.include_router(phase5b_router)
