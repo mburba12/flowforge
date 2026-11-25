@@ -1,0 +1,23 @@
+{
+  "version": "4.3.0",
+  "scope": "canonical identity, matching, merge governance, product crosswalks, relationships",
+  "tables": 10,
+  "automatic_merge": false,
+  "files": [
+    "PHASE4D_COMPLETE_MANIFEST.json",
+    "manifests/phase4d.json",
+    "scripts/Verify-Phase4D-Complete.ps1",
+    "src/flowforge/phase4d/__init__.py",
+    "src/flowforge/phase4d/matching.py",
+    "src/flowforge/phase4d/models.py",
+    "src/flowforge/phase4d/normalization.py",
+    "src/flowforge/phase4d/router.py",
+    "src/flowforge/phase4d/routes.py",
+    "src/flowforge/phase4d/schemas.py",
+    "src/flowforge/phase4d/service.py",
+    "tests/phase4d/test_matching.py",
+    "tests/phase4d/test_models.py",
+    "tests/phase4d/test_normalization.py",
+    "tests/phase4d/test_openapi.py"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "phase": "4I",
+  "module": "production_activation",
+  "tables": [
+    "connector_activation_policies",
+    "connector_activation_events",
+    "writeback_requests",
+    "writeback_results",
+    "transaction_limits",
+    "beneficiary_controls"
+  ],
+  "table_count": 6,
+  "production_writes": false
+}

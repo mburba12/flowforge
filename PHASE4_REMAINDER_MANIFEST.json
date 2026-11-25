@@ -1,0 +1,103 @@
+{
+  "version": "4.9.0",
+  "waves": {
+    "4d": {
+      "module": "unified_data",
+      "tables": [
+        "canonical_entities",
+        "external_entity_references",
+        "entity_match_candidates",
+        "entity_merge_proposals",
+        "entity_merge_members",
+        "entity_merge_events",
+        "canonical_products",
+        "product_source_links",
+        "sku_crosswalks",
+        "entity_relationships"
+      ],
+      "count": 10
+    },
+    "4e": {
+      "module": "reconciliation",
+      "tables": [
+        "reconciliation_definitions",
+        "reconciliation_runs",
+        "reconciliation_items",
+        "reconciliation_matches",
+        "reconciliation_exceptions",
+        "reconciliation_resolutions",
+        "operational_metrics",
+        "operational_scorecards"
+      ],
+      "count": 8
+    },
+    "4f": {
+      "module": "copilot_documents",
+      "tables": [
+        "ai_sessions",
+        "ai_messages",
+        "ai_tool_invocations",
+        "ai_citations",
+        "ai_usage_records",
+        "ai_safety_events",
+        "document_extractions",
+        "document_extraction_fields",
+        "ai_evaluation_cases",
+        "ai_evaluation_runs"
+      ],
+      "count": 10
+    },
+    "4g": {
+      "module": "governed_automation",
+      "tables": [
+        "action_proposals",
+        "action_proposal_items",
+        "action_evidence",
+        "action_risk_assessments",
+        "action_approvals",
+        "workflow_instances",
+        "workflow_steps",
+        "action_executions",
+        "action_rollbacks",
+        "work_queue_items"
+      ],
+      "count": 10
+    },
+    "4h": {
+      "module": "enterprise_controls",
+      "tables": [
+        "integration_health_snapshots",
+        "connector_alerts",
+        "secret_references",
+        "audit_evidence_packages",
+        "recovery_drills",
+        "performance_test_runs"
+      ],
+      "count": 6
+    },
+    "4i": {
+      "module": "production_activation",
+      "tables": [
+        "connector_activation_policies",
+        "connector_activation_events",
+        "writeback_requests",
+        "writeback_results",
+        "transaction_limits",
+        "beneficiary_controls"
+      ],
+      "count": 6
+    },
+    "4j": {
+      "module": "release_candidate",
+      "tables": [
+        "release_candidates",
+        "release_gate_results",
+        "failure_injection_runs",
+        "launch_readiness_items"
+      ],
+      "count": 4
+    }
+  },
+  "total_new_tables": 54,
+  "final_tag": "v4.9.0-phase4-complete"
+}

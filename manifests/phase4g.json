@@ -1,0 +1,18 @@
+{
+  "phase": "4G",
+  "module": "governed_automation",
+  "tables": [
+    "action_proposals",
+    "action_proposal_items",
+    "action_evidence",
+    "action_risk_assessments",
+    "action_approvals",
+    "phase4g_workflow_instances",
+    "workflow_steps",
+    "action_executions",
+    "action_rollbacks",
+    "work_queue_items"
+  ],
+  "table_count": 10,
+  "production_writes": false
+}

@@ -1,0 +1,14 @@
+{
+  "phase": "4H",
+  "module": "enterprise_controls",
+  "tables": [
+    "integration_health_snapshots",
+    "connector_alerts",
+    "secret_references",
+    "audit_evidence_packages",
+    "recovery_drills",
+    "performance_test_runs"
+  ],
+  "table_count": 6,
+  "production_writes": false
+}

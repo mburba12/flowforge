@@ -1,0 +1,7 @@
+app.include_router(phase4d_router)
+app.include_router(phase4e_router)
+app.include_router(phase4f_router)
+app.include_router(phase4g_router)
+app.include_router(phase4h_router)
+app.include_router(phase4i_router)
+app.include_router(phase4j_router)

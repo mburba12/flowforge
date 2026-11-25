@@ -1,0 +1,12 @@
+{
+  "phase": "4J",
+  "module": "release_candidate",
+  "tables": [
+    "release_candidates",
+    "release_gate_results",
+    "failure_injection_runs",
+    "launch_readiness_items"
+  ],
+  "table_count": 4,
+  "production_writes": false
+}

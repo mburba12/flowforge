@@ -1,0 +1,16 @@
+{
+  "phase": "4E",
+  "module": "reconciliation",
+  "tables": [
+    "reconciliation_definitions",
+    "reconciliation_runs",
+    "reconciliation_items",
+    "reconciliation_matches",
+    "reconciliation_exceptions",
+    "reconciliation_resolutions",
+    "operational_metrics",
+    "operational_scorecards"
+  ],
+  "table_count": 8,
+  "production_writes": false
+}

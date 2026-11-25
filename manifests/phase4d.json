@@ -1,0 +1,19 @@
+{
+  "phase": "4D",
+  "module": "unified_data",
+  "tables": [
+    "canonical_entities",
+    "external_entity_references",
+    "entity_match_candidates",
+    "entity_merge_proposals",
+    "entity_merge_members",
+    "entity_merge_events",
+    "canonical_products",
+    "product_source_links",
+    "sku_crosswalks",
+    "entity_relationships"
+  ],
+  "table_count": 10,
+  "automatic_merge": false,
+  "production_writes": false
+}

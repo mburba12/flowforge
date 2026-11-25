@@ -1,0 +1,7 @@
+from flowforge.phase4d.router import router as phase4d_router
+from flowforge.phase4e.router import router as phase4e_router
+from flowforge.phase4f.router import router as phase4f_router
+from flowforge.phase4g.router import router as phase4g_router
+from flowforge.phase4h.router import router as phase4h_router
+from flowforge.phase4i.router import router as phase4i_router
+from flowforge.phase4j.router import router as phase4j_router
