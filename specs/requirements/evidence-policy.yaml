@@ -1,0 +1,24 @@
+version: 1
+risk_tiers:
+  critical:
+    required_evidence: [static, unit, integration, live_acceptance, failure_recovery]
+  high:
+    required_evidence: [static, unit, integration, live_acceptance]
+  medium:
+    required_evidence: [static, unit_or_integration, acceptance_or_ui]
+  low:
+    required_evidence: [static, targeted_validation]
+status_values:
+  - NOT_STARTED
+  - VERIFIED_EXISTING
+  - EXISTING_NEEDS_INTEGRATION
+  - EXISTING_NEEDS_REPAIR
+  - PARTIAL
+  - INTERFACE_ONLY
+  - MISSING_FOUNDATION
+  - MISSING_FEATURE
+  - LIVE_ACCEPTED
+  - EXTERNALLY_BLOCKED
+  - APPROVED_DEFERRED
+  - NOT_APPLICABLE
+completion_statuses: [VERIFIED_EXISTING, LIVE_ACCEPTED, EXTERNALLY_BLOCKED, APPROVED_DEFERRED, NOT_APPLICABLE]

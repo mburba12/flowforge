@@ -1,0 +1,12 @@
+version: 1
+sources:
+  mega_specification:
+    file: specs/source/FlowForge_Mega_Specification_Volume.pdf
+  ultimate_master_specification:
+    file: specs/source/FlowForge_Ultimate_Master_Specification.pdf
+  enterprise_build_bible:
+    file: specs/source/FlowForge_Enterprise_Build_Bible.pdf
+  completion_blueprint:
+    file: specs/source/FlowForge_AI_Completion_and_Deployment_Blueprint.pdf
+  capability_inventory:
+    file_pattern: specs/source/FLOWFORGE_CURRENT_CAPABILITIES_*.txt

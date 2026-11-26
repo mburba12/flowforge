@@ -1,0 +1,58 @@
+version: 1
+module: DAT
+requirements:
+- id: FF-DAT-00001
+  title: integrations and test catalogs.
+  requirement: integrations and test catalogs.
+  module: DAT
+  risk: low
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: integrations and test catalogs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+- id: FF-DAT-00002
+  title: Master architecture, operating model, implementation standards, module catalog,
+    industry packs,
+  requirement: Master architecture, operating model, implementation standards, module
+    catalog, industry packs,
+  module: DAT
+  risk: low
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 1
+    heading: ''
+    source_text: Master architecture, operating model, implementation standards, module
+      catalog, industry packs,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null

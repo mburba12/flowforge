@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "documents": [
+    {
+      "key": "mega_specification",
+      "file": "specs/source/FlowForge_Mega_Specification_Volume.pdf",
+      "pages": 1201,
+      "sha256": "f677f0ccc3580208a551cbb166ddbeec8f4593c3c19a2e36233466c713d13df6",
+      "extracted_file": "specs/extracted/mega_specification.jsonl"
+    },
+    {
+      "key": "ultimate_master_specification",
+      "file": "specs/source/FlowForge_Ultimate_Master_Specification.pdf",
+      "pages": 961,
+      "sha256": "de0f4183ec84da3b5f406b088f78600bafa80efd8b1dc341b26cf12bd74947f2",
+      "extracted_file": "specs/extracted/ultimate_master_specification.jsonl"
+    },
+    {
+      "key": "enterprise_build_bible",
+      "file": "specs/source/FlowForge_Enterprise_Build_Bible.pdf",
+      "pages": 1123,
+      "sha256": "bf466f0b6c81b6995c14c3f05dd3b760546713ff4435a698688aa5c459926b49",
+      "extracted_file": "specs/extracted/enterprise_build_bible.jsonl"
+    }
+  ],
+  "total_pages": 3285,
+  "candidate_count": 83
+}

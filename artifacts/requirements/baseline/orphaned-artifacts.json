@@ -1,0 +1,3678 @@
+{
+  "version": 1,
+  "note": "Manual reverse mapping required after candidate review",
+  "artifacts": [
+    {
+      "path": "src/flowforge/main.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/support_feedback.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/api/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/api/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/core/config.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/core/security.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/core/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/db/base.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/db/session.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/db/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/integration/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/integration/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/integration/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/audit.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/clock.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/errors.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/invitations.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/mfa.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/outbox.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/rbac.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/security.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/sessions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/tenancy.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/workflow.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1a/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/analytics.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/documents.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/integrations.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/notifications.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/operations.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/search.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1b/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/duplicates.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/enums.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/normalization.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2a/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/enums.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/posting.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase2b/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/enums.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/integration.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/integration_models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/integration_routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/matching.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/payment_routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/payment_service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3a/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3b/enums.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3b/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3b/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3b/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3b/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3b/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3b/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3final/reconciliation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3final/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3final/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase3final/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a/enums.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage2/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage2/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage2/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage2/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage2/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage2/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage3/calculator.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage3/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage3/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage3/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage3/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage3/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4a_stage3/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b/calculator.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b_stage2/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b_stage2/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b_stage2/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b_stage2/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b_stage2/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4b_stage2/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/provider.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/provider.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage2/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/catalog.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/provider.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage3/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/catalog.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/provider.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage4/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/catalog.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/provider.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage5/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/catalog.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/provider.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage6/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/catalog.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/provider.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4c_stage7/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/matching.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/normalization.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4d/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4e/engine.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4e/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4e/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4e/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4e/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4e/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4f/governance.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4f/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4f/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4f/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4f/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4g/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4g/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4g/workflow.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4g/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4h/controls.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4h/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4h/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4h/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4i/activation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4i/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4i/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4i/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4j/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4j/release.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4j/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase4j/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5a/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5a/policy.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5a/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5a/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5b/activation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5b/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5b/providers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5b/release.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5b/router.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5b/secrets.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase5b/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/platform/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/platform/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/platform/services.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/platform/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/security_hardening/context.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/security_hardening/database.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/security_hardening/encryption.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/security_hardening/redaction.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/security_hardening/rls.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/security_hardening/storage.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/security_hardening/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/api/routes/auth.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/api/routes/health.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/api/routes/platform.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/api/routes/tenants.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/api/routes/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/aggregations.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/dashboards.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/exports.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/freshness.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/metrics.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/analytics/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/approval_limits.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/audit.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/custom_roles.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/permission_checker.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/policies.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/role_assignments.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/separation_of_duties.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/system_roles.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/authorization/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/azure_blob.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/categories.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/checksums.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/downloads.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/legal_hold.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/malware_scan.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/ocr_handoff.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/permissions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/previews.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/retention.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/signed_urls.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/storage.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/tags.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/uploads.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/versions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/documents/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/consumer.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/dead_letters.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/deliveries.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/idempotency.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/monitoring.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/outbox.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/publisher.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/replay.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/retries.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/schema_registry.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/subscriptions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/webhooks.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/webhook_signing.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/events/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/api_keys.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/email_verification.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/entra_id.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/invitations.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/mfa.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/passwords.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/password_reset.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/permissions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/rate_limits.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/recovery_codes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/refresh_tokens.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/service_accounts.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/sessions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/sso.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/trusted_devices.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/identity/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/azure.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/connection_test.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/connector.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/credentials.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/encryption.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/jobs.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/microsoft365.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/oauth.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/rate_limits.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/retries.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/scheduler.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/secret_rotation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/sync_cursor.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/token_refresh.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/webhooks.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/integrations/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/consent.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/deliveries.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/digests.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/dispatcher.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/email.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/in_app.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/localization.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/preferences.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/retries.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/sms.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/templates.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/notifications/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/backup.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/config_validation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/correlation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/disaster_recovery.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/errors.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/health.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/key_vault.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/liveness.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/logging.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/metrics.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/opentelemetry.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/readiness.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/request_limits.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/restore.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/security_headers.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/tracing.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/operations/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/filters.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/indexer.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/query.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/ranking.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/reindex.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/search/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/clock.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/encryption.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/errors.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/feature_flags.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/ids.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/pagination.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/result.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/serialization.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/unit_of_work.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/validation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/shared/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/admin_boundaries.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/context.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/event_scope.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/isolation_checks.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/job_scope.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/middleware.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/query_scope.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/row_level_security.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/storage_scope.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/tenancy/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/approvals.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/assignments.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/definitions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/delegations.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/escalations.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/events.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/executor.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/history.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/instances.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/models.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/parallel.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/policies.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/reminders.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/repository.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/routes.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/schemas.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/service.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/steps.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/tasks.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/transitions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/validation.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/versions.py",
+      "kind": "backend"
+    },
+    {
+      "path": "src/flowforge/phase1/workflow/__init__.py",
+      "kind": "backend"
+    },
+    {
+      "path": "tests/test_health.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/test_phase1_contract.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/test_phase4_remaining_status.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/test_security.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/integration/test_models_registered.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/integration/test_openapi_integration.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/integration/test_tenant_columns.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/integration/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_audit.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_invitations.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_mfa.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_outbox.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_rbac.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_security.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_sessions.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_tenancy.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/test_workflow.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1a/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1b/test_analytics.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1b/test_documents.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1b/test_integrations.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1b/test_notifications.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1b/test_operations.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1b/test_search.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1b/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2a/test_duplicates.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2a/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2a/test_normalization.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2a/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2a/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2a/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2b/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2b/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2b/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase2b/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/test_final_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/test_integration_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/test_integration_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/test_matching.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3a/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3b/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3b/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3b/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3b/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3final/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3final/test_reconciliation_contract.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase3final/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage2/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage2/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage2/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage2/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage3/test_calculator.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage3/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage3/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4a_stage3/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4b/test_calculator.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4b/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4b/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4b/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4b_stage2/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4b_stage2/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4b_stage2/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c/test_provider.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage2/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage2/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage2/test_provider.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage2/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage3/test_catalog.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage3/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage3/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage3/test_provider.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage3/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage4/test_catalog.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage4/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage4/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage4/test_provider.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage4/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage5/test_catalog.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage5/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage5/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage5/test_provider.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage5/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage6/test_catalog.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage6/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage6/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage6/test_provider.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage6/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage7/test_catalog.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage7/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage7/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage7/test_provider.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4c_stage7/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4d/test_matching.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4d/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4d/test_normalization.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4d/test_openapi.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4d/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4d/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4e/test_engine.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4e/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4e/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4e/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4f/test_governance.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4f/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4f/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4f/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4g/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4g/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4g/test_workflow.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4g/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4h/test_controls.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4h/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4h/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4h/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4i/test_activation.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4i/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4i/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4i/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4j/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4j/test_release.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4j/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase4j/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5a/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5a/test_policy.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5a/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5a/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5b/test_activation.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5b/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5b/test_providers.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5b/test_release.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5b/test_router.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5b/test_secrets.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase5b/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/requirements/test_registry.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/security_hardening/test_security.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_analytics_tenant_filter.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_audit_immutability.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_backup_restore.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_connector_secret_encryption.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_document_storage_isolation.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_invitation_reuse.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_malware_rejection.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_mfa_bypass.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_migration_downgrade.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_migration_upgrade.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_notification_preferences.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_openapi_contract.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_outbox_idempotency.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_ownership_transfer.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_password_reset_security.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_performance_smoke.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_permission_matrix.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_rate_limiting.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_search_tenant_filter.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_security_headers.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_tenant_isolation_matrix.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_token_revocation.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_webhook_signatures.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_workflow_escalation.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/test_workflow_parallelism.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/acceptance/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/test_aggregations.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/test_metrics.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/analytics/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/test_permission_checker.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/test_policies.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/authorization/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/test_azure_blob.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/test_storage.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/documents/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/test_outbox.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/test_publisher.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/events/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/test_email_verification.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/test_passwords.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/identity/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/test_connector.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/test_credentials.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/integrations/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/test_preferences.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/test_templates.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/notifications/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/test_correlation.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/test_errors.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/test_health.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/test_liveness.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/test_logging.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/test_metrics.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/test_readiness.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/operations/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/test_indexer.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/test_query.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/search/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/test_context.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/test_middleware.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/tenancy/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/test_definitions.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/test_models.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/test_repository.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/test_routes.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/test_schemas.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/test_service.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/test_versions.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/phase1/workflow/__init__.py",
+      "kind": "test"
+    },
+    {
+      "path": "web/src/app/layout.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/app-icon.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/AppShell.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/backend-feature-workspace.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/cash-flow-chart.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/dashboard-actions.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/data-table.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/flowforge-ai.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/global-search.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/metric-card.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/module-action-controller.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/ModulePage.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/problem-report-form.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/sidebar.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/status-banner.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/topbar.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/components/workspace-page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/api.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/auth.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/demo-data.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/generated-api-catalog.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/modules.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/navigation.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/session.test.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/session.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/telemetry.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/lib/types.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/ap/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/approvals/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/ar/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/audit/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/banking/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/billing/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/copilot/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/dashboard/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/documents/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/entities/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/feature-coverage/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/finance/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/integrations/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/inventory/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/onboarding/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/orders/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/payroll/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/reconciliation/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/reports/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/settings/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/shipping/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/support/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/tax/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/work-queue/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/workforce/page.tsx",
+      "kind": "frontend"
+    },
+    {
+      "path": "web/src/app/api/flowforge/[...path]/route.ts",
+      "kind": "frontend"
+    },
+    {
+      "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Build-Phase2-Final-Integration.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Build-Phase3-Final.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Build-Phase3A-Final.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Clean-FlowForge-Payroll-Metrics.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Complete-Phase1.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Enable-FlowForge-Clickable-Table-Rows.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Enable-FlowForge-Editable-Security-and-Adaptive-Chart.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Enable-FlowForge-Topbar-Controls.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Fix-FlowForge-Dashboard-Buttons.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Fix-FlowForge-Settings-Actions.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Fix-FlowForge-Workspace-Buttons.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Generate-Phase1-Migrations.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Generate-Tenant-RLS.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-FlowForge-Accurate-Icons.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-FlowForge-AI-Only.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-FlowForge-Complete-API-Package-V2.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-FlowForge-Complete-API-Package.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-FlowForge-Global-Search.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-FlowForge-Inventory-History-V2.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-FlowForge-Problem-Submission.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase1-Total.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase1.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase1A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase1B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase2A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase2B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase3A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase3B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4-Security.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4A-Stage2.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4A-Stage3.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4B-Stage2.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4C-Stage1.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Install-Student-Staging-Profile.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Integrate-Phase1.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Integrate-Phase3A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Invoke-FlowForgeUnifiedBuild.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Package-FlowForge-For-Complete-Build.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Remove-FlowForge-User-API-Docs-Link.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Repair-Phase5B-Bicep.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Complete-Remaining-Phase4.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase1-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase2A-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase2B-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase3-Final-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase3A-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase3A-Final-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase3B-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4A-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4A-Stage2-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4A-Stage3-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4B-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4B-Stage2-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4C-Stage1-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4C-Stage2-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4C-Stage3-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4C-Stage4-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4C-Stage5-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4C-Stage6-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Phase4C-Stage7-Acceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Run-Remaining-Phase4-Build.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Sanitize-FlowForge-Frontend-Encoding.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Seed-Phase1.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Start-FlowForgeLocal.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Stop-FlowForgeLocal.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Test-BackupRestore.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Test-FlowForgeUnifiedAcceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Test-Phase5B-LaunchGates.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Test-TenantIsolation.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Upgrade-FlowForge-Cash-Flow-Chart.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase1-Integration.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase1-Total.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase1.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase1A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase1B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase2A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase2B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase3A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase3B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4-Security.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4A-Stage2.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4A-Stage3.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4B-Stage2.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4C-Stage1.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4C-Stage2.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4C-Stage3.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4C-Stage4.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4C-Stage5.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4C-Stage6.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4C-Stage7.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase4D-Complete.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase5A.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/Verify-Phase5B.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/build_registry.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/crosswalk_repository.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/extract_requirements.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/Invoke-FlowForgeBG00.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/README.md",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/validate_registry.py",
+      "kind": "script"
+    },
+    {
+      "path": "infra/bicep/main.bicep",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "infra/bicep/modules/apps.bicep",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "infra/bicep/modules/data.bicep",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "infra/bicep/modules/identity.bicep",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "infra/bicep/modules/messaging.bicep",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "infra/bicep/modules/network.bicep",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "infra/bicep/modules/observability.bicep",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "infra/unified/local/docker-compose.complete.yml",
+      "kind": "infrastructure"
+    },
+    {
+      "path": "migrations/env.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/0da1ad1a6a23_phase_1_platform_foundation.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/12db53aeac95_complete_phase_3a_procure_to_pay.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/149f3d7edf78_phase_4b_stage_2_filing_remittance.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/3318dcffc3e9_phase_4c_stage_3_multichannel_commerce.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/33cb63422333_phase_4d_canonical_identity_and_lineage.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/3f322c0597b2_phase_4h_enterprise_controls.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/46373839efb2_integrate_phase_1a_and_phase_1b.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/4726038422d0_phase_4s1_authorization_tenant_hardening.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/52bb40857189_phase_4a_stage_2_time_leave_pay_.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/53b65dc8fd4e_complete_phase_2a_enterprise_master_data.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/544fc9f26544_phase_4c_stage_4_logistics_networks.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/62c328ad22f3_phase_5a_product_platform_integration.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/6efb663fb198_integrate_phase_3a_ap_posting.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/6ff07f5a8cbc_phase_4c_stage_5_finance_integrations.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/727bf133d179_phase_4c_stage_6_workforce_integrations.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/77d1cfac3666_phase_4e_reconciliation.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/78899fca05f2_complete_phase_1.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/7a72d6875398_phase_4i_production_activation_controls.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/7b95753c737c_phase_4c_stage_2_payment_connections.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/965aa5c1d146_phase_4b_jurisdiction_payroll_tax_engine.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/a817e268c085_phase_4j_release_candidate.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/c8b3313333b5_phase_4a_stage_3_payroll_calculation_.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/ce4e1a70739f_phase_4f_copilot_documents.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/cfb9d6dfec75_phase_4c_stage_1_connected_banking.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/d7f159a6b264_phase_4c_stage_7_engagement_integrations.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/de2c93b0b9b3_phase_4a_workforce_compensation.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/dee8fe877d63_complete_phase_2b_financial_foundation.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/e2cdf0926072_phase_4g_governed_automation.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/f174aad30e21_phase_5b_production_launch_integration.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/f6d88fb6e3eb_complete_phase_3b_quote_to_cash.py",
+      "kind": "migration"
+    },
+    {
+      "path": "migrations/versions/ff_all_apis_delta_001_complete_platform_schema.py",
+      "kind": "migration"
+    }
+  ]
+}
