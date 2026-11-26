@@ -29,13 +29,7 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
     role = Role(tenant_id=tenant.id, name="Owner", description="Tenant owner")
     db.add(role)
     await db.flush()
-    db.add(
-        UserRole(
-            user_id=user.id,
-            role_id=role.id,
-            tenant_id=tenant.id,
-        )
-    )
+    db.add(UserRole(tenant_id=tenant.id, user_id=user.id, role_id=role.id))
     for code in [
         "tenant.manage",
         "users.manage",
@@ -52,9 +46,9 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
             await db.flush()
         db.add(
             RolePermission(
+                tenant_id=tenant.id,
                 role_id=role.id,
                 permission_id=permission.id,
-                tenant_id=tenant.id,
             )
         )
     await record_change(db, tenant.id, user.id, "created", "tenant", str(tenant.id))
