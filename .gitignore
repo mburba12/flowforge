@@ -61,3 +61,10 @@ var/ff_all_apis_delta_001.sql
 var/generate_one_big_migration.py
 var/audit_one_big_migration.py
 var/complete_api_database_install_report.json
+# FlowForge local runtime artifacts
+var/*.dump
+web/coverage/
+**/__pycache__/
+*.pyc
+web/tsconfig.tsbuildinfo
+openapi.json

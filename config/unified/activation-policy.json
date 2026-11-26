@@ -1,0 +1,13 @@
+{
+  "productionCredentials": false,
+  "providerWrites": false,
+  "paymentExecution": false,
+  "payrollRelease": false,
+  "taxFiling": false,
+  "highRiskAiActions": false,
+  "requiredGates": [
+    "entra_mfa", "step_up", "tenant_isolation", "permission_tests", "audit_tests", "idempotency_tests",
+    "backup_restore", "pitr_restore", "penetration_test", "capacity_test", "provider_sandbox",
+    "webhook_security", "reversal_test", "pilot_acceptance", "security_approval", "privacy_approval"
+  ]
+}
