@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 $Base = "http://127.0.0.1:8000"
 $Slug = "phase2-final-$(Get-Date -Format 'yyyyMMddHHmmss')"
-$Password = "FlowForge-Phase2-Final-2026!Secure"
+$Password = $env:FLOWFORGE_TEST_PASSWORD
 function Pass($Name) { Write-Host "PASSED: $Name" -ForegroundColor Green }
 function Gate($Name, $Action) { Write-Host "RUNNING: $Name" -ForegroundColor Cyan; & $Action; Pass $Name }
 
@@ -56,7 +56,7 @@ Gate "Database-backed separate approver" {
     $approverId = [guid]::NewGuid().ToString()
     $hash = & ".\.venv\Scripts\python.exe" -c "from flowforge.core.security import hash_password; print(hash_password('Approver-2026!Secure'))"
     docker compose exec -T postgres psql -U flowforge -d flowforge -v ON_ERROR_STOP=1 -c "INSERT INTO users (id,tenant_id,email,password_hash,display_name,is_active,is_deleted) VALUES ('$approverId','$tenantId','approver-$Slug@example.com','$hash','Phase 2 Approver',true,false);" | Out-Null
-    $login=@{tenant_slug=$Slug;email="approver-$Slug@example.com";password="Approver-2026!Secure"}|ConvertTo-Json
+    $login=@{tenant_slug=$Slug;email="approver-$Slug@example.com";password = $Password}|ConvertTo-Json
     $a=Invoke-RestMethod -Method Post -Uri "$Base/api/v1/auth/login" -ContentType "application/json" -Body $login
     $script:ApproverHeaders=@{Authorization="Bearer $($a.access_token)"}
 }
