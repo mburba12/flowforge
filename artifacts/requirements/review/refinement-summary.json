@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "atomic_requirements": 83,
+  "parents": 83,
+  "by_module": {
+    "BIL": 1,
+    "COM": 2,
+    "DAT": 2,
+    "FIN": 5,
+    "INT": 3,
+    "PLT": 66,
+    "QMS": 2,
+    "SEC": 1,
+    "SRC": 1
+  },
+  "by_risk": {
+    "critical": 17,
+    "high": 7,
+    "low": 33,
+    "medium": 26
+  },
+  "by_priority": {
+    "enterprise_expansion": 38,
+    "launch": 39,
+    "post_launch": 6
+  },
+  "pending_reviews": 332
+}

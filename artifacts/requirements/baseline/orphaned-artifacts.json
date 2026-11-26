@@ -2355,6 +2355,14 @@
       "kind": "test"
     },
     {
+      "path": "tests/requirements/test_authoritative_registry.py",
+      "kind": "test"
+    },
+    {
+      "path": "tests/requirements/test_refinement.py",
+      "kind": "test"
+    },
+    {
       "path": "tests/requirements/test_registry.py",
       "kind": "test"
     },
@@ -3503,11 +3511,39 @@
       "kind": "script"
     },
     {
+      "path": "scripts/requirements/finalize_review.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/generate_build_queue.py",
+      "kind": "script"
+    },
+    {
       "path": "scripts/requirements/Invoke-FlowForgeBG00.ps1",
       "kind": "script"
     },
     {
+      "path": "scripts/requirements/Invoke-FlowForgeBG00Refinement.ps1",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/Invoke-Repair-BG00Authority.ps1",
+      "kind": "script"
+    },
+    {
       "path": "scripts/requirements/README.md",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/refine_registry.py",
+      "kind": "script"
+    },
+    {
+      "path": "scripts/requirements/validate_bg00_authority.py",
       "kind": "script"
     },
     {

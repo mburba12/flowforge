@@ -1,1196 +1,18 @@
-version: 1
+version: 2
+authority: FlowForge_AI_Completion_and_Deployment_Blueprint.pdf
 requirements:
 - id: FF-PLT-00001
-  title: This specification placeholder expands the FlowForge architecture across
-    entities, APIs, schemas,
-  requirement: This specification placeholder expands the FlowForge architecture across
-    entities, APIs, schemas,
+  title: FlowForge_Mega_Specification_Volume.pdf
+  requirement: FlowForge_Mega_Specification_Volume.pdf
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: This specification placeholder expands the FlowForge architecture
-      across entities, APIs, schemas,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00002
-  title: workflows, permissions, integrations and test catalogs.
-  requirement: workflows, permissions, integrations and test catalogs.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: workflows, permissions, integrations and test catalogs.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00003
-  title: A complete real implementation would
-  requirement: A complete real implementation would
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: A complete real implementation would
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00004
-  title: require authoring each artifact in detail.
-  requirement: require authoring each artifact in detail.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: require authoring each artifact in detail.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00005
-  title: This specification placeholder expands the FlowForge
-  requirement: This specification placeholder expands the FlowForge
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: This specification placeholder expands the FlowForge
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00006
-  title: architecture across entities, APIs, schemas, workflows, permissions, integrations
-    and test catalogs.
-  requirement: architecture across entities, APIs, schemas, workflows, permissions,
-    integrations and test catalogs.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: architecture across entities, APIs, schemas, workflows, permissions,
-      integrations and test catalogs.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00007
-  title: A complete real implementation would require authoring each artifact in detail.
-  requirement: A complete real implementation would require authoring each artifact
-    in detail.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: A complete real implementation would require authoring each artifact
-      in detail.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00008
-  title: placeholder expands the FlowForge architecture across entities, APIs, schemas,
-    workflows,
-  requirement: placeholder expands the FlowForge architecture across entities, APIs,
-    schemas, workflows,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: placeholder expands the FlowForge architecture across entities, APIs,
-      schemas, workflows,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00009
-  title: permissions, integrations and test catalogs.
-  requirement: permissions, integrations and test catalogs.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: permissions, integrations and test catalogs.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00010
-  title: A complete real implementation would require
-  requirement: A complete real implementation would require
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: A complete real implementation would require
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00011
-  title: authoring each artifact in detail.
-  requirement: authoring each artifact in detail.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: authoring each artifact in detail.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00012
-  title: This specification placeholder expands the FlowForge architecture
-  requirement: This specification placeholder expands the FlowForge architecture
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: This specification placeholder expands the FlowForge architecture
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00013
-  title: across entities, APIs, schemas, workflows, permissions, integrations and
-    test catalogs.
-  requirement: across entities, APIs, schemas, workflows, permissions, integrations
-    and test catalogs.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: across entities, APIs, schemas, workflows, permissions, integrations
-      and test catalogs.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00014
-  title: real implementation would require authoring each artifact in detail.
-  requirement: real implementation would require authoring each artifact in detail.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: real implementation would require authoring each artifact in detail.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00015
-  title: This specification placeholder
-  requirement: This specification placeholder
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: This specification placeholder
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00016
-  title: expands the FlowForge architecture across entities, APIs, schemas, workflows,
-    permissions,
-  requirement: expands the FlowForge architecture across entities, APIs, schemas,
-    workflows, permissions,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: expands the FlowForge architecture across entities, APIs, schemas,
-      workflows, permissions,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-DAT-00001
-  title: integrations and test catalogs.
-  requirement: integrations and test catalogs.
-  module: DAT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: integrations and test catalogs.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00017
-  title: A complete real implementation would require authoring each artifact
-  requirement: A complete real implementation would require authoring each artifact
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: A complete real implementation would require authoring each artifact
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00018
-  title: This specification placeholder expands the FlowForge architecture across
-    entities, APIs,
-  requirement: This specification placeholder expands the FlowForge architecture across
-    entities, APIs,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: This specification placeholder expands the FlowForge architecture
-      across entities, APIs,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00019
-  title: schemas, workflows, permissions, integrations and test catalogs.
-  requirement: schemas, workflows, permissions, integrations and test catalogs.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: schemas, workflows, permissions, integrations and test catalogs.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00020
-  title: A complete real implementation
-  requirement: A complete real implementation
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: A complete real implementation
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00021
-  title: would require authoring each artifact in detail.
-  requirement: would require authoring each artifact in detail.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: would require authoring each artifact in detail.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00022
-  title: This specification placeholder expands the
-  requirement: This specification placeholder expands the
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: This specification placeholder expands the
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00023
-  title: FlowForge architecture across entities, APIs, schemas, workflows, permissions,
-    integrations and
-  requirement: FlowForge architecture across entities, APIs, schemas, workflows, permissions,
-    integrations and
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: FlowForge architecture across entities, APIs, schemas, workflows,
-      permissions, integrations and
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00024
-  title: specification placeholder expands the FlowForge architecture across entities,
-    APIs, schemas,
-  requirement: specification placeholder expands the FlowForge architecture across
-    entities, APIs, schemas,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: mega_specification
-    page_or_section: 2
-    heading: Section 1
-    source_text: specification placeholder expands the FlowForge architecture across
-      entities, APIs, schemas,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00025
-  title: This chapter defines architecture standards, entities, schemas, endpoint
-    patterns, workflow
-  requirement: This chapter defines architecture standards, entities, schemas, endpoint
-    patterns, workflow
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: This chapter defines architecture standards, entities, schemas, endpoint
-      patterns, workflow
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00026
-  title: requirements, permission requirements, integration contracts, tenant boundaries,
-    validation rules,
-  requirement: requirements, permission requirements, integration contracts, tenant
-    boundaries, validation rules,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: requirements, permission requirements, integration contracts, tenant
-      boundaries, validation rules,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00027
-  title: audit controls, reporting requirements, testing expectations, operational
-    controls and
-  requirement: audit controls, reporting requirements, testing expectations, operational
-    controls and
-  module: PLT
-  risk: high
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: audit controls, reporting requirements, testing expectations, operational
-      controls and
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00028
-  title: implementation considerations.
-  requirement: implementation considerations.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: implementation considerations.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00029
-  title: Representative entities include Tenant, User, Role, Permission,
-  requirement: Representative entities include Tenant, User, Role, Permission,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: Representative entities include Tenant, User, Role, Permission,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00030
-  title: AuditEvent, WorkflowInstance, Document, Connector, Customer, Vendor, Order,
-    Invoice,
-  requirement: AuditEvent, WorkflowInstance, Document, Connector, Customer, Vendor,
-    Order, Invoice,
-  module: PLT
-  risk: high
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: AuditEvent, WorkflowInstance, Document, Connector, Customer, Vendor,
-      Order, Invoice,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-COM-00001
-  title: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
-    CAPA and
-  requirement: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
-    CAPA and
-  module: COM
-  risk: critical
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
-      CAPA and
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-SRC-00001
-  title: Representative API patterns include CRUD, search, bulk operations, approval
-  requirement: Representative API patterns include CRUD, search, bulk operations,
-    approval
-  module: SRC
-  risk: high
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: Representative API patterns include CRUD, search, bulk operations,
-      approval
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-BIL-00001
-  title: actions, reporting actions and webhook subscriptions.
-  requirement: actions, reporting actions and webhook subscriptions.
-  module: BIL
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: actions, reporting actions and webhook subscriptions.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-INT-00001
-  title: Representative tests include unit, integration,
-  requirement: Representative tests include unit, integration,
-  module: INT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: Representative tests include unit, integration,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00031
-  title: security, tenant isolation, audit verification, workflow validation, performance,
-    recovery and
-  requirement: security, tenant isolation, audit verification, workflow validation,
-    performance, recovery and
-  module: PLT
-  risk: critical
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: security, tenant isolation, audit verification, workflow validation,
-      performance, recovery and
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00032
-  title: This chapter defines architecture standards, entities, schemas, endpoint
-  requirement: This chapter defines architecture standards, entities, schemas, endpoint
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: This chapter defines architecture standards, entities, schemas, endpoint
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00033
-  title: patterns, workflow requirements, permission requirements, integration contracts,
-    tenant
-  requirement: patterns, workflow requirements, permission requirements, integration
-    contracts, tenant
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: patterns, workflow requirements, permission requirements, integration
-      contracts, tenant
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00034
-  title: boundaries, validation rules, audit controls, reporting requirements, testing
-    expectations,
-  requirement: boundaries, validation rules, audit controls, reporting requirements,
-    testing expectations,
-  module: PLT
-  risk: high
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: boundaries, validation rules, audit controls, reporting requirements,
-      testing expectations,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00035
-  title: operational controls and implementation considerations.
-  requirement: operational controls and implementation considerations.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: operational controls and implementation considerations.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00036
-  title: Representative entities include Tenant,
-  requirement: Representative entities include Tenant,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: Representative entities include Tenant,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00037
-  title: User, Role, Permission, AuditEvent, WorkflowInstance, Document, Connector,
-    Customer, Vendor,
-  requirement: User, Role, Permission, AuditEvent, WorkflowInstance, Document, Connector,
-    Customer, Vendor,
-  module: PLT
-  risk: high
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: User, Role, Permission, AuditEvent, WorkflowInstance, Document, Connector,
-      Customer, Vendor,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-COM-00002
-  title: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project, Asset,
-    WorkOrder, CAPA
-  requirement: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project,
-    Asset, WorkOrder, CAPA
-  module: COM
-  risk: critical
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: ultimate_master_specification
-    page_or_section: 2
-    heading: 'Chapter 1: Vision'
-    source_text: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project,
-      Asset, WorkOrder, CAPA
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-DAT-00002
-  title: Master architecture, operating model, implementation standards, module catalog,
-    industry packs,
-  requirement: Master architecture, operating model, implementation standards, module
-    catalog, industry packs,
-  module: DAT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
+  - document: completion_blueprint
     page_or_section: 1
     heading: ''
-    source_text: Master architecture, operating model, implementation standards, module
-      catalog, industry packs,
+    source_text: FlowForge_Mega_Specification_Volume.pdf
   dependencies: []
   implementation:
     backend: []
@@ -1202,21 +24,894 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00002
+  title: FlowForge_Ultimate_Master_Specification.pdf
+  requirement: FlowForge_Ultimate_Master_Specification.pdf
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 1
+    heading: ''
+    source_text: FlowForge_Ultimate_Master_Specification.pdf
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00003
+  title: FlowForge_Enterprise_Build_Bible.pdf
+  requirement: FlowForge_Enterprise_Build_Bible.pdf
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 1
+    heading: ''
+    source_text: FlowForge_Enterprise_Build_Bible.pdf
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00004
+  title: FLOWFORGE_CURRENT_CAPABILITIES_20261126-141832.txt
+  requirement: FLOWFORGE_CURRENT_CAPABILITIES_20261126-141832.txt
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 1
+    heading: ''
+    source_text: FLOWFORGE_CURRENT_CAPABILITIES_20261126-141832.txt
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00005
+  title: 'operating_rule: REUSE > REPAIR > COMPLETE > BUILD_NEW'
+  requirement: 'operating_rule: REUSE > REPAIR > COMPLETE > BUILD_NEW'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 1
+    heading: ''
+    source_text: 'operating_rule: REUSE > REPAIR > COMPLETE > BUILD_NEW'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00006
+  title: ordering, exit criteria, build gates, and final acceptance conditions are
+    intended to be machine-ext
+  requirement: ordering, exit criteria, build gates, and final acceptance conditions
+    are intended to be machine-extractable
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 1
+    heading: ''
+    source_text: ordering, exit criteria, build gates, and final acceptance conditions
+      are intended to be machine-extractable
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00007
+  title: 'branch: post-acceptance-work'
+  requirement: 'branch: post-acceptance-work'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 2
+    heading: 0. Authoritative baseline
+    source_text: 'branch: post-acceptance-work'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00008
+  title: Status Meaning Counts as complete?
+  requirement: Status Meaning Counts as complete?
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 2
+    heading: 0.1 Status vocabulary
+    source_text: Status Meaning Counts as complete?
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00009
+  title: "\x7F Never create a parallel foundation when an existing system can be repaired\
+    \ or extended"
+  requirement: "\x7F Never create a parallel foundation when an existing system can\
+    \ be repaired or extended"
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 2
+    heading: 0.2 Execution constraints
+    source_text: "\x7F Never create a parallel foundation when an existing system\
+      \ can be repaired or extended"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00010
+  title: "\x7F Critical invariants are checked during construction; comprehensive\
+    \ acceptance is deferred until th"
+  requirement: "\x7F Critical invariants are checked during construction; comprehensive\
+    \ acceptance is deferred until the assembled build"
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 2
+    heading: 0.2 Execution constraints
+    source_text: "\x7F Critical invariants are checked during construction; comprehensive\
+      \ acceptance is deferred until the assembled build"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00011
+  title: 'Migration strategy: retain historical phase packages during construction.
+    Introduce stable domain fa'
+  requirement: 'Migration strategy: retain historical phase packages during construction.
+    Introduce stable domain facades and compatibility imports'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 3
+    heading: 1. Final repository architecture
+    source_text: 'Migration strategy: retain historical phase packages during construction.
+      Introduce stable domain facades and compatibility imports'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00001
+  title: 'document: <source_pdf>'
+  requirement: 'document: <source_pdf>'
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 3
+    heading: 2.1 Atomic requirement schema
+    source_text: 'document: <source_pdf>'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00002
+  title: "\x7F Every existing table, API, page, test, script, and provider adapter\
+    \ maps to one or more requiremen"
+  requirement: "\x7F Every existing table, API, page, test, script, and provider adapter\
+    \ maps to one or more requirements or is classified obsolete"
+  module: DAT
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 4
+    heading: ''
+    source_text: "\x7F Every existing table, API, page, test, script, and provider\
+      \ adapter maps to one or more requirements or is classified obsolete"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00012
+  title: 3. Build groups and current position
+  requirement: 3. Build groups and current position
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: 3. Build groups and current position
+    source_text: 3. Build groups and current position
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00013
+  title: ID Build group Current State Target
+  requirement: ID Build group Current State Target
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: 3. Build groups and current position
+    source_text: ID Build group Current State Target
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00003
+  title: ~5% NEXT Create authoritative backlog and evidence graph
+  requirement: ~5% NEXT Create authoritative backlog and evidence graph
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-00 Requirement registry and code
+    source_text: ~5% NEXT Create authoritative backlog and evidence graph
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00014
+  title: BG-01 Platform control plane ~78% PARTIAL Complete lifecycle, scoped auth,
+    workflow, documents, even
+  requirement: BG-01 Platform control plane ~78% PARTIAL Complete lifecycle, scoped
+    auth, workflow, documents, events, jobs
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-01 Platform control plane ~78% PARTIAL Complete lifecycle, scoped
+      auth, workflow, documents, events, jobs
+    source_text: BG-01 Platform control plane ~78% PARTIAL Complete lifecycle, scoped
+      auth, workflow, documents, events, jobs
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00004
+  title: BG-02 Data platform and master data ~52% PARTIAL Complete APIs, stewardship,
+    merge, lineage, quality
+  requirement: BG-02 Data platform and master data ~52% PARTIAL Complete APIs, stewardship,
+    merge, lineage, quality, governance
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-02 Data platform and master data ~52% PARTIAL Complete APIs, stewardship,
+      merge, lineage, quality, governance
+    source_text: BG-02 Data platform and master data ~52% PARTIAL Complete APIs, stewardship,
+      merge, lineage, quality, governance
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-FIN-00001
+  title: BG-03 Complete finance GL ~80%; wider
+  requirement: BG-03 Complete finance GL ~80%; wider
+  module: FIN
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-03 Complete finance GL ~80%; wider
+    source_text: BG-03 Complete finance GL ~80%; wider
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-FIN-00002
+  title: PARTIAL Complete AP, AR, banking, close, consolidations, budgets
+  requirement: PARTIAL Complete AP, AR, banking, close, consolidations, budgets
+  module: FIN
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-03 Complete finance GL ~80%; wider
+    source_text: PARTIAL Complete AP, AR, banking, close, consolidations, budgets
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PRT-00001
+  title: BG-04 CRM, sales, portals ~36% PARTIAL Build lead/opportunity/activity/portal
+    behavior and quote-to-
+  requirement: BG-04 CRM, sales, portals ~36% PARTIAL Build lead/opportunity/activity/portal
+    behavior and quote-to-order
+  module: PRT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-04 CRM, sales, portals ~36% PARTIAL Build lead/opportunity/activity/portal
+      behavior and quote-to-order
+    source_text: BG-04 CRM, sales, portals ~36% PARTIAL Build lead/opportunity/activity/portal
+      behavior and quote-to-order
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-COM-00001
+  title: BG-05 Commerce, supply chain, shipping ~50% PARTIAL Complete procurement,
+    inventory, fulfillment, lo
+  requirement: BG-05 Commerce, supply chain, shipping ~50% PARTIAL Complete procurement,
+    inventory, fulfillment, logistics, reconciliation
+  module: COM
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-05 Commerce, supply chain, shipping ~50% PARTIAL Complete procurement,
+      inventory, fulfillment, logistics, reconciliation
+    source_text: BG-05 Commerce, supply chain, shipping ~50% PARTIAL Complete procurement,
+      inventory, fulfillment, logistics, reconciliation
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-WFM-00001
+  title: BG-06 Workforce and talent ~46% PARTIAL Complete recruiting, performance,
+    learning, benefits, retire
+  requirement: BG-06 Workforce and talent ~46% PARTIAL Complete recruiting, performance,
+    learning, benefits, retirement
+  module: WFM
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-06 Workforce and talent ~46% PARTIAL Complete recruiting, performance,
+      learning, benefits, retirement
+    source_text: BG-06 Workforce and talent ~46% PARTIAL Complete recruiting, performance,
+      learning, benefits, retirement
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-INT-00001
+  title: BG-07 Payroll and tax ~53% PARTIAL Complete lifecycle, provider migration,
+    rules, liabilities, retur
+  requirement: BG-07 Payroll and tax ~53% PARTIAL Complete lifecycle, provider migration,
+    rules, liabilities, returns
+  module: INT
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-07 Payroll and tax ~53% PARTIAL Complete lifecycle, provider migration,
+      rules, liabilities, returns
+    source_text: BG-07 Payroll and tax ~53% PARTIAL Complete lifecycle, provider migration,
+      rules, liabilities, returns
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLM-00001
+  title: BG-09 Manufacturing, PLM, MRP, quality 20-25% EARLY Largest concentrated
+    domain build
+  requirement: BG-09 Manufacturing, PLM, MRP, quality 20-25% EARLY Largest concentrated
+    domain build
+  module: PLM
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-09 Manufacturing, PLM, MRP, quality 20-25% EARLY Largest concentrated
+      domain build
+    source_text: BG-09 Manufacturing, PLM, MRP, quality 20-25% EARLY Largest concentrated
+      domain build
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PRT-00002
+  title: BG-10 Reporting, search, portals, Copilot 20-50% PARTIAL Complete governed
+    metrics, portals, grounde
+  requirement: BG-10 Reporting, search, portals, Copilot 20-50% PARTIAL Complete governed
+    metrics, portals, grounded AI, evaluations
+  module: PRT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-10 Reporting, search, portals, Copilot 20-50% PARTIAL Complete governed
+      metrics, portals, grounded AI, evaluations
+    source_text: BG-10 Reporting, search, portals, Copilot 20-50% PARTIAL Complete
+      governed metrics, portals, grounded AI, evaluations
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-INT-00002
+  title: BG-11 Integrations and provider activation ~37%; prod <10% EARLY Implement
+    adapters and sandbox cert
+  requirement: BG-11 Integrations and provider activation ~37%; prod <10% EARLY Implement
+    adapters and sandbox certification
+  module: INT
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-11 Integrations and provider activation ~37%; prod <10% EARLY Implement
+      adapters and sandbox certification
+    source_text: BG-11 Integrations and provider activation ~37%; prod <10% EARLY
+      Implement adapters and sandbox certification
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00015
+  title: BG-12 Frontend operational depth ~15% EARLY Convert workspace shells into
+    full transaction workflows
+  requirement: BG-12 Frontend operational depth ~15% EARLY Convert workspace shells
+    into full transaction workflows
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-12 Frontend operational depth ~15% EARLY Convert workspace shells
+      into full transaction workflows
+    source_text: BG-12 Frontend operational depth ~15% EARLY Convert workspace shells
+      into full transaction workflows
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
 - id: FF-SEC-00001
-  title: security model, governance model and build roadmap.
-  requirement: security model, governance model and build roadmap.
+  title: 'BG-13 Azure, security, recovery ~30% EARLY Deploy and prove production topology,
+    restore, rollback, '
+  requirement: BG-13 Azure, security, recovery ~30% EARLY Deploy and prove production
+    topology, restore, rollback, security
   module: SEC
   risk: critical
-  required_for: enterprise_expansion
+  required_for: launch
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 1
-    heading: ''
-    source_text: security model, governance model and build roadmap.
+  - document: completion_blueprint
+    page_or_section: 5
+    heading: BG-13 Azure, security, recovery ~30% EARLY Deploy and prove production
+      topology, restore, rollback, security
+    source_text: BG-13 Azure, security, recovery ~30% EARLY Deploy and prove production
+      topology, restore, rollback, security
   dependencies: []
   implementation:
     backend: []
@@ -1228,22 +923,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00038
-  title: FlowForge is a tenant-isolated, module-driven business operating platform.
-  requirement: FlowForge is a tenant-isolated, module-driven business operating platform.
-  module: PLT
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00005
+  title: Required build scope
+  requirement: Required build scope
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: FlowForge is a tenant-isolated, module-driven business operating
-      platform.
+  - document: completion_blueprint
+    page_or_section: 6
+    heading: 'BG-00: Requirement Registry and Repository Crosswalk'
+    source_text: Required build scope
   dependencies: []
   implementation:
     backend: []
@@ -1255,21 +953,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-QMS-00001
-  title: Every capability is built
-  requirement: Every capability is built
-  module: QMS
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00006
+  title: "\x7F Extract all atomic requirements from three PDFs"
+  requirement: "\x7F Extract all atomic requirements from three PDFs"
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: Every capability is built
+  - document: completion_blueprint
+    page_or_section: 6
+    heading: 'BG-00: Requirement Registry and Repository Crosswalk'
+    source_text: "\x7F Extract all atomic requirements from three PDFs"
   dependencies: []
   implementation:
     backend: []
@@ -1281,24 +983,27 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00039
-  title: on shared platform services including security, audit, workflow, events,
-    documents and integrations.
-  requirement: on shared platform services including security, audit, workflow, events,
-    documents and integrations.
-  module: PLT
-  risk: critical
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00007
+  title: "\x7F Map 561 tables, 271 models, 145 OpenAPI paths, 26 pages, 280 tests"
+  requirement: "\x7F Map 561 tables, 271 models, 145 OpenAPI paths, 26 pages, 280\
+    \ tests"
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: on shared platform services including security, audit, workflow,
-      events, documents and integrations.
+  - document: completion_blueprint
+    page_or_section: 6
+    heading: 'BG-00: Requirement Registry and Repository Crosswalk'
+    source_text: "\x7F Map 561 tables, 271 models, 145 OpenAPI paths, 26 pages, 280\
+      \ tests"
   dependencies: []
   implementation:
     backend: []
@@ -1310,24 +1015,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00040
-  title: Each chapter defines design goals, data ownership, permissions, workflows,
-    reporting
-  requirement: Each chapter defines design goals, data ownership, permissions, workflows,
-    reporting
-  module: PLT
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00008
+  title: "\x7F Create dependency graph and risk-based evidence policy"
+  requirement: "\x7F Create dependency graph and risk-based evidence policy"
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: Each chapter defines design goals, data ownership, permissions, workflows,
-      reporting
+  - document: completion_blueprint
+    page_or_section: 6
+    heading: 'BG-00: Requirement Registry and Repository Crosswalk'
+    source_text: "\x7F Create dependency graph and risk-based evidence policy"
   dependencies: []
   implementation:
     backend: []
@@ -1339,24 +1045,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-INT-00002
-  title: requirements, integration points, dependencies, operational controls, scalability
-    considerations and
-  requirement: requirements, integration points, dependencies, operational controls,
-    scalability considerations and
-  module: INT
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00009
+  title: "\x7F Generate machine-readable missing-work backlog"
+  requirement: "\x7F Generate machine-readable missing-work backlog"
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: requirements, integration points, dependencies, operational controls,
-      scalability considerations and
+  - document: completion_blueprint
+    page_or_section: 6
+    heading: 'BG-00: Requirement Registry and Repository Crosswalk'
+    source_text: "\x7F Generate machine-readable missing-work backlog"
   dependencies: []
   implementation:
     backend: []
@@ -1368,21 +1075,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-FIN-00001
-  title: The architecture is designed to support banks, distributors,
-  requirement: The architecture is designed to support banks, distributors,
-  module: FIN
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00010
+  title: Minimal build-time gates
+  requirement: Minimal build-time gates
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: The architecture is designed to support banks, distributors,
+  - document: completion_blueprint
+    page_or_section: 6
+    heading: 'BG-00: Requirement Registry and Repository Crosswalk'
+    source_text: Minimal build-time gates
   dependencies: []
   implementation:
     backend: []
@@ -1394,24 +1105,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00041
-  title: manufacturers, medical device OEMs, professional services companies, construction
-    firms and
-  requirement: manufacturers, medical device OEMs, professional services companies,
-    construction firms and
-  module: PLT
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00011
+  title: Execution record schema
+  requirement: Execution record schema
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: manufacturers, medical device OEMs, professional services companies,
-      construction firms and
+  - document: completion_blueprint
+    page_or_section: 6
+    heading: 'BG-00: Requirement Registry and Repository Crosswalk'
+    source_text: Execution record schema
   dependencies: []
   implementation:
     backend: []
@@ -1423,21 +1135,27 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00042
-  title: other industries through modular activation and industry packs.
-  requirement: other industries through modular activation and industry packs.
-  module: PLT
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SUP-00001
+  title: "\x7F Events, outbox, jobs, scheduler, notifications, webhooks, support access"
+  requirement: "\x7F Events, outbox, jobs, scheduler, notifications, webhooks, support\
+    \ access"
+  module: SUP
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: other industries through modular activation and industry packs.
+  - document: completion_blueprint
+    page_or_section: 7
+    heading: 'BG-01: Shared Platform Control Plane'
+    source_text: "\x7F Events, outbox, jobs, scheduler, notifications, webhooks, support\
+      \ access"
   dependencies: []
   implementation:
     backend: []
@@ -1449,21 +1167,28 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00043
-  title: FlowForge is a tenant-isolated,
-  requirement: FlowForge is a tenant-isolated,
-  module: PLT
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00012
+  title: "\x7F Data quality, classification, catalog, warehouse/lake export contracts,\
+    \ search indexing"
+  requirement: "\x7F Data quality, classification, catalog, warehouse/lake export\
+    \ contracts, search indexing"
+  module: DAT
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: 'Chapter 1: Executive Summary'
-    source_text: FlowForge is a tenant-isolated,
+  - document: completion_blueprint
+    page_or_section: 8
+    heading: 'BG-02: Data Platform and Enterprise Master Data'
+    source_text: "\x7F Data quality, classification, catalog, warehouse/lake export\
+      \ contracts, search indexing"
   dependencies: []
   implementation:
     backend: []
@@ -1475,340 +1200,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00044
-  title: including security, audit, workflow, events, documents and integrations.
-  requirement: including security, audit, workflow, events, documents and integrations.
-  module: PLT
-  risk: critical
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: including security, audit, workflow, events, documents and integrations.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00045
-  title: design goals, data ownership, permissions, workflows, reporting requirements,
-    integration points,
-  requirement: design goals, data ownership, permissions, workflows, reporting requirements,
-    integration points,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: design goals, data ownership, permissions, workflows, reporting requirements,
-      integration points,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00046
-  title: dependencies, operational controls, scalability considerations and compliance
-    requirements.
-  requirement: dependencies, operational controls, scalability considerations and
-    compliance requirements.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: dependencies, operational controls, scalability considerations and
-      compliance requirements.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-FIN-00002
-  title: architecture is designed to support banks, distributors, manufacturers, medical
-    device OEMs,
-  requirement: architecture is designed to support banks, distributors, manufacturers,
-    medical device OEMs,
-  module: FIN
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: architecture is designed to support banks, distributors, manufacturers,
-      medical device OEMs,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00047
-  title: professional services companies, construction firms and other industries
-    through modular activation
-  requirement: professional services companies, construction firms and other industries
-    through modular activation
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: professional services companies, construction firms and other industries
-      through modular activation
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00048
-  title: Every capability is built on shared platform services including security,
-    audit, workflow, events,
-  requirement: Every capability is built on shared platform services including security,
-    audit, workflow, events,
-  module: PLT
-  risk: critical
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: Every capability is built on shared platform services including security,
-      audit, workflow, events,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00049
-  title: documents and integrations.
-  requirement: documents and integrations.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: documents and integrations.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00050
-  title: Each chapter defines design goals, data ownership, permissions,
-  requirement: Each chapter defines design goals, data ownership, permissions,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: Each chapter defines design goals, data ownership, permissions,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00051
-  title: workflows, reporting requirements, integration points, dependencies, operational
-    controls,
-  requirement: workflows, reporting requirements, integration points, dependencies,
-    operational controls,
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: workflows, reporting requirements, integration points, dependencies,
-      operational controls,
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00052
-  title: scalability considerations and compliance requirements.
-  requirement: scalability considerations and compliance requirements.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: scalability considerations and compliance requirements.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00053
-  title: The architecture is designed to support
-  requirement: The architecture is designed to support
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: The architecture is designed to support
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
 - id: FF-FIN-00003
-  title: banks, distributors, manufacturers, medical device OEMs, professional services
-    companies,
-  requirement: banks, distributors, manufacturers, medical device OEMs, professional
-    services companies,
+  title: 'BG-03: Complete Financial System'
+  requirement: 'BG-03: Complete Financial System'
   module: FIN
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: banks, distributors, manufacturers, medical device OEMs, professional
-      services companies,
+  - document: completion_blueprint
+    page_or_section: 9
+    heading: 'BG-03: Complete Financial System'
+    source_text: 'BG-03: Complete Financial System'
   dependencies: []
   implementation:
     backend: []
@@ -1820,25 +1230,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00054
-  title: construction firms and other industries through modular activation and industry
-    packs.
-  requirement: construction firms and other industries through modular activation
-    and industry packs.
-  module: PLT
-  risk: low
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-AST-00001
+  title: "\x7F Period close/reopen, fixed assets, project accounting"
+  requirement: "\x7F Period close/reopen, fixed assets, project accounting"
+  module: AST
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: construction firms and other industries through modular activation
-      and industry packs.
+  - document: completion_blueprint
+    page_or_section: 9
+    heading: 'BG-03: Complete Financial System'
+    source_text: "\x7F Period close/reopen, fixed assets, project accounting"
   dependencies: []
   implementation:
     backend: []
@@ -1850,139 +1260,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00055
-  title: a tenant-isolated, module-driven business operating platform.
-  requirement: a tenant-isolated, module-driven business operating platform.
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: a tenant-isolated, module-driven business operating platform.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-QMS-00002
-  title: Every capability is built on shared
-  requirement: Every capability is built on shared
-  module: QMS
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: Every capability is built on shared
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00056
-  title: platform services including security, audit, workflow, events, documents
-    and integrations.
-  requirement: platform services including security, audit, workflow, events, documents
-    and integrations.
-  module: PLT
-  risk: critical
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: module-driven business operating platform. Every capability is built
-      on shared platform services
-    source_text: platform services including security, audit, workflow, events, documents
-      and integrations.
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-INT-00003
-  title: integration points, dependencies, operational controls, scalability considerations
-    and compliance
-  requirement: integration points, dependencies, operational controls, scalability
-    considerations and compliance
-  module: INT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: integration points, dependencies, operational controls, scalability
-      considerations and compliance
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
 - id: FF-FIN-00004
-  title: The architecture is designed to support banks, distributors, manufacturers,
-    medical
-  requirement: The architecture is designed to support banks, distributors, manufacturers,
-    medical
+  title: "\x7F Subledgers reconcile to GL"
+  requirement: "\x7F Subledgers reconcile to GL"
   module: FIN
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: The architecture is designed to support banks, distributors, manufacturers,
-      medical
+  - document: completion_blueprint
+    page_or_section: 9
+    heading: 'BG-03: Complete Financial System'
+    source_text: "\x7F Subledgers reconcile to GL"
   dependencies: []
   implementation:
     backend: []
@@ -1994,25 +1290,115 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00057
-  title: device OEMs, professional services companies, construction firms and other
-    industries through
-  requirement: device OEMs, professional services companies, construction firms and
-    other industries through
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-INT-00003
+  title: "\x7F Provider migration, history import, parallel comparison, cutover/rollback"
+  requirement: "\x7F Provider migration, history import, parallel comparison, cutover/rollback"
+  module: INT
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 13
+    heading: 'BG-07: Payroll and Tax'
+    source_text: "\x7F Provider migration, history import, parallel comparison, cutover/rollback"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLM-00002
+  title: "\x7F WIP/inventory reconcile"
+  requirement: "\x7F WIP/inventory reconcile"
+  module: PLM
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 15
+    heading: 'BG-09: Manufacturing, PLM, MRP and Quality'
+    source_text: "\x7F WIP/inventory reconcile"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SRC-00001
+  title: "\x7F Reports reconcile"
+  requirement: "\x7F Reports reconcile"
+  module: SRC
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 16
+    heading: 'BG-10: Reporting, Search, Portals and Copilot'
+    source_text: "\x7F Reports reconcile"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00016
+  title: "\x7F Accessibility and complete Playwright business scenarios"
+  requirement: "\x7F Accessibility and complete Playwright business scenarios"
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: device OEMs, professional services companies, construction firms
-      and other industries through
+  - document: completion_blueprint
+    page_or_section: 18
+    heading: 'BG-12: Frontend Operational Completion'
+    source_text: "\x7F Accessibility and complete Playwright business scenarios"
   dependencies: []
   implementation:
     backend: []
@@ -2024,22 +1410,148 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00058
-  title: modular activation and industry packs.
-  requirement: modular activation and industry packs.
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SEC-00002
+  title: "\x7F Bicep for Container Apps, PostgreSQL, Blob, Service Bus, Key Vault,\
+    \ ACR, Entra, Monitor"
+  requirement: "\x7F Bicep for Container Apps, PostgreSQL, Blob, Service Bus, Key\
+    \ Vault, ACR, Entra, Monitor"
+  module: SEC
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 19
+    heading: 'BG-13: Azure, Security and Recovery'
+    source_text: "\x7F Bicep for Container Apps, PostgreSQL, Blob, Service Bus, Key\
+      \ Vault, ACR, Entra, Monitor"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SEC-00003
+  title: "\x7F Backup, point-in-time recovery, restore and DR rehearsal"
+  requirement: "\x7F Backup, point-in-time recovery, restore and DR rehearsal"
+  module: SEC
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 19
+    heading: 'BG-13: Azure, Security and Recovery'
+    source_text: "\x7F Backup, point-in-time recovery, restore and DR rehearsal"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SEC-00004
+  title: "\x7F Restore and rollback pass"
+  requirement: "\x7F Restore and rollback pass"
+  module: SEC
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 19
+    heading: 'BG-13: Azure, Security and Recovery'
+    source_text: "\x7F Restore and rollback pass"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-OPS-00001
+  title: "\x7F Backup/restore and deployment rollback"
+  requirement: "\x7F Backup/restore and deployment rollback"
+  module: OPS
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 20
+    heading: 'BG-14: Comprehensive Acceptance and Feature Certification'
+    source_text: "\x7F Backup/restore and deployment rollback"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00017
+  title: 4. Minimal test policy during construction
+  requirement: 4. Minimal test policy during construction
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: modular activation and industry packs.
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 4. Minimal test policy during construction
+    source_text: 4. Minimal test policy during construction
   dependencies: []
   implementation:
     backend: []
@@ -2051,52 +1563,28 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00059
-  title: FlowForge is a tenant-isolated, module-driven business
-  requirement: FlowForge is a tenant-isolated, module-driven business
-  module: PLT
-  risk: low
-  required_for: enterprise_expansion
-  status: NOT_STARTED
-  sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: FlowForge is a tenant-isolated, module-driven business
-  dependencies: []
-  implementation:
-    backend: []
-    database: []
-    frontend: []
-    infrastructure: []
-  evidence:
-    unit_tests: []
-    integration_tests: []
-    acceptance_scenarios: []
-    security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00060
-  title: Every capability is built on shared platform services including security,
-    audit,
-  requirement: Every capability is built on shared platform services including security,
-    audit,
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00018
+  title: Every build group One two-tenant isolation smoke; permission denial; audit
+    evidence
+  requirement: Every build group One two-tenant isolation smoke; permission denial;
+    audit evidence
   module: PLT
   risk: critical
-  required_for: enterprise_expansion
+  required_for: launch
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: Every capability is built on shared platform services including security,
-      audit,
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 4. Minimal test policy during construction
+    source_text: Every build group One two-tenant isolation smoke; permission denial;
+      audit evidence
   dependencies: []
   implementation:
     backend: []
@@ -2108,22 +1596,28 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00061
-  title: workflow, events, documents and integrations.
-  requirement: workflow, events, documents and integrations.
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00019
+  title: Release candidate Full backend regression; frontend typecheck/tests/build;
+    migration
+  requirement: Release candidate Full backend regression; frontend typecheck/tests/build;
+    migration
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: workflow, events, documents and integrations.
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 4. Minimal test policy during construction
+    source_text: Release candidate Full backend regression; frontend typecheck/tests/build;
+      migration
   dependencies: []
   implementation:
     backend: []
@@ -2135,22 +1629,214 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00062
-  title: Each chapter defines design goals, data ownership,
-  requirement: Each chapter defines design goals, data ownership,
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00013
+  title: Post-build certification All comprehensive suites and requirement verification.
+    Only externally bloc
+  requirement: Post-build certification All comprehensive suites and requirement verification.
+    Only externally blocked provider/legal items
+  module: DAT
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 4. Minimal test policy during construction
+    source_text: Post-build certification All comprehensive suites and requirement
+      verification. Only externally blocked provider/legal items
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-OPS-00002
+  title: 'telemetry: Application Insights + Log Analytics + Azure Monitor'
+  requirement: 'telemetry: Application Insights + Log Analytics + Azure Monitor'
+  module: OPS
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 5. Deployment architecture
+    source_text: 'telemetry: Application Insights + Log Analytics + Azure Monitor'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-OPS-00003
+  title: tests; no secrets; backup/restore
+  requirement: tests; no secrets; backup/restore
+  module: OPS
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 6. Deployment phases
+    source_text: tests; no secrets; backup/restore
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-OPS-00004
+  title: DP-B Azure development Deploy all Azure resources; managed identities; Key
+    Vault refs; migration job
+  requirement: DP-B Azure development Deploy all Azure resources; managed identities;
+    Key Vault refs; migration job
+  module: OPS
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 6. Deployment phases
+    source_text: DP-B Azure development Deploy all Azure resources; managed identities;
+      Key Vault refs; migration job
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SEC-00005
+  title: security, restore, rollback
+  requirement: security, restore, rollback
+  module: SEC
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 6. Deployment phases
+    source_text: security, restore, rollback
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SUP-00002
+  title: DP-F General availability Signed artifact; staging acceptance; support, backup,
+    DR, incident respons
+  requirement: DP-F General availability Signed artifact; staging acceptance; support,
+    backup, DR, incident response
+  module: SUP
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 21
+    heading: 6. Deployment phases
+    source_text: DP-F General availability Signed artifact; staging acceptance; support,
+      backup, DR, incident response
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00020
+  title: 7. Comprehensive post-build verification
+  requirement: 7. Comprehensive post-build verification
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: Each chapter defines design goals, data ownership,
+  - document: completion_blueprint
+    page_or_section: 22
+    heading: 7. Comprehensive post-build verification
+    source_text: 7. Comprehensive post-build verification
   dependencies: []
   implementation:
     backend: []
@@ -2162,25 +1848,55 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00063
-  title: permissions, workflows, reporting requirements, integration points, dependencies,
-    operational
-  requirement: permissions, workflows, reporting requirements, integration points,
-    dependencies, operational
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SRC-00002
+  title: B Normal tenant with known Tenant A IDs Attempt cross-tenant read/search/update/delete/approve/expor
+  requirement: B Normal tenant with known Tenant A IDs Attempt cross-tenant read/search/update/delete/approve/export/download
+  module: SRC
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 22
+    heading: 7.1 Four-tenant matrix
+    source_text: B Normal tenant with known Tenant A IDs Attempt cross-tenant read/search/update/delete/approve/export/download
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00021
+  title: C Limited modules Verify entitlement enforcement and hidden routes/actions
+  requirement: C Limited modules Verify entitlement enforcement and hidden routes/actions
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: permissions, workflows, reporting requirements, integration points,
-      dependencies, operational
+  - document: completion_blueprint
+    page_or_section: 22
+    heading: 7.1 Four-tenant matrix
+    source_text: C Limited modules Verify entitlement enforcement and hidden routes/actions
   dependencies: []
   implementation:
     backend: []
@@ -2192,22 +1908,87 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00064
-  title: controls, scalability considerations and compliance requirements.
-  requirement: controls, scalability considerations and compliance requirements.
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-INT-00004
+  title: D Suspended Verify login/job/provider/action denial while preserving history
+  requirement: D Suspended Verify login/job/provider/action denial while preserving
+    history
+  module: INT
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 22
+    heading: 7.1 Four-tenant matrix
+    source_text: D Suspended Verify login/job/provider/action denial while preserving
+      history
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SUP-00003
+  title: "\x7F support-to-resolution"
+  requirement: "\x7F support-to-resolution"
+  module: SUP
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 22
+    heading: 7.2 Cross-module workflows
+    source_text: "\x7F support-to-resolution"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00022
+  title: "\x7F backup restore and disaster recovery"
+  requirement: "\x7F backup restore and disaster recovery"
   module: PLT
-  risk: low
-  required_for: enterprise_expansion
+  risk: critical
+  required_for: launch
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: controls, scalability considerations and compliance requirements.
+  - document: completion_blueprint
+    page_or_section: 22
+    heading: 7.3 Failure and recovery campaign
+    source_text: "\x7F backup restore and disaster recovery"
   dependencies: []
   implementation:
     backend: []
@@ -2219,22 +2000,25 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00065
-  title: The architecture is designed to
-  requirement: The architecture is designed to
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00023
+  title: 'final_banner: FLOWFORGE COMPLETE PRODUCT ACCEPTANCE PASSED: <run-id>'
+  requirement: 'final_banner: FLOWFORGE COMPLETE PRODUCT ACCEPTANCE PASSED: <run-id>'
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: The architecture is designed to
+  - document: completion_blueprint
+    page_or_section: 23
+    heading: ''
+    source_text: 'final_banner: FLOWFORGE COMPLETE PRODUCT ACCEPTANCE PASSED: <run-id>'
   dependencies: []
   implementation:
     backend: []
@@ -2246,25 +2030,85 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00024
+  title: M1 Shared platform complete PARTIAL
+  requirement: M1 Shared platform complete PARTIAL
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M1 Shared platform complete PARTIAL
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00014
+  title: M2 Master data and data platform complete PARTIAL
+  requirement: M2 Master data and data platform complete PARTIAL
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M2 Master data and data platform complete PARTIAL
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
 - id: FF-FIN-00005
-  title: support banks, distributors, manufacturers, medical device OEMs, professional
-    services
-  requirement: support banks, distributors, manufacturers, medical device OEMs, professional
-    services
+  title: M3 Finance complete PARTIAL
+  requirement: M3 Finance complete PARTIAL
   module: FIN
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: support banks, distributors, manufacturers, medical device OEMs,
-      professional services
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M3 Finance complete PARTIAL
   dependencies: []
   implementation:
     backend: []
@@ -2276,25 +2120,175 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
-- id: FF-PLT-00066
-  title: companies, construction firms and other industries through modular activation
-    and industry packs.
-  requirement: companies, construction firms and other industries through modular
-    activation and industry packs.
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-COM-00002
+  title: M4 CRM and commerce complete PARTIAL
+  requirement: M4 CRM and commerce complete PARTIAL
+  module: COM
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M4 CRM and commerce complete PARTIAL
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-WFM-00002
+  title: M5 Workforce, payroll, tax complete PARTIAL
+  requirement: M5 Workforce, payroll, tax complete PARTIAL
+  module: WFM
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M5 Workforce, payroll, tax complete PARTIAL
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-AST-00002
+  title: M6 Billing, projects, assets complete EARLY
+  requirement: M6 Billing, projects, assets complete EARLY
+  module: AST
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M6 Billing, projects, assets complete EARLY
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLM-00003
+  title: M7 Manufacturing, PLM, MRP, quality complete EARLY
+  requirement: M7 Manufacturing, PLM, MRP, quality complete EARLY
+  module: PLM
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M7 Manufacturing, PLM, MRP, quality complete EARLY
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-AIC-00001
+  title: M8 Reporting, portals, Copilot complete PARTIAL
+  requirement: M8 Reporting, portals, Copilot complete PARTIAL
+  module: AIC
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M8 Reporting, portals, Copilot complete PARTIAL
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00025
+  title: M10 Frontend operationally complete EARLY
+  requirement: M10 Frontend operationally complete EARLY
   module: PLT
-  risk: low
+  risk: medium
   required_for: enterprise_expansion
   status: NOT_STARTED
   sources:
-  - document: enterprise_build_bible
-    page_or_section: 2
-    heading: chapter defines design goals, data ownership, permissions, workflows,
-      reporting requirements,
-    source_text: companies, construction firms and other industries through modular
-      activation and industry packs.
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: M10 Frontend operationally complete EARLY
   dependencies: []
   implementation:
     backend: []
@@ -2306,6 +2300,799 @@ requirements:
     integration_tests: []
     acceptance_scenarios: []
     security_tests: []
-  provider_dependency: null
-  owner: null
-  notes: null
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00026
+  title: after each build group
+  requirement: after each build group
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: after each build group
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00015
+  title: record commit/tag in requirement registry
+  requirement: record commit/tag in requirement registry
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 24
+    heading: 9. Milestones and checkpointing
+    source_text: record commit/tag in requirement registry
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00016
+  title: '1: create specs/requirements and extraction pipeline'
+  requirement: '1: create specs/requirements and extraction pipeline'
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '1: create specs/requirements and extraction pipeline'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00017
+  title: '2: generate requirement IDs and source crosswalk'
+  requirement: '2: generate requirement IDs and source crosswalk'
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '2: generate requirement IDs and source crosswalk'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00027
+  title: '3: map current database/models/routes/pages/tests/scripts'
+  requirement: '3: map current database/models/routes/pages/tests/scripts'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '3: map current database/models/routes/pages/tests/scripts'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-DAT-00018
+  title: '4: classify each requirement REUSE|REPAIR|COMPLETE|BUILD|VERIFY|BLOCK|DEFER'
+  requirement: '4: classify each requirement REUSE|REPAIR|COMPLETE|BUILD|VERIFY|BLOCK|DEFER'
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '4: classify each requirement REUSE|REPAIR|COMPLETE|BUILD|VERIFY|BLOCK|DEFER'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00028
+  title: '5: generate dependency-safe backlog'
+  requirement: '5: generate dependency-safe backlog'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '5: generate dependency-safe backlog'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00029
+  title: '7: create local release candidate'
+  requirement: '7: create local release candidate'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '7: create local release candidate'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-OPS-00005
+  title: '8: deploy Azure development'
+  requirement: '8: deploy Azure development'
+  module: OPS
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '8: deploy Azure development'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00030
+  title: '10: run BG-14 comprehensive certification'
+  requirement: '10: run BG-14 comprehensive certification'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '10: run BG-14 comprehensive certification'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00031
+  title: '13: approve general availability'
+  requirement: '13: approve general availability'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11. Immediate execution queue
+    source_text: '13: approve general availability'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00032
+  title: '> master_data_and_data_platform'
+  requirement: '> master_data_and_data_platform'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> master_data_and_data_platform'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-COM-00003
+  title: '> crm_and_commerce'
+  requirement: '> crm_and_commerce'
+  module: COM
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> crm_and_commerce'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-WFM-00003
+  title: '> workforce_payroll_tax'
+  requirement: '> workforce_payroll_tax'
+  module: WFM
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> workforce_payroll_tax'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-AST-00003
+  title: '> billing_projects_assets'
+  requirement: '> billing_projects_assets'
+  module: AST
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> billing_projects_assets'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-MFG-00001
+  title: '> manufacturing_quality'
+  requirement: '> manufacturing_quality'
+  module: MFG
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> manufacturing_quality'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-AIC-00002
+  title: '> reporting_portals_copilot'
+  requirement: '> reporting_portals_copilot'
+  module: AIC
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> reporting_portals_copilot'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00033
+  title: '> frontend_completion'
+  requirement: '> frontend_completion'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> frontend_completion'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-SEC-00006
+  title: '> azure_and_security'
+  requirement: '> azure_and_security'
+  module: SEC
+  risk: critical
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> azure_and_security'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00034
+  title: '> comprehensive_acceptance'
+  requirement: '> comprehensive_acceptance'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> comprehensive_acceptance'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00035
+  title: '> general_availability'
+  requirement: '> general_availability'
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 11.1 Dependency priority
+    source_text: '> general_availability'
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00036
+  title: "\x7F Run only the minimal gates defined for the current build group unless\
+    \ a critical invariant require"
+  requirement: "\x7F Run only the minimal gates defined for the current build group\
+    \ unless a critical invariant requires broader checks"
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 12. AI operating instructions
+    source_text: "\x7F Run only the minimal gates defined for the current build group\
+      \ unless a critical invariant requires broader checks"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-INT-00005
+  title: "\x7F Retain provider simulation and deny production writes until provider-specific\
+    \ sandbox acceptance"
+  requirement: "\x7F Retain provider simulation and deny production writes until provider-specific\
+    \ sandbox acceptance"
+  module: INT
+  risk: high
+  required_for: launch
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 12. AI operating instructions
+    source_text: "\x7F Retain provider simulation and deny production writes until\
+      \ provider-specific sandbox acceptance"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00037
+  title: "\x7F At build completion, run comprehensive tests and fix failures in dependency\
+    \ order"
+  requirement: "\x7F At build completion, run comprehensive tests and fix failures\
+    \ in dependency order"
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: 12. AI operating instructions
+    source_text: "\x7F At build completion, run comprehensive tests and fix failures\
+      \ in dependency order"
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-PLT-00038
+  title: E2 Unit test Local rule
+  requirement: E2 Unit test Local rule
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: Appendix A. Evidence hierarchy
+    source_text: E2 Unit test Local rule
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
+- id: FF-INT-00006
+  title: E3 Integration test Service + database/component
+  requirement: E3 Integration test Service + database/component
+  module: INT
+  risk: medium
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: completion_blueprint
+    page_or_section: 25
+    heading: Appendix A. Evidence hierarchy
+    source_text: E3 Integration test Service + database/component
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  review:
+    semantic_review: APPROVED
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  notes: Blueprint-derived canonical requirement. Repository evidence must be reviewed
+    before status changes.
