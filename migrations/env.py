@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 from alembic import context
 from sqlalchemy import pool
@@ -37,6 +38,11 @@ from flowforge.platform import models  # noqa:F401
 
 config = context.config
 target_metadata = Base.metadata
+
+# Deployments (for example the production "migrate" service) pass the owner
+# connection through the environment; local tooling keeps using alembic.ini.
+if os.environ.get("ALEMBIC_DATABASE_URL"):
+    config.set_main_option("sqlalchemy.url", os.environ["ALEMBIC_DATABASE_URL"])
 
 
 def run_migrations_offline() -> None:

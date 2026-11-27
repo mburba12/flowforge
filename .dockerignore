@@ -1,0 +1,24 @@
+# API build context: only pyproject.toml, src, alembic.ini and migrations are needed.
+.git
+.github
+.idea
+.venv
+.mypy_cache
+.pytest_cache
+.ruff_cache
+**/__pycache__
+**/*.pyc
+.env
+.env.*
+*.dump
+*.sql
+*.zip
+*.b64.txt
+artifacts
+var
+release-*
+web
+docs
+tests
+specs
+architecture

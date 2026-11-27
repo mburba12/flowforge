@@ -1,8 +1,4 @@
+# Production stack entry point (since the 2026-11-27 cutover). See docs\FLOWFORGE_PRODUCTION_RUNBOOK.md.
+# The pre-cutover recovered runtime is retired; use scripts\production\Rollback-FlowForgeCutover.ps1 to return to it.
 $ErrorActionPreference = "Stop"
-$Timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-$Output = Join-Path $HOME "Downloads\forgeflow-$Timestamp.sql"
-cmd /c "docker exec forgeflow-v4-phase0-postgres-1 pg_dump -U forgeflow -d forgeflow --clean --if-exists --no-owner --no-privileges > `"$Output`""
-if ($LASTEXITCODE -ne 0) {
-    throw "Backup failed."
-}
-Write-Host "BACKUP CREATED: $Output" -ForegroundColor Green
+& (Join-Path $PSScriptRoot "scripts\production\Backup-FlowForge.ps1") @args
