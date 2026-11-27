@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from flowforge.api.routes import auth, health, platform, tenants
+from flowforge.foundation_final.router import router as foundation_final_router
 from flowforge.foundation_completion.router import router as foundation_completion_router
 from flowforge.finance_final.router import router as finance_final_router
 from flowforge.finance_completion.router import router as finance_completion_router
@@ -23,3 +24,4 @@ api_router.include_router(finance_advanced_router)
 api_router.include_router(finance_completion_router)
 api_router.include_router(finance_final_router)
 api_router.include_router(foundation_completion_router)
+api_router.include_router(foundation_final_router)
