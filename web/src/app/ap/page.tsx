@@ -1,1 +1,2 @@
-import {WorkspacePage} from "@/components/workspace-page";import {workspaces} from "@/lib/demo-data";export default function Page(){return <WorkspacePage config={workspaces.ap}/>}
+import {BackendFeatureWorkspace} from "@/components/backend-feature-workspace";
+export default function Page(){return <BackendFeatureWorkspace title="Accounts payable" description="Live operations mapped from the FlowForge OpenAPI contract." tags={["phase3a","phase3a-integration","phase3a-final"]} />}
