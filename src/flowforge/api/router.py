@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from flowforge.api.routes import auth, health, platform, tenants
+from flowforge.workforce_completion.router import router as workforce_completion_router
 from flowforge.workforce_final.router import router as workforce_final_router
 from flowforge.commerce_completion.router import router as commerce_completion_router
 from flowforge.commerce_final.router import router as commerce_final_router
@@ -37,3 +38,4 @@ api_router.include_router(crm_completion_router)
 api_router.include_router(commerce_final_router)
 api_router.include_router(commerce_completion_router)
 api_router.include_router(workforce_final_router)
+api_router.include_router(workforce_completion_router)
