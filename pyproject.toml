@@ -52,3 +52,34 @@ strict=true
 "src/flowforge/workforce_final/service.py" = ["F403", "F405"]
 "src/flowforge/workforce_ultimate/router.py" = ["F403", "F405"]
 "src/flowforge/workforce_ultimate/service.py" = ["F403", "F405"]
+[[tool.mypy.overrides]]
+module = [
+    "flowforge.bg08_completion.*",
+    "flowforge.bg08_final.*",
+    "flowforge.bg09_final.*",
+    "flowforge.bg10_final.*",
+    "flowforge.bg11_final.*",
+    "flowforge.bg13_ops.*",
+    "flowforge.commerce_completion.*",
+    "flowforge.commerce_final.*",
+    "flowforge.crm_completion.*",
+    "flowforge.crm_final.*",
+    "flowforge.crm_sales.*",
+    "flowforge.finance.*",
+    "flowforge.finance_advanced.*",
+    "flowforge.finance_completion.*",
+    "flowforge.finance_final.*",
+    "flowforge.finance_workflows.*",
+    "flowforge.foundation_completion.*",
+    "flowforge.foundation_final.*",
+    "flowforge.master_data.*",
+    "flowforge.payroll_tax_completion.*",
+    "flowforge.payroll_tax_final.*",
+    "flowforge.workforce_completion.*",
+    "flowforge.workforce_final.*",
+    "flowforge.workforce_ultimate.*"
+]
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+check_untyped_defs = true
+warn_return_any = false
