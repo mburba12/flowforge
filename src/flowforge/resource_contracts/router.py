@@ -1,13 +1,27 @@
+"""Generic read-only browsing of tenant-owned tables.
+
+Interim contract used by the frontend BusinessWorkspace until each domain is
+served by its canonical typed routes. Every query is explicitly scoped to the
+caller's tenant (the runtime database does not enforce RLS), and the router is
+read-only: business mutations must go through domain services that validate
+state transitions, permissions, and write audit records.
+"""
+
+import asyncio
 from typing import Annotated, Any
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import MetaData, Table, func, select, update
+from sqlalchemy import MetaData, Table, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
+from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
 
 router = APIRouter(prefix="/api/v1/business", tags=["business-resources"])
 Db = Annotated[AsyncSession, Depends(get_tenant_db)]
+Caller = Annotated[Principal, Depends(current_principal)]
 
 ALIASES: dict[str, tuple[str, ...]] = {
     "vendors": ("vendors",),
@@ -61,22 +75,39 @@ ALIASES: dict[str, tuple[str, ...]] = {
     "copilot-conversations": ("copilot_conversations",),
 }
 
-READ_ONLY_COLUMNS = {"id", "tenant_id", "created_at", "created_by"}
 SENSITIVE_MARKERS = ("password", "secret", "token", "credential", "hash")
 
+_table_cache: dict[str, Table] | None = None
+_table_cache_lock = asyncio.Lock()
 
-def _tables(db: AsyncSession) -> dict[str, Table]:
+
+def _reflect_tenant_tables(sync_session: Session) -> dict[str, Table]:
     metadata = MetaData()
-    metadata.reflect(bind=db.sync_session.connection(), schema="public")
+    metadata.reflect(bind=sync_session.connection(), schema="public")
     return {
         table.name: table
         for table in metadata.tables.values()
-        if "tenant_id" in table.c
+        if table.schema == "public" and "tenant_id" in table.c
     }
 
 
-def _resolve(resource: str, db: AsyncSession) -> Table:
-    available = _tables(db)
+async def _tables(db: AsyncSession) -> dict[str, Table]:
+    """Reflect public tenant-owned tables once per process.
+
+    Reflection is synchronous SQLAlchemy work, so it must run through
+    AsyncSession.run_sync; calling it directly raises MissingGreenlet.
+    The schema only changes through migrations, which restart the API.
+    """
+    global _table_cache
+    if _table_cache is None:
+        async with _table_cache_lock:
+            if _table_cache is None:
+                _table_cache = await db.run_sync(_reflect_tenant_tables)
+    return _table_cache
+
+
+async def _resolve(resource: str, db: AsyncSession) -> Table:
+    available = await _tables(db)
     candidates = ALIASES.get(resource, (resource.replace("-", "_"),))
     for name in candidates:
         table = available.get(name)
@@ -101,22 +132,26 @@ def _row(row: Any) -> dict[str, Any]:
     }
 
 
+def _visible_columns(table: Table) -> list[Any]:
+    return [
+        column
+        for column in table.columns
+        if not any(marker in column.name.lower() for marker in SENSITIVE_MARKERS)
+    ]
+
+
 @router.get("/resources")
-async def resources(db: Db) -> list[dict[str, Any]]:
-    available = _tables(db)
+async def resources(db: Db, caller: Caller) -> list[dict[str, Any]]:
+    available = await _tables(db)
     result = []
     for alias, candidates in sorted(ALIASES.items()):
-        table = next((available.get(name) for name in candidates if name in available), None)
+        table = next((available[name] for name in candidates if name in available), None)
         if table is not None:
             result.append(
                 {
                     "resource": alias,
                     "table": table.name,
-                    "columns": [
-                        column.name
-                        for column in table.columns
-                        if not any(marker in column.name.lower() for marker in SENSITIVE_MARKERS)
-                    ],
+                    "columns": [column.name for column in _visible_columns(table)],
                 }
             )
     return result
@@ -126,53 +161,42 @@ async def resources(db: Db) -> list[dict[str, Any]]:
 async def list_records(
     resource: str,
     db: Db,
+    caller: Caller,
     limit: int = Query(50, ge=1, le=200),
     offset: int = Query(0, ge=0),
 ) -> dict[str, Any]:
-    table = _resolve(resource, db)
-    total = await db.scalar(select(func.count()).select_from(table))
-    result = await db.execute(select(table).limit(limit).offset(offset))
+    table = await _resolve(resource, db)
+    tenant_filter = table.c.tenant_id == caller.tenant_id
+    total = await db.scalar(select(func.count()).select_from(table).where(tenant_filter))
+    order: list[Any] = [table.c.created_at.desc()] if "created_at" in table.c else []
+    if "id" in table.c:
+        order.append(table.c.id)
+    result = await db.execute(
+        select(*_visible_columns(table))
+        .where(tenant_filter)
+        .order_by(*order)
+        .limit(limit)
+        .offset(offset)
+    )
     return {"resource": resource, "total": total or 0, "items": [_row(row) for row in result]}
 
 
 @router.get("/{resource}/{record_id}")
-async def get_record(resource: str, record_id: str, db: Db) -> dict[str, Any]:
-    table = _resolve(resource, db)
+async def get_record(resource: str, record_id: str, db: Db, caller: Caller) -> dict[str, Any]:
+    table = await _resolve(resource, db)
     if "id" not in table.c:
         raise HTTPException(404, "Resource has no record identifier")
-    result = await db.execute(select(table).where(table.c.id == record_id))
+    try:
+        key = UUID(record_id)
+    except ValueError as exc:
+        raise HTTPException(404, "Record not found") from exc
+    result = await db.execute(
+        select(*_visible_columns(table)).where(
+            table.c.id == key,
+            table.c.tenant_id == caller.tenant_id,
+        )
+    )
     row = result.first()
     if row is None:
         raise HTTPException(404, "Record not found")
     return _row(row)
-
-
-@router.patch("/{resource}/{record_id}")
-async def update_record(
-    resource: str,
-    record_id: str,
-    payload: dict[str, Any],
-    db: Db,
-) -> dict[str, Any]:
-    table = _resolve(resource, db)
-    if "id" not in table.c:
-        raise HTTPException(404, "Resource has no record identifier")
-    editable = {
-        column.name
-        for column in table.columns
-        if column.name not in READ_ONLY_COLUMNS
-        and not any(marker in column.name.lower() for marker in SENSITIVE_MARKERS)
-    }
-    changes = {key: value for key, value in payload.items() if key in editable}
-    if not changes:
-        raise HTTPException(422, "No editable fields supplied")
-    existing = await db.execute(
-        select(table.c.id).where(table.c.id == record_id)
-    )
-    if existing.first() is None:
-        raise HTTPException(404, "Record not found")
-    await db.execute(
-        update(table).where(table.c.id == record_id).values(**changes)
-    )
-    await db.commit()
-    return await get_record(resource, record_id, db)
