@@ -71,3 +71,6 @@ openapi.json
 
 # Local BG-14 diagnostic logs
 /bg14-*.txt
+
+# TypeScript incremental build cache
+*.tsbuildinfo
