@@ -178,8 +178,38 @@ RESULT=25 PASS / 1 FAIL / 26 gates (commit 57f0dbd + step-2 changes)
             consolidation into canonical models).
 
 PRIVACY_FIX=sign-in form no longer pre-fills the administrator email.
-LIVE_RUNTIME=unchanged. The live API (recovered database, superuser) and live web do not yet carry the
-             accounting fixes or the new sign-in page; deploying posting-rule changes to the live system and
-             moving it onto the migration path are owner decisions.
+LIVE_RUNTIME=deployed afterwards on owner approval (section 7).
+
+================================================================================
+7. LIVE DEPLOYMENT 2026-11-27 23:18 UTC (owner approved)
+================================================================================
+
+DEPLOYED_COMMIT=117ffea (API and web)
+STEPS:
+  1. Rollback images: flowforge-phase1-web:rollback-predeploy-20261127-181623 (docker commit of the running web);
+     flowforge-phase1-api:rollback-0628e0a (built from git commit 0628e0a, the code that was live; docker commit
+     of the running API was impossible because its image layers had been garbage-collected).
+  2. Database backup: var\backups\forgeflow-predeploy-20261127-181800.dump (custom format, 1,153,390 bytes,
+     370 table-data entries verified with pg_restore -l, SHA-256 prefix AE7C807D53A9A8C4, gitignored).
+  3. API rebuilt and recreated with docker-compose.yml + compose.recovered-database.yml (unchanged config,
+     still the recovered forgeflow database).
+  4. Web rebuilt and recreated with the same docker run settings (network flowforge-phase1_default, port 3000,
+     restart unless-stopped, FLOWFORGE_API_BASE_URL=http://flowforge-phase1-api-1:8000).
+  5. Live database: inserted 19 standard units of measure (ON CONFLICT DO NOTHING). No other data changed;
+     tenants=1, users=1 before and after.
+VERIFIED (read-only; no business records written to the live tenant):
+  health ok; unknown-user and unknown-tenant login 401; unauthenticated business read 401; /me returns the
+  production tenant; 31/31 catalogued business resources 200; foreign-tenant token sees 0 users (own 1);
+  web /login 200, proxy health 200, administrator email absent from the web bundle; 0 API 5xx, 0 web errors.
+NOT_VERIFIED_LIVE: posting workflows (they would create real accounting records); verified on the isolated
+  stack instead (G14W, G25). The live database still runs as superuser without RLS policies.
+ROLLBACK:
+  API: docker tag flowforge-phase1-api:rollback-0628e0a flowforge-phase1-api:latest, then
+       docker compose --env-file .env.recovered-database -f docker-compose.yml -f compose.recovered-database.yml
+       up -d --no-deps --force-recreate api
+  Web: docker rm -f flowforge-phase1-web-1, then docker run -d --name flowforge-phase1-web-1
+       --network flowforge-phase1_default -p 3000:3000 --restart unless-stopped
+       -e FLOWFORGE_API_BASE_URL=http://flowforge-phase1-api-1:8000 flowforge-phase1-web:rollback-predeploy-20261127-181623
+  Data: the only data change is the units-of-measure rows; restore the backup above only if required.
 
 END_OF_REPORT
