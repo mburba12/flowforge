@@ -51,8 +51,5 @@ async def records(
         raise HTTPException(404, "Unknown tenant resource")
     total = await db.scalar(select(func.count()).select_from(table))
     result = await db.execute(select(table).limit(limit).offset(offset))
-    items = [
-        {key: clean(value) for key, value in row._mapping.items()}
-        for row in result
-    ]
+    items = [{key: clean(value) for key, value in row._mapping.items()} for row in result]
     return {"table": table_name, "total": total or 0, "items": items}

@@ -167,6 +167,10 @@ try {
     }
 
     # ---------------------------------------------------------------- tenancy
+    Invoke-Gate "G14W" "Release workflows: AP, AR, Payroll, Tax, GL (tests\workflows, fresh DB as flowforge_app)" {
+        Use-HostDbEnv { & $Python -m pytest -q -p no:cacheprovider ".\tests\workflows" -rA }
+    }
+
     Invoke-Gate "G15" "API tenant-isolation tests" {
         $tests = @(".\tests\phase1\acceptance\test_tenant_isolation_matrix.py", ".\tests\security_hardening\test_security.py", ".\tests\test_security.py") | Where-Object { Test-Path $_ }
         "tests=" + ($tests -join ",")
@@ -193,7 +197,22 @@ try {
         "recovered=true"
     }
     Invoke-Gate "G19" "Phase 4 comprehensive live test (host uvicorn :$Phase4Port as flowforge_app)" {
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\Run-Phase4-Comprehensive-Live-Test.ps1" -RuntimePassword $RuntimePassword -Port $Phase4Port
+        # The Phase 4 cross-tenant leak check needs two populated tenants; create throwaway ones.
+        $p4 = @()
+        try {
+            foreach ($n in 1..2) {
+                $slug = "p4-" + [guid]::NewGuid().ToString("N").Substring(0, 12)
+                $body = @{ tenant = @{ name = "Phase 4 Fixture $n"; slug = $slug }; email = "owner-$slug@example.com"; password = "P4-" + [guid]::NewGuid().ToString("N"); display_name = "Phase 4 Fixture" } | ConvertTo-Json -Depth 4
+                $null = Invoke-RestMethod -Method Post -Uri "$Api/api/v1/auth/bootstrap" -ContentType "application/json" -Body $body
+                $p4 += $slug
+            }
+            "fixture_tenants=$($p4 -join ',')"
+            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\Run-Phase4-Comprehensive-Live-Test.ps1" -RuntimePassword $RuntimePassword -Port $Phase4Port
+        } finally {
+            $code = $LASTEXITCODE
+            docker exec $PgContainer psql -U flowforge -d flowforge -q -c "DELETE FROM tenants WHERE slug LIKE 'p4-%';" | Out-Null
+            $global:LASTEXITCODE = $code
+        }
     }
 
     # ---------------------------------------------------------------- frontend
@@ -203,6 +222,10 @@ try {
         Invoke-Gate "G21" "Frontend lint" { & npm.cmd run lint }
         Invoke-Gate "G22" "Frontend unit tests (vitest)" { & npm.cmd test }
         Invoke-Gate "G23" "Frontend production build" { & npm.cmd run build }
+        Invoke-Gate "G25" "Browser acceptance (Playwright, signed in; isolated web :3100 -> API :$IsolatedApiPort)" {
+            $env:E2E_API_BASE_URL = $Api
+            try { & npx.cmd playwright test --reporter=line } finally { Remove-Item Env:\E2E_API_BASE_URL -ErrorAction SilentlyContinue }
+        }
     } finally { Pop-Location }
 
     # ---------------------------------------------------------------- security
@@ -223,13 +246,15 @@ try {
 }
 finally {
     if (-not $KeepIsolatedApi) { docker rm -f $ApiContainer 2>$null | Out-Null }
+    # Browser acceptance tenants are throwaway; remove them from the isolated database.
+    docker exec $PgContainer psql -U flowforge -d flowforge -q -c "DELETE FROM tenants WHERE slug LIKE 'e2e-%';" 2>$null | Out-Null
     $RuntimePassword = $null
     $Results | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $Out "results.json") -Encoding UTF8
     $lines = @("FLOWFORGE ISOLATED ACCEPTANCE RERUN", "RUN=$Stamp", "COMMIT=$((git rev-parse HEAD).Trim())", "DATABASE=$PgContainer/flowforge (isolated)", "API=$Api (isolated, flowforge_app)", "")
     foreach ($r in $Results) { $lines += ("{0,-4} {1} {2} ({3}s) {4}" -f $r.status, $r.id, $r.gate, $r.seconds, $r.detail) }
     $lines += ""
     $lines += "PASS=$(@($Results | Where-Object status -eq 'PASS').Count) FAIL=$(@($Results | Where-Object status -eq 'FAIL').Count) TOTAL=$($Results.Count)"
-    $lines += "NOT_RUN=Playwright e2e (playwright.config reuses :3000, which is the live web/API)"
+    $lines += "NOTE=G14 includes the G14W workflow tests; G25 browser tenants (e2e-*) are removed after the run"
     $lines | Set-Content (Join-Path $Out "summary.txt") -Encoding UTF8
     Write-Host ""
     $lines | ForEach-Object { Write-Host $_ }

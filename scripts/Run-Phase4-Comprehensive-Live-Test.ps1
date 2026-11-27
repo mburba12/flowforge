@@ -126,8 +126,8 @@ print('behavioral engines passed')
     $PublicTables = "$(docker compose exec -T postgres psql -U flowforge -d flowforge -tAc "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';")".Trim()
     $TenantTables = "$(docker compose exec -T postgres psql -U flowforge -d flowforge -tAc "SELECT COUNT(DISTINCT table_name) FROM information_schema.columns WHERE table_schema='public' AND column_name='tenant_id';")".Trim()
     $ForcedRls = "$(docker compose exec -T postgres psql -U flowforge -d flowforge -tAc "SELECT COUNT(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relkind='r' AND c.relrowsecurity AND c.relforcerowsecurity;")".Trim()
-    if ($PublicTables -ne "242") { throw "Expected 242 public tables; found $PublicTables." }
-    if ($ForcedRls -ne "238") { throw "Expected 238 forced-RLS tables; found $ForcedRls." }
+    if ([int]$PublicTables -lt 242) { throw "Expected at least 242 public tables (Phase 4 baseline); found $PublicTables." }
+    if ([int]$ForcedRls -lt [int]$TenantTables) { throw "Expected every tenant table ($TenantTables) to have forced RLS; found $ForcedRls." }
     Write-Host "PASSED: Database totals public=$PublicTables tenant=$TenantTables forcedRLS=$ForcedRls" -ForegroundColor Green
 
     $MissingRls = @(docker compose exec -T postgres psql -U flowforge -d flowforge -tAc "SELECT col.table_name FROM information_schema.columns col JOIN pg_namespace n ON n.nspname=col.table_schema JOIN pg_class c ON c.relnamespace=n.oid AND c.relname=col.table_name WHERE col.table_schema='public' AND col.column_name='tenant_id' AND c.relkind='r' AND (NOT c.relrowsecurity OR NOT c.relforcerowsecurity) ORDER BY col.table_name;" | Where-Object { $_ })

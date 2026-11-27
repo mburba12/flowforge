@@ -156,4 +156,30 @@ CURRENT LEVEL (evidence tiers per Blueprint Appendix A)
   Frontend ......................... E0-E1  (builds, typechecks; no signed-in browser test)
   Azure / providers ............... not tested
 
+================================================================================
+6. UPDATE 2026-11-27 - RELEASE WORKFLOWS + CLEANUPS - RUN 20261127-181008
+================================================================================
+
+RESULT=25 PASS / 1 FAIL / 26 gates (commit 57f0dbd + step-2 changes)
+  PASS G08  main acceptance script end to end (was failing on bootstrap, then on ruff format)
+  PASS G11  ruff format (catalog\router.py formatted)
+  PASS G14  backend suite (includes tests\workflows)
+  PASS G14W release workflows AP/AR/Payroll/Tax/GL: 18 passed (see FLOWFORGE_RELEASE_WORKFLOWS_20261127.txt)
+  PASS G19  Phase 4 live test: stale "exactly 242 / 238 tables" assertions replaced by invariants
+            (>= 242 public tables; forced RLS on every tenant table); runner supplies two throwaway tenants
+  PASS G21  frontend lint: 0 errors (prefer-const in login page). 8 warnings remain (unused vars,
+            hook dependency rules, window.location.assign) - left because hook changes alter behaviour.
+  PASS G25  browser acceptance, signed in: 41 passed. Tests now sign in through the real form with a
+            throwaway tenant from global setup, assert the signed-in shell (sidebar + Log out, no sign-in
+            heading), the AP workspace reads live data with no error notice, and log-out protects routes.
+            playwright.config targets an isolated web (:3100, never reusing a server) and API (:8001) and
+            refuses :8000 unless E2E_ALLOW_LIVE=1.
+  FAIL G03  alembic check: ORM metadata still lacks 388 schema-first tables (out of scope; needs schema
+            consolidation into canonical models).
+
+PRIVACY_FIX=sign-in form no longer pre-fills the administrator email.
+LIVE_RUNTIME=unchanged. The live API (recovered database, superuser) and live web do not yet carry the
+             accounting fixes or the new sign-in page; deploying posting-rule changes to the live system and
+             moving it onto the migration path are owner decisions.
+
 END_OF_REPORT

@@ -40,7 +40,7 @@ async function readJson(response: Response): Promise<JsonObject> {
 export default function LoginPage() {
   const router = useRouter();
   const [tenantSlug, setTenantSlug] = useState(DEFAULT_TENANT);
-  const [email, setEmail] = useState("mack.burba@gmail.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -72,8 +72,6 @@ export default function LoginPage() {
 
       const accessToken = tokenFromResponse(payload);
       const tokenType = typeof payload.token_type === "string" ? payload.token_type : "bearer";
-      let user: JsonObject | undefined;
-      let tenantId: string | undefined;
 
       const me = await fetch("/api/flowforge/api/v1/me", {
         headers: { authorization: `Bearer ${accessToken}`, accept: "application/json" },
@@ -83,9 +81,9 @@ export default function LoginPage() {
         throw new Error(messageFrom(detail, "The account signed in, but identity verification failed."));
       }
 
-      user = await readJson(me);
+      const user: JsonObject = await readJson(me);
       const candidate = user.tenant_id ?? user.tenantId ?? user.organization_id ?? user.organizationId;
-      tenantId = typeof candidate === "string" ? candidate : undefined;
+      const tenantId = typeof candidate === "string" ? candidate : undefined;
 
       writeSession({ accessToken, tokenType, tenantId, user });
       router.replace("/modules/dashboard" as never);
