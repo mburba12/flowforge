@@ -11,6 +11,7 @@ pythonpath=["src"]
 asyncio_mode="auto"
 asyncio_default_fixture_loop_scope="function"
 [tool.ruff]
+extend-exclude = ["migrations/versions"]
 line-length=100
 [tool.ruff.lint]
 select=["E","F","I","B","UP"]
