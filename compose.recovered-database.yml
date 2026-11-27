@@ -1,0 +1,13 @@
+services:
+  api:
+    environment:
+      DATABASE_URL: ${FLOWFORGE_PROD_DATABASE_URL}
+      FLOWFORGE_DATABASE_URL: ${FLOWFORGE_PROD_DATABASE_URL}
+    networks:
+      - default
+      - recovered_database
+
+networks:
+  recovered_database:
+    external: true
+    name: forgeflow-v4-phase0_default

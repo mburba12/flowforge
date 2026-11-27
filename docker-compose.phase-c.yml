@@ -6,9 +6,13 @@ services:
         NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:8000
     environment:
       NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:8000
+      FLOWFORGE_API_URL: http://api:8000
     ports:
       - "3000:3000"
     depends_on:
       api:
         condition: service_started
     restart: unless-stopped
+  api:
+    environment:
+      DATABASE_URL: ${FLOWFORGE_APP_DATABASE_URL:?set FLOWFORGE_APP_DATABASE_URL in .env}

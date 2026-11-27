@@ -1,5 +1,7 @@
 "use client";
 
+import { LogoutButton } from "@/components/logout-button";
+
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppIcon } from "@/components/app-icon";

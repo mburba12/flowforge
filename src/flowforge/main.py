@@ -31,6 +31,7 @@ from flowforge.phase4i.router import router as phase4i_router
 from flowforge.phase4j.router import router as phase4j_router
 from flowforge.phase5a.router import router as phase5a_router
 from flowforge.phase5b.router import router as phase5b_router
+from flowforge.resource_contracts.router import router as resource_contract_router
 from flowforge.support_feedback import router as support_feedback_router
 
 app = FastAPI(
@@ -73,3 +74,5 @@ app.include_router(catalog_router)
 app.include_router(part2a_resource_router)
 
 app.include_router(part2b_router)
+
+app.include_router(resource_contract_router)
