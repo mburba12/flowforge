@@ -1,0 +1,19 @@
+version: 1
+zero_tolerance:
+  missing_required_implementation: 0
+  missing_required_evidence: 0
+  critical_failures: 0
+  high_risk_failures: 0
+  cross_tenant_exposures: 0
+  unbalanced_financial_events: 0
+  unauthorized_provider_writes: 0
+  acceptance_data_remaining: 0
+  critical_security_findings: 0
+required_suites:
+  - four_tenant
+  - cross_module
+  - provider_sandbox
+  - failure_recovery
+  - accessibility
+  - backup_restore
+  - cleanup
