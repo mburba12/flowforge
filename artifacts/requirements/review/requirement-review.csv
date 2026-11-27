@@ -1,4 +1,4 @@
-﻿id,module,risk,required_for,status,semantic_review,artifact_review,dependency_review,evidence_review,requirement,source_page
+id,module,risk,required_for,status,semantic_review,artifact_review,dependency_review,evidence_review,requirement,source_page
 FF-PLT-00001,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,FlowForge_Mega_Specification_Volume.pdf,1
 FF-PLT-00002,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,FlowForge_Ultimate_Master_Specification.pdf,1
 FF-PLT-00003,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,FlowForge_Enterprise_Build_Bible.pdf,1

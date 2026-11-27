@@ -1,4 +1,4 @@
-﻿migrations/versions/ff_bg03_advanced_001.py
+migrations/versions/ff_bg03_advanced_001.py
 migrations/versions/ff_bg03_advanced_002.py
 migrations/versions/ff_bg03_completion_001.py
 migrations/versions/ff_bg04_completion_001.py

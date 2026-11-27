@@ -1,0 +1,12 @@
+work_queue=yes
+approvals=yes
+global_search=yes
+integrations=yes
+documents=yes
+users_roles_permissions=yes
+audit=yes
+reports=yes
+notifications=yes
+support=yes
+billing_entitlements=yes
+copilot=yes

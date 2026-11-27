@@ -1,4 +1,4 @@
-﻿using '../main.bicep'
+using '../main.bicep'
 param environmentName = 'production'
 param deploymentProfile = 'production'
 param imageTag = 'REPLACE_RELEASE_TAG'
@@ -7,4 +7,3 @@ param workerImage = 'REPLACE.azurecr.io/flowforge-worker'
 param webImage = 'REPLACE.azurecr.io/flowforge-web'
 param postgresAdminLogin = 'flowforge_admin'
 param postgresAdminPassword = readEnvironmentVariable('FLOWFORGE_POSTGRES_ADMIN_PASSWORD')
-

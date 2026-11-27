@@ -1,0 +1,4 @@
+tenant_slug=<mackburba>
+admin_email=<mack.burba@outlook.com>
+approver_email=<mack.burba@gmail.com>
+restricted_email=<mvburba@olivet.edu>

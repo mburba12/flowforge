@@ -1,10 +1,10 @@
-from flowforge.part2b.router import router as part2b_router
 from fastapi import FastAPI
 
 from flowforge.api.router import api_router
 from flowforge.catalog.router import router as catalog_router
 from flowforge.integration.router import router as phase1_router
 from flowforge.part2a.resource_router import router as part2a_resource_router
+from flowforge.part2b.router import router as part2b_router
 from flowforge.phase2a.router import router as phase2a_router
 from flowforge.phase2b.router import router as phase2b_router
 from flowforge.phase3a.router import router as phase3a_router

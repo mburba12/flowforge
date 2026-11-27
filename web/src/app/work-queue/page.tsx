@@ -1,1 +1,11 @@
-import {PlatformWorkspace} from "@/components/part2b/platform-workspace";export default function Page(){return <PlatformWorkspace title="Work queue" resource="work-items" />}
+import { ServiceWorkspace } from "@/components/part2b/service-workspace";
+
+export default function Page() {
+  return (
+    <ServiceWorkspace
+      title="Work queue"
+      resources={["work-items"]}
+      actions={["assign","start","complete","reopen"]}
+    />
+  );
+}

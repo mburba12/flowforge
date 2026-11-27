@@ -1,1 +1,11 @@
-import {PlatformWorkspace} from "@/components/part2b/platform-workspace";export default function Page(){return <PlatformWorkspace title="Integrations" resource="integrations" />}
+import { ServiceWorkspace } from "@/components/part2b/service-workspace";
+
+export default function Page() {
+  return (
+    <ServiceWorkspace
+      title="Integrations"
+      resources={["integration-connections","integration-sync-runs","webhook-deliveries"]}
+      actions={["test","sync","retry","enable","disable"]}
+    />
+  );
+}
