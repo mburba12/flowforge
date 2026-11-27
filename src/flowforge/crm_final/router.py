@@ -9,7 +9,7 @@ from flowforge.crm_sales.models import Communication, Lead, Opportunity, Quote
 from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
-from .schemas import *
+from .schemas import *  # noqa: F403, F405
 from .service import CRMFinalService
 
 router = APIRouter(prefix="/api/v2/crm/final", tags=["crm-final"])

@@ -98,15 +98,15 @@ class CompletionService:
         )
         self.db.add(po)
         await self.db.flush()
-        for i, l in enumerate(lines, 1):
+        for i, line in enumerate(lines, 1):
             self.db.add(
                 PurchaseOrderLine(
                     tenant_id=self.ctx.tenant_id,
                     purchase_order_id=po.id,
                     line_number=i,
-                    description=l.description,
-                    quantity=l.quantity,
-                    unit_price=l.unit_price,
+                    description=line.description,
+                    quantity=line.quantity,
+                    unit_price=line.unit_price,
                     expense_account_id=None,
                     received_quantity=0,
                     invoiced_quantity=0,
@@ -174,30 +174,30 @@ class CompletionService:
                 )
             ).all()
         )
-        for l in lines:
+        for count_line in lines:
             bal = await self.db.scalar(
                 select(InventoryBalance)
                 .where(
                     InventoryBalance.tenant_id == self.ctx.tenant_id,
-                    InventoryBalance.product_id == l.product_id,
+                    InventoryBalance.product_id == count_line.product_id,
                     InventoryBalance.warehouse_id == c.warehouse_id,
-                    InventoryBalance.location_id == l.location_id,
+                    InventoryBalance.location_id == count_line.location_id,
                 )
                 .with_for_update()
             )
             if not bal:
                 raise LookupError("Count balance not found")
-            bal.on_hand = l.counted_quantity
+            bal.on_hand = count_line.counted_quantity
             self.db.add(
                 InventoryMovement(
                     tenant_id=self.ctx.tenant_id,
-                    product_id=l.product_id,
+                    product_id=count_line.product_id,
                     warehouse_id=c.warehouse_id,
-                    location_id=l.location_id,
+                    location_id=count_line.location_id,
                     movement_type="count_adjustment",
-                    quantity=l.variance,
+                    quantity=count_line.variance,
                     unit_cost=0,
-                    idempotency_key=f"{key}-{l.id}",
+                    idempotency_key=f"{key}-{count_line.id}",
                 )
             )
         c.status = "approved"
@@ -226,15 +226,15 @@ class CompletionService:
                 )
             ).all()
         )
-        for l in lines:
-            qty = l.reserved_quantity - l.shipped_quantity
+        for order_line in lines:
+            qty = order_line.reserved_quantity - order_line.shipped_quantity
             if qty <= 0:
                 continue
             bal = await self.db.scalar(
                 select(InventoryBalance)
                 .where(
                     InventoryBalance.tenant_id == self.ctx.tenant_id,
-                    InventoryBalance.product_id == l.product_id,
+                    InventoryBalance.product_id == order_line.product_id,
                     InventoryBalance.warehouse_id == b.warehouse_id,
                 )
                 .with_for_update()
@@ -243,17 +243,17 @@ class CompletionService:
                 raise ValueError("Insufficient inventory for fulfillment")
             bal.on_hand -= qty
             bal.reserved = max(Decimal("0"), bal.reserved - qty)
-            l.shipped_quantity += qty
+            order_line.shipped_quantity += qty
             self.db.add(
                 InventoryMovement(
                     tenant_id=self.ctx.tenant_id,
-                    product_id=l.product_id,
+                    product_id=order_line.product_id,
                     warehouse_id=b.warehouse_id,
                     location_id=bal.location_id,
                     movement_type="shipment",
                     quantity=-qty,
                     unit_cost=0,
-                    idempotency_key=f"{b.idempotency_key}-{l.id}",
+                    idempotency_key=f"{b.idempotency_key}-{order_line.id}",
                 )
             )
         ship = Shipment(

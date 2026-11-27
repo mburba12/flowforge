@@ -9,8 +9,8 @@ from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
-from .models import *
-from .schemas import *
+from .models import *  # noqa: F403, F405
+from .schemas import *  # noqa: F403, F405
 from .service import FoundationService
 
 router = APIRouter(prefix="/api/v2/foundation-completion", tags=["foundation-completion"])

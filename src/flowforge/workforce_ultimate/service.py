@@ -18,7 +18,7 @@ from flowforge.workforce_final.models import (
     PerformanceReview,
 )
 
-from .models import *
+from .models import *  # noqa: F403, F405
 
 
 class UltimateService:

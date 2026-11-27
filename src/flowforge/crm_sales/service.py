@@ -10,8 +10,8 @@ from flowforge.phase2a.models import Organization, Party, PartyRoleAssignment
 from flowforge.phase3b.models import SalesOrder
 from flowforge.platform.services import record_change
 
-from .models import *
-from .schemas import *
+from .models import *  # noqa: F403, F405
+from .schemas import *  # noqa: F403, F405
 
 
 class CRMService:
@@ -98,31 +98,33 @@ class CRMService:
         return q
 
     async def convert_lead(self, lid):
-        l = await self.db.scalar(
+        lead = await self.db.scalar(
             select(Lead).where(Lead.id == lid, Lead.tenant_id == self.ctx.tenant_id)
         )
-        if not l or l.status == "converted":
+        if not lead or lead.status == "converted":
             raise ValueError("Lead unavailable for conversion")
         p = Party(
             tenant_id=self.ctx.tenant_id,
-            party_number=f"CUST-{l.lead_number}",
-            party_type="organization" if l.company_name else "person",
-            display_name=l.company_name or l.contact_name,
+            party_number=f"CUST-{lead.lead_number}",
+            party_type="organization" if lead.company_name else "person",
+            display_name=lead.company_name or lead.contact_name,
             status="active",
         )
         self.db.add(p)
         await self.db.flush()
-        if l.company_name:
+        if lead.company_name:
             self.db.add(
-                Organization(tenant_id=self.ctx.tenant_id, party_id=p.id, legal_name=l.company_name)
+                Organization(
+                    tenant_id=self.ctx.tenant_id, party_id=p.id, legal_name=lead.company_name
+                )
             )
         self.db.add(
             PartyRoleAssignment(tenant_id=self.ctx.tenant_id, party_id=p.id, role="customer")
         )
-        l.status = "converted"
-        l.converted_party_id = p.id
+        lead.status = "converted"
+        lead.converted_party_id = p.id
         await self.db.commit()
-        return {"lead_id": str(l.id), "party_id": str(p.id)}
+        return {"lead_id": str(lead.id), "party_id": str(p.id)}
 
     async def credit_check(self, party_id, amount):
         c = await self.db.scalar(

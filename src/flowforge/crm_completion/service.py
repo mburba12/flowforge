@@ -16,7 +16,7 @@ from flowforge.phase1a.tenancy import TenantContext
 from flowforge.phase3b.models import CustomerInvoice, SalesOrder
 from flowforge.platform.services import record_change
 
-from .models import *
+from .models import *  # noqa: F403, F405
 
 
 class CRMCompletionService:
@@ -126,7 +126,11 @@ class CRMCompletionService:
         snap = {
             "quote": {c.name: str(getattr(q, c.name)) for c in q.__table__.columns},
             "lines": [
-                {c.name: str(getattr(l, c.name)) for c in l.__table__.columns} for l in lines
+                {
+                    column.name: str(getattr(quote_line, column.name))
+                    for column in quote_line.__table__.columns
+                }
+                for quote_line in lines
             ],
         }
         r = QuoteRevision(

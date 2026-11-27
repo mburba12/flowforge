@@ -9,7 +9,7 @@ from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
-from .schemas import *
+from .schemas import *  # noqa: F403, F405
 from .service import CompletionService
 
 router = APIRouter(prefix="/api/v2/bg08/completion", tags=["bg08-completion"])

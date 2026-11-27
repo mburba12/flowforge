@@ -9,7 +9,7 @@ from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
 from .models import LandedCost, Manifest
-from .schemas import *
+from .schemas import *  # noqa: F403, F405
 from .service import CompletionService
 
 router = APIRouter(prefix="/api/v2/commerce/completion", tags=["commerce-completion"])

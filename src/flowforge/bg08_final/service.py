@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from flowforge.phase1a.tenancy import TenantContext
 from flowforge.platform.services import record_change
 
-from .models import *
+from .models import *  # noqa: F403, F405
 
 
 class BG08Service:
@@ -172,7 +172,6 @@ class BG08Service:
 
     async def depreciation(self, book_id):
         b = await self.get(AssetBook, book_id)
-        base = b.salvage_value
         asset = await self.db.execute(
             select(
                 __import__(

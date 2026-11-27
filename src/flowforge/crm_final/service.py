@@ -94,17 +94,17 @@ class CRMFinalService:
         )
         self.db.add(o)
         await self.db.flush()
-        for l in lines:
-            if l.product_id is None:
+        for quote_line in lines:
+            if quote_line.product_id is None:
                 raise ValueError("All converted quote lines require product_id")
             self.db.add(
                 SalesOrderLine(
                     tenant_id=self.ctx.tenant_id,
                     order_id=o.id,
-                    product_id=l.product_id,
-                    quantity=l.quantity,
-                    unit_price=l.unit_price,
-                    line_total=l.line_total,
+                    product_id=quote_line.product_id,
+                    quantity=quote_line.quantity,
+                    unit_price=quote_line.unit_price,
+                    line_total=quote_line.line_total,
                 )
             )
         q.status = "converted"

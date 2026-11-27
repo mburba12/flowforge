@@ -16,7 +16,7 @@ from flowforge.phase2a.models import (
 )
 from flowforge.platform.services import record_change
 
-from .models import *
+from .models import *  # noqa: F403, F405
 
 
 class FinalFoundationService:

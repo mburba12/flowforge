@@ -18,7 +18,7 @@ from flowforge.phase2a.models import (
     PaymentTerm,
 )
 
-from .schemas import *
+from .schemas import *  # noqa: F403, F405
 from .service import MasterDataService
 
 router = APIRouter(prefix="/api/v2/master-data", tags=["master-data"])

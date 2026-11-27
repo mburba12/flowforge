@@ -15,8 +15,8 @@ from flowforge.foundation_completion.models import (
 )
 from flowforge.phase1a.tenancy import TenantContext
 
-from .models import *
-from .schemas import *
+from .models import *  # noqa: F403, F405
+from .schemas import *  # noqa: F403, F405
 from .service import FinalFoundationService
 
 router = APIRouter(prefix="/api/v2/foundation-final", tags=["foundation-final"])

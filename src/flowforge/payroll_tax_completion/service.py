@@ -10,7 +10,7 @@ from flowforge.phase1a.tenancy import TenantContext
 from flowforge.phase4a_stage3.models import PayrollRunWorker
 from flowforge.platform.services import record_change
 
-from .models import *
+from .models import *  # noqa: F403, F405
 
 
 class CompletionService:
