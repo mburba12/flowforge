@@ -1,12 +1,13 @@
-from datetime import UTC, datetime
 from decimal import Decimal
 from uuid import UUID
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flowforge.phase2b.models import JournalEntry, JournalLine
+from flowforge.phase2b.models import JournalLine
+from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
 from flowforge.phase4a.models import CompensationRate, WorkerProfile
+from flowforge.phase4a_stage2.models import PayPeriod
 
 from .calculator import calculate_payroll
 from .models import (
@@ -174,68 +175,55 @@ class PayrollService:
             (x.pretax_deductions + x.posttax_deductions for x in workers), Decimal("0")
         )
         net = sum((x.net_pay for x in workers), Decimal("0"))
-        journal = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=run.ledger_id,
-            period_id=run.accounting_period_id,
-            journal_number=f"PAYROLL-{run.run_number}",
-            journal_date=datetime.now(UTC).date(),
-            description=f"Payroll {run.run_number}",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-            posted_at=datetime.now(UTC),
-        )
-        self.db.add(journal)
-        await self.db.flush()
-        lines = [
-            (accounts.wage_expense_account_id, gross, Decimal("0"), "Gross wages"),
-            (
-                accounts.employer_tax_expense_account_id,
-                employer_tax,
-                Decimal("0"),
-                "Employer payroll taxes",
-            ),
-            (
-                accounts.employee_tax_payable_account_id,
-                Decimal("0"),
-                employee_tax,
-                "Employee tax payable",
-            ),
-            (
-                accounts.employer_tax_payable_account_id,
-                Decimal("0"),
-                employer_tax,
-                "Employer tax payable",
-            ),
-            (
-                accounts.deductions_payable_account_id,
-                Decimal("0"),
-                deductions,
-                "Deductions payable",
-            ),
-            (
-                accounts.net_pay_payable_account_id,
-                Decimal("0"),
-                net,
-                "Net pay payable",
-            ),
-        ]
-        for number, (account_id, debit, credit, description) in enumerate(lines, start=1):
-            if debit == 0 and credit == 0:
-                continue
-            self.db.add(
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=number,
-                    account_id=account_id,
-                    description=description,
-                    debit=debit,
-                    credit=credit,
-                    currency_code=accounts.currency_code,
-                )
+        period = await self.db.get(PayPeriod, run.pay_period_id)
+        if period is None:
+            raise PayrollError("Pay period was not found")
+        try:
+            journal = await post_system_journal(
+                self.db,
+                tenant_id=self.tenant_id,
+                user_id=self.user_id,
+                ledger_id=run.ledger_id,
+                period_id=run.accounting_period_id,
+                journal_number=f"PAYROLL-{run.run_number}",
+                journal_date=period.pay_date,
+                description=f"Payroll {run.run_number}",
+                currency_code=accounts.currency_code,
+                lines=[
+                    PostingLine(
+                        accounts.wage_expense_account_id, gross, Decimal("0"), "Gross wages"
+                    ),
+                    PostingLine(
+                        accounts.employer_tax_expense_account_id,
+                        employer_tax,
+                        Decimal("0"),
+                        "Employer payroll taxes",
+                    ),
+                    PostingLine(
+                        accounts.employee_tax_payable_account_id,
+                        Decimal("0"),
+                        employee_tax,
+                        "Employee tax payable",
+                    ),
+                    PostingLine(
+                        accounts.employer_tax_payable_account_id,
+                        Decimal("0"),
+                        employer_tax,
+                        "Employer tax payable",
+                    ),
+                    PostingLine(
+                        accounts.deductions_payable_account_id,
+                        Decimal("0"),
+                        deductions,
+                        "Deductions payable",
+                    ),
+                    PostingLine(
+                        accounts.net_pay_payable_account_id, Decimal("0"), net, "Net pay payable"
+                    ),
+                ],
             )
+        except PostingError as exc:
+            raise PayrollError(str(exc)) from exc
         self.db.add_all(
             [
                 PayrollLiability(
@@ -271,6 +259,38 @@ class PayrollService:
         run = await self._run(run_id)
         if run.status not in {"posted", "funded", "paid"}:
             raise PayrollError("Payroll is not posted")
+        run_worker = await self.db.scalar(
+            select(PayrollRunWorker).where(
+                PayrollRunWorker.payroll_run_id == run.id,
+                PayrollRunWorker.worker_id == data.worker_id,
+                PayrollRunWorker.tenant_id == self.tenant_id,
+            )
+        )
+        if run_worker is None:
+            raise PayrollError("Worker is not part of this payroll run")
+        already_paid = await self.db.scalar(
+            select(func.coalesce(func.sum(PayrollPayment.amount), 0)).where(
+                PayrollPayment.payroll_run_id == run.id,
+                PayrollPayment.worker_id == data.worker_id,
+                PayrollPayment.tenant_id == self.tenant_id,
+            )
+        )
+        if Decimal(already_paid or 0) + data.amount > run_worker.net_pay:
+            raise PayrollError("Payment exceeds the worker's unpaid net pay")
+        liability = await self.db.scalar(
+            select(PayrollLiability)
+            .where(
+                PayrollLiability.payroll_run_id == run.id,
+                PayrollLiability.tenant_id == self.tenant_id,
+                PayrollLiability.liability_type == "net_pay",
+            )
+            .with_for_update()
+        )
+        if liability is None or data.amount > liability.open_amount:
+            raise PayrollError("Payment exceeds the open net-pay liability")
+        period = await self.db.get(PayPeriod, run.pay_period_id)
+        if period is None:
+            raise PayrollError("Pay period was not found")
         payment = PayrollPayment(
             tenant_id=self.tenant_id,
             payroll_run_id=run.id,
@@ -280,45 +300,31 @@ class PayrollService:
         )
         self.db.add(payment)
         await self.db.flush()
-        journal = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=run.ledger_id,
-            period_id=run.accounting_period_id,
-            journal_number=f"PAY-{str(payment.id)[:8]}",
-            journal_date=datetime.now(UTC).date(),
-            description="Payroll payment",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-            posted_at=datetime.now(UTC),
-        )
-        self.db.add(journal)
-        await self.db.flush()
-        self.db.add_all(
-            [
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=1,
-                    account_id=data.net_pay_payable_account_id,
-                    description="Clear net pay",
-                    debit=data.amount,
-                    credit=Decimal("0"),
-                    currency_code=data.currency_code,
-                ),
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=2,
-                    account_id=data.cash_account_id,
-                    description="Payroll cash",
-                    debit=Decimal("0"),
-                    credit=data.amount,
-                    currency_code=data.currency_code,
-                ),
-            ]
-        )
+        try:
+            journal = await post_system_journal(
+                self.db,
+                tenant_id=self.tenant_id,
+                user_id=self.user_id,
+                ledger_id=run.ledger_id,
+                period_id=run.accounting_period_id,
+                journal_number=f"PAY-{str(payment.id)[:8]}",
+                journal_date=period.pay_date,
+                description="Payroll payment",
+                currency_code=data.currency_code,
+                lines=[
+                    PostingLine(
+                        data.net_pay_payable_account_id, data.amount, Decimal("0"), "Clear net pay"
+                    ),
+                    PostingLine(data.cash_account_id, Decimal("0"), data.amount, "Payroll cash"),
+                ],
+            )
+        except PostingError as exc:
+            raise PayrollError(str(exc)) from exc
         payment.journal_id = journal.id
+        liability.open_amount -= data.amount
+        liability.status = "paid" if liability.open_amount == 0 else "partially_paid"
+        if liability.open_amount == 0:
+            run.status = "paid"
         await self.db.commit()
         await self.db.refresh(payment)
         return payment

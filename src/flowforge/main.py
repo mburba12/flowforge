@@ -1,4 +1,8 @@
-from fastapi import FastAPI
+import logging
+
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from sqlalchemy.exc import IntegrityError
 
 from flowforge.api.router import api_router
 from flowforge.catalog.router import router as catalog_router
@@ -6,6 +10,7 @@ from flowforge.integration.router import router as phase1_router
 from flowforge.part2a.resource_router import router as part2a_resource_router
 from flowforge.part2b.router import router as part2b_router
 from flowforge.phase2a.router import router as phase2a_router
+from flowforge.phase2b.posting import PostingError
 from flowforge.phase2b.router import router as phase2b_router
 from flowforge.phase3a.router import router as phase3a_router
 from flowforge.phase3b.router import router as phase3b_router
@@ -34,11 +39,33 @@ from flowforge.phase5b.router import router as phase5b_router
 from flowforge.resource_contracts.router import router as resource_contract_router
 from flowforge.support_feedback import router as support_feedback_router
 
+logger = logging.getLogger("flowforge")
+
 app = FastAPI(
     title="FlowForge API",
     version="1.0.0-phase1",
     description="Complete Phase 1 platform foundation",
 )
+
+
+@app.exception_handler(PostingError)
+async def posting_error_handler(_: Request, exc: PostingError) -> JSONResponse:
+    # Ledger rule violations (closed period, unbalanced, unpostable account) are
+    # client-correctable conflicts, never server errors.
+    return JSONResponse(status_code=409, content={"detail": str(exc)})
+
+
+@app.exception_handler(IntegrityError)
+async def integrity_error_handler(_: Request, exc: IntegrityError) -> JSONResponse:
+    # Constraint violations (unknown reference, duplicate key) are reported as
+    # conflicts without exposing database internals.
+    logger.warning("Integrity constraint violation: %s", type(exc.orig).__name__)
+    return JSONResponse(
+        status_code=409,
+        content={"detail": "The request conflicts with existing or missing reference data"},
+    )
+
+
 app.include_router(api_router)
 app.include_router(phase1_router)
 app.include_router(phase2a_router)

@@ -2,10 +2,11 @@ from datetime import date
 from decimal import Decimal
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.phase2b.models import JournalEntry, JournalLine
+from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
 
 from .integration_models import (
     APReconciliationRun,
@@ -64,48 +65,24 @@ class APPaymentService:
             )
         )
 
-        count = await self.db.scalar(
-            select(func.count())
-            .select_from(JournalEntry)
-            .where(JournalEntry.tenant_id == self.tenant_id)
-        )
-        journal = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=ledger_id,
-            period_id=period_id,
-            journal_number=f"PAY-{int(count or 0) + 1:08d}",
-            journal_date=payment_date,
-            description="Vendor payment",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-        )
-        self.db.add(journal)
-        await self.db.flush()
-        self.db.add_all(
-            [
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=1,
-                    account_id=ap_account_id,
-                    description="Clear accounts payable",
-                    debit=amount,
-                    credit=Decimal("0"),
-                    currency_code=currency_code,
-                ),
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=2,
-                    account_id=cash_account_id,
-                    description="Vendor payment cash",
-                    debit=Decimal("0"),
-                    credit=amount,
-                    currency_code=currency_code,
-                ),
-            ]
-        )
+        try:
+            journal = await post_system_journal(
+                self.db,
+                tenant_id=self.tenant_id,
+                user_id=self.user_id,
+                ledger_id=ledger_id,
+                period_id=period_id,
+                journal_number=f"APPAY-{str(payment.id)[:8]}",
+                journal_date=payment_date,
+                description="Vendor payment",
+                currency_code=currency_code,
+                lines=[
+                    PostingLine(ap_account_id, amount, Decimal("0"), "Clear accounts payable"),
+                    PostingLine(cash_account_id, Decimal("0"), amount, "Vendor payment cash"),
+                ],
+            )
+        except PostingError as exc:
+            raise APPaymentError(str(exc)) from exc
         payment.journal_id = journal.id
         item.open_amount -= amount
         if item.open_amount == 0:

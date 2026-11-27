@@ -1,11 +1,11 @@
-from datetime import UTC, date, datetime
+from datetime import date
 from decimal import Decimal
 from uuid import UUID
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flowforge.phase2b.models import JournalEntry, JournalLine
+from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
 
 from .models import (
     AROpenItem,
@@ -130,6 +130,43 @@ class CommerceService:
             raise Phase3BError("Insufficient inventory")
 
         balance.on_hand = new_on_hand
+
+        if data.accounting is not None:
+            product = await self.db.scalar(
+                select(Product).where(
+                    Product.id == data.product_id, Product.tenant_id == self.tenant_id
+                )
+            )
+            if product is None:
+                raise Phase3BError("Product was not found")
+            value = abs(data.quantity) * data.unit_cost
+            if value > 0:
+                inventory_side = (
+                    (value, Decimal("0")) if data.quantity > 0 else (Decimal("0"), value)
+                )
+                try:
+                    await post_system_journal(
+                        self.db,
+                        tenant_id=self.tenant_id,
+                        user_id=self.user_id,
+                        ledger_id=data.accounting.ledger_id,
+                        period_id=data.accounting.period_id,
+                        journal_number=f"INVADJ-{data.idempotency_key[:40]}",
+                        journal_date=data.accounting.adjustment_date,
+                        description="Inventory adjustment",
+                        currency_code=data.accounting.currency_code,
+                        lines=[
+                            PostingLine(product.inventory_account_id, *inventory_side, "Inventory"),
+                            PostingLine(
+                                data.accounting.offset_account_id,
+                                inventory_side[1],
+                                inventory_side[0],
+                                "Inventory adjustment offset",
+                            ),
+                        ],
+                    )
+                except PostingError as exc:
+                    raise Phase3BError(str(exc)) from exc
 
         movement_type = "adjustment_in" if data.quantity > 0 else "adjustment_out"
 
@@ -300,6 +337,7 @@ class CommerceService:
             ).all()
         )
         cost = Decimal("0")
+        cogs_by_account: dict[tuple[UUID, UUID], Decimal] = {}
         for line in lines:
             product = await self.db.get(Product, line.product_id)
             if product is None:
@@ -326,7 +364,10 @@ class CommerceService:
             balance.on_hand -= line.quantity
             balance.reserved -= line.quantity
             line.shipped_quantity = line.quantity
-            cost += line.quantity * product.standard_cost
+            line_cost = line.quantity * product.standard_cost
+            cost += line_cost
+            key = (product.cogs_account_id, product.inventory_account_id)
+            cogs_by_account[key] = cogs_by_account.get(key, Decimal("0")) + line_cost
         shipment = Shipment(
             tenant_id=self.tenant_id,
             order_id=o.id,
@@ -334,82 +375,46 @@ class CommerceService:
             ship_date=ship_date,
         )
         self.db.add(shipment)
-        cogs = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=o.ledger_id,
-            period_id=o.period_id,
-            journal_number=f"COGS-{str(o.id)[:8]}",
-            journal_date=ship_date,
-            description="Shipment COGS",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-            posted_at=datetime.now(UTC),
-        )
-        self.db.add(cogs)
-        await self.db.flush()
-        p = await self.db.get(Product, lines[0].product_id)
-        if p is None:
-            raise Phase3BError("Shipment product was not found")
-        self.db.add_all(
-            [
-                JournalLine(
+        try:
+            if cost > 0:
+                cogs_lines: list[PostingLine] = []
+                for (cogs_account_id, inventory_account_id), amount in cogs_by_account.items():
+                    cogs_lines.append(PostingLine(cogs_account_id, amount, Decimal("0"), "COGS"))
+                    cogs_lines.append(
+                        PostingLine(inventory_account_id, Decimal("0"), amount, "Inventory")
+                    )
+                cogs = await post_system_journal(
+                    self.db,
                     tenant_id=self.tenant_id,
-                    journal_id=cogs.id,
-                    line_number=1,
-                    account_id=p.cogs_account_id,
-                    debit=cost,
-                    credit=0,
+                    user_id=self.user_id,
+                    ledger_id=o.ledger_id,
+                    period_id=o.period_id,
+                    journal_number=f"COGS-{str(o.id)[:8]}",
+                    journal_date=ship_date,
+                    description="Shipment COGS",
                     currency_code=customer.default_currency,
-                ),
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=cogs.id,
-                    line_number=2,
-                    account_id=p.inventory_account_id,
-                    debit=0,
-                    credit=cost,
-                    currency_code=customer.default_currency,
-                ),
-            ]
-        )
-        shipment.cogs_journal_id = cogs.id
-        ar = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=o.ledger_id,
-            period_id=o.period_id,
-            journal_number=f"AR-{str(o.id)[:8]}",
-            journal_date=ship_date,
-            description="Customer invoice",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-            posted_at=datetime.now(UTC),
-        )
-        self.db.add(ar)
-        await self.db.flush()
-        self.db.add_all(
-            [
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=ar.id,
-                    line_number=1,
-                    account_id=customer.ar_account_id,
-                    debit=o.total_amount,
-                    credit=0,
-                    currency_code=customer.default_currency,
-                ),
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=ar.id,
-                    line_number=2,
-                    account_id=customer.revenue_account_id,
-                    debit=0,
-                    credit=o.total_amount,
-                    currency_code=customer.default_currency,
-                ),
-            ]
-        )
+                    lines=cogs_lines,
+                )
+                shipment.cogs_journal_id = cogs.id
+            ar = await post_system_journal(
+                self.db,
+                tenant_id=self.tenant_id,
+                user_id=self.user_id,
+                ledger_id=o.ledger_id,
+                period_id=o.period_id,
+                journal_number=f"AR-{str(o.id)[:8]}",
+                journal_date=ship_date,
+                description="Customer invoice",
+                currency_code=customer.default_currency,
+                lines=[
+                    PostingLine(customer.ar_account_id, o.total_amount, Decimal("0"), "Receivable"),
+                    PostingLine(
+                        customer.revenue_account_id, Decimal("0"), o.total_amount, "Revenue"
+                    ),
+                ],
+            )
+        except PostingError as exc:
+            raise Phase3BError(str(exc)) from exc
         inv = CustomerInvoice(
             tenant_id=self.tenant_id,
             customer_id=customer.id,
@@ -454,44 +459,28 @@ class CommerceService:
         )
         self.db.add(r)
         await self.db.flush()
-        j = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=d.ledger_id,
-            period_id=d.period_id,
-            journal_number=f"RCPT-{str(r.id)[:8]}",
-            journal_date=d.receipt_date,
-            description="Customer receipt",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-            posted_at=datetime.now(UTC),
-        )
-        self.db.add(j)
-        await self.db.flush()
-        self.db.add_all(
-            [
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=j.id,
-                    line_number=1,
-                    account_id=d.cash_account_id,
-                    debit=d.amount,
-                    credit=0,
-                    currency_code=d.currency_code,
-                ),
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=j.id,
-                    line_number=2,
-                    account_id=d.ar_account_id,
-                    debit=0,
-                    credit=d.amount,
-                    currency_code=d.currency_code,
-                ),
-                ReceiptAllocation(
-                    tenant_id=self.tenant_id, receipt_id=r.id, open_item_id=item.id, amount=d.amount
-                ),
-            ]
+        try:
+            j = await post_system_journal(
+                self.db,
+                tenant_id=self.tenant_id,
+                user_id=self.user_id,
+                ledger_id=d.ledger_id,
+                period_id=d.period_id,
+                journal_number=f"RCPT-{str(r.id)[:8]}",
+                journal_date=d.receipt_date,
+                description="Customer receipt",
+                currency_code=d.currency_code,
+                lines=[
+                    PostingLine(d.cash_account_id, d.amount, Decimal("0"), "Cash receipt"),
+                    PostingLine(d.ar_account_id, Decimal("0"), d.amount, "Clear receivable"),
+                ],
+            )
+        except PostingError as exc:
+            raise Phase3BError(str(exc)) from exc
+        self.db.add(
+            ReceiptAllocation(
+                tenant_id=self.tenant_id, receipt_id=r.id, open_item_id=item.id, amount=d.amount
+            )
         )
         r.journal_id = j.id
         item.open_amount -= d.amount
