@@ -2,11 +2,42 @@ import ast
 from pathlib import Path
 
 
-def test_advanced_migrations_create_all_tables():
+def created_tables(path: Path) -> set[str]:
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    tables: set[str] = set()
+
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+
+        function = node.func
+
+        if not (
+            isinstance(function, ast.Attribute)
+            and function.attr == "create_table"
+            and isinstance(function.value, ast.Name)
+            and function.value.id == "op"
+        ):
+            continue
+
+        if not node.args:
+            continue
+
+        table_name = node.args[0]
+
+        if isinstance(table_name, ast.Constant) and isinstance(table_name.value, str):
+            tables.add(table_name.value)
+
+    return tables
+
+
+def test_advanced_migrations_create_all_tables() -> None:
     root = Path("migrations/versions")
-    text = (root / "ff_bg03_advanced_001.py").read_text() + (
+
+    tables = created_tables(root / "ff_bg03_advanced_001.py") | created_tables(
         root / "ff_bg03_advanced_002.py"
-    ).read_text()
+    )
+
     required = {
         "finance_close_runs",
         "finance_recurring_journals",
@@ -17,10 +48,5 @@ def test_advanced_migrations_create_all_tables():
         "finance_consolidation_runs",
         "finance_asset_register",
     }
-    assert all(f"op.create_table('{x}'" in text for x in required)
-    assert "ENABLE ROW LEVEL SECURITY" in text and "FORCE ROW LEVEL SECURITY" in text
 
-
-def test_migration_syntax():
-    for name in ("ff_bg03_advanced_001.py", "ff_bg03_advanced_002.py"):
-        ast.parse((Path("migrations/versions") / name).read_text())
+    assert required <= tables

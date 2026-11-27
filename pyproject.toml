@@ -7,6 +7,7 @@ dependencies=["fastapi>=0.115","uvicorn[standard]>=0.30","sqlalchemy[asyncio]>=2
 [project.optional-dependencies]
 dev=["pytest>=8.3","pytest-asyncio>=0.24","httpx>=0.27","ruff>=0.6","mypy>=1.11"]
 [tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
 pythonpath=["src"]
 asyncio_mode="auto"
 asyncio_default_fixture_loop_scope="function"
