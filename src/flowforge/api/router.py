@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from flowforge.api.routes import auth, health, platform, tenants
+from flowforge.bg08_completion.router import router as bg08_completion_router
 from flowforge.bg08_final.router import router as bg08_final_router
 from flowforge.payroll_tax_completion.router import router as payroll_tax_completion_router
 from flowforge.payroll_tax_final.router import router as payroll_tax_final_router
@@ -47,3 +48,4 @@ api_router.include_router(workforce_ultimate_router)
 api_router.include_router(payroll_tax_final_router)
 api_router.include_router(payroll_tax_completion_router)
 api_router.include_router(bg08_final_router)
+api_router.include_router(bg08_completion_router)
