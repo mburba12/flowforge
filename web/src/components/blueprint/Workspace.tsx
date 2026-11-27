@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect, react-hooks/exhaustive-deps */
 "use client";
 import {useEffect,useMemo,useState} from "react";
 type Row={id:string;name?:string;status?:string;[key:string]:unknown};

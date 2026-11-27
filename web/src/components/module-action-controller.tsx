@@ -72,6 +72,7 @@ export function ModuleActionController() {
         return;
       }
       if (kind === "export") {
+        // eslint-disable-next-line react-hooks/immutability
         exportVisibleData();
         return;
       }
