@@ -1,3 +1,4 @@
+# Usage: docker compose --env-file .env.phase-c -f docker-compose.yml -f docker-compose.phase-c.yml ...
 services:
   web:
     build:
@@ -15,4 +16,4 @@ services:
     restart: unless-stopped
   api:
     environment:
-      DATABASE_URL: ${FLOWFORGE_APP_DATABASE_URL:?set FLOWFORGE_APP_DATABASE_URL in .env}
+      DATABASE_URL: ${COMPOSE_APP_DATABASE_URL:?run compose with --env-file .env.phase-c}

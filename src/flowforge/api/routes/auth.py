@@ -4,7 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import create_access_token, hash_password, verify_password
-from flowforge.db.session import get_db
+from flowforge.db.session import enter_tenant_context, get_db
 from flowforge.platform.models import Permission, Role, RolePermission, Tenant, User, UserRole
 from flowforge.platform.schemas import BootstrapRequest, LoginRequest, TokenResponse
 from flowforge.platform.services import record_change
@@ -19,6 +19,9 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
     tenant = Tenant(**body.tenant.model_dump())
     db.add(tenant)
     await db.flush()
+    # Tenant-owned tables are protected by forced RLS; install the new
+    # tenant's context before writing any of them.
+    await enter_tenant_context(db, tenant.id)
     user = User(
         tenant_id=tenant.id,
         email=body.email.lower(),
@@ -26,6 +29,8 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
         display_name=body.display_name,
     )
     db.add(user)
+    await db.flush()
+    await enter_tenant_context(db, tenant.id, user.id)
     role = Role(tenant_id=tenant.id, name="Owner", description="Tenant owner")
     db.add(role)
     await db.flush()
@@ -70,6 +75,8 @@ async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)) -> Token
     )
     if tenant is None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid credentials")
+    # users is tenant-owned and RLS-protected; scope the lookup to this tenant.
+    await enter_tenant_context(db, tenant.id)
     user = await db.scalar(
         select(User).where(
             User.tenant_id == tenant.id, User.email == body.email.lower(), User.is_active.is_(True)

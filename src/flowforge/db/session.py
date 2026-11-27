@@ -72,6 +72,32 @@ def install_transaction_tenant_context(
     )
 
 
+async def enter_tenant_context(
+    session: AsyncSession,
+    tenant_id: UUID,
+    user_id: UUID | None = None,
+) -> None:
+    """
+    Install tenant (and optionally user) context on the current transaction.
+
+    For pre-principal flows (bootstrap, login) that use get_db: once the
+    tenant is known server-side, row-level security policies on tenant-owned
+    tables require app.current_tenant_id. The setting is transaction-local.
+    When user_id is supplied, it is also stored in session.info so the
+    after_begin listener reinstalls it for later transactions.
+    """
+    await session.execute(
+        text(
+            "SELECT set_config('app.current_tenant_id', :tenant_id, true),"
+            " set_config('app.current_user_id', :user_id, true)"
+        ),
+        {"tenant_id": str(tenant_id), "user_id": str(user_id) if user_id else ""},
+    )
+    if user_id is not None:
+        session.info["tenant_id"] = tenant_id
+        session.info["user_id"] = user_id
+
+
 async def get_db() -> AsyncIterator[AsyncSession]:
     """
     Bootstrap database dependency.
