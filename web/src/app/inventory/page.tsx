@@ -1,2 +1,1 @@
-import {BackendFeatureWorkspace} from "@/components/backend-feature-workspace";
-export default function Page(){return <BackendFeatureWorkspace title="Inventory and purchasing" description="Live operations mapped from the FlowForge OpenAPI contract." tags={["phase3a","phase3b"]} />}
+import {DomainWorkspace} from "@/components/part2a/domain-workspace";export default function Page(){return <DomainWorkspace title="Inventory" resources={["products","warehouses","warehouse_locations","inventory_balances"]} />}
