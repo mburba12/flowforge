@@ -13,7 +13,7 @@ class PriceListCreate(BaseModel):
 
 class PriceItemCreate(BaseModel):
     product_id: UUID
-    min_quantity: Decimal = Field(default=1, gt=0)
+    min_quantity: Decimal = Field(default=Decimal("1"), gt=0)
     unit_price: Decimal = Field(ge=0)
     discount_bps: int = Field(default=0, ge=0, le=10000)
 

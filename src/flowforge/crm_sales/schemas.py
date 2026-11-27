@@ -21,7 +21,7 @@ class OpportunityCreate(BaseModel):
     name: str
     party_id: UUID | None = None
     lead_id: UUID | None = None
-    amount: Decimal = Field(default=0, ge=0)
+    amount: Decimal = Field(default=Decimal("0"), ge=0)
     currency_code: str = Field(default="USD", min_length=3, max_length=3)
     expected_close_date: date | None = None
     owner_id: UUID | None = None
@@ -42,7 +42,7 @@ class CampaignCreate(BaseModel):
     name: str
     starts_on: date | None = None
     ends_on: date | None = None
-    budget: Decimal = Field(default=0, ge=0)
+    budget: Decimal = Field(default=Decimal("0"), ge=0)
 
 
 class QuoteLineCreate(BaseModel):

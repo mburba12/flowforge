@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -20,7 +21,7 @@ class ArtifactClassify(BaseModel):
 class DelegationCreate(BaseModel):
     grantor_id: UUID
     delegate_id: UUID
-    scope: dict
+    scope: dict[str, Any]
     starts_at: datetime
     expires_at: datetime
 
@@ -41,7 +42,7 @@ class SodCreate(BaseModel):
 class ImportCreate(BaseModel):
     entity_type: str
     source_reference: str
-    mapping: dict = {}
+    mapping: dict[str, Any] = {}
 
 
 class LineageCreate(BaseModel):
@@ -55,7 +56,7 @@ class LineageCreate(BaseModel):
 class IndexCreate(BaseModel):
     entity_type: str
     entity_id: UUID
-    document: dict
+    document: dict[str, Any]
 
 
 class Decision(BaseModel):

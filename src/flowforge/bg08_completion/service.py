@@ -68,6 +68,8 @@ class CompletionService:
         p = await self.db.scalar(
             select(Plan).where(Plan.id == s.plan_id, Plan.tenant_id == self.ctx.tenant_id)
         )
+        if p is None:
+            raise LookupError("Plan not found")
         days = 30
         remaining = max(
             Decimal("0"), Decimal((s.renews_on - b.effective_date).days if s.renews_on else days)

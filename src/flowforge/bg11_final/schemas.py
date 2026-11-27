@@ -1,3 +1,4 @@
+from typing import Any
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -9,21 +10,21 @@ class ConnectionCreate(BaseModel):
     )
     provider_code: str
     mode: str = Field(default="sandbox", pattern="^(sandbox|production)$")
-    configuration: dict = {}
+    configuration: dict[str, Any] = {}
 
 
 class OperationCreate(BaseModel):
     connection_id: UUID
     operation: str
     idempotency_key: str = Field(min_length=8)
-    request: dict = {}
+    request: dict[str, Any] = {}
 
 
 class WebhookCreate(BaseModel):
     connection_id: UUID
     event_id: str
     signature_valid: bool
-    payload: dict
+    payload: dict[str, Any]
 
 
 class StatusAction(BaseModel):

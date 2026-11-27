@@ -1,5 +1,5 @@
 import json
-from typing import Annotated
+from typing import Annotated, Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -18,7 +18,7 @@ D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 @router.post("/connections", status_code=201)
-async def connection(b: ConnectionCreate, p: P, db: D):
+async def connection(b: ConnectionCreate, p: P, db: D) -> Any:
     if b.mode == "production":
         raise HTTPException(409, "Production mode requires explicit approval transition")
     x = ProviderConnection(
@@ -34,7 +34,7 @@ async def connection(b: ConnectionCreate, p: P, db: D):
 
 
 @router.post("/connections/{id}/status")
-async def status(id: UUID, b: StatusAction, p: P, db: D):
+async def status(id: UUID, b: StatusAction, p: P, db: D) -> Any:
     x = await db.scalar(
         select(ProviderConnection).where(
             ProviderConnection.id == id, ProviderConnection.tenant_id == p.tenant_id
@@ -60,7 +60,7 @@ async def status(id: UUID, b: StatusAction, p: P, db: D):
 
 
 @router.post("/operations", status_code=201)
-async def operation(b: OperationCreate, p: P, db: D):
+async def operation(b: OperationCreate, p: P, db: D) -> Any:
     c = await db.scalar(
         select(ProviderConnection).where(
             ProviderConnection.id == b.connection_id, ProviderConnection.tenant_id == p.tenant_id
@@ -84,7 +84,7 @@ async def operation(b: OperationCreate, p: P, db: D):
 
 
 @router.post("/webhooks", status_code=201)
-async def webhook(b: WebhookCreate, p: P, db: D):
+async def webhook(b: WebhookCreate, p: P, db: D) -> Any:
     if not b.signature_valid:
         raise HTTPException(401, "Invalid webhook signature")
     x = WebhookReceipt(

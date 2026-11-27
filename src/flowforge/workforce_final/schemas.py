@@ -81,8 +81,8 @@ class BenefitPlanCreate(BaseModel):
     code: str
     name: str
     plan_type: str
-    employee_cost: Decimal = Field(default=0, ge=0)
-    employer_cost: Decimal = Field(default=0, ge=0)
+    employee_cost: Decimal = Field(default=Decimal("0"), ge=0)
+    employer_cost: Decimal = Field(default=Decimal("0"), ge=0)
 
 
 class BenefitEnroll(BaseModel):

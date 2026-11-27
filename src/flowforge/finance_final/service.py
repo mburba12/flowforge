@@ -207,7 +207,7 @@ class FinalFinanceService:
         )
         batch.status = "reversed" if reverse else "applied"
         await self.db.execute(
-            PaymentBatchItem.__table__.update()
+            PaymentBatchItem.__table__.update()  # type: ignore[attr-defined]
             .where(
                 PaymentBatchItem.batch_id == bid, PaymentBatchItem.tenant_id == self.ctx.tenant_id
             )

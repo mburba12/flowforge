@@ -47,9 +47,9 @@ class UltimateService:
         count = int(
             (
                 await self.db.scalar(
-                    select(func.count())
+                    select(func.count())  # type: ignore[arg-type]
                     .select_from(models[code])
-                    .where(models[code].tenant_id == self.ctx.tenant_id)
+                    .where(models[code].tenant_id == self.ctx.tenant_id)  # type: ignore[attr-defined]
                 )
             )
             or 0

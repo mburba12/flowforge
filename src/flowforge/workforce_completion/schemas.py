@@ -39,7 +39,7 @@ class TimecardCreate(BaseModel):
     period_start: date
     period_end: date
     regular_hours: Decimal = Field(ge=0, le=744)
-    overtime_hours: Decimal = Field(default=0, ge=0, le=744)
+    overtime_hours: Decimal = Field(default=Decimal("0"), ge=0, le=744)
 
 
 class LeavePolicyCreate(BaseModel):
@@ -47,7 +47,7 @@ class LeavePolicyCreate(BaseModel):
     name: str
     unit: str = "hours"
     annual_entitlement: Decimal = Field(ge=0)
-    carryover_limit: Decimal = Field(default=0, ge=0)
+    carryover_limit: Decimal = Field(default=Decimal("0"), ge=0)
 
 
 class LeaveCreate(BaseModel):

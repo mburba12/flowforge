@@ -1,3 +1,4 @@
+from typing import Any
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
@@ -48,14 +49,14 @@ class RoleCreate(BaseModel):
 
 class WorkflowCreate(BaseModel):
     name: str
-    definition: dict[str, object] = Field(default_factory=dict)
+    definition: dict[str, object] = Field(default_factory=dict[str, Any])
 
 
 class DocumentCreate(BaseModel):
     filename: str
     content_type: str
     storage_key: str
-    metadata: dict[str, object] = Field(default_factory=dict)
+    metadata: dict[str, object] = Field(default_factory=dict[str, Any])
 
 
 class NotificationCreate(BaseModel):
@@ -67,4 +68,4 @@ class NotificationCreate(BaseModel):
 class IntegrationCreate(BaseModel):
     provider: str
     name: str
-    config: dict[str, object] = Field(default_factory=dict)
+    config: dict[str, object] = Field(default_factory=dict[str, Any])

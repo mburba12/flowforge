@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -18,7 +19,7 @@ class InterviewFeedback(BaseModel):
 class TemplateCreate(BaseModel):
     code: str
     name: str
-    items: list[dict] = Field(min_length=1)
+    items: list[dict[str, Any]] = Field(min_length=1)
 
 
 class DependentCreate(BaseModel):
@@ -42,9 +43,9 @@ class TransferCreate(BaseModel):
     source_type: str
     source_id: UUID
     idempotency_key: str = Field(min_length=8)
-    payload: dict
+    payload: dict[str, Any]
 
 
 class ReportRequest(BaseModel):
     report_code: str
-    parameters: dict = {}
+    parameters: dict[str, Any] = {}

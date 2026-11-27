@@ -1,5 +1,5 @@
 import json
-from typing import Annotated
+from typing import Annotated, Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -18,7 +18,7 @@ P = Annotated[Principal, Depends(current_principal)]
 D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
-def svc(p: P, db: D):
+def svc(p: P, db: D) -> Any:
     return UltimateService(db, TenantContext(p.tenant_id, p.user_id))
 
 

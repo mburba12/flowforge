@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 
@@ -6,15 +8,15 @@ class InfoCreate(BaseModel):
         pattern="^(metric|dashboard|report|schedule|export|semantic_model|search_document|customer_portal|supplier_portal|employee_portal|auditor_portal)$"
     )
     code: str
-    payload: dict = {}
+    payload: dict[str, Any] = {}
     permission_code: str | None = None
 
 
 class CopilotCreate(BaseModel):
     prompt: str
-    context: dict
-    response: dict
-    citations: list[dict] = []
+    context: dict[str, Any]
+    response: dict[str, Any]
+    citations: list[dict[str, Any]] = []
     risk: str = Field(pattern="^(low|medium|high)$")
     cost_micros: int = Field(default=0, ge=0)
 

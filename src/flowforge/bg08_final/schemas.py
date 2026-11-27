@@ -18,7 +18,7 @@ class SubscriptionCreate(BaseModel):
     customer_id: UUID
     plan_id: UUID
     starts_on: date
-    quantity: Decimal = Field(default=1, gt=0)
+    quantity: Decimal = Field(default=Decimal("1"), gt=0)
 
 
 class EntitlementCreate(BaseModel):
@@ -51,7 +51,7 @@ class ProjectCreate(BaseModel):
     customer_id: UUID | None = None
     starts_on: date | None = None
     ends_on: date | None = None
-    budget: Decimal = Field(default=0, ge=0)
+    budget: Decimal = Field(default=Decimal("0"), ge=0)
     billing_method: str
     manager_id: UUID | None = None
 
@@ -60,7 +60,7 @@ class TaskCreate(BaseModel):
     parent_id: UUID | None = None
     code: str
     name: str
-    budget_hours: Decimal = Field(default=0, ge=0)
+    budget_hours: Decimal = Field(default=Decimal("0"), ge=0)
     milestone: bool = False
 
 
@@ -70,7 +70,7 @@ class TimeCreate(BaseModel):
     work_date: date
     hours: Decimal = Field(gt=0, le=24)
     billable: bool = True
-    rate: Decimal = Field(default=0, ge=0)
+    rate: Decimal = Field(default=Decimal("0"), ge=0)
 
 
 class ExpenseCreate(BaseModel):
@@ -93,7 +93,7 @@ class BookCreate(BaseModel):
     book_code: str
     method: str = Field(pattern="^(straight_line|declining_balance|units)$")
     useful_life_periods: int = Field(gt=0)
-    salvage_value: Decimal = Field(default=0, ge=0)
+    salvage_value: Decimal = Field(default=Decimal("0"), ge=0)
 
 
 class AssetTxnCreate(BaseModel):

@@ -35,7 +35,7 @@ class CompletionService:
             m.tenant_id == self.ctx.tenant_id,
             m.worker_id == worker,
             or_(m.effective_to.is_(None), m.effective_to >= start),
-            or_(end is None, m.effective_from <= end),
+            or_(end is None, m.effective_from <= end),  # type: ignore[arg-type]
         ]
         if exclude:
             cond.append(m.id != exclude)

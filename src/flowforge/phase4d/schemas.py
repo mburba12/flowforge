@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Any, Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -40,4 +40,4 @@ class RelationshipCreate(BaseModel):
     source_entity_id: UUID
     target_entity_id: UUID
     relationship_type: str
-    evidence: dict[str, object] = Field(default_factory=dict)
+    evidence: dict[str, object] = Field(default_factory=dict[str, Any])

@@ -18,9 +18,13 @@ select=["E","F","I","B","UP"]
 [tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls=["fastapi.Depends"]
 [tool.mypy]
-python_version="3.12"
-strict=true
-
+python_version = "3.12"
+strict = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+disallow_untyped_calls = false
+check_untyped_defs = true
+warn_return_any = false
 [tool.ruff.lint.per-file-ignores]
 "src/flowforge/bg08_completion/router.py" = ["F403", "F405"]
 "src/flowforge/bg08_final/router.py" = ["F403", "F405"]

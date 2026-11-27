@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from decimal import Decimal
+from typing import Any
 from uuid import UUID
 
 from sqlalchemy import func, select
@@ -37,7 +38,7 @@ class CompletionService:
         await self.db.refresh(o)
         return o
 
-    async def execution(self, t: str, sid: UUID, key: str, result: dict):
+    async def execution(self, t: str, sid: UUID, key: str, result: dict[str, Any]):
         old = await self.db.scalar(
             select(FinanceExecution).where(
                 FinanceExecution.tenant_id == self.ctx.tenant_id,
@@ -116,6 +117,8 @@ class CompletionService:
                 AccountingPeriod.id == c.period_id, AccountingPeriod.tenant_id == self.ctx.tenant_id
             )
         )
+        if period is None:
+            raise LookupError("Accounting period not found")
         period.status = "open"
         c.status = "reopened"
         await self.db.commit()

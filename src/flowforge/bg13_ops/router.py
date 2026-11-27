@@ -1,6 +1,6 @@
 import json
 from datetime import UTC, datetime
-from typing import Annotated
+from typing import Annotated, Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -19,7 +19,7 @@ D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 @router.post("/runs", status_code=201)
-async def create(b: RunCreate, p: P, db: D):
+async def create(b: RunCreate, p: P, db: D) -> Any:
     x = OperationalRun(
         tenant_id=p.tenant_id,
         run_type=b.run_type,
@@ -32,7 +32,7 @@ async def create(b: RunCreate, p: P, db: D):
 
 
 @router.post("/runs/{id}/complete")
-async def complete(id: UUID, b: RunComplete, p: P, db: D):
+async def complete(id: UUID, b: RunComplete, p: P, db: D) -> Any:
     x = await db.scalar(
         select(OperationalRun).where(
             OperationalRun.id == id, OperationalRun.tenant_id == p.tenant_id

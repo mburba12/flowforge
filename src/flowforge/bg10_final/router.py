@@ -1,6 +1,6 @@
 import hashlib
 import json
-from typing import Annotated
+from typing import Annotated, Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -19,7 +19,7 @@ D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 @router.post("/records", status_code=201)
-async def record(b: InfoCreate, p: P, db: D):
+async def record(b: InfoCreate, p: P, db: D) -> Any:
     x = InformationRecord(
         tenant_id=p.tenant_id,
         record_type=b.record_type,
@@ -34,7 +34,7 @@ async def record(b: InfoCreate, p: P, db: D):
 
 
 @router.get("/search")
-async def search(q: str, p: P, db: D):
+async def search(q: str, p: P, db: D) -> Any:
     return list(
         (
             await db.scalars(
@@ -53,7 +53,7 @@ async def search(q: str, p: P, db: D):
 
 
 @router.post("/copilot/proposals", status_code=201)
-async def proposal(b: CopilotCreate, p: P, db: D):
+async def proposal(b: CopilotCreate, p: P, db: D) -> Any:
     if b.risk == "high" and not b.citations:
         raise HTTPException(422, "High-risk proposal requires citations")
     x = CopilotProposal(
@@ -71,7 +71,7 @@ async def proposal(b: CopilotCreate, p: P, db: D):
 
 
 @router.post("/copilot/proposals/{id}/action")
-async def action(id: UUID, b: ProposalAction, p: P, db: D):
+async def action(id: UUID, b: ProposalAction, p: P, db: D) -> Any:
     x = await db.scalar(
         select(CopilotProposal).where(
             CopilotProposal.id == id, CopilotProposal.tenant_id == p.tenant_id

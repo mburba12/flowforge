@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -30,8 +30,8 @@ def svc(p: P, db: D) -> MasterDataService:
     return MasterDataService(db, TenantContext(p.tenant_id, p.user_id))
 
 
-def guard(fn):
-    async def wrapped(*args, **kwargs):
+def guard(fn) -> Any:
+    async def wrapped(*args, **kwargs) -> Any:
         try:
             return await fn(*args, **kwargs)
         except LookupError as e:

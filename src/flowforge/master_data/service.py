@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 from uuid import UUID
 
 from sqlalchemy import select, update
@@ -194,7 +194,7 @@ class MasterDataService:
     async def list_for(
         self, model: type[M], party_column: Any | None = None, pid: UUID | None = None
     ) -> list[M]:
-        stmt = select(model).where(model.tenant_id == self.ctx.tenant_id)
+        stmt = select(model).where(cast(Any, model).tenant_id == self.ctx.tenant_id)
         if party_column is not None and pid is not None:
             stmt = stmt.where(party_column == pid)
         return list((await self.db.scalars(stmt)).all())

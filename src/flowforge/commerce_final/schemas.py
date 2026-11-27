@@ -1,5 +1,6 @@
 from datetime import date, datetime
 from decimal import Decimal
+from typing import Any
 from uuid import UUID
 
 from pydantic import BaseModel, Field, model_validator
@@ -48,7 +49,7 @@ class ReturnCreate(BaseModel):
     number: str
     order_id: UUID
     reason: str
-    refund_amount: Decimal = Field(default=0, ge=0)
+    refund_amount: Decimal = Field(default=Decimal("0"), ge=0)
 
 
 class RateCreate(BaseModel):
@@ -80,7 +81,7 @@ class ClaimCreate(BaseModel):
     claim_number: str
     reason: str
     amount: Decimal = Field(ge=0)
-    evidence: dict = {}
+    evidence: dict[str, Any] = {}
 
 
 class Action(BaseModel):

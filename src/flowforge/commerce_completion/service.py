@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from datetime import UTC, datetime
 from decimal import Decimal
+from typing import Any
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -26,6 +27,7 @@ from flowforge.phase3b.models import (
     SalesOrderLine,
     Shipment,
 )
+from flowforge.platform.services import record_change
 
 from .models import CommerceEvent
 
@@ -34,6 +36,21 @@ class CompletionService:
     def __init__(self, db: AsyncSession, ctx: TenantContext):
         self.db = db
         self.ctx = ctx
+
+    async def save(self, obj: Any, event_name: str) -> Any:
+        self.db.add(obj)
+        await self.db.flush()
+        await record_change(
+            self.db,
+            self.ctx.tenant_id,
+            self.ctx.user_id,
+            "created",
+            event_name,
+            str(obj.id),
+        )
+        await self.db.commit()
+        await self.db.refresh(obj)
+        return obj
 
     async def idem(self, op, key, typ, id):
         old = await self.db.scalar(

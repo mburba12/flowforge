@@ -159,7 +159,12 @@ class CRMCompletionService:
             str(
                 (
                     await self.db.scalar(
-                        select(func.coalesce(func.sum(CustomerInvoice.balance_due), 0)).where(
+                        select(
+                            func.coalesce(
+                                func.sum(CustomerInvoice.total_amount),
+                                0,
+                            )
+                        ).where(
                             CustomerInvoice.tenant_id == self.ctx.tenant_id,
                             CustomerInvoice.customer_id == party_id,
                         )

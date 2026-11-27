@@ -1,5 +1,5 @@
 import json
-from typing import Annotated
+from typing import Annotated, Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -18,7 +18,7 @@ D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
 @router.post("/records", status_code=201)
-async def create(b: RecordCreate, p: P, db: D):
+async def create(b: RecordCreate, p: P, db: D) -> Any:
     x = ManufacturingRecord(
         tenant_id=p.tenant_id,
         record_type=b.record_type,
@@ -33,7 +33,7 @@ async def create(b: RecordCreate, p: P, db: D):
 
 
 @router.post("/records/{id}/transition")
-async def transition(id: UUID, b: Transition, p: P, db: D):
+async def transition(id: UUID, b: Transition, p: P, db: D) -> Any:
     x = await db.scalar(
         select(ManufacturingRecord).where(
             ManufacturingRecord.id == id, ManufacturingRecord.tenant_id == p.tenant_id
@@ -61,7 +61,7 @@ async def transition(id: UUID, b: Transition, p: P, db: D):
 
 
 @router.post("/genealogy", status_code=201)
-async def genealogy(b: GenealogyCreate, p: P, db: D):
+async def genealogy(b: GenealogyCreate, p: P, db: D) -> Any:
     if b.parent_lot == b.child_lot:
         raise HTTPException(422, "Self genealogy forbidden")
     x = GenealogyEdge(
