@@ -1,27 +1,156 @@
 """Complete BG-03 advanced finance tables, indexes, and tenant RLS."""
-from alembic import op
+
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
-revision='ff_bg03_advanced_002';down_revision='ff_bg03_advanced_001';branch_labels=None;depends_on=None
-NEW_TABLES=['finance_recurring_journals','finance_payment_batches','finance_reconciliation_sessions','finance_budget_versions','finance_budget_lines','finance_consolidation_runs','finance_asset_register']
-ALL_TABLES=['finance_close_runs',*NEW_TABLES]
+
+revision = "ff_bg03_advanced_002"
+down_revision = "ff_bg03_advanced_001"
+branch_labels = None
+depends_on = None
+NEW_TABLES = [
+    "finance_recurring_journals",
+    "finance_payment_batches",
+    "finance_reconciliation_sessions",
+    "finance_budget_versions",
+    "finance_budget_lines",
+    "finance_consolidation_runs",
+    "finance_asset_register",
+]
+ALL_TABLES = ["finance_close_runs", *NEW_TABLES]
+
+
 def _base():
- return [sa.Column('id',postgresql.UUID(),primary_key=True),sa.Column('tenant_id',postgresql.UUID(),sa.ForeignKey('tenants.id',ondelete='CASCADE'),nullable=False)]
+    return [
+        sa.Column("id", postgresql.UUID(), primary_key=True),
+        sa.Column(
+            "tenant_id",
+            postgresql.UUID(),
+            sa.ForeignKey("tenants.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+    ]
+
+
 def _rls(table):
- op.create_index(f'ix_{table}_tenant_id',table,['tenant_id'])
- op.execute(sa.text(f'ALTER TABLE "{table}" ENABLE ROW LEVEL SECURITY'))
- op.execute(sa.text(f'ALTER TABLE "{table}" FORCE ROW LEVEL SECURITY'))
- op.execute(sa.text(f'''CREATE POLICY "{table}_tenant_isolation" ON "{table}" USING (tenant_id = NULLIF(current_setting('app.current_tenant_id', true), '')::uuid) WITH CHECK (tenant_id = NULLIF(current_setting('app.current_tenant_id', true), '')::uuid)'''))
+    op.create_index(f"ix_{table}_tenant_id", table, ["tenant_id"])
+    op.execute(sa.text(f'ALTER TABLE "{table}" ENABLE ROW LEVEL SECURITY'))
+    op.execute(sa.text(f'ALTER TABLE "{table}" FORCE ROW LEVEL SECURITY'))
+    op.execute(
+        sa.text(
+            f'''CREATE POLICY "{table}_tenant_isolation" ON "{table}" USING (tenant_id = NULLIF(current_setting('app.current_tenant_id', true), '')::uuid) WITH CHECK (tenant_id = NULLIF(current_setting('app.current_tenant_id', true), '')::uuid)'''
+        )
+    )
+
+
 def upgrade():
- op.create_table('finance_recurring_journals',*_base(),sa.Column('code',sa.String(60),nullable=False),sa.Column('description',sa.String(300),nullable=False),sa.Column('ledger_id',postgresql.UUID(),sa.ForeignKey('ledgers.id'),nullable=False),sa.Column('frequency',sa.String(30),nullable=False),sa.Column('next_run_date',sa.Date(),nullable=False),sa.Column('debit_account_id',postgresql.UUID(),sa.ForeignKey('accounts.id'),nullable=False),sa.Column('credit_account_id',postgresql.UUID(),sa.ForeignKey('accounts.id'),nullable=False),sa.Column('amount',sa.Numeric(20,6),nullable=False),sa.Column('active',sa.Boolean(),nullable=False,server_default=sa.true()),sa.UniqueConstraint('tenant_id','code',name='uq_recurring_journal_code'))
- op.create_table('finance_payment_batches',*_base(),sa.Column('batch_number',sa.String(80),nullable=False),sa.Column('kind',sa.String(20),nullable=False),sa.Column('status',sa.String(30),nullable=False,server_default='draft'),sa.Column('currency_code',sa.String(3),nullable=False),sa.Column('total_amount',sa.Numeric(20,6),nullable=False,server_default='0'),sa.Column('item_count',sa.Integer(),nullable=False,server_default='0'),sa.Column('approved_by',postgresql.UUID(),sa.ForeignKey('users.id')),sa.Column('released_at',sa.DateTime(timezone=True)),sa.Column('provider_reference',sa.String(200)),sa.UniqueConstraint('tenant_id','batch_number',name='uq_payment_batch_number'))
- op.create_table('finance_reconciliation_sessions',*_base(),sa.Column('account_id',postgresql.UUID(),sa.ForeignKey('accounts.id')),sa.Column('source_name',sa.String(80),nullable=False),sa.Column('target_name',sa.String(80),nullable=False),sa.Column('source_balance',sa.Numeric(20,6),nullable=False),sa.Column('target_balance',sa.Numeric(20,6),nullable=False),sa.Column('tolerance',sa.Numeric(20,6),nullable=False,server_default='0'),sa.Column('status',sa.String(30),nullable=False,server_default='open'),sa.Column('variance',sa.Numeric(20,6),nullable=False),sa.Column('certified_by',postgresql.UUID(),sa.ForeignKey('users.id')),sa.Column('evidence',sa.Text(),nullable=False,server_default=''))
- op.create_table('finance_budget_versions',*_base(),sa.Column('code',sa.String(60),nullable=False),sa.Column('name',sa.String(200),nullable=False),sa.Column('fiscal_year',sa.Integer(),nullable=False),sa.Column('status',sa.String(30),nullable=False,server_default='draft'),sa.Column('locked',sa.Boolean(),nullable=False,server_default=sa.false()),sa.Column('approved_by',postgresql.UUID(),sa.ForeignKey('users.id')),sa.UniqueConstraint('tenant_id','code',name='uq_budget_version_code'))
- op.create_table('finance_budget_lines',*_base(),sa.Column('version_id',postgresql.UUID(),sa.ForeignKey('finance_budget_versions.id',ondelete='CASCADE'),nullable=False),sa.Column('account_id',postgresql.UUID(),sa.ForeignKey('accounts.id'),nullable=False),sa.Column('period_number',sa.Integer(),nullable=False),sa.Column('amount',sa.Numeric(20,6),nullable=False),sa.Column('dimension_json',sa.Text(),nullable=False,server_default='{}'),sa.UniqueConstraint('tenant_id','version_id','account_id','period_number',name='uq_budget_line'))
- op.create_table('finance_consolidation_runs',*_base(),sa.Column('code',sa.String(80),nullable=False),sa.Column('as_of_date',sa.Date(),nullable=False),sa.Column('status',sa.String(30),nullable=False,server_default='draft'),sa.Column('source_entities',sa.Integer(),nullable=False,server_default='0'),sa.Column('elimination_variance',sa.Numeric(20,6),nullable=False,server_default='0'),sa.Column('created_by',postgresql.UUID(),sa.ForeignKey('users.id'),nullable=False),sa.Column('approved_by',postgresql.UUID(),sa.ForeignKey('users.id')),sa.UniqueConstraint('tenant_id','code',name='uq_consolidation_run_code'))
- op.create_table('finance_asset_register',*_base(),sa.Column('asset_number',sa.String(80),nullable=False),sa.Column('name',sa.String(240),nullable=False),sa.Column('acquisition_date',sa.Date(),nullable=False),sa.Column('cost',sa.Numeric(20,6),nullable=False),sa.Column('salvage_value',sa.Numeric(20,6),nullable=False,server_default='0'),sa.Column('useful_life_periods',sa.Integer(),nullable=False),sa.Column('accumulated_depreciation',sa.Numeric(20,6),nullable=False,server_default='0'),sa.Column('status',sa.String(30),nullable=False,server_default='active'),sa.UniqueConstraint('tenant_id','asset_number',name='uq_asset_number'))
- for table in ALL_TABLES:_rls(table)
+    op.create_table(
+        "finance_recurring_journals",
+        *_base(),
+        sa.Column("code", sa.String(60), nullable=False),
+        sa.Column("description", sa.String(300), nullable=False),
+        sa.Column("ledger_id", postgresql.UUID(), sa.ForeignKey("ledgers.id"), nullable=False),
+        sa.Column("frequency", sa.String(30), nullable=False),
+        sa.Column("next_run_date", sa.Date(), nullable=False),
+        sa.Column(
+            "debit_account_id", postgresql.UUID(), sa.ForeignKey("accounts.id"), nullable=False
+        ),
+        sa.Column(
+            "credit_account_id", postgresql.UUID(), sa.ForeignKey("accounts.id"), nullable=False
+        ),
+        sa.Column("amount", sa.Numeric(20, 6), nullable=False),
+        sa.Column("active", sa.Boolean(), nullable=False, server_default=sa.true()),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_recurring_journal_code"),
+    )
+    op.create_table(
+        "finance_payment_batches",
+        *_base(),
+        sa.Column("batch_number", sa.String(80), nullable=False),
+        sa.Column("kind", sa.String(20), nullable=False),
+        sa.Column("status", sa.String(30), nullable=False, server_default="draft"),
+        sa.Column("currency_code", sa.String(3), nullable=False),
+        sa.Column("total_amount", sa.Numeric(20, 6), nullable=False, server_default="0"),
+        sa.Column("item_count", sa.Integer(), nullable=False, server_default="0"),
+        sa.Column("approved_by", postgresql.UUID(), sa.ForeignKey("users.id")),
+        sa.Column("released_at", sa.DateTime(timezone=True)),
+        sa.Column("provider_reference", sa.String(200)),
+        sa.UniqueConstraint("tenant_id", "batch_number", name="uq_payment_batch_number"),
+    )
+    op.create_table(
+        "finance_reconciliation_sessions",
+        *_base(),
+        sa.Column("account_id", postgresql.UUID(), sa.ForeignKey("accounts.id")),
+        sa.Column("source_name", sa.String(80), nullable=False),
+        sa.Column("target_name", sa.String(80), nullable=False),
+        sa.Column("source_balance", sa.Numeric(20, 6), nullable=False),
+        sa.Column("target_balance", sa.Numeric(20, 6), nullable=False),
+        sa.Column("tolerance", sa.Numeric(20, 6), nullable=False, server_default="0"),
+        sa.Column("status", sa.String(30), nullable=False, server_default="open"),
+        sa.Column("variance", sa.Numeric(20, 6), nullable=False),
+        sa.Column("certified_by", postgresql.UUID(), sa.ForeignKey("users.id")),
+        sa.Column("evidence", sa.Text(), nullable=False, server_default=""),
+    )
+    op.create_table(
+        "finance_budget_versions",
+        *_base(),
+        sa.Column("code", sa.String(60), nullable=False),
+        sa.Column("name", sa.String(200), nullable=False),
+        sa.Column("fiscal_year", sa.Integer(), nullable=False),
+        sa.Column("status", sa.String(30), nullable=False, server_default="draft"),
+        sa.Column("locked", sa.Boolean(), nullable=False, server_default=sa.false()),
+        sa.Column("approved_by", postgresql.UUID(), sa.ForeignKey("users.id")),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_budget_version_code"),
+    )
+    op.create_table(
+        "finance_budget_lines",
+        *_base(),
+        sa.Column(
+            "version_id",
+            postgresql.UUID(),
+            sa.ForeignKey("finance_budget_versions.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+        sa.Column("account_id", postgresql.UUID(), sa.ForeignKey("accounts.id"), nullable=False),
+        sa.Column("period_number", sa.Integer(), nullable=False),
+        sa.Column("amount", sa.Numeric(20, 6), nullable=False),
+        sa.Column("dimension_json", sa.Text(), nullable=False, server_default="{}"),
+        sa.UniqueConstraint(
+            "tenant_id", "version_id", "account_id", "period_number", name="uq_budget_line"
+        ),
+    )
+    op.create_table(
+        "finance_consolidation_runs",
+        *_base(),
+        sa.Column("code", sa.String(80), nullable=False),
+        sa.Column("as_of_date", sa.Date(), nullable=False),
+        sa.Column("status", sa.String(30), nullable=False, server_default="draft"),
+        sa.Column("source_entities", sa.Integer(), nullable=False, server_default="0"),
+        sa.Column("elimination_variance", sa.Numeric(20, 6), nullable=False, server_default="0"),
+        sa.Column("created_by", postgresql.UUID(), sa.ForeignKey("users.id"), nullable=False),
+        sa.Column("approved_by", postgresql.UUID(), sa.ForeignKey("users.id")),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_consolidation_run_code"),
+    )
+    op.create_table(
+        "finance_asset_register",
+        *_base(),
+        sa.Column("asset_number", sa.String(80), nullable=False),
+        sa.Column("name", sa.String(240), nullable=False),
+        sa.Column("acquisition_date", sa.Date(), nullable=False),
+        sa.Column("cost", sa.Numeric(20, 6), nullable=False),
+        sa.Column("salvage_value", sa.Numeric(20, 6), nullable=False, server_default="0"),
+        sa.Column("useful_life_periods", sa.Integer(), nullable=False),
+        sa.Column(
+            "accumulated_depreciation", sa.Numeric(20, 6), nullable=False, server_default="0"
+        ),
+        sa.Column("status", sa.String(30), nullable=False, server_default="active"),
+        sa.UniqueConstraint("tenant_id", "asset_number", name="uq_asset_number"),
+    )
+    for table in ALL_TABLES:
+        _rls(table)
+
+
 def downgrade():
- for table in reversed(ALL_TABLES):
-  op.execute(sa.text(f'DROP POLICY IF EXISTS "{table}_tenant_isolation" ON "{table}"'))
- for table in reversed(NEW_TABLES):op.drop_table(table)
+    for table in reversed(ALL_TABLES):
+        op.execute(sa.text(f'DROP POLICY IF EXISTS "{table}_tenant_isolation" ON "{table}"'))
+    for table in reversed(NEW_TABLES):
+        op.drop_table(table)

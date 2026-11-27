@@ -1,20 +1,109 @@
-from datetime import date,datetime
+from datetime import date, datetime
 from decimal import Decimal
-from uuid import UUID,uuid4
-from sqlalchemy import Boolean,Date,DateTime,ForeignKey,Integer,Numeric,String,Text,UniqueConstraint,func
-from sqlalchemy.orm import Mapped,mapped_column
+from uuid import UUID, uuid4
+
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    UniqueConstraint,
+    func,
+)
+from sqlalchemy.orm import Mapped, mapped_column
+
 from flowforge.db.base import Base
+
+
 class T:
- id:Mapped[UUID]=mapped_column(primary_key=True,default=uuid4);tenant_id:Mapped[UUID]=mapped_column(ForeignKey('tenants.id',ondelete='CASCADE'),index=True);created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),server_default=func.now());version:Mapped[int]=mapped_column(Integer,default=1)
-class RetroCalculation(T,Base):
- __tablename__='payroll_retro_calculations_final';worker_id:Mapped[UUID]=mapped_column(ForeignKey('worker_profiles.id'));source_run_id:Mapped[UUID]=mapped_column(ForeignKey('payroll_runs.id'));effective_date:Mapped[date];old_amount:Mapped[Decimal]=mapped_column(Numeric(20,6));new_amount:Mapped[Decimal]=mapped_column(Numeric(20,6));difference:Mapped[Decimal]=mapped_column(Numeric(20,6));status:Mapped[str]=mapped_column(String(30),default='draft');approved_by:Mapped[UUID|None]=mapped_column(ForeignKey('users.id'))
-class GarnishmentOrder(T,Base):
- __tablename__='payroll_garnishments_final';worker_id:Mapped[UUID]=mapped_column(ForeignKey('worker_profiles.id'));authority:Mapped[str]=mapped_column(String(200));case_reference:Mapped[str]=mapped_column(String(120));priority:Mapped[int]=mapped_column(Integer,default=100);amount_type:Mapped[str]=mapped_column(String(30));amount:Mapped[Decimal]=mapped_column(Numeric(20,6));maximum_total:Mapped[Decimal|None]=mapped_column(Numeric(20,6));withheld_total:Mapped[Decimal]=mapped_column(Numeric(20,6),default=0);status:Mapped[str]=mapped_column(String(30),default='active');__table_args__=(UniqueConstraint('tenant_id','case_reference',name='uq_garnishment_case'),)
-class PayrollPaymentBatch(T,Base):
- __tablename__='payroll_payment_batches_final';payroll_run_id:Mapped[UUID]=mapped_column(ForeignKey('payroll_runs.id'));batch_number:Mapped[str]=mapped_column(String(100));payment_method:Mapped[str]=mapped_column(String(30));status:Mapped[str]=mapped_column(String(30),default='draft');total_amount:Mapped[Decimal]=mapped_column(Numeric(20,6),default=0);approved_by:Mapped[UUID|None]=mapped_column(ForeignKey('users.id'));released_at:Mapped[datetime|None]=mapped_column(DateTime(timezone=True));provider_reference:Mapped[str|None]=mapped_column(String(200));__table_args__=(UniqueConstraint('tenant_id','batch_number',name='uq_payroll_payment_batch'),)
-class YearEndForm(T,Base):
- __tablename__='payroll_year_end_forms_final';worker_id:Mapped[UUID]=mapped_column(ForeignKey('worker_profiles.id'));tax_year:Mapped[int]=mapped_column(Integer);form_type:Mapped[str]=mapped_column(String(30));status:Mapped[str]=mapped_column(String(30),default='draft');wages:Mapped[Decimal]=mapped_column(Numeric(20,6),default=0);tax_withheld:Mapped[Decimal]=mapped_column(Numeric(20,6),default=0);storage_reference:Mapped[str|None]=mapped_column(String(500));checksum:Mapped[str|None]=mapped_column(String(128));__table_args__=(UniqueConstraint('tenant_id','worker_id','tax_year','form_type',name='uq_year_end_form'),)
-class TaxFilingSubmission(T,Base):
- __tablename__='tax_filing_submissions_final';tax_return_id:Mapped[UUID]=mapped_column(ForeignKey('tax_returns.id'));submission_key:Mapped[str]=mapped_column(String(160));status:Mapped[str]=mapped_column(String(30),default='prepared');provider_code:Mapped[str|None]=mapped_column(String(80));provider_reference:Mapped[str|None]=mapped_column(String(200));response_json:Mapped[str]=mapped_column(Text,default='{}');submitted_at:Mapped[datetime|None]=mapped_column(DateTime(timezone=True));__table_args__=(UniqueConstraint('tenant_id','submission_key',name='uq_tax_submission_key'),)
-class PayrollPermissionDecision(T,Base):
- __tablename__='payroll_permission_decisions_final';operation:Mapped[str]=mapped_column(String(80));aggregate_type:Mapped[str]=mapped_column(String(60));aggregate_id:Mapped[UUID];actor_user_id:Mapped[UUID]=mapped_column(ForeignKey('users.id'));allowed:Mapped[bool]=mapped_column(Boolean);reason:Mapped[str]=mapped_column(Text)
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    tenant_id: Mapped[UUID] = mapped_column(
+        ForeignKey("tenants.id", ondelete="CASCADE"), index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    version: Mapped[int] = mapped_column(Integer, default=1)
+
+
+class RetroCalculation(T, Base):
+    __tablename__ = "payroll_retro_calculations_final"
+    worker_id: Mapped[UUID] = mapped_column(ForeignKey("worker_profiles.id"))
+    source_run_id: Mapped[UUID] = mapped_column(ForeignKey("payroll_runs.id"))
+    effective_date: Mapped[date]
+    old_amount: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    new_amount: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    difference: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    approved_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+
+
+class GarnishmentOrder(T, Base):
+    __tablename__ = "payroll_garnishments_final"
+    worker_id: Mapped[UUID] = mapped_column(ForeignKey("worker_profiles.id"))
+    authority: Mapped[str] = mapped_column(String(200))
+    case_reference: Mapped[str] = mapped_column(String(120))
+    priority: Mapped[int] = mapped_column(Integer, default=100)
+    amount_type: Mapped[str] = mapped_column(String(30))
+    amount: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    maximum_total: Mapped[Decimal | None] = mapped_column(Numeric(20, 6))
+    withheld_total: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    status: Mapped[str] = mapped_column(String(30), default="active")
+    __table_args__ = (UniqueConstraint("tenant_id", "case_reference", name="uq_garnishment_case"),)
+
+
+class PayrollPaymentBatch(T, Base):
+    __tablename__ = "payroll_payment_batches_final"
+    payroll_run_id: Mapped[UUID] = mapped_column(ForeignKey("payroll_runs.id"))
+    batch_number: Mapped[str] = mapped_column(String(100))
+    payment_method: Mapped[str] = mapped_column(String(30))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    total_amount: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    approved_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    released_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    provider_reference: Mapped[str | None] = mapped_column(String(200))
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "batch_number", name="uq_payroll_payment_batch"),
+    )
+
+
+class YearEndForm(T, Base):
+    __tablename__ = "payroll_year_end_forms_final"
+    worker_id: Mapped[UUID] = mapped_column(ForeignKey("worker_profiles.id"))
+    tax_year: Mapped[int] = mapped_column(Integer)
+    form_type: Mapped[str] = mapped_column(String(30))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    wages: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    tax_withheld: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    storage_reference: Mapped[str | None] = mapped_column(String(500))
+    checksum: Mapped[str | None] = mapped_column(String(128))
+    __table_args__ = (
+        UniqueConstraint(
+            "tenant_id", "worker_id", "tax_year", "form_type", name="uq_year_end_form"
+        ),
+    )
+
+
+class TaxFilingSubmission(T, Base):
+    __tablename__ = "tax_filing_submissions_final"
+    tax_return_id: Mapped[UUID] = mapped_column(ForeignKey("tax_returns.id"))
+    submission_key: Mapped[str] = mapped_column(String(160))
+    status: Mapped[str] = mapped_column(String(30), default="prepared")
+    provider_code: Mapped[str | None] = mapped_column(String(80))
+    provider_reference: Mapped[str | None] = mapped_column(String(200))
+    response_json: Mapped[str] = mapped_column(Text, default="{}")
+    submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "submission_key", name="uq_tax_submission_key"),
+    )
+
+
+class PayrollPermissionDecision(T, Base):
+    __tablename__ = "payroll_permission_decisions_final"
+    operation: Mapped[str] = mapped_column(String(80))
+    aggregate_type: Mapped[str] = mapped_column(String(60))
+    aggregate_id: Mapped[UUID]
+    actor_user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    allowed: Mapped[bool] = mapped_column(Boolean)
+    reason: Mapped[str] = mapped_column(Text)

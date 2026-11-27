@@ -1,23 +1,200 @@
 """Complete remaining BG-06 workforce lifecycle backend."""
-from alembic import op
+
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
-revision='ff_bg06_completion_001';down_revision='ff_bg06_workforce_001';branch_labels=None;depends_on=None
-TABLES=['workforce_assignments_final','workforce_compensation_final','workforce_schedules_final','workforce_timecards_final','workforce_leave_policies_final','workforce_leave_requests_final','workforce_lifecycle_tasks_final','workforce_retirement_plans_final','workforce_retirement_enrollments_final','workforce_documents_final','workforce_executions_final']
-def b():return [sa.Column('id',postgresql.UUID(),primary_key=True),sa.Column('tenant_id',postgresql.UUID(),sa.ForeignKey('tenants.id',ondelete='CASCADE'),nullable=False),sa.Column('created_at',sa.DateTime(timezone=True),server_default=sa.func.now()),sa.Column('version',sa.Integer(),server_default='1')]
-def r(t):op.create_index(f'ix_{t}_tenant_id',t,['tenant_id']);op.execute(sa.text(f'ALTER TABLE "{t}" ENABLE ROW LEVEL SECURITY'));op.execute(sa.text(f'ALTER TABLE "{t}" FORCE ROW LEVEL SECURITY'));op.execute(sa.text(f'''CREATE POLICY "{t}_tenant_isolation" ON "{t}" USING (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid) WITH CHECK (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid)'''))
+
+revision = "ff_bg06_completion_001"
+down_revision = "ff_bg06_workforce_001"
+branch_labels = None
+depends_on = None
+TABLES = [
+    "workforce_assignments_final",
+    "workforce_compensation_final",
+    "workforce_schedules_final",
+    "workforce_timecards_final",
+    "workforce_leave_policies_final",
+    "workforce_leave_requests_final",
+    "workforce_lifecycle_tasks_final",
+    "workforce_retirement_plans_final",
+    "workforce_retirement_enrollments_final",
+    "workforce_documents_final",
+    "workforce_executions_final",
+]
+
+
+def b():
+    return [
+        sa.Column("id", postgresql.UUID(), primary_key=True),
+        sa.Column(
+            "tenant_id",
+            postgresql.UUID(),
+            sa.ForeignKey("tenants.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
+        sa.Column("version", sa.Integer(), server_default="1"),
+    ]
+
+
+def r(t):
+    op.create_index(f"ix_{t}_tenant_id", t, ["tenant_id"])
+    op.execute(sa.text(f'ALTER TABLE "{t}" ENABLE ROW LEVEL SECURITY'))
+    op.execute(sa.text(f'ALTER TABLE "{t}" FORCE ROW LEVEL SECURITY'))
+    op.execute(
+        sa.text(
+            f'''CREATE POLICY "{t}_tenant_isolation" ON "{t}" USING (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid) WITH CHECK (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid)'''
+        )
+    )
+
+
 def upgrade():
- op.create_table('workforce_assignments_final',*b(),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('position_id',postgresql.UUID(),sa.ForeignKey('workforce_positions_final.id')),sa.Column('manager_worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('legal_entity_id',postgresql.UUID()),sa.Column('organization_unit_id',postgresql.UUID(),sa.ForeignKey('organization_units.id')),sa.Column('employment_type',sa.String(40)),sa.Column('effective_from',sa.Date()),sa.Column('effective_to',sa.Date()),sa.Column('status',sa.String(30),server_default='active'))
- op.create_table('workforce_compensation_final',*b(),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('effective_from',sa.Date()),sa.Column('effective_to',sa.Date()),sa.Column('pay_type',sa.String(30)),sa.Column('amount',sa.Numeric(20,2)),sa.Column('currency_code',sa.String(3)),sa.Column('frequency',sa.String(30)),sa.Column('approved_by',postgresql.UUID(),sa.ForeignKey('users.id')))
- op.create_table('workforce_schedules_final',*b(),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('work_date',sa.Date()),sa.Column('start_time',sa.Time()),sa.Column('end_time',sa.Time()),sa.Column('timezone',sa.String(80)),sa.Column('status',sa.String(30),server_default='scheduled'),sa.UniqueConstraint('tenant_id','worker_id','work_date',name='uq_worker_schedule_date'))
- op.create_table('workforce_timecards_final',*b(),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('period_start',sa.Date()),sa.Column('period_end',sa.Date()),sa.Column('regular_hours',sa.Numeric(8,2),server_default='0'),sa.Column('overtime_hours',sa.Numeric(8,2),server_default='0'),sa.Column('status',sa.String(30),server_default='draft'),sa.Column('submitted_at',sa.DateTime(timezone=True)),sa.Column('approved_by',postgresql.UUID(),sa.ForeignKey('users.id')),sa.UniqueConstraint('tenant_id','worker_id','period_start','period_end',name='uq_worker_timecard_period'))
- op.create_table('workforce_leave_policies_final',*b(),sa.Column('code',sa.String(80)),sa.Column('name',sa.String(200)),sa.Column('unit',sa.String(20),server_default='hours'),sa.Column('annual_entitlement',sa.Numeric(10,2),server_default='0'),sa.Column('carryover_limit',sa.Numeric(10,2),server_default='0'),sa.Column('active',sa.Boolean(),server_default=sa.true()),sa.UniqueConstraint('tenant_id','code',name='uq_leave_policy'))
- op.create_table('workforce_leave_requests_final',*b(),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('policy_id',postgresql.UUID(),sa.ForeignKey('workforce_leave_policies_final.id')),sa.Column('starts_on',sa.Date()),sa.Column('ends_on',sa.Date()),sa.Column('units',sa.Numeric(10,2)),sa.Column('status',sa.String(30),server_default='draft'),sa.Column('reason',sa.Text()),sa.Column('approved_by',postgresql.UUID(),sa.ForeignKey('users.id')))
- op.create_table('workforce_lifecycle_tasks_final',*b(),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('lifecycle_type',sa.String(30)),sa.Column('task_code',sa.String(80)),sa.Column('title',sa.String(240)),sa.Column('status',sa.String(30),server_default='open'),sa.Column('assigned_to',postgresql.UUID(),sa.ForeignKey('users.id')),sa.Column('due_at',sa.DateTime(timezone=True)),sa.Column('completed_at',sa.DateTime(timezone=True)),sa.UniqueConstraint('tenant_id','worker_id','lifecycle_type','task_code',name='uq_worker_lifecycle_task'))
- op.create_table('workforce_retirement_plans_final',*b(),sa.Column('code',sa.String(80)),sa.Column('name',sa.String(200)),sa.Column('employee_max_bps',sa.Integer(),server_default='10000'),sa.Column('employer_match_bps',sa.Integer(),server_default='0'),sa.Column('active',sa.Boolean(),server_default=sa.true()),sa.UniqueConstraint('tenant_id','code',name='uq_retirement_plan'))
- op.create_table('workforce_retirement_enrollments_final',*b(),sa.Column('plan_id',postgresql.UUID(),sa.ForeignKey('workforce_retirement_plans_final.id')),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('employee_bps',sa.Integer()),sa.Column('effective_date',sa.Date()),sa.Column('status',sa.String(30),server_default='active'),sa.UniqueConstraint('tenant_id','plan_id','worker_id','effective_date',name='uq_retirement_enrollment'))
- op.create_table('workforce_documents_final',*b(),sa.Column('worker_id',postgresql.UUID(),sa.ForeignKey('worker_profiles.id')),sa.Column('document_type',sa.String(80)),sa.Column('storage_reference',sa.String(500)),sa.Column('classification',sa.String(40),server_default='confidential'),sa.Column('status',sa.String(30),server_default='active'),sa.Column('retention_until',sa.Date()),sa.Column('legal_hold',sa.Boolean(),server_default=sa.false()))
- op.create_table('workforce_executions_final',*b(),sa.Column('operation',sa.String(80)),sa.Column('idempotency_key',sa.String(160)),sa.Column('aggregate_type',sa.String(60)),sa.Column('aggregate_id',postgresql.UUID()),sa.Column('result_json',sa.Text(),server_default='{}'),sa.Column('actor_user_id',postgresql.UUID(),sa.ForeignKey('users.id')),sa.UniqueConstraint('tenant_id','operation','idempotency_key',name='uq_workforce_execution'))
- for t in TABLES:r(t)
+    op.create_table(
+        "workforce_assignments_final",
+        *b(),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("position_id", postgresql.UUID(), sa.ForeignKey("workforce_positions_final.id")),
+        sa.Column("manager_worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("legal_entity_id", postgresql.UUID()),
+        sa.Column(
+            "organization_unit_id", postgresql.UUID(), sa.ForeignKey("organization_units.id")
+        ),
+        sa.Column("employment_type", sa.String(40)),
+        sa.Column("effective_from", sa.Date()),
+        sa.Column("effective_to", sa.Date()),
+        sa.Column("status", sa.String(30), server_default="active"),
+    )
+    op.create_table(
+        "workforce_compensation_final",
+        *b(),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("effective_from", sa.Date()),
+        sa.Column("effective_to", sa.Date()),
+        sa.Column("pay_type", sa.String(30)),
+        sa.Column("amount", sa.Numeric(20, 2)),
+        sa.Column("currency_code", sa.String(3)),
+        sa.Column("frequency", sa.String(30)),
+        sa.Column("approved_by", postgresql.UUID(), sa.ForeignKey("users.id")),
+    )
+    op.create_table(
+        "workforce_schedules_final",
+        *b(),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("work_date", sa.Date()),
+        sa.Column("start_time", sa.Time()),
+        sa.Column("end_time", sa.Time()),
+        sa.Column("timezone", sa.String(80)),
+        sa.Column("status", sa.String(30), server_default="scheduled"),
+        sa.UniqueConstraint("tenant_id", "worker_id", "work_date", name="uq_worker_schedule_date"),
+    )
+    op.create_table(
+        "workforce_timecards_final",
+        *b(),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("period_start", sa.Date()),
+        sa.Column("period_end", sa.Date()),
+        sa.Column("regular_hours", sa.Numeric(8, 2), server_default="0"),
+        sa.Column("overtime_hours", sa.Numeric(8, 2), server_default="0"),
+        sa.Column("status", sa.String(30), server_default="draft"),
+        sa.Column("submitted_at", sa.DateTime(timezone=True)),
+        sa.Column("approved_by", postgresql.UUID(), sa.ForeignKey("users.id")),
+        sa.UniqueConstraint(
+            "tenant_id", "worker_id", "period_start", "period_end", name="uq_worker_timecard_period"
+        ),
+    )
+    op.create_table(
+        "workforce_leave_policies_final",
+        *b(),
+        sa.Column("code", sa.String(80)),
+        sa.Column("name", sa.String(200)),
+        sa.Column("unit", sa.String(20), server_default="hours"),
+        sa.Column("annual_entitlement", sa.Numeric(10, 2), server_default="0"),
+        sa.Column("carryover_limit", sa.Numeric(10, 2), server_default="0"),
+        sa.Column("active", sa.Boolean(), server_default=sa.true()),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_leave_policy"),
+    )
+    op.create_table(
+        "workforce_leave_requests_final",
+        *b(),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column(
+            "policy_id", postgresql.UUID(), sa.ForeignKey("workforce_leave_policies_final.id")
+        ),
+        sa.Column("starts_on", sa.Date()),
+        sa.Column("ends_on", sa.Date()),
+        sa.Column("units", sa.Numeric(10, 2)),
+        sa.Column("status", sa.String(30), server_default="draft"),
+        sa.Column("reason", sa.Text()),
+        sa.Column("approved_by", postgresql.UUID(), sa.ForeignKey("users.id")),
+    )
+    op.create_table(
+        "workforce_lifecycle_tasks_final",
+        *b(),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("lifecycle_type", sa.String(30)),
+        sa.Column("task_code", sa.String(80)),
+        sa.Column("title", sa.String(240)),
+        sa.Column("status", sa.String(30), server_default="open"),
+        sa.Column("assigned_to", postgresql.UUID(), sa.ForeignKey("users.id")),
+        sa.Column("due_at", sa.DateTime(timezone=True)),
+        sa.Column("completed_at", sa.DateTime(timezone=True)),
+        sa.UniqueConstraint(
+            "tenant_id", "worker_id", "lifecycle_type", "task_code", name="uq_worker_lifecycle_task"
+        ),
+    )
+    op.create_table(
+        "workforce_retirement_plans_final",
+        *b(),
+        sa.Column("code", sa.String(80)),
+        sa.Column("name", sa.String(200)),
+        sa.Column("employee_max_bps", sa.Integer(), server_default="10000"),
+        sa.Column("employer_match_bps", sa.Integer(), server_default="0"),
+        sa.Column("active", sa.Boolean(), server_default=sa.true()),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_retirement_plan"),
+    )
+    op.create_table(
+        "workforce_retirement_enrollments_final",
+        *b(),
+        sa.Column(
+            "plan_id", postgresql.UUID(), sa.ForeignKey("workforce_retirement_plans_final.id")
+        ),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("employee_bps", sa.Integer()),
+        sa.Column("effective_date", sa.Date()),
+        sa.Column("status", sa.String(30), server_default="active"),
+        sa.UniqueConstraint(
+            "tenant_id", "plan_id", "worker_id", "effective_date", name="uq_retirement_enrollment"
+        ),
+    )
+    op.create_table(
+        "workforce_documents_final",
+        *b(),
+        sa.Column("worker_id", postgresql.UUID(), sa.ForeignKey("worker_profiles.id")),
+        sa.Column("document_type", sa.String(80)),
+        sa.Column("storage_reference", sa.String(500)),
+        sa.Column("classification", sa.String(40), server_default="confidential"),
+        sa.Column("status", sa.String(30), server_default="active"),
+        sa.Column("retention_until", sa.Date()),
+        sa.Column("legal_hold", sa.Boolean(), server_default=sa.false()),
+    )
+    op.create_table(
+        "workforce_executions_final",
+        *b(),
+        sa.Column("operation", sa.String(80)),
+        sa.Column("idempotency_key", sa.String(160)),
+        sa.Column("aggregate_type", sa.String(60)),
+        sa.Column("aggregate_id", postgresql.UUID()),
+        sa.Column("result_json", sa.Text(), server_default="{}"),
+        sa.Column("actor_user_id", postgresql.UUID(), sa.ForeignKey("users.id")),
+        sa.UniqueConstraint(
+            "tenant_id", "operation", "idempotency_key", name="uq_workforce_execution"
+        ),
+    )
+    for t in TABLES:
+        r(t)
+
+
 def downgrade():
- for t in reversed(TABLES):op.execute(sa.text(f'DROP POLICY IF EXISTS "{t}_tenant_isolation" ON "{t}"'));op.drop_table(t)
+    for t in reversed(TABLES):
+        op.execute(sa.text(f'DROP POLICY IF EXISTS "{t}_tenant_isolation" ON "{t}"'))
+        op.drop_table(t)

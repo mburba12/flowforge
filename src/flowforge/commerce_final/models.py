@@ -1,34 +1,174 @@
-from datetime import date,datetime
+from datetime import date, datetime
 from decimal import Decimal
-from uuid import UUID,uuid4
-from sqlalchemy import Boolean,Date,DateTime,ForeignKey,Integer,Numeric,String,Text,UniqueConstraint,func
-from sqlalchemy.orm import Mapped,mapped_column
+from uuid import UUID, uuid4
+
+from sqlalchemy import (
+    Boolean,
+    Date,
+    DateTime,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    UniqueConstraint,
+    func,
+)
+from sqlalchemy.orm import Mapped, mapped_column
+
 from flowforge.db.base import Base
+
+
 class T:
- id:Mapped[UUID]=mapped_column(primary_key=True,default=uuid4);tenant_id:Mapped[UUID]=mapped_column(ForeignKey('tenants.id',ondelete='CASCADE'),index=True);created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),server_default=func.now());version:Mapped[int]=mapped_column(Integer,default=1)
-class Requisition(T,Base):
- __tablename__='commerce_requisitions_final';number:Mapped[str]=mapped_column(String(80));status:Mapped[str]=mapped_column(String(30),default='draft');requester_id:Mapped[UUID]=mapped_column(ForeignKey('users.id'));needed_on:Mapped[date|None]=mapped_column(Date);total_amount:Mapped[Decimal]=mapped_column(Numeric(20,6),default=0);approved_by:Mapped[UUID|None]=mapped_column(ForeignKey('users.id'));converted_po_id:Mapped[UUID|None]=mapped_column(ForeignKey('purchase_orders.id'));__table_args__=(UniqueConstraint('tenant_id','number',name='uq_requisition_number'),)
-class RequisitionLine(T,Base):
- __tablename__='commerce_requisition_lines_final';requisition_id:Mapped[UUID]=mapped_column(ForeignKey('commerce_requisitions_final.id',ondelete='CASCADE'));product_id:Mapped[UUID|None]=mapped_column(ForeignKey('products.id'));description:Mapped[str]=mapped_column(String(500));quantity:Mapped[Decimal]=mapped_column(Numeric(20,6));unit_price:Mapped[Decimal]=mapped_column(Numeric(20,6));line_total:Mapped[Decimal]=mapped_column(Numeric(20,6))
-class InventoryLot(T,Base):
- __tablename__='commerce_inventory_lots_final';product_id:Mapped[UUID]=mapped_column(ForeignKey('products.id'));lot_number:Mapped[str]=mapped_column(String(120));expiration_date:Mapped[date|None]=mapped_column(Date);status:Mapped[str]=mapped_column(String(30),default='available');__table_args__=(UniqueConstraint('tenant_id','product_id','lot_number',name='uq_inventory_lot'),)
-class InventorySerial(T,Base):
- __tablename__='commerce_inventory_serials_final';product_id:Mapped[UUID]=mapped_column(ForeignKey('products.id'));serial_number:Mapped[str]=mapped_column(String(160));warehouse_id:Mapped[UUID|None]=mapped_column(ForeignKey('warehouses.id'));status:Mapped[str]=mapped_column(String(30),default='available');__table_args__=(UniqueConstraint('tenant_id','serial_number',name='uq_inventory_serial'),)
-class InventoryTransfer(T,Base):
- __tablename__='commerce_inventory_transfers_final';number:Mapped[str]=mapped_column(String(80));product_id:Mapped[UUID]=mapped_column(ForeignKey('products.id'));source_warehouse_id:Mapped[UUID]=mapped_column(ForeignKey('warehouses.id'));target_warehouse_id:Mapped[UUID]=mapped_column(ForeignKey('warehouses.id'));quantity:Mapped[Decimal]=mapped_column(Numeric(20,6));status:Mapped[str]=mapped_column(String(30),default='draft');approved_by:Mapped[UUID|None]=mapped_column(ForeignKey('users.id'));__table_args__=(UniqueConstraint('tenant_id','number',name='uq_inventory_transfer'),)
-class InventoryCount(T,Base):
- __tablename__='commerce_inventory_counts_final';number:Mapped[str]=mapped_column(String(80));warehouse_id:Mapped[UUID]=mapped_column(ForeignKey('warehouses.id'));status:Mapped[str]=mapped_column(String(30),default='open');counted_by:Mapped[UUID|None]=mapped_column(ForeignKey('users.id'));approved_by:Mapped[UUID|None]=mapped_column(ForeignKey('users.id'));__table_args__=(UniqueConstraint('tenant_id','number',name='uq_inventory_count'),)
-class InventoryCountLine(T,Base):
- __tablename__='commerce_inventory_count_lines_final';count_id:Mapped[UUID]=mapped_column(ForeignKey('commerce_inventory_counts_final.id',ondelete='CASCADE'));product_id:Mapped[UUID]=mapped_column(ForeignKey('products.id'));location_id:Mapped[UUID|None]=mapped_column(ForeignKey('warehouse_locations.id'));system_quantity:Mapped[Decimal]=mapped_column(Numeric(20,6));counted_quantity:Mapped[Decimal]=mapped_column(Numeric(20,6));variance:Mapped[Decimal]=mapped_column(Numeric(20,6))
-class ReturnAuthorization(T,Base):
- __tablename__='commerce_returns_final';number:Mapped[str]=mapped_column(String(80));order_id:Mapped[UUID]=mapped_column(ForeignKey('sales_orders.id'));status:Mapped[str]=mapped_column(String(30),default='requested');reason:Mapped[str]=mapped_column(String(200));refund_amount:Mapped[Decimal]=mapped_column(Numeric(20,6),default=0);received_at:Mapped[datetime|None]=mapped_column(DateTime(timezone=True));__table_args__=(UniqueConstraint('tenant_id','number',name='uq_return_number'),)
-class ShippingRate(T,Base):
- __tablename__='commerce_shipping_rates_final';shipment_reference:Mapped[str]=mapped_column(String(120));carrier_code:Mapped[str]=mapped_column(String(40));service_code:Mapped[str]=mapped_column(String(80));amount:Mapped[Decimal]=mapped_column(Numeric(20,6));currency_code:Mapped[str]=mapped_column(String(3));estimated_days:Mapped[int|None]=mapped_column(Integer);selected:Mapped[bool]=mapped_column(Boolean,default=False)
-class ShippingLabel(T,Base):
- __tablename__='commerce_shipping_labels_final';shipment_id:Mapped[UUID]=mapped_column(ForeignKey('shipments.id'));carrier_code:Mapped[str]=mapped_column(String(40));service_code:Mapped[str]=mapped_column(String(80));tracking_number_mask:Mapped[str|None]=mapped_column(String(120));status:Mapped[str]=mapped_column(String(30),default='simulated');document_reference:Mapped[str|None]=mapped_column(String(500));idempotency_key:Mapped[str]=mapped_column(String(160));__table_args__=(UniqueConstraint('tenant_id','idempotency_key',name='uq_shipping_label_idem'),)
-class TrackingEvent(T,Base):
- __tablename__='commerce_tracking_events_final';shipment_id:Mapped[UUID]=mapped_column(ForeignKey('shipments.id'));event_code:Mapped[str]=mapped_column(String(80));description:Mapped[str]=mapped_column(String(500));occurred_at:Mapped[datetime]=mapped_column(DateTime(timezone=True));location_text:Mapped[str|None]=mapped_column(String(300))
-class ShippingClaim(T,Base):
- __tablename__='commerce_shipping_claims_final';shipment_id:Mapped[UUID]=mapped_column(ForeignKey('shipments.id'));claim_number:Mapped[str]=mapped_column(String(100));status:Mapped[str]=mapped_column(String(30),default='draft');reason:Mapped[str]=mapped_column(String(200));amount:Mapped[Decimal]=mapped_column(Numeric(20,6),default=0);evidence_json:Mapped[str]=mapped_column(Text,default='{}');__table_args__=(UniqueConstraint('tenant_id','claim_number',name='uq_shipping_claim'),)
-class CommerceExecution(T,Base):
- __tablename__='commerce_executions_final';operation:Mapped[str]=mapped_column(String(80));idempotency_key:Mapped[str]=mapped_column(String(160));aggregate_type:Mapped[str]=mapped_column(String(60));aggregate_id:Mapped[UUID];result_json:Mapped[str]=mapped_column(Text,default='{}');__table_args__=(UniqueConstraint('tenant_id','operation','idempotency_key',name='uq_commerce_execution'),)
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    tenant_id: Mapped[UUID] = mapped_column(
+        ForeignKey("tenants.id", ondelete="CASCADE"), index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    version: Mapped[int] = mapped_column(Integer, default=1)
+
+
+class Requisition(T, Base):
+    __tablename__ = "commerce_requisitions_final"
+    number: Mapped[str] = mapped_column(String(80))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    requester_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    needed_on: Mapped[date | None] = mapped_column(Date)
+    total_amount: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    approved_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    converted_po_id: Mapped[UUID | None] = mapped_column(ForeignKey("purchase_orders.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "number", name="uq_requisition_number"),)
+
+
+class RequisitionLine(T, Base):
+    __tablename__ = "commerce_requisition_lines_final"
+    requisition_id: Mapped[UUID] = mapped_column(
+        ForeignKey("commerce_requisitions_final.id", ondelete="CASCADE")
+    )
+    product_id: Mapped[UUID | None] = mapped_column(ForeignKey("products.id"))
+    description: Mapped[str] = mapped_column(String(500))
+    quantity: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    unit_price: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    line_total: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+
+
+class InventoryLot(T, Base):
+    __tablename__ = "commerce_inventory_lots_final"
+    product_id: Mapped[UUID] = mapped_column(ForeignKey("products.id"))
+    lot_number: Mapped[str] = mapped_column(String(120))
+    expiration_date: Mapped[date | None] = mapped_column(Date)
+    status: Mapped[str] = mapped_column(String(30), default="available")
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "product_id", "lot_number", name="uq_inventory_lot"),
+    )
+
+
+class InventorySerial(T, Base):
+    __tablename__ = "commerce_inventory_serials_final"
+    product_id: Mapped[UUID] = mapped_column(ForeignKey("products.id"))
+    serial_number: Mapped[str] = mapped_column(String(160))
+    warehouse_id: Mapped[UUID | None] = mapped_column(ForeignKey("warehouses.id"))
+    status: Mapped[str] = mapped_column(String(30), default="available")
+    __table_args__ = (UniqueConstraint("tenant_id", "serial_number", name="uq_inventory_serial"),)
+
+
+class InventoryTransfer(T, Base):
+    __tablename__ = "commerce_inventory_transfers_final"
+    number: Mapped[str] = mapped_column(String(80))
+    product_id: Mapped[UUID] = mapped_column(ForeignKey("products.id"))
+    source_warehouse_id: Mapped[UUID] = mapped_column(ForeignKey("warehouses.id"))
+    target_warehouse_id: Mapped[UUID] = mapped_column(ForeignKey("warehouses.id"))
+    quantity: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    approved_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "number", name="uq_inventory_transfer"),)
+
+
+class InventoryCount(T, Base):
+    __tablename__ = "commerce_inventory_counts_final"
+    number: Mapped[str] = mapped_column(String(80))
+    warehouse_id: Mapped[UUID] = mapped_column(ForeignKey("warehouses.id"))
+    status: Mapped[str] = mapped_column(String(30), default="open")
+    counted_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    approved_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "number", name="uq_inventory_count"),)
+
+
+class InventoryCountLine(T, Base):
+    __tablename__ = "commerce_inventory_count_lines_final"
+    count_id: Mapped[UUID] = mapped_column(
+        ForeignKey("commerce_inventory_counts_final.id", ondelete="CASCADE")
+    )
+    product_id: Mapped[UUID] = mapped_column(ForeignKey("products.id"))
+    location_id: Mapped[UUID | None] = mapped_column(ForeignKey("warehouse_locations.id"))
+    system_quantity: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    counted_quantity: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    variance: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+
+
+class ReturnAuthorization(T, Base):
+    __tablename__ = "commerce_returns_final"
+    number: Mapped[str] = mapped_column(String(80))
+    order_id: Mapped[UUID] = mapped_column(ForeignKey("sales_orders.id"))
+    status: Mapped[str] = mapped_column(String(30), default="requested")
+    reason: Mapped[str] = mapped_column(String(200))
+    refund_amount: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    received_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    __table_args__ = (UniqueConstraint("tenant_id", "number", name="uq_return_number"),)
+
+
+class ShippingRate(T, Base):
+    __tablename__ = "commerce_shipping_rates_final"
+    shipment_reference: Mapped[str] = mapped_column(String(120))
+    carrier_code: Mapped[str] = mapped_column(String(40))
+    service_code: Mapped[str] = mapped_column(String(80))
+    amount: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    currency_code: Mapped[str] = mapped_column(String(3))
+    estimated_days: Mapped[int | None] = mapped_column(Integer)
+    selected: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+class ShippingLabel(T, Base):
+    __tablename__ = "commerce_shipping_labels_final"
+    shipment_id: Mapped[UUID] = mapped_column(ForeignKey("shipments.id"))
+    carrier_code: Mapped[str] = mapped_column(String(40))
+    service_code: Mapped[str] = mapped_column(String(80))
+    tracking_number_mask: Mapped[str | None] = mapped_column(String(120))
+    status: Mapped[str] = mapped_column(String(30), default="simulated")
+    document_reference: Mapped[str | None] = mapped_column(String(500))
+    idempotency_key: Mapped[str] = mapped_column(String(160))
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "idempotency_key", name="uq_shipping_label_idem"),
+    )
+
+
+class TrackingEvent(T, Base):
+    __tablename__ = "commerce_tracking_events_final"
+    shipment_id: Mapped[UUID] = mapped_column(ForeignKey("shipments.id"))
+    event_code: Mapped[str] = mapped_column(String(80))
+    description: Mapped[str] = mapped_column(String(500))
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    location_text: Mapped[str | None] = mapped_column(String(300))
+
+
+class ShippingClaim(T, Base):
+    __tablename__ = "commerce_shipping_claims_final"
+    shipment_id: Mapped[UUID] = mapped_column(ForeignKey("shipments.id"))
+    claim_number: Mapped[str] = mapped_column(String(100))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    reason: Mapped[str] = mapped_column(String(200))
+    amount: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    evidence_json: Mapped[str] = mapped_column(Text, default="{}")
+    __table_args__ = (UniqueConstraint("tenant_id", "claim_number", name="uq_shipping_claim"),)
+
+
+class CommerceExecution(T, Base):
+    __tablename__ = "commerce_executions_final"
+    operation: Mapped[str] = mapped_column(String(80))
+    idempotency_key: Mapped[str] = mapped_column(String(160))
+    aggregate_type: Mapped[str] = mapped_column(String(60))
+    aggregate_id: Mapped[UUID]
+    result_json: Mapped[str] = mapped_column(Text, default="{}")
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "operation", "idempotency_key", name="uq_commerce_execution"),
+    )
