@@ -74,3 +74,4 @@ openapi.json
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+/var/backups/
