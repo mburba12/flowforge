@@ -1,2 +1,1 @@
-import {BackendFeatureWorkspace} from "@/components/backend-feature-workspace";
-export default function Page(){return <BackendFeatureWorkspace title="Integrations" description="Live operations mapped from the FlowForge OpenAPI contract." tags={["phase4c-banking","phase4c-payments","phase4c-commerce","phase4c-logistics","phase4c-finance","phase4c-workforce","phase4c-engagement"]} />}
+import {PlatformWorkspace} from "@/components/part2b/platform-workspace";export default function Page(){return <PlatformWorkspace title="Integrations" resource="integrations" />}

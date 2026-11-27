@@ -1,1 +1,1 @@
-import {BackendFeatureWorkspace} from "@/components/backend-feature-workspace";export default function Page(){return <BackendFeatureWorkspace title="Approvals" description="Live approval and workflow operations from FlowForge." tags={["phase2b","phase3a","phase4a-time","phase4a-payroll","phase4b-filing","phase4d-entities"]} />}
+import {PlatformWorkspace} from "@/components/part2b/platform-workspace";export default function Page(){return <PlatformWorkspace title="Approvals" resource="approvals" />}
