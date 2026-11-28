@@ -26,4 +26,17 @@ export default async function globalSetup(): Promise<void> {
   process.env.E2E_TENANT = slug;
   process.env.E2E_EMAIL = email;
   process.env.E2E_PASSWORD = password;
+
+  // Second user for approvals and segregation-of-duties flows.
+  const { access_token: ownerToken } = (await response.json()) as { access_token: string };
+  const approverEmail = `approver-${slug}@example.com`;
+  const approver = await fetch(`${api}/api/v1/users`, {
+    method: "POST",
+    headers: { "content-type": "application/json", authorization: `Bearer ${ownerToken}` },
+    body: JSON.stringify({ email: approverEmail, display_name: "Browser Approver", password, roles: ["Manager"] }),
+  });
+  if (approver.status !== 201) {
+    throw new Error(`Browser acceptance approver creation failed: HTTP ${approver.status} ${await approver.text()}`);
+  }
+  process.env.E2E_APPROVER_EMAIL = approverEmail;
 }
