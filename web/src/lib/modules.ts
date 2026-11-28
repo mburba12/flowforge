@@ -46,6 +46,7 @@ export const navGroups: readonly NavGroup[] = [
     label: null,
     items: [
       ["documents", "Files", "documents"],
+      ["plan", "Billing & usage", "billing"],
       ["settings", "Settings", "settings"],
     ],
   },
@@ -72,6 +73,24 @@ export const navGroups: readonly NavGroup[] = [
       ["support", "Support", "support"],
     ],
   },
+];
+
+/** Never hidden, so hidden sections can always be shown again (Settings → Customize). */
+export const ALWAYS_SHOWN = new Set(["settings"]);
+
+/** Home page parts a person can hide (Settings → Customize). */
+export const HOME_SECTIONS: readonly (readonly [key: string, label: string])[] = [
+  ["home:checklist", "Setup checklist"],
+  ["home:quick", "Quick actions"],
+  ["home:kpis", "Key figures"],
+  ["home:bank", "Latest bank activity"],
+  ["home:shipments", "Shipments on the way"],
+  ["home:kpi:Cash in the bank", "Figure: Cash in the bank"],
+  ["home:kpi:Customers owe you", "Figure: Customers owe you"],
+  ["home:kpi:Bills to pay", "Figure: Bills to pay"],
+  ["home:kpi:Packages on the way", "Figure: Packages on the way"],
+  ["home:kpi:Payroll waiting on you", "Figure: Payroll waiting on you"],
+  ["home:kpi:Journals to approve or post", "Figure: Journals to approve or post"],
 ];
 
 /** Every sidebar entry as [slug, label]. */

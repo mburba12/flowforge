@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { del, get, patch, post, put } from "../client";
-import { resetPermissions, useLoad } from "../hooks";
+import { ALWAYS_SHOWN, HOME_SECTIONS, navGroups } from "@/lib/modules";
+
+import { resetPermissions, useHidden, useLoad } from "../hooks";
 import { ActionButton, Badge, Card, Form, Grid, Notice, RequiresPermission, Table, Tabs, Workspace, useActionLog } from "../ui";
 
 type User = { id: string; email: string; display_name: string; is_active: boolean; roles: string[] } & Record<string, unknown>;
@@ -24,6 +26,7 @@ const approvesOwn = (u: User, roles: Role[]) =>
 export function AdminWorkspace() {
   return (
     <Workspace title="Settings" description="Your connections, the people who can sign in and what each role may do." accent="#334155">
+      <Customize />
       <Connections />
       <RequiresPermission permission="users.manage" area="Managing users and roles">
         <AdminContent />
@@ -35,6 +38,48 @@ export function AdminWorkspace() {
 type ConnectionStatus = { banks: number; carriers: number; shipments: number; payroll_imports: number; files: number };
 
 /** Where each outside service connects, with its current state. */
+/** Each person chooses what they see: sidebar sections and Home page parts. */
+function Customize() {
+  const { loaded, isHidden, setHidden, showAll } = useHidden();
+  const [error, setError] = useState("");
+  const toggle = (key: string, shown: boolean) => {
+    setError("");
+    setHidden(key, !shown).catch((e: unknown) => setError(e instanceof Error ? e.message : "Could not save."));
+  };
+  const box = (key: string, label: string, locked = false) => (
+    <label key={key} className="rwCheck">
+      <input type="checkbox" checked={locked || !isHidden(key)} disabled={!loaded || locked} onChange={(e) => toggle(key, e.target.checked)} data-testid={`show-${key}`} />
+      <span>{label}</span>
+    </label>
+  );
+  return (
+    <Card
+      title="Customize your screen"
+      testId="customize"
+      aside={
+        <button type="button" className="rwBtn" disabled={!loaded} onClick={() => showAll().catch(() => setError("Could not save."))}>
+          Show everything
+        </button>
+      }
+    >
+      <p className="rwMuted small">Untick anything you do not use to hide it. Only your own screen changes; everything stays included and you can show it again here any time.</p>
+      {error ? <Notice kind="error">{error}</Notice> : null}
+      <div className="rwCustomize">
+        {navGroups.map((group, index) => (
+          <fieldset key={index}>
+            <legend>{group.label ?? (index === 0 ? "Start" : "Files and settings")}</legend>
+            {group.items.map(([slug, label]) => box(`nav:${slug}`, label, ALWAYS_SHOWN.has(slug)))}
+          </fieldset>
+        ))}
+        <fieldset>
+          <legend>Home page</legend>
+          {HOME_SECTIONS.map(([key, label]) => box(key, label))}
+        </fieldset>
+      </div>
+    </Card>
+  );
+}
+
 function Connections() {
   const status = useLoad(() => get<ConnectionStatus>("/api/v1/connections/status"), "settings-connections");
   const s = status.data;

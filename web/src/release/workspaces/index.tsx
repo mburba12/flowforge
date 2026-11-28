@@ -9,6 +9,7 @@ import { AuditWorkspace, DashboardWorkspace } from "./overview";
 import { PayablesWorkspace } from "./payables";
 import { PayrollWorkspace } from "./payroll";
 import { ReceivablesWorkspace } from "./receivables";
+import { PlanWorkspace } from "./plan";
 import { ShippingWorkspace } from "./shipping";
 import { TaxWorkspace } from "./tax";
 
@@ -27,6 +28,7 @@ const WORKSPACES: Record<string, () => React.JSX.Element> = {
   banking: BankingWorkspace,
   shipping: ShippingWorkspace,
   documents: FilesWorkspace,
+  plan: PlanWorkspace,
 };
 
 export function ReleaseWorkspace({ slug }: { slug: string }) {

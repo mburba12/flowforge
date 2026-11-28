@@ -40,6 +40,8 @@ CATALOG: dict[str, str] = {
     "documents.read": "View and download uploaded files",
     "documents.upload": "Upload files (invoices, receipts, contracts) in any section",
     # connections
+    "account.billing.read": "See the workspace's usage, estimated bill and invoices",
+    "account.billing.manage": "Add or remove the card on file and pay invoices",
     "banking.read": "See bank accounts, balances and transactions",
     "banking.import": "Import bank statements and refresh bank feeds",
     "banking.connect": "Connect and disconnect bank accounts",
@@ -221,7 +223,7 @@ DECISION_VALUES = {
     "terminated",
 }
 
-_READ = {c for c in CATALOG if c.endswith(".read")} - {"audit.read"}
+_READ = {c for c in CATALOG if c.endswith(".read")} - {"audit.read", "account.billing.read"}
 _APPROVE = {
     "ap.po.approve",
     "gl.journal.approve",
@@ -260,6 +262,7 @@ _ADMIN_ONLY = {
     "tenant.manage",
     "platform.tenants.create",
     SELF_APPROVE,
+    "account.billing.manage",
 }
 # Extended domains: clerks prepare, approvers decide. Governance and integrations stay
 # with owners and managers.
@@ -303,6 +306,7 @@ RELEASE_MODULES = {
     "flowforge.connect.payroll",
     "flowforge.connect.shipping",
     "flowforge.connect.status",
+    "flowforge.billing.routes",
 }
 
 AUTHENTICATED = ""  # mapped, but any active user of the tenant may call it
@@ -457,6 +461,15 @@ POLICY: dict[str, str] = {
     "flowforge.connect.shipping:remove_shipment": "shipping.track",
     # setup checklist
     "flowforge.connect.status:connection_status": AUTHENTICATED,
+    # billing & usage, preferences
+    "flowforge.billing.routes:summary": "account.billing.read",
+    "flowforge.billing.routes:calculator": "account.billing.read",
+    "flowforge.billing.routes:add_card": "account.billing.manage",
+    "flowforge.billing.routes:complete_card": "account.billing.manage",
+    "flowforge.billing.routes:remove_card": "account.billing.manage",
+    "flowforge.billing.routes:pay_now": "account.billing.manage",
+    "flowforge.billing.routes:get_preferences": AUTHENTICATED,
+    "flowforge.billing.routes:put_preferences": AUTHENTICATED,
 }
 
 # Endpoints anyone may call without signing in.
@@ -627,6 +640,9 @@ async def enforce(
         raise HTTPException(status.HTTP_403_FORBIDDEN, f"Missing permission: {required}")
     request.state.permissions = granted
     set_request_permissions(granted)
+    from flowforge.billing.metering import count_request
+
+    count_request(principal.tenant_id, request.url.path)
 
 
 async def sync_standard_roles() -> dict[str, int]:

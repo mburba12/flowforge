@@ -5,15 +5,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { AppIcon } from "@/components/app-icon";
-import { labelOf, navGroups } from "@/lib/modules";
+import { ALWAYS_SHOWN, labelOf, navGroups } from "@/lib/modules";
 import { clearSession } from "@/lib/session";
 import { SectionFiles } from "@/release/files";
+import { useHidden } from "@/release/hooks";
 
 /** Signed-in chrome: grouped sidebar (specialist tools folded away) and a slim top bar. */
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { isHidden } = useHidden();
   if (path === "/login" || path === "/signup" || path === "/onboarding" || path.startsWith("/connections/")) return <>{children}</>;
   const current = path.startsWith("/modules/") ? path.split("/")[2] : "";
   const inMoreTools = navGroups.some((g) => g.collapsed && g.items.some(([slug]) => slug === current));
@@ -27,7 +29,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </Link>
         <nav aria-label="Main">
           {navGroups.map((group, index) => {
-            const links = group.items.map(([slug, label, icon]) => {
+            const visible = group.items.filter(([slug]) => ALWAYS_SHOWN.has(slug) || slug === current || !isHidden(`nav:${slug}`));
+            if (!visible.length) return null;
+            const links = visible.map(([slug, label, icon]) => {
               const href = `/modules/${slug}`;
               return (
                 <Link

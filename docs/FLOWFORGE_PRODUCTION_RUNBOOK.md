@@ -94,6 +94,41 @@ update with backup, rollback-tagged images and verification):
 .\scripts\production\Update-FlowForge.ps1
 ```
 
+## Billing (usage-based)
+
+Pricing and costs: `docs/KROV_PRICING.md`. The API meters every workspace (activity as it
+happens, storage daily), issues invoices on the 1st of each month, emails them to each
+workspace's owners and charges the saved card 3 business days later (retried on the next
+business day if declined, 3 tries). Your own workspace (`FLOWFORGE_BILLING_EXEMPT`,
+default `flowforge-production`) is never billed. Rehearsals never bill, email or charge.
+
+Turn on card charges and invoice email (hidden prompts; keys go to `.env.production`):
+
+```powershell
+.\scripts\production\Set-FlowForgeConnections.ps1 -Only Stripe
+```
+
+```powershell
+.\scripts\production\Set-FlowForgeConnections.ps1 -Only Email
+```
+
+Start Stripe with a test key (`sk_test_...`, card 4242 4242 4242 4242) and switch to the
+live key when you are ready to charge real cards. Until email is configured, invoices are
+written to the API's mail outbox; read them with:
+
+```powershell
+docker exec flowforge-api-1 ls /data/mail-outbox
+```
+
+Change prices by changing costs or margin in `.env.production`
+(`FLOWFORGE_COST_STORAGE_GB_MONTH`, `FLOWFORGE_COST_PER_1K_REQUESTS`,
+`FLOWFORGE_TARGET_MARGIN`), run the update, and update `website/krov-config.js` to match.
+
+## Website
+
+The Cloudflare Pages site is in `website/` (see its README). Set `KROV_APP_URL` in
+`website/krov-config.js` to the tunnel address, then upload the folder to Pages.
+
 ## Public address (Cloudflare Tunnel)
 
 The app is branded **Krov WorkAgent** (internal names, folders and scripts keep

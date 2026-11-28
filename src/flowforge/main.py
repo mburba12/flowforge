@@ -9,6 +9,8 @@ from sqlalchemy.exc import DBAPIError, IntegrityError
 
 import flowforge.core.errors  # noqa: F401 - registers rule violations
 from flowforge.api.router import api_router, extended_router
+from flowforge.billing import router as billing_router
+from flowforge.billing import scheduler as billing_scheduler
 from flowforge.connect import router as connect_router
 from flowforge.integration.router import router as phase1_router
 from flowforge.phase2a.router import router as phase2a_router
@@ -60,7 +62,9 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         logger.info("RBAC standard roles synchronised: %s", added)
     except Exception:  # noqa: BLE001 - never block startup; health checks report the database
         logger.exception("RBAC standard role synchronisation failed")
-    yield
+    # Usage metering, monthly invoices and automatic charges (on in production).
+    async with billing_scheduler.running():
+        yield
 
 
 app = FastAPI(
@@ -157,6 +161,7 @@ app.include_router(release_admin_router)
 app.include_router(release_read_router)
 app.include_router(operations_router)
 app.include_router(connect_router)
+app.include_router(billing_router)
 app.include_router(api_router)
 app.include_router(extended_router)
 app.include_router(phase1_router)

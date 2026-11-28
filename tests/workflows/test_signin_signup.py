@@ -53,7 +53,9 @@ async def test_sign_in_with_email_only(harness: Harness) -> None:
     who = await h.client.get("/api/v1/me", headers={"Authorization": f"Bearer {token}"})
     assert who.json()["tenant_id"] == me["tenant_id"]
 
-    wrong = await h.client.post("/api/v1/auth/login", json={"email": email, "password": "nope-nope"})
+    wrong = await h.client.post(
+        "/api/v1/auth/login", json={"email": email, "password": "nope-nope"}
+    )
     assert wrong.status_code == 401
     unknown = await h.client.post(
         "/api/v1/auth/login", json={"email": "nobody@example.com", "password": password}
@@ -115,7 +117,12 @@ async def test_public_sign_up_creates_a_workspace_and_signs_in(harness: Harness)
 
         short = await h.client.post(
             "/api/v1/auth/signup",
-            json={"organization": "X Co", "name": "P", "email": f"x-{tag}@example.com", "password": "short"},
+            json={
+                "organization": "X Co",
+                "name": "P",
+                "email": f"x-{tag}@example.com",
+                "password": "short",
+            },
         )
         assert short.status_code == 422
     finally:
@@ -139,7 +146,9 @@ async def test_email_in_two_workspaces_asks_which_one(harness: Harness) -> None:
             "/api/v1/users",
             json={"email": email, "display_name": "B", "password": password, "roles": ["Viewer"]},
         )
-        choose = await h.client.post("/api/v1/auth/login", json={"email": email, "password": password})
+        choose = await h.client.post(
+            "/api/v1/auth/login", json={"email": email, "password": password}
+        )
         assert choose.status_code == 409
         detail = choose.json()["detail"]
         assert detail["code"] == "workspace_required"

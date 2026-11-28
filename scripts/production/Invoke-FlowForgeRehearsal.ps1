@@ -51,6 +51,8 @@ $env:FF_WEB_PORT = "3300"; $env:FF_API_PORT = "8300"; $env:FF_DB_PORT = "5436"
 $env:COMPOSE_PROFILES = "rehearsal-no-tunnel"; $env:FLOWFORGE_TUNNEL_TOKEN = ""
 # The signed-in browser tests sign in far more often than the public limits allow.
 $env:FLOWFORGE_RATE_LIMITS = "off"
+# Never bill, email or charge anyone from a rehearsal copy of production.
+$env:FLOWFORGE_BILLING = "off"; $env:FLOWFORGE_STRIPE_SECRET_KEY = ""; $env:FLOWFORGE_SMTP_HOST = ""
 try {
     Step "R00" "Script syntax" {
         foreach ($f in Get-ChildItem $PSScriptRoot -Filter *.ps1) {
@@ -151,7 +153,7 @@ try {
     if (-not $KeepStack) {
         try { Invoke-FFCompose -Project $project -Arguments @("down", "-v", "--remove-orphans") -Description "remove rehearsal stack" | Out-Null } catch { Write-Warning $_.Exception.Message }
     }
-    Remove-Item Env:\FF_WEB_PORT, Env:\FF_API_PORT, Env:\FF_DB_PORT, Env:\COMPOSE_PROFILES, Env:\FLOWFORGE_TUNNEL_TOKEN, Env:\FLOWFORGE_RATE_LIMITS -ErrorAction SilentlyContinue
+    Remove-Item Env:\FF_WEB_PORT, Env:\FF_API_PORT, Env:\FF_DB_PORT, Env:\COMPOSE_PROFILES, Env:\FLOWFORGE_TUNNEL_TOKEN, Env:\FLOWFORGE_RATE_LIMITS, Env:\FLOWFORGE_BILLING, Env:\FLOWFORGE_STRIPE_SECRET_KEY, Env:\FLOWFORGE_SMTP_HOST -ErrorAction SilentlyContinue
     $results | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $out "results.json") -Encoding UTF8
     $summary = @("FLOWFORGE CUTOVER REHEARSAL $stamp", "") + ($results | ForEach-Object { "{0} {1} {2} ({3}s) {4}" -f $_.status, $_.id, $_.step, $_.seconds, $_.detail })
     $failed = @($results | Where-Object status -eq "FAIL").Count

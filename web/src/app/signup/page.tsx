@@ -7,15 +7,9 @@ import { useRouter } from "next/navigation";
 import { readSession } from "@/lib/session";
 import { clearFragment, finishSignIn, fragmentValues, messageFrom, postJson, readJson } from "@/lib/signin";
 
-const PLANS = [
-  { value: "starter", label: "Starter · $199/month" },
-  { value: "business", label: "Business · $499/month" },
-];
-
 /** Public sign-up: a new workspace with this person as its owner, then straight in. */
 export default function SignupPage() {
   const router = useRouter();
-  const [plan, setPlan] = useState("starter");
   const [organization, setOrganization] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,8 +28,6 @@ export default function SignupPage() {
     /* eslint-disable react-hooks/set-state-in-effect */
     const given = fragmentValues();
     clearFragment();
-    const wanted = given.get("plan");
-    if (wanted && PLANS.some((p) => p.value === wanted)) setPlan(wanted);
     if (given.get("company")) setOrganization(given.get("company") ?? "");
     if (given.get("email")) setEmail(given.get("email") ?? "");
     if (given.get("name")) setName(given.get("name") ?? "");
@@ -56,7 +48,7 @@ export default function SignupPage() {
         name: name.trim(),
         email: email.trim().toLowerCase(),
         password,
-        plan,
+        plan: "usage",
       });
       const payload = await readJson(response);
       if (!response.ok) throw new Error(messageFrom(payload, `Sign-up failed (${response.status}).`));
@@ -78,17 +70,8 @@ export default function SignupPage() {
           <img src="/krov-workagent-logo.svg" alt="Krov WorkAgent" width={230} height={40} />
         </div>
         <h1 id="signup-title">Create your account</h1>
-        <p>Your own Krov WorkAgent workspace. You are its administrator.</p>
+        <p>Your own Krov WorkAgent workspace, with every feature included. You pay only for the storage and activity you use; moving your data in is free.</p>
         <form onSubmit={submit} noValidate data-testid="signup-form">
-          <label htmlFor="plan">Plan</label>
-          <select id="plan" value={plan} onChange={(e) => setPlan(e.target.value)} disabled={busy}>
-            {PLANS.map((p) => (
-              <option key={p.value} value={p.value}>
-                {p.label}
-              </option>
-            ))}
-          </select>
-
           <label htmlFor="organization">Business name</label>
           <input id="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} autoComplete="organization" required disabled={busy} />
 

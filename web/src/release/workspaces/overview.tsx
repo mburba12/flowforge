@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AppIcon, type IconName } from "@/components/app-icon";
 
 import { get, money, openFile, type Row } from "../client";
-import { useLoad, usePermissions } from "../hooks";
+import { useHidden, useLoad, usePermissions } from "../hooks";
 import { ActionButton, Card, Grid, RequiresPermission, Table, Workspace, Badge, useActionLog } from "../ui";
 
 type Aging = { total_open: string; buckets: Record<string, string> };
@@ -64,9 +64,12 @@ export function DashboardWorkspace() {
   if (runs.data) tiles.push({ label: "Payroll waiting on you", value: String(waitingRuns), href: "/modules/payroll" });
   if (journals.data) tiles.push({ label: "Journals to approve or post", value: String(waitingJournals), href: "/modules/finance" });
 
+  const { isHidden } = useHidden();
+  const shownTiles = tiles.filter((t) => !isHidden(`home:kpi:${t.label}`));
+
   return (
     <Workspace title={`${greeting()}`} description="Here's what's happening in your business today." accent="#57d3ff">
-      {remaining.length ? (
+      {remaining.length && !isHidden("home:checklist") ? (
         <Card title={`Finish setting up (${checklist.length - remaining.length} of ${checklist.length} done)`} testId="setup-checklist">
           <ul className="checklist">
             {checklist.map((item) => (
@@ -87,18 +90,21 @@ export function DashboardWorkspace() {
         </Card>
       ) : null}
 
-      <nav className="quickActions" aria-label="Quick actions">
-        {QUICK.filter((q) => can(q.permission)).map((q) => (
-          <Link key={q.label} href={q.href as never}>
-            <AppIcon name={q.icon} />
-            {q.label}
-          </Link>
-        ))}
-      </nav>
+      {isHidden("home:quick") ? null : (
+        <nav className="quickActions" aria-label="Quick actions">
+          {QUICK.filter((q) => can(q.permission)).map((q) => (
+            <Link key={q.label} href={q.href as never}>
+              <AppIcon name={q.icon} />
+              {q.label}
+            </Link>
+          ))}
+        </nav>
+      )}
 
+      {isHidden("home:kpis") ? null : (
       <div className="rwKpis" data-testid="dashboard-kpis">
         {loaded && tiles.length === 0 ? <p className="rwMuted">Your role does not include any dashboard figures.</p> : null}
-        {tiles.map((t) => (
+        {shownTiles.map((t) => (
           <article key={t.label}>
             <span>{t.label}</span>
             <strong>{t.value}</strong>
@@ -107,9 +113,10 @@ export function DashboardWorkspace() {
           </article>
         ))}
       </div>
+      )}
 
       <Grid>
-        {txns.data ? (
+        {txns.data && !isHidden("home:bank") ? (
           <Card title="Latest bank activity" aside={<Link href={"/modules/banking" as never}>All transactions</Link>}>
             <Table
               rows={txns.data}
@@ -127,7 +134,7 @@ export function DashboardWorkspace() {
             />
           </Card>
         ) : <span />}
-        {ships.data ? (
+        {ships.data && !isHidden("home:shipments") ? (
           <Card title="Shipments on the way" aside={<Link href={"/modules/shipping" as never}>All shipments</Link>}>
             <Table
               rows={ships.data.shipments}

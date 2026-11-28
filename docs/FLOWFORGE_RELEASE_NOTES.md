@@ -5,6 +5,33 @@ Sign in at **http://127.0.0.1:3000**. Every workspace is under the left-hand men
 permission they need; every business rule is enforced by the server, so the UI can
 never bypass it.
 
+## New: Krov WorkAgent, sign up from the website, pay for what you use
+
+**Krov WorkAgent.** The product is now called Krov WorkAgent, with the Krov logo.
+
+**Sign in with email and password only.** There is no Workspace box any more: Krov
+WorkAgent finds your workspace from your email. If one email belongs to several workspaces,
+you choose which one after your password is checked. The website's **Log in** button asks
+for your email and opens the app's sign-in page with it filled in; passwords are only ever
+typed in the app.
+
+**Sign up.** Anyone can create an account from the website or at `/signup`: business name,
+name, email and password. They get their own workspace, every feature included, and are
+its administrator. Sign-in and sign-up attempts are limited per address to stop guessing.
+
+**Billing & usage** (sidebar, next to Settings). Customers pay only for what they use:
+storage and activity. Moving data in and keeping banks, payroll and carriers in sync are
+free. The page shows this month's estimated bill, a **cost calculator**, the card on file and
+past invoices. On the 1st of each month every customer is emailed an invoice for the month
+before; the card on file is charged automatically 3 business days later, and the email says
+which card, how much and on what day. Cards are saved on Stripe's secure page, after the
+owner agrees to automatic monthly charges. Prices are set at a 70% margin after card fees
+(see `docs/KROV_PRICING.md`). Your own workspace is never billed.
+
+**Customize your screen** (Settings). Each person can hide any sidebar section, Home page
+part or Home figure they do not use, and show it again any time. It is saved to their
+account, so it follows them to any computer. Settings itself always stays visible.
+
 ## New: approving your own work, full audit export, record drop-downs
 
 **Approving your own work.** The two-person rule still applies by default: whoever creates

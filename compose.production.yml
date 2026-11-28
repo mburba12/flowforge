@@ -76,6 +76,20 @@ services:
       FLOWFORGE_GUSTO_ENV: ${FLOWFORGE_GUSTO_ENV:-demo}
       # Public sign-in / sign-up attempt limits (rehearsals set off for the browser tests).
       FLOWFORGE_RATE_LIMITS: ${FLOWFORGE_RATE_LIMITS:-on}
+      # Usage billing (docs\KROV_PRICING.md): invoices on the 1st, card charged 3 business
+      # days later. Rates are your costs; prices add the margin and card fees.
+      FLOWFORGE_BILLING: ${FLOWFORGE_BILLING:-on}
+      FLOWFORGE_BILLING_EXEMPT: ${FLOWFORGE_BILLING_EXEMPT:-flowforge-production}
+      FLOWFORGE_COST_STORAGE_GB_MONTH: ${FLOWFORGE_COST_STORAGE_GB_MONTH:-2.00}
+      FLOWFORGE_COST_PER_1K_REQUESTS: ${FLOWFORGE_COST_PER_1K_REQUESTS:-0.0245}
+      FLOWFORGE_TARGET_MARGIN: ${FLOWFORGE_TARGET_MARGIN:-0.70}
+      FLOWFORGE_STRIPE_SECRET_KEY: ${FLOWFORGE_STRIPE_SECRET_KEY:-}
+      FLOWFORGE_SMTP_HOST: ${FLOWFORGE_SMTP_HOST:-}
+      FLOWFORGE_SMTP_PORT: ${FLOWFORGE_SMTP_PORT:-587}
+      FLOWFORGE_SMTP_USERNAME: ${FLOWFORGE_SMTP_USERNAME:-}
+      FLOWFORGE_SMTP_PASSWORD: ${FLOWFORGE_SMTP_PASSWORD:-}
+      FLOWFORGE_MAIL_FROM: ${FLOWFORGE_MAIL_FROM:-}
+      FLOWFORGE_MAIL_OUTBOX: /data/mail-outbox
     volumes:
       - flowforge_support:/data
     ports:

@@ -28,7 +28,7 @@ test.describe.serial("Sign in and sign up from the website", () => {
     const email = `founder-${tag}@example.com`;
     await page.goto(`/signup#plan=business&company=${encodeURIComponent(company)}&email=${encodeURIComponent(email)}`);
     const form = page.getByTestId("signup-form");
-    await expect(form.locator("#plan")).toHaveValue("business");
+    await expect(page.locator(".loginCard")).toContainText("pay only for the storage and activity you use");
     await expect(form.locator("#organization")).toHaveValue(company);
     await expect(form.locator("#email")).toHaveValue(email);
     await form.locator("#name").fill("Pat Founder");

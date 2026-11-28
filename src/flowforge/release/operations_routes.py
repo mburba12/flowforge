@@ -48,6 +48,7 @@ RELEASE_WORKSPACES = {
     "tax": "tax",
     "banking": "banking",
     "shipping": "shipping",
+    "account": "plan",
 }
 # Extended operations and tables: workspace by permission domain.
 EXTENDED_WORKSPACES = {

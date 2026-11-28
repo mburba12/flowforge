@@ -30,6 +30,7 @@ warn_return_any = false
 # Provider catalogs: user-facing instructions and column aliases read best on one line.
 "src/flowforge/connect/carriers.py" = ["E501"]
 "src/flowforge/connect/payroll.py" = ["E501"]
+"src/flowforge/billing/invoices.py" = ["E501"]  # invoice email template
 "src/flowforge/bg08_completion/router.py" = ["F403", "F405"]
 "src/flowforge/bg08_final/router.py" = ["F403", "F405"]
 "src/flowforge/bg08_final/service.py" = ["F403", "F405"]
