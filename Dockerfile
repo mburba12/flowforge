@@ -7,4 +7,6 @@ COPY src ./src
 COPY alembic.ini .
 COPY migrations ./migrations
 ENV PYTHONPATH=/app/src
-CMD ["uvicorn","flowforge.main:app","--host","0.0.0.0","--port","8000"]
+# Keep idle connections longer than the web proxy's client pool (Node ~4s), so the client
+# always closes first and never reuses a socket the server is closing (ECONNRESET).
+CMD ["uvicorn","flowforge.main:app","--host","0.0.0.0","--port","8000","--timeout-keep-alive","75"]

@@ -99,7 +99,7 @@ def _reflect_tenant_tables(sync_session: Session) -> dict[str, Table]:
     }
 
 
-async def _tables(db: AsyncSession) -> dict[str, Table]:
+async def tenant_tables(db: AsyncSession) -> dict[str, Table]:
     """Reflect public tenant-owned tables once per process.
 
     Reflection is synchronous SQLAlchemy work, so it must run through
@@ -115,7 +115,7 @@ async def _tables(db: AsyncSession) -> dict[str, Table]:
 
 
 async def _resolve(resource: str, db: AsyncSession) -> Table:
-    available = await _tables(db)
+    available = await tenant_tables(db)
     candidates = ALIASES.get(resource, (resource.replace("-", "_"),))
     for name in candidates:
         table = available.get(name)
@@ -150,7 +150,7 @@ def _visible_columns(table: Table) -> list[Any]:
 
 @router.get("/resources")
 async def resources(db: Db, caller: Caller) -> list[dict[str, Any]]:
-    available = await _tables(db)
+    available = await tenant_tables(db)
     result = []
     for alias, candidates in sorted(ALIASES.items()):
         table = next((available[name] for name in candidates if name in available), None)
@@ -221,3 +221,6 @@ async def get_record(resource: str, record_id: str, db: Db, caller: Caller) -> d
     if row is None:
         raise HTTPException(404, "Record not found")
     return _row(row)
+
+
+_tables = tenant_tables

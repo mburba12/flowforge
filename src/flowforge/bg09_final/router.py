@@ -17,6 +17,11 @@ P = Annotated[Principal, Depends(current_principal)]
 D = Annotated[AsyncSession, Depends(get_tenant_db)]
 
 
+def _out(x: Any) -> dict[str, Any]:
+    """Plain column values, so responses never depend on ORM instance state."""
+    return {c.key: getattr(x, c.key) for c in x.__table__.columns}
+
+
 @router.post("/records", status_code=201)
 async def create(b: RecordCreate, p: P, db: D) -> Any:
     x = ManufacturingRecord(
@@ -29,7 +34,7 @@ async def create(b: RecordCreate, p: P, db: D) -> Any:
     db.add(x)
     await db.commit()
     await db.refresh(x)
-    return x
+    return _out(x)
 
 
 @router.post("/records/{id}/transition")
@@ -57,7 +62,8 @@ async def transition(id: UUID, b: Transition, p: P, db: D) -> Any:
         x.approved_by = p.user_id
     x.status = b.target
     await db.commit()
-    return x
+    await db.refresh(x)
+    return _out(x)
 
 
 @router.post("/genealogy", status_code=201)
@@ -73,4 +79,5 @@ async def genealogy(b: GenealogyCreate, p: P, db: D) -> Any:
     )
     db.add(x)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return _out(x)

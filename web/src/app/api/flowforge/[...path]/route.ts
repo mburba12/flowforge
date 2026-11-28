@@ -5,6 +5,13 @@ export const runtime = "nodejs";
 
 const API_BASE = (process.env.FLOWFORGE_API_BASE_URL || "http://flowforge-phase1-api-1:8000").replace(/\/$/, "");
 
+const REPEATABLE = new Set(["GET", "HEAD", "OPTIONS", "PUT", "DELETE"]);
+
+function isConnectionReset(error: unknown): boolean {
+  const cause = (error as { cause?: { code?: string } })?.cause;
+  return ["ECONNRESET", "UND_ERR_SOCKET", "EPIPE"].includes(cause?.code ?? "");
+}
+
 async function proxy(request: NextRequest, context: { params: Promise<{ path: string[] }> }) {
   const { path } = await context.params;
   const target = new URL(`${API_BASE}/${path.join("/")}`);
@@ -24,7 +31,15 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
   if (!['GET','HEAD'].includes(request.method)) init.body = await request.arrayBuffer();
 
   try {
-    const upstream = await fetch(target, init);
+    let upstream: Response;
+    try {
+      upstream = await fetch(target, init);
+    } catch (error) {
+      // A pooled keep-alive socket the API just closed fails with ECONNRESET before the
+      // request is processed. Retry once, only for methods that are safe to repeat.
+      if (!REPEATABLE.has(request.method) || !isConnectionReset(error)) throw error;
+      upstream = await fetch(target, init);
+    }
     const responseHeaders = new Headers(upstream.headers);
     responseHeaders.delete("content-encoding");
     responseHeaders.delete("content-length");

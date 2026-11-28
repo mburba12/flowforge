@@ -1,10 +1,11 @@
 import logging
+import sys
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from flowforge.api.router import api_router
 from flowforge.catalog.router import router as catalog_router
@@ -86,6 +87,67 @@ async def integrity_error_handler(_: Request, exc: IntegrityError) -> JSONRespon
     )
 
 
+@app.exception_handler(LookupError)
+async def lookup_error_handler(_: Request, exc: LookupError) -> JSONResponse:
+    # Services raise plain LookupError for "record not found". Subclasses such as
+    # KeyError/IndexError are programming errors and stay server errors.
+    if type(exc) is not LookupError:
+        raise exc
+    return JSONResponse(status_code=404, content={"detail": str(exc) or "Not found"})
+
+
+@app.exception_handler(ValueError)
+async def value_error_handler(_: Request, exc: ValueError) -> JSONResponse:
+    # Services raise plain ValueError for business-rule violations (invalid state change,
+    # insufficient stock, ...). Library subclasses stay server errors.
+    if type(exc) is not ValueError:
+        raise exc
+    return JSONResponse(status_code=409, content={"detail": str(exc)})
+
+
+@app.exception_handler(DBAPIError)
+async def data_error_handler(_: Request, exc: DBAPIError) -> JSONResponse:
+    # SQLSTATE class 22 = data exception (value too long, invalid number/date format).
+    sqlstate = str(
+        getattr(exc.orig, "sqlstate", "")
+        or getattr(getattr(exc.orig, "__cause__", None), "sqlstate", "")
+        or ""
+    )
+    if not sqlstate.startswith("22"):
+        raise exc
+    logger.warning("Data exception %s: %s", sqlstate, type(exc.orig).__name__)
+    return JSONResponse(
+        status_code=422,
+        content={"detail": "A value is too long or has an invalid format for its field"},
+    )
+
+
+async def domain_error_handler(_: Request, exc: Exception) -> JSONResponse:
+    # Business-rule errors defined by FlowForge modules are client-correctable conflicts.
+    name = type(exc).__name__
+    status = 404 if "NotFound" in name else 409
+    return JSONResponse(status_code=status, content={"detail": str(exc)})
+
+
+def register_domain_errors(application: FastAPI) -> list[str]:
+    """Map every exception class defined in a loaded flowforge module to 404/409."""
+    registered: list[str] = []
+    for module_name, module in list(sys.modules.items()):
+        if not module_name.startswith("flowforge.") or module is None:
+            continue
+        for obj in list(vars(module).values()):
+            if (
+                isinstance(obj, type)
+                and issubclass(obj, Exception)
+                and obj.__module__ == module_name
+                and not issubclass(obj, HTTPException)
+                and obj is not PostingError
+            ):
+                application.add_exception_handler(obj, domain_error_handler)
+                registered.append(f"{module_name}.{obj.__name__}")
+    return registered
+
+
 # Release-scope completion routes first, so their GET paths take precedence.
 app.include_router(release_admin_router)
 app.include_router(release_read_router)
@@ -126,3 +188,5 @@ app.include_router(part2a_resource_router)
 app.include_router(part2b_router)
 
 app.include_router(resource_contract_router)
+
+DOMAIN_ERRORS = register_domain_errors(app)

@@ -1,10 +1,11 @@
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import MetaData, Table, func, or_, select, update
+from sqlalchemy import Table, func, or_, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.db.session import get_tenant_db
+from flowforge.resource_contracts.router import tenant_tables
 
 router = APIRouter(prefix="/api/v1/platform", tags=["part2b-platform"])
 Db = Annotated[AsyncSession, Depends(get_tenant_db)]
@@ -22,14 +23,12 @@ RESOURCE_MAP = {
 }
 
 
-def tables(db: AsyncSession) -> dict[str, Table]:
-    metadata = MetaData()
-    metadata.reflect(bind=db.sync_session.connection(), schema="public")
-    return {table.name: table for table in metadata.tables.values()}
+async def tables(db: AsyncSession) -> dict[str, Table]:
+    return await tenant_tables(db)
 
 
-def resource_table(name: str, db: AsyncSession) -> Table:
-    available = tables(db)
+async def resource_table(name: str, db: AsyncSession) -> Table:
+    available = await tables(db)
     for candidate in RESOURCE_MAP.get(name, ()):
         table = available.get(candidate)
         if table is not None and "tenant_id" in table.c:
@@ -53,7 +52,7 @@ def output(row: Any) -> dict[str, Any]:
 async def list_resource(
     resource: str, db: Db, limit: int = Query(50, ge=1, le=200), offset: int = Query(0, ge=0)
 ) -> dict[str, Any]:
-    table = resource_table(resource, db)
+    table = await resource_table(resource, db)
     total = await db.scalar(select(func.count()).select_from(table))
     rows = await db.execute(select(table).limit(limit).offset(offset))
     return {"total": total or 0, "items": [output(row) for row in rows]}
@@ -61,7 +60,7 @@ async def list_resource(
 
 @router.get("/{resource}/{record_id}")
 async def get_resource(resource: str, record_id: str, db: Db) -> dict[str, Any]:
-    table = resource_table(resource, db)
+    table = await resource_table(resource, db)
     if "id" not in table.c:
         raise HTTPException(404, "Resource has no record identifier")
     row = (await db.execute(select(table).where(table.c.id == record_id))).first()
@@ -74,7 +73,7 @@ async def get_resource(resource: str, record_id: str, db: Db) -> dict[str, Any]:
 async def patch_resource(
     resource: str, record_id: str, payload: dict[str, Any], db: Db
 ) -> dict[str, Any]:
-    table = resource_table(resource, db)
+    table = await resource_table(resource, db)
     allowed = {
         column.name
         for column in table.columns
@@ -93,7 +92,7 @@ async def search_all(q: str, db: Db, limit: int = Query(25, ge=1, le=100)) -> di
     found: list[dict[str, Any]] = []
     for name in RESOURCE_MAP:
         try:
-            table = resource_table(name, db)
+            table = await resource_table(name, db)
         except HTTPException:
             continue
         text_columns = [
