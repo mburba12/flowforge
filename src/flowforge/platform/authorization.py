@@ -12,7 +12,6 @@
 """
 
 from typing import Annotated, Any
-from uuid import UUID
 
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -325,5 +324,52 @@ async def enforce(
     request.state.permissions = granted
 
 
-def tenant_uuid(principal: Principal) -> UUID:
-    return UUID(str(principal.tenant_id))
+async def sync_standard_roles() -> dict[str, int]:
+    """Ensure the catalog and every tenant's standard roles hold the current permission sets.
+
+    Additive only (never removes a role, grant or assignment), so it is safe on every
+    start. Covers tenants created by import or restore after migrations ran, and new
+    catalog codes added in later releases.
+    """
+    from flowforge.db.session import SessionLocal
+
+    added = {"permissions": 0, "roles": 0, "grants": 0}
+    async with SessionLocal() as session:
+        for code, description in CATALOG.items():
+            result = await session.execute(
+                text(
+                    "INSERT INTO permissions (id, code, description)"
+                    " VALUES (gen_random_uuid(), :c, :d) ON CONFLICT (code) DO NOTHING"
+                ),
+                {"c": code, "d": description},
+            )
+            added["permissions"] += result.rowcount or 0  # type: ignore[attr-defined]
+        await session.commit()
+        tenant_ids = [row[0] for row in await session.execute(text("SELECT id FROM tenants"))]
+    for tenant_id in tenant_ids:
+        async with SessionLocal() as session:
+            await session.execute(
+                text("SELECT set_config('app.current_tenant_id', :t, true)"), {"t": str(tenant_id)}
+            )
+            for role_name, codes in STANDARD_ROLES.items():
+                result = await session.execute(
+                    text(
+                        "INSERT INTO roles (id, tenant_id, name, description, is_deleted)"
+                        " VALUES (gen_random_uuid(), :t, :n, :d, false)"
+                        " ON CONFLICT (tenant_id, name) DO NOTHING"
+                    ),
+                    {"t": tenant_id, "n": role_name, "d": f"Standard {role_name} role"},
+                )
+                added["roles"] += result.rowcount or 0  # type: ignore[attr-defined]
+                result = await session.execute(
+                    text(
+                        "INSERT INTO role_permissions (role_id, permission_id, tenant_id)"
+                        " SELECT r.id, p.id, r.tenant_id FROM roles r JOIN permissions p"
+                        " ON p.code = ANY(:codes) WHERE r.tenant_id = :t AND r.name = :n"
+                        " AND NOT r.is_deleted ON CONFLICT DO NOTHING"
+                    ),
+                    {"t": tenant_id, "n": role_name, "codes": sorted(codes)},
+                )
+                added["grants"] += result.rowcount or 0  # type: ignore[attr-defined]
+            await session.commit()
+    return added

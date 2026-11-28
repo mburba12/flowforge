@@ -1,4 +1,6 @@
 import logging
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -36,7 +38,7 @@ from flowforge.phase4i.router import router as phase4i_router
 from flowforge.phase4j.router import router as phase4j_router
 from flowforge.phase5a.router import router as phase5a_router
 from flowforge.phase5b.router import router as phase5b_router
-from flowforge.platform.authorization import enforce
+from flowforge.platform.authorization import enforce, sync_standard_roles
 from flowforge.release.admin_routes import router as release_admin_router
 from flowforge.release.read_routes import router as release_read_router
 from flowforge.resource_contracts.router import router as resource_contract_router
@@ -44,7 +46,20 @@ from flowforge.support_feedback import router as support_feedback_router
 
 logger = logging.getLogger("flowforge")
 
+
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    # Bring every tenant's standard roles up to the current permission catalog.
+    try:
+        added = await sync_standard_roles()
+        logger.info("RBAC standard roles synchronised: %s", added)
+    except Exception:  # noqa: BLE001 - never block startup; health checks report the database
+        logger.exception("RBAC standard role synchronisation failed")
+    yield
+
+
 app = FastAPI(
+    lifespan=lifespan,
     title="FlowForge API",
     version="1.0.0-phase1",
     description="Complete Phase 1 platform foundation",

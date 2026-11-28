@@ -210,3 +210,20 @@ async def test_custom_role_permissions(harness: Harness) -> None:
     tb = {"ledger_id": h.ledger_id, "period_id": h.period_id}
     assert await _status(h, "GET", "/api/v2/trial-balance", user, params=tb) == 200
     assert await _status(h, "POST", "/api/v2/journals", user, json=_journal(h)) == 403
+
+
+async def test_startup_sync_restores_standard_grants(harness: Harness) -> None:
+    from flowforge.platform.authorization import sync_standard_roles
+
+    h = harness
+    await h.sql(
+        "DELETE FROM role_permissions rp USING roles r, permissions p"
+        " WHERE rp.role_id = r.id AND rp.permission_id = p.id AND r.name = 'Viewer'"
+        " AND p.code = 'gl.read' AND r.tenant_id = :t",
+        t=h.tenant_id,
+    )
+    added = await sync_standard_roles()
+    assert added["grants"] >= 1
+    viewer = next(r for r in await h.call("GET", "/api/v1/roles") if r["name"] == "Viewer")
+    assert "gl.read" in viewer["permissions"]
+    assert (await sync_standard_roles())["grants"] == 0
