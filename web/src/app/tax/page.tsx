@@ -1,1 +1,6 @@
-import {DomainWorkspace} from "@/components/part2a/domain-workspace";export default function Page(){return <DomainWorkspace title="Tax" resources={["tax_liabilities","tax_returns","tax_remittances","tax_notices"]} />}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/tax" as never);
+}

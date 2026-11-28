@@ -36,6 +36,11 @@ export function useGl(key = "") {
   return { ledgers, accounts, calendars, periods, ledgerOptions, openPeriodOptions, calendarOptions, accountOptions, accountName, reload };
 }
 
+export const UOM_OPTIONS: Option[] = ["EA", "PK", "BOX", "CS", "SET", "PAL", "HR", "DAY", "KG", "G", "LB", "OZ", "L", "ML", "GAL", "M", "CM", "FT", "IN"].map((u) => ({
+  value: u,
+  label: u,
+}));
+
 export function optionsOf(rows: Row[] | null, label: (r: Row) => string): Option[] {
   return (rows ?? []).map((r) => ({ value: String(r.id), label: label(r) }));
 }

@@ -1,1 +1,6 @@
-import {DomainWorkspace} from "@/components/part2a/domain-workspace";export default function Page(){return <DomainWorkspace title="Accounts payable" resources={["vendors","purchase_orders","vendor_invoices","vendor_payments"]} />}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/ap" as never);
+}

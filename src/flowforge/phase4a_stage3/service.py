@@ -8,6 +8,7 @@ from flowforge.phase2b.models import JournalLine
 from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
 from flowforge.phase4a.models import CompensationRate, WorkerProfile
 from flowforge.phase4a_stage2.models import PayPeriod
+from flowforge.platform.numbering import next_number
 
 from .calculator import calculate_payroll
 from .models import (
@@ -37,16 +38,10 @@ class PayrollService:
         self,
         data: PayrollRunCreate,
     ) -> PayrollRun:
-        count_statement = (
-            select(func.count())
-            .select_from(PayrollRun)
-            .where(PayrollRun.tenant_id == self.tenant_id)
-        )
-        count = await self.db.scalar(count_statement)
 
         payroll_run = PayrollRun(
             tenant_id=self.tenant_id,
-            run_number=(f"PR-{int(count or 0) + 1:08d}"),
+            run_number=await next_number(self.db, self.tenant_id, "payroll_run"),
             created_by=self.user_id,
             **data.model_dump(),
         )

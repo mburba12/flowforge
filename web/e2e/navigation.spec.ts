@@ -36,7 +36,9 @@ test.describe("FlowForge workspace navigation (signed in)", () => {
     test(`${workspace.label} loads inside the signed-in shell`, async ({ page }) => {
       const response = await page.goto(workspace.path, { waitUntil: "domcontentloaded" });
       expect(response?.status(), `${workspace.path} returned an HTTP error`).toBeLessThan(400);
-      await expect(page).toHaveURL(new RegExp(`${workspace.path.replaceAll("/", "\\/")}\\/?$`));
+      // Legacy top-level routes redirect to their connected /modules workspace.
+      const expected = ["/shipping", "/billing"].includes(workspace.path) ? workspace.path : `/modules${workspace.path}`;
+      await expect(page).toHaveURL(new RegExp(`${expected.replaceAll("/", "\\/")}\\/?$`));
       await expectSignedInShell(page);
 
       const content = page.locator(".shell .main");
@@ -58,9 +60,10 @@ test.describe("FlowForge workspace navigation (signed in)", () => {
   test("accounts payable workspace reads live data without errors", async ({ page }) => {
     await page.goto("/modules/ap");
     await expect(page.getByRole("heading", { name: "Accounts payable", level: 1 })).toBeVisible();
-    await page.locator(".commandbar select").selectOption("purchase-orders");
-    await expect(page.locator(".dataCard .cardTitle span")).toHaveText(/\d+ records/);
-    await expect(page.locator(".notice")).toHaveCount(0);
+    await expect(page.getByTestId("po-form")).toBeVisible();
+    await page.getByRole("tab", { name: "Vendors" }).click();
+    await expect(page.getByTestId("vendor-form")).toBeVisible();
+    await expect(page.locator(".rwNotice.error")).toHaveCount(0);
   });
 
   test("log out returns to sign-in and protects workspaces", async ({ page }) => {

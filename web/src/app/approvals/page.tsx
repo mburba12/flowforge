@@ -1,11 +1,6 @@
-import { ServiceWorkspace } from "@/components/part2b/service-workspace";
+import { redirect } from "next/navigation";
 
+// Legacy route: the connected workspace lives under /modules.
 export default function Page() {
-  return (
-    <ServiceWorkspace
-      title="Approvals"
-      resources={["approvals"]}
-      actions={["approve","reject","request-changes","delegate"]}
-    />
-  );
+  redirect("/modules/approvals" as never);
 }

@@ -1,9 +1,10 @@
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.phase1a.tenancy import TenantContext
+from flowforge.platform.numbering import next_number
 from flowforge.platform.services import record_change
 
 from .enums import PartyKind, PartyStatus
@@ -18,10 +19,7 @@ class PartyService:
         self.ctx = ctx
 
     async def _number(self) -> str:
-        count = await self.db.scalar(
-            select(func.count()).select_from(Party).where(Party.tenant_id == self.ctx.tenant_id)
-        )
-        return f"P-{int(count or 0) + 1:08d}"
+        return await next_number(self.db, self.ctx.tenant_id, "party")
 
     async def organization(self, data: OrganizationCreate) -> Party:
         p = Party(

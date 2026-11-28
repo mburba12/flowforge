@@ -2,10 +2,11 @@ from datetime import date
 from decimal import Decimal
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
+from flowforge.platform.numbering import next_number
 from flowforge.release.models import record_order_status
 
 from .models import (
@@ -52,13 +53,10 @@ class CommerceService:
         self.user_id = user_id
 
     async def customer(self, d: CustomerCreate) -> CustomerProfile:
-        n = await self.db.scalar(
-            select(func.count())
-            .select_from(CustomerProfile)
-            .where(CustomerProfile.tenant_id == self.tenant_id)
-        )
         x = CustomerProfile(
-            tenant_id=self.tenant_id, customer_number=f"C-{int(n or 0) + 1:08d}", **d.model_dump()
+            tenant_id=self.tenant_id,
+            customer_number=await next_number(self.db, self.tenant_id, "customer"),
+            **d.model_dump(),
         )
         self.db.add(x)
         await self.db.commit()
@@ -209,16 +207,9 @@ class CommerceService:
 
         order_status = "credit_hold" if total > customer.credit_limit else "approved"
 
-        count_statement = (
-            select(func.count())
-            .select_from(SalesOrder)
-            .where(SalesOrder.tenant_id == self.tenant_id)
-        )
-        count = await self.db.scalar(count_statement)
-
         order = SalesOrder(
             tenant_id=self.tenant_id,
-            order_number=(f"SO-{int(count or 0) + 1:08d}"),
+            order_number=await next_number(self.db, self.tenant_id, "sales_order"),
             customer_id=data.customer_id,
             ledger_id=data.ledger_id,
             period_id=data.period_id,

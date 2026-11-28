@@ -1,9 +1,10 @@
 from decimal import Decimal
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.platform.numbering import next_number
 from flowforge.platform.services import record_change
 
 from .models import (
@@ -69,16 +70,11 @@ class LedgerService:
         return item
 
     async def journal(self, data: JournalCreate) -> JournalEntry:
-        number = await self.db.scalar(
-            select(func.count())
-            .select_from(JournalEntry)
-            .where(JournalEntry.tenant_id == self.tenant_id)
-        )
         item = JournalEntry(
             tenant_id=self.tenant_id,
             ledger_id=data.ledger_id,
             period_id=data.period_id,
-            journal_number=f"JE-{int(number or 0) + 1:08d}",
+            journal_number=await next_number(self.db, self.tenant_id, "journal"),
             journal_date=data.journal_date,
             description=data.description,
             created_by=self.user_id,

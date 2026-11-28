@@ -1,1 +1,0 @@
-export function LoadingState(){return <p role="status">Loading...</p>} export function EmptyState(){return <p>No records found.</p>} export function ErrorState({message,retry}:{message:string;retry?:()=>void}){return <div role="alert"><p>{message}</p>{retry&&<button onClick={retry}>Retry</button>}</div>}

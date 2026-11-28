@@ -1,1 +1,6 @@
-import {DomainWorkspace} from "@/components/part2a/domain-workspace";export default function Page(){return <DomainWorkspace title="Workforce" resources={["workers","worker_profiles","time_entries","work_schedules"]} />}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/workforce" as never);
+}

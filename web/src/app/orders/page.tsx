@@ -1,1 +1,6 @@
-import {DomainWorkspace} from "@/components/part2a/domain-workspace";export default function Page(){return <DomainWorkspace title="Orders" resources={["sales_orders","sales_order_lines","shipments"]} />}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/orders" as never);
+}

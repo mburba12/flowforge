@@ -1,2 +1,6 @@
-import {BackendFeatureWorkspace} from "@/components/backend-feature-workspace";
-export default function Page(){return <BackendFeatureWorkspace title="Entities" description="Live operations mapped from the FlowForge OpenAPI contract." tags={["phase2a","phase4d-entities"]} />}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/entities" as never);
+}

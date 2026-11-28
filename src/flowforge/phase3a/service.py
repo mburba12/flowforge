@@ -1,9 +1,10 @@
 from decimal import Decimal
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.platform.numbering import next_number
 from flowforge.platform.services import record_change
 
 from .models import (
@@ -30,16 +31,10 @@ class ProcurementService:
         self.user_id = user_id
 
     async def vendor(self, data: VendorCreate) -> VendorProfile:
-        statement = (
-            select(func.count())
-            .select_from(VendorProfile)
-            .where(VendorProfile.tenant_id == self.tenant_id)
-        )
-        count = await self.db.scalar(statement)
 
         vendor = VendorProfile(
             tenant_id=self.tenant_id,
-            vendor_number=f"V-{int(count or 0) + 1:08d}",
+            vendor_number=await next_number(self.db, self.tenant_id, "vendor"),
             **data.model_dump(),
         )
         self.db.add(vendor)
@@ -50,12 +45,6 @@ class ProcurementService:
         return vendor
 
     async def purchase_order(self, data: POCreate) -> PurchaseOrder:
-        statement = (
-            select(func.count())
-            .select_from(PurchaseOrder)
-            .where(PurchaseOrder.tenant_id == self.tenant_id)
-        )
-        count = await self.db.scalar(statement)
 
         total = sum(
             (line.quantity * line.unit_price for line in data.lines),
@@ -64,7 +53,7 @@ class ProcurementService:
 
         purchase_order = PurchaseOrder(
             tenant_id=self.tenant_id,
-            po_number=f"PO-{int(count or 0) + 1:08d}",
+            po_number=await next_number(self.db, self.tenant_id, "purchase_order"),
             vendor_id=data.vendor_id,
             currency_code=data.currency_code,
             order_date=data.order_date,
@@ -114,16 +103,9 @@ class ProcurementService:
         if purchase_order is None or purchase_order.status not in receivable_statuses:
             raise ValueError("Purchase order is not receivable")
 
-        count_statement = (
-            select(func.count())
-            .select_from(GoodsReceipt)
-            .where(GoodsReceipt.tenant_id == self.tenant_id)
-        )
-        count = await self.db.scalar(count_statement)
-
         receipt = GoodsReceipt(
             tenant_id=self.tenant_id,
-            receipt_number=f"GR-{int(count or 0) + 1:08d}",
+            receipt_number=await next_number(self.db, self.tenant_id, "goods_receipt"),
             purchase_order_id=purchase_order.id,
             receipt_date=data.receipt_date,
             received_by=self.user_id,
