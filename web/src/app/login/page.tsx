@@ -99,6 +99,7 @@ export default function LoginPage() {
     <main className="loginPage">
       <section className="loginCard" aria-labelledby="login-title">
         <div className="loginBrand">FlowForge</div>
+        <span className="loginTag">One platform. Every business operation.</span>
         <h1 id="login-title">Sign in</h1>
         <p>Access the FlowForge Production workspace.</p>
         <form onSubmit={submit} noValidate>
