@@ -1,19 +1,23 @@
-"""Role-based access control for the release-scope API (platform, GL, AP, AR, payroll, tax).
+"""Role-based access control for every API operation.
 
-* CATALOG: every permission code with its description (seeded by migration ff_rbac_001).
+* CATALOG: every permission code with its description (seeded by migrations
+  ff_rbac_001/ff_rbac_002 and kept current by sync_standard_roles at startup).
 * STANDARD_ROLES: permission sets for the built-in roles created for every tenant.
 * POLICY: the permission each release-scope endpoint requires, keyed by the endpoint
   function ("module:qualname") because nested include_router prefixes make route
   paths unreliable for matching.
-* enforce(): app-wide dependency. For an endpoint in a release module it requires a
-  valid token, an active user in an active tenant, and the mapped permission; an
-  unmapped endpoint in a release module is denied (deny by default). Endpoints in
-  other (extended) modules keep their own authentication unchanged.
+* EXTENDED_POLICY: derived per operation for the extended domains by
+  build_extended_policy(app) (read / write / approve per domain).
+* enforce(): app-wide dependency. Except for PUBLIC endpoints it requires a valid
+  token, an active user in an active tenant, and the mapped permission. An endpoint
+  without a policy is denied (deny by default).
 """
 
+import re
 from typing import Annotated, Any
 
 from fastapi import Depends, HTTPException, Request, status
+from fastapi.routing import APIRoute
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import text
 
@@ -81,6 +85,125 @@ CATALOG: dict[str, str] = {
     "tax.remit": "Remit tax payments",
     "tax.notice.manage": "Record and resolve tax notices",
     "tax.reconcile": "Reconcile tax accounts",
+    # extended domains (policy derived per operation by build_extended_policy)
+    "integrations.read": "Read integration providers and connections",
+    "crm.read": "Read leads, opportunities, quotes, campaigns and pricing",
+    "crm.write": "Maintain leads, opportunities, quotes, activities, campaigns and pricing",
+    "crm.approve": "Decide CRM transitions (win/lose, approve quotes)",
+    "commerce.read": "Read requisitions, transfers, counts, shipments and returns",
+    "commerce.write": "Create requisitions, reservations, transfers, receipts and shipments",
+    "commerce.approve": "Approve requisitions, transfers and inventory counts",
+    "finance.advanced.read": "Read close runs, budgets, assets, consolidations and controls",
+    "finance.advanced.write": "Prepare accruals, allocations, recurring journals and budgets",
+    "finance.advanced.approve": "Post, close, reverse, release and certify advanced finance work",
+    "payroll.advanced.read": "Read payroll adjustments, filings, garnishments and year-end forms",
+    "payroll.advanced.write": "Prepare payroll adjustments, imports, filings and payment batches",
+    "payroll.advanced.approve": "Approve payroll adjustments, filings and payment batches",
+    "billing.read": "Read plans, subscriptions, projects, billing runs and fixed assets",
+    "billing.write": "Maintain plans, subscriptions, projects, time, expenses and usage",
+    "billing.approve": "Execute billing runs, post project billing and depreciation",
+    "manufacturing.read": "Read manufacturing and quality records",
+    "manufacturing.write": "Create manufacturing and quality records and genealogy",
+    "manufacturing.approve": "Approve, release and close manufacturing and quality records",
+    "intelligence.read": "Search and read knowledge records and copilot proposals",
+    "intelligence.write": "Create knowledge records, copilot proposals and upload inspections",
+    "intelligence.approve": "Accept or reject copilot proposals",
+    "operations.read": "Read operations runs",
+    "operations.write": "Start and complete operations runs",
+    "operations.approve": "Approve operations runs",
+    "entities.read": "Read entities, relationships and lineage",
+    "entities.write": "Create entities, relationships, lineage and match proposals",
+    "entities.approve": "Approve entity merges",
+    "governance.read": "Read entitlements, access reviews, delegations and controls",
+    "governance.write": "Maintain entitlements, delegations, approval limits and SoD rules",
+    "governance.approve": "Decide access reviews, revoke delegations and disable entitlements",
+}
+
+# Extended modules: module prefix -> permission domain. Longest prefix wins.
+EXTENDED_DOMAINS: dict[str, str] = {
+    "flowforge.crm_": "crm",
+    "flowforge.commerce_": "commerce",
+    "flowforge.finance.": "finance.advanced",
+    "flowforge.finance_": "finance.advanced",
+    "flowforge.phase3final.routes": "finance.advanced",
+    "flowforge.phase4e.routes": "finance.advanced",
+    "flowforge.foundation_": "governance",
+    "flowforge.master_data.": "masterdata",
+    "flowforge.workforce_": "workforce",
+    "flowforge.payroll_tax_": "payroll.advanced",
+    "flowforge.bg08_": "billing",
+    "flowforge.bg09_": "manufacturing",
+    "flowforge.bg10_": "intelligence",
+    "flowforge.phase4f.routes": "intelligence",
+    "flowforge.bg11_": "integrations",
+    "flowforge.phase4c": "integrations",
+    "flowforge.bg13_": "operations",
+    "flowforge.phase4d.routes": "entities",
+}
+# domain -> (read, write, approve) permission codes
+DOMAIN_CODES: dict[str, tuple[str, str, str]] = {
+    "masterdata": ("masterdata.read", "masterdata.write", "masterdata.write"),
+    "workforce": ("workforce.read", "workforce.write", "workforce.approve"),
+    "integrations": ("integrations.read", "integrations.manage", "integrations.manage"),
+    **{
+        d: (f"{d}.read", f"{d}.write", f"{d}.approve")
+        for d in (
+            "crm",
+            "commerce",
+            "finance.advanced",
+            "payroll.advanced",
+            "billing",
+            "manufacturing",
+            "intelligence",
+            "operations",
+            "entities",
+            "governance",
+        )
+    },
+}
+# Last path segments of operations that commit a decision (approve level).
+APPROVE_SEGMENTS = {
+    "approve",
+    "post",
+    "close",
+    "reopen",
+    "certify",
+    "release",
+    "reverse",
+    "execute",
+    "apply",
+    "depreciate",
+    "decide",
+    "revoke",
+    "disable",
+    "merge",
+}
+# Generic state-change endpoints: approve level only when the requested target is a decision.
+DECISION_SEGMENTS = {"action", "transition"}
+DECISION_FIELDS = ("target", "stage", "action", "decision", "status", "to_status")
+DECISION_VALUES = {
+    "approve",
+    "approved",
+    "reject",
+    "rejected",
+    "post",
+    "posted",
+    "release",
+    "released",
+    "simulated_released",
+    "close",
+    "closed",
+    "won",
+    "lost",
+    "accept",
+    "accepted",
+    "paid",
+    "executed",
+    "voided",
+    "recalled",
+    "activate",
+    "terminate",
+    "terminated",
 }
 
 _READ = {c for c in CATALOG if c.endswith(".read")} - {"audit.read"}
@@ -114,6 +237,13 @@ _CLERK_WRITE = {
     "notifications.manage",
 }
 _ADMIN_ONLY = {"users.manage", "roles.manage", "tenant.manage", "platform.tenants.create"}
+# Extended domains: clerks prepare, approvers decide. Governance and integrations stay
+# with owners and managers.
+_ADMIN_DOMAINS = {"governance", "integrations"}
+_APPROVE |= {
+    codes[2] for d, codes in DOMAIN_CODES.items() if d not in _ADMIN_DOMAINS | {"masterdata"}
+}
+_CLERK_WRITE |= {codes[1] for d, codes in DOMAIN_CODES.items() if d not in _ADMIN_DOMAINS}
 
 STANDARD_ROLES: dict[str, set[str]] = {
     "Owner": set(CATALOG) - {"platform.tenants.create"},
@@ -260,11 +390,97 @@ POLICY: dict[str, str] = {
     "flowforge.release.read_routes:list_tax_returns": "tax.read",
 }
 
+# Endpoints anyone may call without signing in.
+PUBLIC: set[str] = {
+    "flowforge.api.routes.auth:bootstrap",
+    "flowforge.api.routes.auth:login",
+    "flowforge.api.routes.health:health",
+    "flowforge.support_feedback:submit_problem_report",
+}
+# Read-only module diagnostics (/phase*/status, /phase1b/health): static, no tenant data.
+_DIAGNOSTIC_PATH = re.compile(r"^/phase[\w/]*/(status|health)$")
+# Explicit choices for extended endpoints that the derivation would get wrong.
+EXTENDED_OVERRIDES: dict[str, str] = {
+    "flowforge.control_plane.router:capabilities": AUTHENTICATED,
+    "flowforge.control_plane.router:capability": AUTHENTICATED,
+    "flowforge.control_plane.router:readiness": AUTHENTICATED,
+}
+
+# Filled by build_extended_policy(app) once every router is included.
+EXTENDED_POLICY: dict[str, str] = {}
+DECISIONS: dict[str, tuple[str, str]] = {}  # endpoint key -> (write code, approve code)
+
 _optional_bearer = HTTPBearer(auto_error=False)
 
 
 def endpoint_key(endpoint: Any) -> str:
     return f"{getattr(endpoint, '__module__', '')}:{getattr(endpoint, '__qualname__', '')}"
+
+
+def iter_api_routes(routes: list[Any]) -> list[APIRoute]:
+    """All API routes, including those inside lazily included routers."""
+    found: list[APIRoute] = []
+    for route in routes:
+        if isinstance(route, APIRoute):
+            found.append(route)
+        elif type(route).__name__ == "_IncludedRouter":
+            found.extend(iter_api_routes(route.original_router.routes))
+    return found
+
+
+def extended_domain(module: str) -> str | None:
+    matches = [prefix for prefix in EXTENDED_DOMAINS if module.startswith(prefix)]
+    return EXTENDED_DOMAINS[max(matches, key=len)] if matches else None
+
+
+def build_extended_policy(app: Any) -> dict[str, str]:
+    """Derive the permission of every endpoint outside the release modules.
+
+    GET -> domain read; operations whose last path segment commits a decision
+    (approve, post, close, ...) -> domain approve; generic action/transition
+    endpoints -> write, escalated to approve at request time for decision targets;
+    everything else -> domain write. Diagnostics and PUBLIC endpoints need no
+    permission. Endpoints of an unknown module get no policy and are denied.
+    """
+    EXTENDED_POLICY.clear()
+    DECISIONS.clear()
+    for route in iter_api_routes(list(app.routes)):
+        module = route.endpoint.__module__
+        key = endpoint_key(route.endpoint)
+        methods = route.methods or set()
+        if module in RELEASE_MODULES or key in PUBLIC:
+            continue
+        if methods <= {"GET", "HEAD"} and _DIAGNOSTIC_PATH.match(route.path):
+            PUBLIC.add(key)
+            continue
+        if key in EXTENDED_OVERRIDES:
+            EXTENDED_POLICY[key] = EXTENDED_OVERRIDES[key]
+            continue
+        domain = extended_domain(module)
+        if domain is None:
+            continue
+        read, write, approve = DOMAIN_CODES[domain]
+        segments = [s for s in route.path.split("/") if s and not s.startswith("{")]
+        last = segments[-1] if segments else ""
+        if methods <= {"GET", "HEAD"}:
+            EXTENDED_POLICY[key] = read
+        elif last in APPROVE_SEGMENTS:
+            EXTENDED_POLICY[key] = approve
+        else:
+            EXTENDED_POLICY[key] = write
+            if last in DECISION_SEGMENTS and approve != write:
+                DECISIONS[key] = (write, approve)
+    return EXTENDED_POLICY
+
+
+async def _decision_requested(request: Request) -> bool:
+    try:
+        body = await request.json()
+    except ValueError:
+        return False
+    if not isinstance(body, dict):
+        return False
+    return any(str(body.get(field, "")).lower() in DECISION_VALUES for field in DECISION_FIELDS)
 
 
 async def load_access(principal: Principal) -> set[str] | None:
@@ -306,11 +522,12 @@ async def enforce(
     credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(_optional_bearer)],
 ) -> None:
     endpoint = request.scope.get("endpoint")
-    module = getattr(endpoint, "__module__", "")
-    if module not in RELEASE_MODULES:
-        return  # extended modules keep their own authentication
     key = endpoint_key(endpoint)
-    if key not in POLICY:
+    if key in PUBLIC:
+        return
+    required = POLICY.get(key, EXTENDED_POLICY.get(key))
+    if required is None:
+        # Deny by default: every operation must have an explicit or derived policy.
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Endpoint has no authorization policy")
     if credentials is None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Not authenticated")
@@ -318,7 +535,8 @@ async def enforce(
     granted = await load_access(principal)
     if granted is None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Account or tenant is not active")
-    required = POLICY[key]
+    if key in DECISIONS and await _decision_requested(request):
+        required = DECISIONS[key][1]
     if required and required not in granted:
         raise HTTPException(status.HTTP_403_FORBIDDEN, f"Missing permission: {required}")
     request.state.permissions = granted

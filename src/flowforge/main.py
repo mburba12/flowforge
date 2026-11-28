@@ -7,11 +7,8 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import DBAPIError, IntegrityError
 
-from flowforge.api.router import api_router
-from flowforge.catalog.router import router as catalog_router
+from flowforge.api.router import api_router, extended_router
 from flowforge.integration.router import router as phase1_router
-from flowforge.part2a.resource_router import router as part2a_resource_router
-from flowforge.part2b.router import router as part2b_router
 from flowforge.phase2a.router import router as phase2a_router
 from flowforge.phase2b.posting import PostingError
 from flowforge.phase2b.router import router as phase2b_router
@@ -39,7 +36,11 @@ from flowforge.phase4i.router import router as phase4i_router
 from flowforge.phase4j.router import router as phase4j_router
 from flowforge.phase5a.router import router as phase5a_router
 from flowforge.phase5b.router import router as phase5b_router
-from flowforge.platform.authorization import enforce, sync_standard_roles
+from flowforge.platform.authorization import (
+    build_extended_policy,
+    enforce,
+    sync_standard_roles,
+)
 from flowforge.release.admin_routes import router as release_admin_router
 from flowforge.release.read_routes import router as release_read_router
 from flowforge.resource_contracts.router import router as resource_contract_router
@@ -152,6 +153,7 @@ def register_domain_errors(application: FastAPI) -> list[str]:
 app.include_router(release_admin_router)
 app.include_router(release_read_router)
 app.include_router(api_router)
+app.include_router(extended_router)
 app.include_router(phase1_router)
 app.include_router(phase2a_router)
 app.include_router(phase2b_router)
@@ -181,12 +183,10 @@ app.include_router(phase5a_router)
 app.include_router(phase5b_router)
 
 app.include_router(support_feedback_router)
-app.include_router(catalog_router)
 
-app.include_router(part2a_resource_router)
-
-app.include_router(part2b_router)
 
 app.include_router(resource_contract_router)
 
 DOMAIN_ERRORS = register_domain_errors(app)
+# Every extended operation gets a read/write/approve permission (deny by default).
+build_extended_policy(app)

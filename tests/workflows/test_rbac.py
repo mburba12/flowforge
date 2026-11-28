@@ -2,43 +2,48 @@
 
 from uuid import uuid4
 
-from fastapi.routing import APIRoute
-
 from flowforge.main import app
 from flowforge.platform.authorization import (
     CATALOG,
+    EXTENDED_POLICY,
     POLICY,
+    PUBLIC,
     RELEASE_MODULES,
     STANDARD_ROLES,
     endpoint_key,
+    iter_api_routes,
 )
 
 from .conftest import IN_PERIOD, Harness
 
 
-def _release_endpoints() -> set[str]:
-    keys: set[str] = set()
-
-    def walk(routes: list[object]) -> None:
-        for route in routes:
-            if isinstance(route, APIRoute):
-                if route.endpoint.__module__ in RELEASE_MODULES:
-                    keys.add(endpoint_key(route.endpoint))
-            elif type(route).__name__ == "_IncludedRouter":
-                walk(route.original_router.routes)  # type: ignore[attr-defined]
-
-    walk(list(app.routes))
-    return keys
+def _endpoint_keys(modules: set[str] | None = None) -> set[str]:
+    return {
+        endpoint_key(route.endpoint)
+        for route in iter_api_routes(list(app.routes))
+        if modules is None or route.endpoint.__module__ in modules
+    }
 
 
 def test_every_release_endpoint_has_a_policy() -> None:
-    endpoints = _release_endpoints()
-    public = {
-        k for k in endpoints if k.split(":")[0].endswith((".auth", ".health"))
-    }  # not in release modules, listed for clarity
-    assert not public
+    endpoints = _endpoint_keys(RELEASE_MODULES)
     assert endpoints - set(POLICY) == set(), "release endpoints without a policy"
     assert set(POLICY) - endpoints == set(), "policy entries for endpoints that do not exist"
+
+
+def test_every_endpoint_is_public_or_has_a_policy() -> None:
+    endpoints = _endpoint_keys()
+    unmapped = endpoints - PUBLIC - set(POLICY) - set(EXTENDED_POLICY)
+    assert not unmapped, sorted(unmapped)
+    assert {code for code in EXTENDED_POLICY.values() if code} <= set(CATALOG)
+    # Public endpoints are sign-in, health, problem reports and static diagnostics only.
+    for key in PUBLIC:
+        module, name = key.split(":")
+        assert module.endswith((".auth", ".health", "support_feedback")) or name in {
+            "status",
+            "health",
+            "phase1_status",
+        }, key
 
 
 def test_policy_uses_known_permissions_and_roles_are_consistent() -> None:
@@ -227,3 +232,39 @@ async def test_startup_sync_restores_standard_grants(harness: Harness) -> None:
     viewer = next(r for r in await h.call("GET", "/api/v1/roles") if r["name"] == "Viewer")
     assert "gl.read" in viewer["permissions"]
     assert (await sync_standard_roles())["grants"] == 0
+
+
+async def test_extended_domains_enforce_read_write_approve(harness: Harness) -> None:
+    h = harness
+    _, viewer = await _user(h, "Viewer")
+    _, clerk = await _user(h, "Clerk")
+    _, approver = await _user(h, "Approver")
+    _, nobody = await _user(h, None)
+    leads = "/api/v2/crm/final/leads"
+    # read: any standard role with domain read; no role -> forbidden; no token -> 401
+    assert await _status(h, "GET", leads, viewer) == 200
+    assert await _status(h, "GET", leads, nobody) == 403
+    assert (await h.client.get(leads)).status_code == 401
+    # write: clerk passes authorization (body validation answers), viewer/approver do not
+    assert await _status(h, "POST", "/api/v2/crm/leads", viewer, json={}) == 403
+    assert await _status(h, "POST", "/api/v2/crm/leads", approver, json={}) == 403
+    assert await _status(h, "POST", "/api/v2/crm/leads", clerk, json={}) == 422
+    # approve-level path: clerk denied, approver authorized
+    close = f"/api/v2/finance/completion/close-runs/{uuid4()}/close"
+    assert await _status(h, "POST", close, clerk, json={}) == 403
+    assert await _status(h, "POST", close, approver, json={}) != 403
+    # generic transition: deciding (won) needs approve, progressing does not
+    transition = f"/api/v2/crm/final/opportunities/{uuid4()}/transition"
+    won = {"stage": "won", "probability": 100}
+    progress = {"stage": "proposal", "probability": 40}
+    assert await _status(h, "POST", transition, clerk, json=won) == 403
+    assert await _status(h, "POST", transition, clerk, json=progress) != 403
+    # governance stays with owners and managers
+    assert await _status(h, "POST", "/api/v2/foundation-final/delegations", clerk, json={}) == 403
+    assert await _status(h, "POST", "/api/v2/foundation-final/delegations", h.owner, json={}) == 422
+
+
+async def test_public_endpoints_need_no_token(harness: Harness) -> None:
+    h = harness
+    assert (await h.client.get("/api/v1/health")).status_code == 200
+    assert (await h.client.get("/phase4a/status")).status_code == 200
