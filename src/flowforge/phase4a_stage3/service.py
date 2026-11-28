@@ -1,7 +1,8 @@
+from datetime import date
 from decimal import Decimal
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.phase2b.models import JournalLine
@@ -22,6 +23,9 @@ from .models import (
     PayrollTaxLine,
 )
 from .schemas import PayrollCalculate, PayrollPaymentCreate, PayrollPostAccounts, PayrollRunCreate
+
+ANNUAL_HOURS = Decimal("2080")
+PERIODS_PER_YEAR = {"weekly": 52, "biweekly": 26, "semimonthly": 24, "monthly": 12}
 
 
 class PayrollError(Exception):
@@ -52,6 +56,55 @@ class PayrollService:
 
         return payroll_run
 
+    async def _pay_basis(
+        self, worker: WorkerProfile, regular_hours: Decimal
+    ) -> tuple[Decimal | None, Decimal]:
+        """Hourly rate and regular hours for a run: the current hourly rate, or for salaried
+        workers the annual salary over 2,080 hours with the standard hours of their pay
+        frequency when no hours are entered (gross = salary / pay periods per year)."""
+        today = date.today()
+        current = (
+            select(CompensationRate)
+            .where(
+                CompensationRate.worker_id == worker.id,
+                CompensationRate.tenant_id == self.tenant_id,
+                CompensationRate.effective_from <= today,
+                or_(
+                    CompensationRate.effective_to.is_(None), CompensationRate.effective_to >= today
+                ),
+            )
+            .order_by(CompensationRate.effective_from.desc())
+        )
+        any_date = (
+            select(CompensationRate)
+            .where(
+                CompensationRate.worker_id == worker.id,
+                CompensationRate.tenant_id == self.tenant_id,
+            )
+            .order_by(CompensationRate.effective_from.desc())
+        )
+
+        async def rate_of(kind: str) -> CompensationRate | None:
+            # The rate in effect today; else the latest one (runs for past or future periods).
+            found = await self.db.scalar(current.where(CompensationRate.compensation_type == kind))
+            return found or await self.db.scalar(
+                any_date.where(CompensationRate.compensation_type == kind)
+            )
+
+        hourly = await rate_of("hourly")
+        if hourly is not None:
+            return hourly.amount, regular_hours
+        salary = await rate_of("salary")
+        if salary is None:
+            return None, regular_hours
+        if regular_hours == 0:
+            # A salaried period: exactly salary / periods, shown over the period's standard hours.
+            periods = PERIODS_PER_YEAR.get(worker.pay_frequency, 26)
+            regular_hours = (ANNUAL_HOURS / periods).quantize(Decimal("0.01"))
+            period_pay = salary.amount / periods
+            return (period_pay / regular_hours).quantize(Decimal("0.000001")), regular_hours
+        return (salary.amount / ANNUAL_HOURS).quantize(Decimal("0.000001")), regular_hours
+
     async def calculate(self, run_id: UUID, data: PayrollCalculate) -> PayrollRun:
         run = await self._run(run_id)
         if run.status != "draft":
@@ -63,19 +116,17 @@ class PayrollService:
                     WorkerProfile.tenant_id == self.tenant_id,
                 )
             )
-            rate = await self.db.scalar(
-                select(CompensationRate).where(
-                    CompensationRate.worker_id == item.worker_id,
-                    CompensationRate.tenant_id == self.tenant_id,
-                    CompensationRate.compensation_type == "hourly",
-                )
+            hourly_rate, regular_hours = (
+                await self._pay_basis(worker, item.regular_hours)
+                if worker
+                else (None, item.regular_hours)
             )
-            if worker is None or rate is None:
-                raise PayrollError("Worker or hourly compensation was not found")
+            if worker is None or hourly_rate is None:
+                raise PayrollError("Worker or current hourly or salary compensation was not found")
             result = calculate_payroll(
-                item.regular_hours,
+                regular_hours,
                 item.overtime_hours,
-                rate.amount,
+                hourly_rate,
                 item.bonus,
                 item.pretax_deductions,
                 item.posttax_deductions,
@@ -101,8 +152,8 @@ class PayrollService:
                         tenant_id=self.tenant_id,
                         payroll_worker_id=payroll_worker.id,
                         earning_type="regular_and_overtime",
-                        hours=item.regular_hours + item.overtime_hours,
-                        rate=rate.amount,
+                        hours=regular_hours + item.overtime_hours,
+                        rate=hourly_rate,
                         amount=result.gross_pay,
                     ),
                     PayrollTaxLine(

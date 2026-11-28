@@ -30,7 +30,7 @@ export function TaxWorkspace() {
   };
   const shared = { gl, jurisdictions, authorities, authorityName, version, refresh };
   return (
-    <Workspace title="Tax" description="Jurisdictions and versioned rules, calculation, liabilities from payroll, returns, approval, remittance and reconciliation." accent="#ea580c">
+    <Workspace title="Taxes" description="Jurisdictions and versioned rules, calculation, liabilities from payroll, returns, approval, remittance and reconciliation." accent="#ea580c">
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === "returns" ? <Returns {...shared} /> : null}
       {tab === "liabilities" ? <Liabilities {...shared} /> : null}

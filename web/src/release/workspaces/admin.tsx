@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { del, get, patch, post, put } from "../client";
@@ -17,11 +18,41 @@ const TABS = [
 
 export function AdminWorkspace() {
   return (
-    <Workspace title="Administration" description="Users, roles and permissions for your organisation. Changes take effect on the user's next request." accent="#334155">
-      <RequiresPermission permission="users.manage" area="Administration">
+    <Workspace title="Settings" description="Your connections, the people who can sign in and what each role may do." accent="#334155">
+      <Connections />
+      <RequiresPermission permission="users.manage" area="Managing users and roles">
         <AdminContent />
       </RequiresPermission>
     </Workspace>
+  );
+}
+
+type ConnectionStatus = { banks: number; carriers: number; shipments: number; payroll_imports: number; files: number };
+
+/** Where each outside service connects, with its current state. */
+function Connections() {
+  const status = useLoad(() => get<ConnectionStatus>("/api/v1/connections/status"), "settings-connections");
+  const s = status.data;
+  const rows: [string, string, string, string][] = [
+    ["Banks", s ? (s.banks ? `${s.banks} connected` : "Not connected") : "…", "/modules/banking", "Bank accounts"],
+    ["Payroll provider", s ? (s.payroll_imports ? `${s.payroll_imports} import(s) done` : "Not moved yet") : "…", "/modules/payroll", "Payroll"],
+    ["Shipping carriers", s ? (s.carriers ? `${s.carriers} connected` : "Not connected") : "…", "/modules/shipping", "Shipments"],
+    ["Files", s ? `${s.files} uploaded` : "…", "/modules/documents", "Files"],
+  ];
+  return (
+    <Card title="Connections" testId="settings-connections">
+      <ul className="carrierList">
+        {rows.map(([name, state, href, page]) => (
+          <li key={name}>
+            <b>{name}</b>
+            <span className="rwMuted small">{state}</span>
+            <Link className="rwBtn" href={href as never}>
+              Open {page}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </Card>
   );
 }
 

@@ -98,3 +98,31 @@ LIVE: NOT YET UPDATED. Live still runs commit 6c3c90b (update 20261127-233151). 
   session's permission policy; the owner runs: .\scripts\production\Update-FlowForge.ps1
   Then verify: alembic head ff_security_001 and 272 ff_same_tenant triggers.
 NOT THE AGENT'S: repo-root package.json, playwright.config.ts, tests\*.spec.ts (owner's own audit files) — untracked, untouched.
+================================================================================
+UPDATE 2026-11-28 (later) — CONNECTIONS RELEASE + SIMPLIFIED UI
+================================================================================
+NEW MODULE=src\flowforge\connect (release module, explicit POLICY entries; migration ff_connect_001 = head):
+  files.py      /api/v1/files: upload (multipart, section + optional record), list, download, soft delete.
+                Table attachments (bytea). Active content (html/svg/js) refused; signature check for pdf/png/jpg/zip.
+  banking.py    /api/v1/banking: overview, transactions, link (plaid|demo), connections (connect/sync/delete),
+                statements (CSV/OFX/QFX import, any bank). Reuses bank_connections/connected_bank_accounts/
+                bank_transactions. Amount convention: positive = money out; API returns money_in/money_out.
+  payroll.py    /api/v1/payroll-migration: providers, preview, file import (column aliases for ADP, Paychex,
+                Gusto, QuickBooks, ...), Gusto OAuth (start/complete/sync), imports, ytd. Tables
+                payroll_migrations, payroll_external_workers (re-import matching), payroll_ytd_balances.
+  shipping.py + carriers.py  /api/v1/shipping: carrier accounts (FedEx/UPS/USPS/DHL official REST APIs,
+                credentials verified then encrypted), shipments (auto-detect carrier, CSV import, refresh).
+  crypto.py     AES-256-GCM, key FLOWFORGE_CREDENTIALS_KEY or HKDF(jwt_secret). Context = tenant:kind:id.
+  http.py       outbound httpx; tests swap TRANSPORT for httpx.MockTransport.
+CONFIG (optional, compose passes through): FLOWFORGE_PLAID_CLIENT_ID/_SECRET/_ENV, FLOWFORGE_GUSTO_CLIENT_ID/
+  _CLIENT_SECRET/_ENV, FLOWFORGE_PUBLIC_URL, FLOWFORGE_CREDENTIALS_KEY. Not set in production: live Plaid feeds and
+  direct Gusto sign-in are off (UI says so); statements, payroll files and carrier tracking work without them.
+PAYROLL ENGINE: phase4a_stage3 calculate now pays salaried workers (salary / periods per year when no hours are
+  entered) and picks the rate in effect today (fallback: latest).
+PERMISSIONS ADDED: documents.read/.upload, banking.read/.import/.connect, shipping.read/.track/.connect, payroll.migrate.
+WEB: grouped sidebar (web\src\lib\modules.ts navGroups; "More tools" collapsed), Files + Upload in the top bar of every
+  section (web\src\release\files.tsx, drawer via portal), new pages banking/shipping/documents(Files), payroll tab
+  "Move from another provider", Home rewritten (setup checklist, quick actions), Settings → Connections,
+  Gusto callback at /connections/payroll/callback. Styles in web\src\app\simple.css.
+VERIFIED (isolated stack): backend 411 passed; browser 68 passed (incl. ui-audit, new connections.spec.ts);
+  coverage 429/430 operations (create tenant by design); isolation audit: same 6 benign findings as before, role leaks 0.

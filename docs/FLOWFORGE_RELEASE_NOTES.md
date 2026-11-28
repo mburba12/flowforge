@@ -5,6 +5,49 @@ Sign in at **http://127.0.0.1:3000**. Every workspace is under the left-hand men
 permission they need; every business rule is enforced by the server, so the UI can
 never bypass it.
 
+## New in this release: simpler to use, uploads everywhere, banks, payroll switch, shipments
+
+**A simpler menu.** Everyday work is in five groups: **Money** (Bank accounts, Bills to
+pay, Invoices & payments, Accounting, Taxes), **Sales** (Orders, Customers & deals,
+Shipments), **Products** (Inventory, Purchasing & warehouse), **People** (Employees,
+Payroll), then **Files** and **Settings**. Specialist tools (close and budgets,
+reconciliation, reports, payroll filings, HR, manufacturing, governance, audit trail and
+more) are folded under **More tools** at the bottom. Each page's raw API actions are
+folded under **Advanced** at the bottom of the page.
+
+**Home** shows a setup checklist (connect your bank, move your payroll, connect a
+carrier, upload a first file), one-click shortcuts, cash in the bank, what customers owe
+you, bills to pay, packages on the way, and payroll and journals waiting on you.
+
+**Upload in every section.** Every page has **Files** and **Upload** at the top right.
+Drop invoices, receipts, contracts, statements or photos (PDF, images, spreadsheets,
+documents, CSV, OFX/QFX; up to 20 MB each). Files stay with the section they were
+uploaded in and are all listed in **Files**. HTML, SVG and scripts are refused.
+
+**Bank accounts.** Three ways to bring a bank in:
+* **Connect a bank** — live balances and transactions through Plaid (needs the Plaid keys
+  on the server; see the runbook). Use **Refresh** to fetch new transactions.
+* **Import a statement** — works with every bank: download the activity as CSV, OFX or
+  QFX from the bank's website and import it. Importing the same file twice never
+  duplicates anything; the file is kept in Files.
+* **Try with demo data** — sample accounts you can disconnect any time.
+
+**Payroll → Move from another provider.** Choose your provider (ADP RUN, ADP Workforce
+Now, Paychex Flex, Gusto, QuickBooks Payroll, Rippling, Paylocity, Paycom, Square, OnPay,
+Justworks or a spreadsheet), upload its employee export (with year-to-date totals if you
+have them), check the preview and import. FlowForge creates the employees with their pay
+rates, pay frequency, state and filing status, and carries this year's totals over so
+year-end forms stay right. Re-importing updates the same people (a raise becomes a new
+pay rate from today). Gusto can also be connected directly when the Gusto keys are set
+on the server. Salaried employees are paid salary ÷ pay periods per year.
+
+**Shipments.** Paste any FedEx, UPS, USPS or DHL tracking number (the carrier is detected
+automatically) or upload a CSV of tracking numbers. Each business connects its own
+carrier account in **Carrier accounts** (API keys from the carrier's developer portal;
+FlowForge checks them with the carrier before saving and stores them encrypted). The list
+shows what is on the way, out for delivery, delivered or needs attention, with each
+package's scan history. Tracking numbers starting with DEMO use sample data.
+
 ## Using the workspaces
 
 | Workspace | What you can do |

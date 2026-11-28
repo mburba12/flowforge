@@ -33,7 +33,7 @@ export function PayablesWorkspace() {
   };
   const shared = { gl, ctx, vendors, vendorName, version, refresh };
   return (
-    <Workspace title="Accounts payable" description="Vendors, purchase orders, receiving, three-way match, posting, payments and aging." accent="#7c3aed">
+    <Workspace title="Bills to pay" description="Vendors, purchase orders, receiving, vendor bills, payments and what you owe by age." accent="#7c3aed">
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === "invoices" || tab === "open" ? ctx.node : null}
       {tab === "orders" ? <Orders {...shared} /> : null}

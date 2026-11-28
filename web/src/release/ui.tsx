@@ -10,7 +10,6 @@ export function Workspace(props: { title: string; description: string; accent?: 
   return (
     <main className="rw">
       <header className="rwHead" style={{ borderLeftColor: props.accent ?? "#2563eb" }}>
-        <span>FlowForge</span>
         <h1>{props.title}</h1>
         <p>{props.description}</p>
       </header>

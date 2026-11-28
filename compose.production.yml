@@ -11,6 +11,8 @@
 #   FLOWFORGE_APP_DB_PASSWORD     restricted runtime role flowforge_app (API)
 #   FLOWFORGE_JWT_SECRET          token signing key
 # Optional: FF_WEB_PORT (3000), FF_API_PORT (8000), FF_DB_PORT (5435, bound to 127.0.0.1)
+# Optional connections: FLOWFORGE_CREDENTIALS_KEY, FLOWFORGE_PUBLIC_URL,
+#   FLOWFORGE_PLAID_CLIENT_ID / _SECRET / _ENV, FLOWFORGE_GUSTO_CLIENT_ID / _CLIENT_SECRET / _ENV
 
 name: flowforge
 
@@ -57,6 +59,18 @@ services:
       FLOWFORGE_ACCESS_TOKEN_MINUTES: "30"
       # Problem reports are queued here when support email is not configured.
       FLOWFORGE_SUPPORT_OUTBOX: /data/support-outbox
+      # Connections (all optional; see docs\FLOWFORGE_PRODUCTION_RUNBOOK.md "Connections").
+      # Without them: statement imports, payroll file imports and carrier tracking with
+      # each business's own carrier keys all work; live bank feeds and direct Gusto
+      # sign-in are switched off.
+      FLOWFORGE_CREDENTIALS_KEY: ${FLOWFORGE_CREDENTIALS_KEY:-}
+      FLOWFORGE_PUBLIC_URL: ${FLOWFORGE_PUBLIC_URL:-http://localhost:3000}
+      FLOWFORGE_PLAID_CLIENT_ID: ${FLOWFORGE_PLAID_CLIENT_ID:-}
+      FLOWFORGE_PLAID_SECRET: ${FLOWFORGE_PLAID_SECRET:-}
+      FLOWFORGE_PLAID_ENV: ${FLOWFORGE_PLAID_ENV:-sandbox}
+      FLOWFORGE_GUSTO_CLIENT_ID: ${FLOWFORGE_GUSTO_CLIENT_ID:-}
+      FLOWFORGE_GUSTO_CLIENT_SECRET: ${FLOWFORGE_GUSTO_CLIENT_SECRET:-}
+      FLOWFORGE_GUSTO_ENV: ${FLOWFORGE_GUSTO_ENV:-demo}
     volumes:
       - flowforge_support:/data
     ports:

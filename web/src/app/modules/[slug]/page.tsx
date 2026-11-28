@@ -5,9 +5,10 @@ import { ExtendedWorkspace, OperationsSection } from "@/release/workspaces/exten
 
 export default async function ModulePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  // Release domains have purpose-built workspaces; extended domains are generated from
-  // the operation catalog; the rest keep the record browser. Every operation of a
-  // workspace is reachable from it (OperationsSection or the extended console).
+  // Release domains have purpose-built workspaces; extended domains are generated from the
+  // operation catalog; the rest keep the record browser. Every operation stays reachable
+  // (OperationsSection, folded away under "Advanced", or the extended console). Files and
+  // the Upload button for every section live in the top bar (AppShell).
   if (hasReleaseWorkspace(slug))
     return (
       <>

@@ -20,7 +20,8 @@ WEB = Path(__file__).resolve().parents[2] / "web" / "src"
 
 def _sidebar_slugs() -> set[str]:
     text = (WEB / "lib" / "modules.ts").read_text(encoding="utf-8")
-    return set(re.findall(r'\[\s*"([\w-]+)"\s*,\s*"[^"]+"\s*\]', text))
+    # Sidebar entries are ["slug", "Label", "icon"] tuples.
+    return set(re.findall(r'\[\s*"([\w-]+)"\s*,\s*"[^"]+"\s*,', text))
 
 
 def _extended_ui_slugs() -> set[str]:

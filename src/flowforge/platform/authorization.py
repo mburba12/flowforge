@@ -32,6 +32,16 @@ CATALOG: dict[str, str] = {
     "roles.manage": "Create roles and set role permissions",
     "audit.read": "Read the audit trail",
     "documents.manage": "Manage documents",
+    "documents.read": "View and download uploaded files",
+    "documents.upload": "Upload files (invoices, receipts, contracts) in any section",
+    # connections
+    "banking.read": "See bank accounts, balances and transactions",
+    "banking.import": "Import bank statements and refresh bank feeds",
+    "banking.connect": "Connect and disconnect bank accounts",
+    "shipping.read": "See shipments and their tracking status",
+    "shipping.track": "Add shipments to track and refresh tracking",
+    "shipping.connect": "Connect and disconnect shipping carrier accounts",
+    "payroll.migrate": "Import employees and pay history from a previous payroll provider",
     "workflows.manage": "Manage workflow definitions",
     "integrations.manage": "Manage integration connections",
     "notifications.manage": "Create notifications",
@@ -234,6 +244,9 @@ _CLERK_WRITE = {
     "tax.return.write",
     "tax.notice.manage",
     "documents.manage",
+    "documents.upload",
+    "banking.import",
+    "shipping.track",
     "notifications.manage",
 }
 _ADMIN_ONLY = {"users.manage", "roles.manage", "tenant.manage", "platform.tenants.create"}
@@ -272,6 +285,11 @@ RELEASE_MODULES = {
     "flowforge.release.read_routes",
     "flowforge.release.admin_routes",
     "flowforge.release.operations_routes",
+    "flowforge.connect.files",
+    "flowforge.connect.banking",
+    "flowforge.connect.payroll",
+    "flowforge.connect.shipping",
+    "flowforge.connect.status",
 }
 
 AUTHENTICATED = ""  # mapped, but any active user of the tenant may call it
@@ -391,6 +409,40 @@ POLICY: dict[str, str] = {
     "flowforge.release.read_routes:list_tax_returns": "tax.read",
     # operation catalog for the UI (each operation keeps its own permission)
     "flowforge.release.operations_routes:list_operations": AUTHENTICATED,
+    # uploads in every section
+    "flowforge.connect.files:upload_file": "documents.upload",
+    "flowforge.connect.files:list_files": "documents.read",
+    "flowforge.connect.files:download_file": "documents.read",
+    "flowforge.connect.files:delete_file": "documents.manage",
+    # bank accounts
+    "flowforge.connect.banking:banking_overview": "banking.read",
+    "flowforge.connect.banking:bank_transactions": "banking.read",
+    "flowforge.connect.banking:start_bank_link": "banking.connect",
+    "flowforge.connect.banking:connect_bank": "banking.connect",
+    "flowforge.connect.banking:sync_bank": "banking.import",
+    "flowforge.connect.banking:disconnect_bank": "banking.connect",
+    "flowforge.connect.banking:import_bank_statement": "banking.import",
+    # payroll migration
+    "flowforge.connect.payroll:payroll_providers": "payroll.read",
+    "flowforge.connect.payroll:payroll_imports": "payroll.read",
+    "flowforge.connect.payroll:payroll_ytd": "payroll.read",
+    "flowforge.connect.payroll:preview_payroll_file": "payroll.migrate",
+    "flowforge.connect.payroll:import_payroll_file": "payroll.migrate",
+    "flowforge.connect.payroll:start_gusto_connection": "payroll.migrate",
+    "flowforge.connect.payroll:complete_gusto_connection": "payroll.migrate",
+    "flowforge.connect.payroll:sync_gusto": "payroll.migrate",
+    # shipping carriers and tracking
+    "flowforge.connect.shipping:shipping_carriers": "shipping.read",
+    "flowforge.connect.shipping:connect_carrier": "shipping.connect",
+    "flowforge.connect.shipping:disconnect_carrier": "shipping.connect",
+    "flowforge.connect.shipping:list_shipments": "shipping.read",
+    "flowforge.connect.shipping:add_shipment": "shipping.track",
+    "flowforge.connect.shipping:import_shipments": "shipping.track",
+    "flowforge.connect.shipping:refresh_shipment": "shipping.track",
+    "flowforge.connect.shipping:refresh_all_shipments": "shipping.track",
+    "flowforge.connect.shipping:remove_shipment": "shipping.track",
+    # setup checklist
+    "flowforge.connect.status:connection_status": AUTHENTICATED,
 }
 
 # Endpoints anyone may call without signing in.

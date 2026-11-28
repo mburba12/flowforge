@@ -20,7 +20,7 @@ export function FinanceWorkspace() {
   const refresh = () => setVersion((v) => v + 1);
   const gl = useGl(String(version));
   return (
-    <Workspace title="General ledger" description="Journals, approvals and posting, accounting periods, trial balance and chart of accounts." accent="#4f46e5">
+    <Workspace title="Accounting" description="Your books: journal entries, approvals, accounting periods, trial balance and chart of accounts." accent="#4f46e5">
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === "journals" ? <Journals gl={gl} version={version} refresh={refresh} /> : null}
       {tab === "periods" ? <Periods gl={gl} refresh={refresh} /> : null}

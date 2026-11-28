@@ -109,6 +109,31 @@ docker exec flowforge-api-1 ls /data/support-outbox
 docker exec flowforge-api-1 cat /data/support-outbox/<reference>.json
 ```
 
+## Connections (banks, payroll, carriers)
+
+Stored connection credentials (bank tokens, Gusto tokens, carrier API keys) are encrypted
+with AES-256-GCM. The key is `FLOWFORGE_CREDENTIALS_KEY` (32 random bytes, base64) when
+set; otherwise it is derived from `FLOWFORGE_JWT_SECRET`. **Changing either key makes the
+stored credentials unreadable** — users then reconnect their banks and carriers.
+
+What works with no configuration: uploads, bank statement imports (CSV/OFX/QFX), payroll
+file imports from any provider, and carrier tracking (each business enters its own
+FedEx/UPS/USPS/DHL keys in Shipments → Carrier accounts).
+
+Optional, in `.env.production` (then run the update so the API restarts with them):
+
+| Setting | Turns on |
+|---|---|
+| `FLOWFORGE_PLAID_CLIENT_ID`, `FLOWFORGE_PLAID_SECRET`, `FLOWFORGE_PLAID_ENV` (`sandbox` or `production`) | **Connect a bank** (live feeds). Keys from dashboard.plaid.com; production needs Plaid's approval. |
+| `FLOWFORGE_GUSTO_CLIENT_ID`, `FLOWFORGE_GUSTO_CLIENT_SECRET`, `FLOWFORGE_GUSTO_ENV` (`demo` or `production`) | Direct **Sign in to Gusto** in Payroll → Move from another provider. Register the redirect URL `<FLOWFORGE_PUBLIC_URL>/connections/payroll/callback` in the Gusto developer portal. |
+| `FLOWFORGE_PUBLIC_URL` | The address users open FlowForge at (default `http://localhost:3000`). |
+| `FLOWFORGE_CREDENTIALS_KEY` | A dedicated encryption key (see above). |
+
+Permissions: `banking.read`, `banking.import` (clerks), `banking.connect` (owners and
+managers); `shipping.read`, `shipping.track` (clerks), `shipping.connect`;
+`payroll.migrate`; `documents.read`, `documents.upload` (clerks), `documents.manage`
+(delete). Standard roles receive them automatically at API start.
+
 ## API paths and permissions
 
 * Release APIs keep their paths (`/api/v1`, `/api/v2` ledger, `/api/v3` AP, `/api/v3b` AR,

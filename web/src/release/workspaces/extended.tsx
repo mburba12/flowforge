@@ -40,7 +40,7 @@ export function OperationsSection({ slug }: { slug: string }) {
   return (
     <section className="rw rwAllOps" data-testid="all-operations">
       <details>
-        <summary>All operations ({count})</summary>
+        <summary>Advanced: every action in this section ({count})</summary>
         <OperationsConsole workspace={slug} operations={catalog.data.operations} />
       </details>
     </section>

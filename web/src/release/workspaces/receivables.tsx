@@ -45,7 +45,7 @@ export function ReceivablesWorkspace({ initialTab = "orders" }: { initialTab?: s
   };
   const shared = { gl, ctx, customers, customerName, names, version, refresh };
   return (
-    <Workspace title="Accounts receivable & orders" description="Customers and credit, order status tracking, reservation, shipping and invoicing, receipts and aging." accent="#0891b2">
+    <Workspace title={initialTab === "orders" ? "Orders" : "Invoices & payments"} description={initialTab === "orders" ? "Sales orders from entry to shipping and invoicing, with their status." : "Customers, invoices, payments received and who owes you by age."} accent="#0891b2">
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === "orders" || tab === "open" ? ctx.node : null}
       {tab === "orders" ? <Orders {...shared} /> : null}

@@ -7,11 +7,13 @@ import { usePostingContext } from "../context";
 import { useLoad, usePartyNames, useRows } from "../hooks";
 import { optionsOf, useGl } from "../refs";
 import { ActionButton, Amount, Badge, Card, Details, Form, Grid, Notice, Table, Tabs, Workspace, useActionLog } from "../ui";
+import { PayrollSwitch } from "./payroll-switch";
 
 const TABS = [
   { id: "runs", label: "Payroll runs" },
   { id: "workers", label: "Workers" },
   { id: "setup", label: "Pay groups & periods" },
+  { id: "switch", label: "Move from another provider" },
 ];
 
 type RunSummary = {
@@ -38,11 +40,24 @@ export function PayrollWorkspace({ initialTab = "runs" }: { initialTab?: string 
   };
   const shared = { gl, workers, workerName, version, refresh, names };
   return (
-    <Workspace title="Payroll & workforce" description="Workers and pay rates, pay groups and periods, gross-to-net calculation, approval, posting, payment and reconciliation." accent="#dc2626">
+    <Workspace
+      title={initialTab === "workers" ? "Employees" : "Payroll"}
+      description={initialTab === "workers" ? "Everyone you pay: details, pay rates, tax settings and bank accounts." : "Run payroll from gross to net, approve it, pay your people and keep the books right."}
+      accent="#dc2626"
+    >
+      {workers.data && workers.data.length === 0 && tab !== "switch" ? (
+        <Notice kind="info">
+          No employees yet. Coming from ADP, Gusto, Paychex, QuickBooks or another provider?{" "}
+          <button type="button" className="linkish" onClick={() => setTab("switch")}>
+            Move your payroll to FlowForge
+          </button>
+        </Notice>
+      ) : null}
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === "runs" ? <Runs {...shared} /> : null}
       {tab === "workers" ? <Workers {...shared} /> : null}
       {tab === "setup" ? <Setup {...shared} /> : null}
+      {tab === "switch" ? <PayrollSwitch /> : null}
     </Workspace>
   );
 }
