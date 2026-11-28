@@ -121,6 +121,7 @@ async def test_tax_liability_return_remittance(harness: Harness) -> None:
         }
 
     await h.post(f"/api/v4b/returns/{return_id}/remit", json=remit("263.00"), expect=409)  # draft
+    await h.require_two_people()
     await h.post(f"/api/v4b/returns/{return_id}/approve", expect=409)  # creator
     approved = await h.post(f"/api/v4b/returns/{return_id}/approve", as_approver=True)
     assert approved["status"] == "approved"

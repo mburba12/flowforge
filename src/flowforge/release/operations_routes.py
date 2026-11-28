@@ -21,6 +21,7 @@ from flowforge.platform.authorization import (
     extended_domain,
     iter_routes_with_paths,
 )
+from flowforge.release.references import reference_for, reference_for_path
 
 router = APIRouter(prefix="/api/v1/operations", tags=["operations-catalog"])
 
@@ -154,10 +155,32 @@ def _catalog(app: Any) -> dict[str, Any]:
         if domain is None:
             continue
         tables.setdefault(EXTENDED_WORKSPACES[domain], set()).add(table.name)
+    for operation in operations:
+        _annotate_references(operation, tables.get(operation["workspace"], set()))
     return {
         "operations": sorted(operations, key=lambda o: (o["workspace"], o["group"], o["path"])),
         "tables": {k: sorted(v) for k, v in tables.items()},
     }
+
+
+def _annotate_references(operation: dict[str, Any], preferred: set[str]) -> None:
+    """Mark id fields with the table to pick records from ("ref" / "x-ref")."""
+    for parameter in operation["parameters"]:
+        if parameter["in"] == "path":
+            ref = reference_for_path(operation["path"], parameter["name"], preferred)
+        else:
+            ref = reference_for(parameter["name"], preferred)
+        if ref:
+            parameter["ref"] = ref
+    body = operation["body"]
+    if not isinstance(body, dict):
+        return
+    candidates = [body, *[s for s in body.get("anyOf", []) if isinstance(s, dict)]]
+    for schema in candidates:
+        for name, prop in (schema.get("properties") or {}).items():
+            ref = reference_for(name, preferred)
+            if ref and isinstance(prop, dict):
+                prop["x-ref"] = ref
 
 
 def operation_catalog(app: Any) -> dict[str, Any]:

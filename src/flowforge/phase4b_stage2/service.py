@@ -9,6 +9,7 @@ from flowforge.phase2b.models import (
     JournalLine,
 )
 from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
+from flowforge.platform.approval import blocks_self_approval
 
 from .models import (
     TaxLiability,
@@ -103,7 +104,7 @@ class TaxFilingService:
         if tax_return.status != "draft":
             raise TaxFilingError("Tax return is not draft")
 
-        if tax_return.created_by == self.user_id:
+        if blocks_self_approval(tax_return.created_by, self.user_id):
             raise TaxFilingError("Creator cannot approve the same tax return")
 
         tax_return.status = "approved"

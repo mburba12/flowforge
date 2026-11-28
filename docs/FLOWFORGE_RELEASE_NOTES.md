@@ -5,7 +5,26 @@ Sign in at **http://127.0.0.1:3000**. Every workspace is under the left-hand men
 permission they need; every business rule is enforced by the server, so the UI can
 never bypass it.
 
-## New in this release: simpler to use, uploads everywhere, banks, payroll switch, shipments
+## New: approving your own work, full audit export, record drop-downs
+
+**Approving your own work.** The two-person rule still applies by default: whoever creates
+a journal, purchase order, payroll run, tax return, close run or merge proposal cannot
+approve it. **Owners** (the account administrator) may approve their own work. To let
+someone else do the same, open **Settings → Users**, select the person and choose **Let
+them approve their own work** (the "Approves own work" column shows who may). **Require a
+second approver** turns it off again. They still need the normal permission to create and
+to approve. A custom role can also include the permission `approvals.self_approve`.
+
+**Audit trail export.** The Audit trail page shows the latest 100 changes with when and
+who. **Export all changes** downloads every change ever recorded as a CSV spreadsheet
+(time, user, action, record type, record, details). Each export is itself recorded.
+
+**Drop-downs in More tools.** Forms under More tools now let you choose customers,
+workers, accounts, ledgers, periods, products, warehouses, orders and other records by
+name from a list instead of typing record ids (**Enter an id** is still available).
+References to outside systems (for example a provider's event id) stay as text.
+
+## Earlier in this release: simpler to use, uploads everywhere, banks, payroll switch, shipments
 
 **A simpler menu.** Everyday work is in five groups: **Money** (Bank accounts, Bills to
 pay, Invoices & payments, Accounting, Taxes), **Sales** (Orders, Customers & deals,
@@ -102,7 +121,8 @@ that area, including ones without a purpose-built screen.
 | Viewer | Read only. |
 
 Segregation of duties: the person who creates a journal, purchase order, payroll run or tax
-return cannot approve it.
+return cannot approve it, unless they are an Owner or were allowed to approve their own
+work in Settings → Users.
 
 Extended workspaces follow the same pattern: every role can read; Clerks prepare
 (create and update); Approvers decide (approve, post, close, release, reverse, and moving a
@@ -111,9 +131,9 @@ Integrations are changed only by Owners and Managers.
 
 ## Known limitations
 
-* Extended workspaces use generated forms: identifiers (for example a vendor or worker)
-  are entered as record ids, which you can copy from the Records tab. Purpose-built
-  screens exist for the release areas above.
+* Extended workspaces use generated forms. Most record fields are drop-downs; a few
+  generic ones (for example a parent record that could be of several kinds) are still
+  typed as record ids, which you can copy from the Records tab.
 * Banking, reconciliation, documents, approvals, work queue, reports and support remain
   read-only record browsers plus their operations.
 * Segregation of duties (creator cannot approve) is enforced by the release documents;

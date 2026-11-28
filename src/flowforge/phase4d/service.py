@@ -4,6 +4,8 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.platform.approval import blocks_self_approval
+
 from .matching import score_match
 from .models import (
     CanonicalEntity,
@@ -179,7 +181,7 @@ class Phase4DService:
 
     async def approve(self, proposal_id: UUID) -> EntityMergeProposal:
         proposal = await self._proposal(proposal_id)
-        if proposal.created_by == self.user_id:
+        if blocks_self_approval(proposal.created_by, self.user_id):
             raise Phase4DError("Creator cannot approve own proposal")
         proposal.status = "approved"
         proposal.approved_by = self.user_id

@@ -47,6 +47,7 @@ async def test_payroll_gross_to_net_to_gl(harness: Harness) -> None:
 
     # Approval controls.
     await h.post(f"/api/v4a/payroll/runs/{run_id}/post", json=ph.post_accounts(h), expect=409)
+    await h.require_two_people()
     await h.post(f"/api/v4a/payroll/runs/{run_id}/approve", expect=409)  # creator
     approved = await h.post(f"/api/v4a/payroll/runs/{run_id}/approve", as_approver=True)
     assert approved["status"] == "approved"

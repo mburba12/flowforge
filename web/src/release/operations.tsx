@@ -2,7 +2,7 @@
 
 import { type FormEvent, useMemo, useState } from "react";
 
-import { errorText, get, request, type Params } from "./client";
+import { errorText, get, request, type Params, type Row } from "./client";
 import { useLoad, usePermissions, useRows } from "./hooks";
 import { Card, Notice, Table } from "./ui";
 
@@ -28,8 +28,10 @@ export type Schema = {
   description?: string;
   minimum?: number;
   maximum?: number;
+  /** Table whose records this id field refers to (added by the server's operation catalog). */
+  "x-ref"?: string;
 };
-export type Parameter = { name: string; in: "path" | "query"; required: boolean; schema: Schema };
+export type Parameter = { name: string; in: "path" | "query"; required: boolean; schema: Schema; ref?: string };
 export type Operation = {
   id: string;
   method: string;
@@ -49,8 +51,8 @@ export function useOperations(workspace: string) {
 }
 
 // ------------------------------------------------------------------ schema -> fields
-type Kind = "text" | "number" | "integer" | "checkbox" | "select" | "date" | "datetime" | "json";
-type Field = { name: string; label: string; kind: Kind; required: boolean; options: string[]; hint: string; schema: Schema };
+type Kind = "text" | "number" | "integer" | "checkbox" | "select" | "date" | "datetime" | "json" | "ref";
+type Field = { name: string; label: string; kind: Kind; required: boolean; options: string[]; hint: string; schema: Schema; ref?: string };
 
 function plain(schema: Schema): Schema {
   const options = schema.anyOf ?? schema.oneOf;
@@ -87,12 +89,14 @@ function kindOf(schema: Schema): Kind {
 }
 
 function label(name: string): string {
-  const text = name.replace(/_/g, " ");
+  const text = name.replace(/_id$/, "").replace(/^id$/, "record").replace(/_/g, " ");
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-function fieldFor(name: string, raw: Schema, required: boolean): Field {
+function fieldFor(name: string, raw: Schema, required: boolean, ref?: string): Field {
   const schema = plain(raw);
+  const target = ref ?? raw["x-ref"] ?? schema["x-ref"];
+  if (target && kindOf(schema) === "text") return { name, label: label(name), kind: "ref", required, options: [], hint: "", schema, ref: target };
   const kind = kindOf(schema);
   const hints: string[] = [];
   if (schema.format === "uuid" || /_id$/.test(name)) hints.push("record id");
@@ -156,8 +160,63 @@ function initial(field: Field): string {
   return d !== undefined && d !== null ? String(d) : "";
 }
 
+const LABEL_KEYS = ["display_name", "name", "legal_name", "title", "full_name", "email", "number", "document_number", "reference", "code", "period_code", "description", "status"];
+
+/** Human label for a record: its code and name where it has them, else a short id and date. */
+export function recordLabel(row: Row): string {
+  const value = (k: string) => {
+    const v = row[k];
+    return v === null || v === undefined || typeof v === "object" ? "" : String(v).trim();
+  };
+  const given = [value("given_name"), value("family_name")].filter(Boolean).join(" ");
+  const main = LABEL_KEYS.map(value).find(Boolean) || given;
+  const code = value("code") || value("account_code") || value("number");
+  const parts = [code && code !== main ? code : "", main].filter(Boolean);
+  const text = parts.join(" — ");
+  const date = value("created_at").slice(0, 10);
+  const short = String(row.id ?? "").slice(0, 8);
+  return text ? (text.length > 80 ? `${text.slice(0, 77)}…` : text) : `${short}${date ? ` (created ${date})` : ""}`;
+}
+
+function RefInput(props: { field: Field; id: string; value: string; onChange: (v: string) => void }) {
+  const rows = useRows(props.field.ref ?? "", props.field.ref ?? "");
+  const [manual, setManual] = useState(false);
+  const options = (rows.data ?? [])
+    .filter((r) => r.id !== undefined && r.id !== null)
+    .map((r) => ({ value: String(r.id), label: recordLabel(r) }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+  const known = !props.value || options.some((o) => o.value === props.value);
+  if (manual || rows.error || (!known && !rows.loading))
+    return (
+      <span className="rwRef">
+        <input id={props.id} type="text" value={props.value} required={props.field.required} placeholder="Record id" onChange={(e) => props.onChange(e.target.value)} />
+        {rows.data && options.length ? (
+          <button type="button" className="rwLink" onClick={() => setManual(false)}>
+            Choose from list
+          </button>
+        ) : null}
+      </span>
+    );
+  return (
+    <span className="rwRef">
+      <select id={props.id} value={props.value} required={props.field.required} onChange={(e) => props.onChange(e.target.value)} data-ref={props.field.ref}>
+        <option value="">{rows.loading ? "Loading…" : options.length ? "Choose…" : "No records yet"}</option>
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+      <button type="button" className="rwLink" onClick={() => setManual(true)}>
+        Enter an id
+      </button>
+    </span>
+  );
+}
+
 function FieldInput(props: { field: Field; id: string; value: string; onChange: (v: string) => void }) {
   const { field } = props;
+  if (field.kind === "ref") return <RefInput {...props} />;
   if (field.kind === "select")
     return (
       <select id={props.id} value={props.value} required={field.required} onChange={(e) => props.onChange(e.target.value)}>
@@ -211,8 +270,8 @@ function Fields(props: { title?: string; fields: Field[]; values: Record<string,
 export function OperationForm(props: { operation: Operation; onDone?: () => void }) {
   const op = props.operation;
   const { can, loaded } = usePermissions();
-  const pathFields = useMemo(() => op.parameters.filter((p) => p.in === "path").map((p) => fieldFor(p.name, p.schema, true)), [op]);
-  const queryFields = useMemo(() => op.parameters.filter((p) => p.in === "query").map((p) => fieldFor(p.name, p.schema, p.required)), [op]);
+  const pathFields = useMemo(() => op.parameters.filter((p) => p.in === "path").map((p) => fieldFor(p.name, p.schema, true, p.ref)), [op]);
+  const queryFields = useMemo(() => op.parameters.filter((p) => p.in === "query").map((p) => fieldFor(p.name, p.schema, p.required, p.ref)), [op]);
   const fields = useMemo(() => bodyFields(op.body), [op]);
   const all = [...pathFields, ...queryFields, ...(fields ?? [])];
   const [values, setValues] = useState<Record<string, string>>(() => Object.fromEntries(all.map((f) => [f.name, initial(f)])));

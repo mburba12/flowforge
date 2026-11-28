@@ -4,9 +4,9 @@ import Link from "next/link";
 
 import { AppIcon, type IconName } from "@/components/app-icon";
 
-import { get, money, type Row } from "../client";
+import { get, money, openFile, type Row } from "../client";
 import { useLoad, usePermissions } from "../hooks";
-import { Card, Grid, RequiresPermission, Table, Workspace, Badge } from "../ui";
+import { ActionButton, Card, Grid, RequiresPermission, Table, Workspace, Badge, useActionLog } from "../ui";
 
 type Aging = { total_open: string; buckets: Record<string, string> };
 type Status = { banks: number; carriers: number; shipments: number; payroll_imports: number; files: number };
@@ -159,14 +159,31 @@ export function AuditWorkspace() {
 
 function AuditEntries() {
   const audit = useLoad(() => get<Row[]>("/api/v1/audit"), "audit");
+  const [log, onDone] = useActionLog();
   return (
-    <Card title="Latest 100 audit entries">
+    <Card
+      title="Latest 100 changes"
+      testId="audit-card"
+      aside={
+        <ActionButton
+          label="Export all changes"
+          permission="audit.read"
+          testId="audit-export"
+          onDone={onDone}
+          run={() => openFile("/api/v1/audit/export", `flowforge-audit-${new Date().toISOString().slice(0, 10)}.csv`, false)}
+        />
+      }
+    >
+      <p className="rwMuted small">Only the latest 100 are shown here. Export all changes downloads every change ever recorded as a spreadsheet (CSV).</p>
+      {log}
       <Table
         testId="audit-table"
         rows={audit.data}
         loading={audit.loading}
         error={audit.error}
         columns={[
+          { key: "occurred_at", label: "When", render: (r) => (r.occurred_at ? new Date(String(r.occurred_at)).toLocaleString() : "") },
+          { key: "user", label: "Who", render: (r) => String(r.user || "system") },
           { key: "action", label: "Action", render: (r) => <Badge value={r.action} /> },
           { key: "resource_type", label: "Record type" },
           { key: "resource_id", label: "Record" },

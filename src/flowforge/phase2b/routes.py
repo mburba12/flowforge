@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
+from flowforge.platform.approval import blocks_self_approval
 
 from .posting import PostingEngine
 from .schemas import (
@@ -90,7 +91,7 @@ async def approve_journal(journal_id: UUID, principal: P, db: D) -> dict[str, st
         from fastapi import HTTPException
 
         raise HTTPException(404, "Journal not found")
-    if item.created_by == principal.user_id:
+    if blocks_self_approval(item.created_by, principal.user_id):
         from fastapi import HTTPException
 
         raise HTTPException(409, "Journal creator cannot approve the same journal")

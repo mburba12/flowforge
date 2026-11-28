@@ -81,6 +81,9 @@ function subscribe(listener: () => void): () => void {
 export function resetPermissions(): void {
   granted = null;
   pending = null;
+  // Screens already showing re-read the permissions (otherwise their buttons stay
+  // disabled until something new mounts, e.g. a second action in Settings).
+  if (listeners.size) void loadPermissions();
 }
 
 /** Permission codes of the signed-in user (null while loading). */

@@ -143,3 +143,8 @@ a.rwBtn { display: inline-flex; align-items: center; text-decoration: none; just
 .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(620px, 100vw); z-index: 41; background: var(--panel); border-left: 1px solid var(--line2); box-shadow: var(--shadow); padding: 20px; display: grid; align-content: start; gap: 14px; overflow: auto; }
 .drawerHead { display: flex; align-items: center; justify-content: space-between; }
 .drawerHead h2 { margin: 0; font-size: 20px; }
+
+/* Record pickers in generated forms (More tools): a drop-down with a typed-id fallback. */
+.rwRef { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.rwRef select, .rwRef input { flex: 1 1 auto; min-width: 0; }
+.rwLink { background: none; border: 0; padding: 0; color: var(--accent, #2563eb); font-size: 12.5px; cursor: pointer; white-space: nowrap; text-decoration: underline; }

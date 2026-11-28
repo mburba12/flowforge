@@ -212,6 +212,19 @@ class Harness:
         party = await self.post("/api/v2/people", json={"given_name": given, "family_name": family})
         return str(party["id"])
 
+    async def require_two_people(self) -> None:
+        """Take "approve own work" away from this tenant's Owner role.
+
+        Owners may approve their own work (approvals.self_approve); flows that prove the
+        two-person rule with the owner as creator call this first.
+        """
+        await self.sql(
+            "DELETE FROM role_permissions rp USING roles r, permissions p"
+            " WHERE rp.role_id = r.id AND rp.permission_id = p.id AND r.name = 'Owner'"
+            " AND p.code = 'approvals.self_approve' AND r.tenant_id = :t",
+            t=self.tenant_id,
+        )
+
     async def close_period(self) -> None:
         await self.post(f"/api/v2/accounting-periods/{self.period_id}/close")
 

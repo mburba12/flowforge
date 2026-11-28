@@ -128,6 +128,7 @@ async def test_ap_procure_to_pay(harness: Harness) -> None:
     po_id = po["id"]
     await h.post(f"/api/v3/purchase-orders/{po_id}/approve", as_approver=True, expect=409)
     await h.post(f"/api/v3/purchase-orders/{po_id}/submit")
+    await h.require_two_people()
     await h.post(f"/api/v3/purchase-orders/{po_id}/approve", expect=409)  # creator
     approved = await h.post(f"/api/v3/purchase-orders/{po_id}/approve", as_approver=True)
     assert approved["status"] == "approved"

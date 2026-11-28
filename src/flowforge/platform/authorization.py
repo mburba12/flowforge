@@ -22,6 +22,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import text
 
 from flowforge.core.security import Principal, current_principal
+from flowforge.platform.approval import SELF_APPROVE, SELF_APPROVE_ROLE, set_request_permissions
 
 CATALOG: dict[str, str] = {
     # platform
@@ -31,6 +32,10 @@ CATALOG: dict[str, str] = {
     "users.manage": "Create, update, deactivate users and assign roles",
     "roles.manage": "Create roles and set role permissions",
     "audit.read": "Read the audit trail",
+    "approvals.self_approve": (
+        "Approve journals, purchase orders, payroll runs, tax returns and other work"
+        " they created themselves"
+    ),
     "documents.manage": "Manage documents",
     "documents.read": "View and download uploaded files",
     "documents.upload": "Upload files (invoices, receipts, contracts) in any section",
@@ -249,7 +254,13 @@ _CLERK_WRITE = {
     "shipping.track",
     "notifications.manage",
 }
-_ADMIN_ONLY = {"users.manage", "roles.manage", "tenant.manage", "platform.tenants.create"}
+_ADMIN_ONLY = {
+    "users.manage",
+    "roles.manage",
+    "tenant.manage",
+    "platform.tenants.create",
+    SELF_APPROVE,
+}
 # Extended domains: clerks prepare, approvers decide. Governance and integrations stay
 # with owners and managers.
 _ADMIN_DOMAINS = {"governance", "integrations"}
@@ -264,6 +275,8 @@ STANDARD_ROLES: dict[str, set[str]] = {
     "Approver": _READ | _APPROVE,
     "Clerk": _READ | _CLERK_WRITE,
     "Viewer": set(_READ),
+    # Designated people: give a user this role to let them approve their own work.
+    SELF_APPROVE_ROLE: {SELF_APPROVE},
 }
 
 RELEASE_MODULES = {
@@ -298,6 +311,7 @@ POLICY: dict[str, str] = {
     # platform
     "flowforge.api.routes.platform:me": AUTHENTICATED,
     "flowforge.api.routes.platform:audit": "audit.read",
+    "flowforge.api.routes.platform:audit_export": "audit.read",
     "flowforge.api.routes.platform:create_role": "roles.manage",
     "flowforge.api.routes.platform:document": "documents.manage",
     "flowforge.api.routes.platform:integration": "integrations.manage",
@@ -593,6 +607,7 @@ async def enforce(
 ) -> None:
     endpoint = request.scope.get("endpoint")
     key = endpoint_key(endpoint)
+    set_request_permissions(frozenset())
     if key in PUBLIC:
         return
     required = POLICY.get(key, EXTENDED_POLICY.get(key))
@@ -610,6 +625,7 @@ async def enforce(
     if required and required not in granted:
         raise HTTPException(status.HTTP_403_FORBIDDEN, f"Missing permission: {required}")
     request.state.permissions = granted
+    set_request_permissions(granted)
 
 
 async def sync_standard_roles() -> dict[str, int]:

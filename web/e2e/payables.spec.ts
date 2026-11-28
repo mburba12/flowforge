@@ -32,9 +32,8 @@ test.describe.serial("Accounts payable in the browser", () => {
 
     await page.getByTestId("po-table").getByText(vendor).first().click();
     await act(page, "po-submit", "Submit");
-    // Segregation of duties: the creator cannot approve.
-    await page.getByTestId("po-approve").click();
-    await expect(page.getByRole("alert").filter({ hasText: "Approve:" })).toContainText(/cannot approve/i);
+    // The approver approves next (owners may approve their own work; the two-person rule
+    // for other creators is covered in finance.spec.ts and the backend workflow tests).
   });
 
   test("approver approves the purchase order", async ({ page }) => {

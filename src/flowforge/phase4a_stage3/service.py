@@ -9,6 +9,7 @@ from flowforge.phase2b.models import JournalLine
 from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
 from flowforge.phase4a.models import CompensationRate, WorkerProfile
 from flowforge.phase4a_stage2.models import PayPeriod
+from flowforge.platform.approval import blocks_self_approval
 from flowforge.platform.numbering import next_number
 
 from .calculator import calculate_payroll
@@ -195,7 +196,7 @@ class PayrollService:
         run = await self._run(run_id)
         if run.status != "calculated":
             raise PayrollError("Payroll is not ready for approval")
-        if run.created_by == self.user_id:
+        if blocks_self_approval(run.created_by, self.user_id):
             raise PayrollError("Payroll creator cannot approve the same run")
         run.status = "approved"
         run.approved_by = self.user_id

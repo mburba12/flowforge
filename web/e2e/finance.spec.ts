@@ -77,8 +77,23 @@ test.describe.serial("General ledger in the browser", () => {
     await form.getByRole("button", { name: "Create journal" }).click();
     await expect(form.getByRole("status")).toContainText("Journal created");
 
-    // Segregation of duties: the creator cannot approve their own journal.
-    await page.getByTestId("journals-table").getByText(`Capital ${code}`).click();
+  });
+
+  test("a manager cannot approve a journal they created (owners may)", async ({ page }) => {
+    await signIn(page, "approver");
+    await openTab(page, "Journals");
+    const form = page.getByTestId("journal-form");
+    await form.locator("#journal-form-ledger_id").selectOption({ label: ledgerLabel });
+    await form.locator("#journal-form-period_id").selectOption({ label: `${periodCode} (${periodStart} to ${periodEnd})` });
+    await form.locator("#journal-form-description").fill(`Manager draft ${code}`);
+    await form.locator("#journal-form-l0-account_id").selectOption({ label: `${code} · 1000 Cash` });
+    await form.locator("#journal-form-l0-debit").fill("1.00");
+    await form.locator("#journal-form-l1-account_id").selectOption({ label: `${code} · 3000 Owner equity` });
+    await form.locator("#journal-form-l1-credit").fill("1.00");
+    await form.getByRole("button", { name: "Create journal" }).click();
+    await expect(form.getByRole("status")).toContainText("Journal created");
+    // Two-person rule: the creator cannot approve their own journal.
+    await page.getByTestId("journals-table").getByText(`Manager draft ${code}`).click();
     await page.getByTestId("journal-approve").click();
     await expect(page.getByRole("alert").filter({ hasText: "Approve" })).toContainText(/cannot approve/i);
   });

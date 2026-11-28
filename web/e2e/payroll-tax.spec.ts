@@ -69,8 +69,7 @@ test.describe.serial("Payroll and tax in the browser", () => {
     const detail = page.getByTestId("run-detail");
     await expect(detail).toContainText("2,680.00");
     await expect(detail).toContainText("2,347.00");
-    await page.getByTestId("run-approve").click();
-    await expect(page.getByRole("alert").filter({ hasText: "Approve:" })).toContainText(/cannot approve/i);
+    // The approver approves next (owners may approve their own runs).
   });
 
   test("approver approves; owner posts, pays, reconciles", async ({ page }) => {

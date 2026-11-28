@@ -17,6 +17,7 @@ from flowforge.finance_advanced.models import (
 )
 from flowforge.phase1a.tenancy import TenantContext
 from flowforge.phase2b.models import Account, AccountBalance, AccountingPeriod
+from flowforge.platform.approval import blocks_self_approval
 from flowforge.platform.services import record_change
 
 from .models import (
@@ -90,7 +91,7 @@ class CompletionService:
         )
         if not c:
             raise LookupError("Close run not found")
-        if c.created_by == self.ctx.user_id:
+        if blocks_self_approval(c.created_by, self.ctx.user_id):
             raise RuleViolation("Creator cannot approve close run")
         period = await self.db.scalar(
             select(AccountingPeriod).where(

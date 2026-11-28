@@ -120,7 +120,19 @@ What works with no configuration: uploads, bank statement imports (CSV/OFX/QFX),
 file imports from any provider, and carrier tracking (each business enters its own
 FedEx/UPS/USPS/DHL keys in Shipments → Carrier accounts).
 
-Optional, in `.env.production` (then run the update so the API restarts with them):
+**Set up Plaid and Gusto** (prompts for the keys with hidden input, writes them to
+`.env.production`, keeps a backup copy of the file and restarts the API):
+
+```powershell
+.\scripts\production\Set-FlowForgeConnections.ps1
+```
+
+Plaid: sign up at dashboard.plaid.com, then Developers → Keys. Start with `sandbox` (test
+banks; sign in with `user_good` / `pass_good`), then request production access and run the
+script again with `production`. Gusto: create an application at dev.gusto.com, register the
+redirect URL the script prints, start with `demo`; Gusto reviews apps before production.
+
+The settings it writes, in `.env.production`:
 
 | Setting | Turns on |
 |---|---|
@@ -133,6 +145,11 @@ Permissions: `banking.read`, `banking.import` (clerks), `banking.connect` (owner
 managers); `shipping.read`, `shipping.track` (clerks), `shipping.connect`;
 `payroll.migrate`; `documents.read`, `documents.upload` (clerks), `documents.manage`
 (delete). Standard roles receive them automatically at API start.
+
+## Audit trail export
+
+Owners and anyone with `audit.read` can download every audited change as CSV from
+Audit trail → **Export all changes** (`GET /api/v1/audit/export`); the page shows the latest 100.
 
 ## API paths and permissions
 

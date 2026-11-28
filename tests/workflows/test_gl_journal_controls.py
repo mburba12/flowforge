@@ -33,6 +33,7 @@ async def test_gl_journal_approve_post_and_trial_balance(harness: Harness) -> No
     await h.post("/api/v2/journals", json=_journal(h, "100.00", "90.00"), expect=422)
     journal = await h.post("/api/v2/journals", json=_journal(h, "100.00", "100.00"))
     await h.post(f"/api/v2/journals/{journal['id']}/post", expect=409)  # not approved
+    await h.require_two_people()
     await h.post(f"/api/v2/journals/{journal['id']}/approve", expect=409)  # creator
     await h.post(f"/api/v2/journals/{journal['id']}/approve", as_approver=True)
     posted = await h.post(f"/api/v2/journals/{journal['id']}/post", as_approver=True)

@@ -16,6 +16,11 @@ const TABS = [
   { id: "roles", label: "Roles & permissions" },
 ];
 
+/** Standard role that lets a designated person approve work they created (server: approvals.self_approve). */
+const SELF_APPROVE_ROLE = "Approve own work";
+const approvesOwn = (u: User, roles: Role[]) =>
+  u.roles.includes("Owner") || roles.some((r) => u.roles.includes(r.name) && r.permissions.includes("approvals.self_approve"));
+
 export function AdminWorkspace() {
   return (
     <Workspace title="Settings" description="Your connections, the people who can sign in and what each role may do." accent="#334155">
@@ -97,7 +102,8 @@ function Users({ users, roles, refresh }: { users: ReturnType<typeof useLoad<Use
           columns={[
             { key: "display_name", label: "Name" },
             { key: "email", label: "Email" },
-            { key: "roles", label: "Roles", render: (u) => u.roles.join(", ") || "none" },
+            { key: "roles", label: "Roles", render: (u) => u.roles.filter((r) => r !== SELF_APPROVE_ROLE).join(", ") || "none" },
+            { key: "self_approve", label: "Approves own work", render: (u) => (approvesOwn(u, roles.data ?? []) ? "Yes" : "No") },
             { key: "is_active", label: "Active", render: (u) => <Badge value={String(u.is_active)} /> },
           ]}
         />
@@ -125,6 +131,27 @@ function Users({ users, roles, refresh }: { users: ReturnType<typeof useLoad<Use
               </label>
               <ActionButton label="Assign role" permission="users.manage" testId="user-assign" disabled={!role} onDone={done} run={() => post(`/api/v1/users/${user.id}/roles`, { role })} />
               <ActionButton label="Remove role" permission="users.manage" testId="user-remove-role" disabled={!role} onDone={done} run={() => del(`/api/v1/users/${user.id}/roles/${encodeURIComponent(role)}`)} />
+            </div>
+            <div className="rwActions" data-testid="self-approve">
+              {user.roles.includes("Owner") ? (
+                <p className="rwMuted small">Owners can always approve their own journals, purchase orders, payroll runs and tax returns.</p>
+              ) : user.roles.includes(SELF_APPROVE_ROLE) ? (
+                <ActionButton
+                  label="Require a second approver"
+                  permission="users.manage"
+                  testId="self-approve-off"
+                  onDone={done}
+                  run={() => del(`/api/v1/users/${user.id}/roles/${encodeURIComponent(SELF_APPROVE_ROLE)}`)}
+                />
+              ) : (
+                <ActionButton
+                  label="Let them approve their own work"
+                  permission="users.manage"
+                  testId="self-approve-on"
+                  onDone={done}
+                  run={() => post(`/api/v1/users/${user.id}/roles`, { role: SELF_APPROVE_ROLE })}
+                />
+              )}
             </div>
             {log}
           </div>

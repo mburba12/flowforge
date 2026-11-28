@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
+from flowforge.platform.approval import blocks_self_approval
 
 from .models import PurchaseOrder
 from .schemas import InvoiceCreate, POCreate, ReceiptCreate, VendorCreate
@@ -62,7 +63,7 @@ async def approve(po_id: UUID, p: P, db: D) -> dict[str, str]:
     )
     if x is None:
         raise HTTPException(404, "Purchase order not found")
-    if x.created_by == p.user_id:
+    if blocks_self_approval(x.created_by, p.user_id):
         raise HTTPException(409, "Creator cannot approve own purchase order")
     if x.status != "submitted":
         raise HTTPException(409, "Purchase order is not submitted")
