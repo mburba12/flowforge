@@ -23,9 +23,26 @@ class BootstrapRequest(BaseModel):
 
 
 class LoginRequest(BaseModel):
-    tenant_slug: str
+    # Optional: without it the workspace is found from the email (and password).
+    tenant_slug: str | None = None
     email: EmailStr
     password: str
+
+
+class SignupRequest(BaseModel):
+    """Public sign-up from the website: a new workspace and its owner."""
+
+    organization: str = Field(min_length=2, max_length=200)
+    name: str = Field(min_length=1, max_length=200)
+    email: EmailStr
+    password: str = Field(min_length=12, max_length=200)
+    plan: str | None = Field(default=None, max_length=40)
+
+
+class SignupResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    tenant_slug: str
 
 
 class TokenResponse(BaseModel):

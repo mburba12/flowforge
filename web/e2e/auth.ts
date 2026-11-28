@@ -10,7 +10,6 @@ export async function signIn(page: Page, as: "owner" | "approver" = "owner"): Pr
   }
 
   await page.goto("/login");
-  await page.locator("#tenant").fill(tenant);
   await page.locator("#email").fill(email);
   await page.locator("#password").fill(password);
   await page.getByRole("button", { name: "Sign in", exact: true }).click();

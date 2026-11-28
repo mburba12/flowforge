@@ -24,7 +24,6 @@ test.describe.serial("Administration and permissions in the browser", () => {
 
   test("a Viewer can read but every write action is disabled", async ({ page }) => {
     await page.goto("/login");
-    await page.locator("#tenant").fill(process.env.E2E_TENANT ?? "");
     await page.locator("#email").fill(viewerEmail);
     await page.locator("#password").fill(viewerPassword);
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
@@ -42,7 +41,6 @@ test.describe.serial("Administration and permissions in the browser", () => {
   test("owner deactivates the Viewer, whose session then ends", async ({ browser, page }) => {
     const viewer = await browser.newPage();
     await viewer.goto("/login");
-    await viewer.locator("#tenant").fill(process.env.E2E_TENANT ?? "");
     await viewer.locator("#email").fill(viewerEmail);
     await viewer.locator("#password").fill(viewerPassword);
     await viewer.getByRole("button", { name: "Sign in", exact: true }).click();

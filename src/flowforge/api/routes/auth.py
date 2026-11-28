@@ -1,5 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+"""Sign-in and sign-up (public endpoints, rate limited per client address)."""
+
+import re
+import secrets
+from uuid import UUID
+
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,16 +15,27 @@ from flowforge.core.security import (
     verify_password_async,
 )
 from flowforge.db.session import enter_tenant_context, get_db
+from flowforge.platform import ratelimit
 from flowforge.platform.authorization import CATALOG, STANDARD_ROLES
 from flowforge.platform.models import Permission, Role, RolePermission, Tenant, User, UserRole
-from flowforge.platform.schemas import BootstrapRequest, LoginRequest, TokenResponse
+from flowforge.platform.schemas import (
+    BootstrapRequest,
+    LoginRequest,
+    SignupRequest,
+    SignupResponse,
+    TenantCreate,
+    TokenResponse,
+)
 from flowforge.platform.services import record_change
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+SIGNUP_LIMIT = (5, 3600)  # new workspaces per client address per hour
+LOGIN_LIMIT = (20, 300)  # sign-in attempts per client address per 5 minutes
+LOGIN_EMAIL_LIMIT = (10, 300)  # sign-in attempts per address and email per 5 minutes
 
-@router.post("/bootstrap", response_model=TokenResponse, status_code=201)
-async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) -> TokenResponse:
+
+async def _create_workspace(db: AsyncSession, body: BootstrapRequest) -> tuple[Tenant, User]:
     if await db.scalar(select(Tenant).where(Tenant.slug == body.tenant.slug)):
         raise HTTPException(409, "Tenant slug already exists")
     tenant = Tenant(**body.tenant.model_dump())
@@ -66,23 +83,111 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
             status_code=status.HTTP_409_CONFLICT,
             detail="Tenant slug or owner email already exists",
         ) from exc
+    return tenant, user
+
+
+@router.post("/bootstrap", response_model=TokenResponse, status_code=201)
+async def bootstrap(
+    body: BootstrapRequest, request: Request, db: AsyncSession = Depends(get_db)
+) -> TokenResponse:
+    ratelimit.check(f"signup:{ratelimit.client_address(request)}", *SIGNUP_LIMIT)
+    tenant, user = await _create_workspace(db, body)
     return TokenResponse(access_token=create_access_token(str(user.id), str(tenant.id)))
+
+
+async def _tenants_for_email(db: AsyncSession, email: str) -> list[UUID]:
+    """Workspaces with an active user of this email (ff_login_tenants, migration ff_login_001)."""
+    rows = await db.execute(text("SELECT ff_login_tenants(:e)"), {"e": email.lower()})
+    return [row[0] for row in rows]
+
+
+def _slug_base(organization: str) -> str:
+    base = re.sub(r"[^a-z0-9]+", "-", organization.lower()).strip("-")[:40].strip("-")
+    return base if len(base) >= 2 else "workspace"
+
+
+@router.post("/signup", response_model=SignupResponse, status_code=201)
+async def signup(
+    body: SignupRequest, request: Request, db: AsyncSession = Depends(get_db)
+) -> SignupResponse:
+    """Public sign-up: a new workspace with this person as its owner, signed in."""
+    ratelimit.check(f"signup:{ratelimit.client_address(request)}", *SIGNUP_LIMIT)
+    if await _tenants_for_email(db, body.email):
+        raise HTTPException(
+            status.HTTP_409_CONFLICT,
+            "An account with this email already exists. Sign in instead.",
+        )
+    base = _slug_base(body.organization)
+    slug = base
+    while await db.scalar(select(Tenant.id).where(Tenant.slug == slug)):
+        slug = f"{base}-{secrets.token_hex(2)}"
+    tenant, user = await _create_workspace(
+        db,
+        BootstrapRequest(
+            tenant=TenantCreate(name=body.organization.strip(), slug=slug),
+            email=body.email,
+            password=body.password,
+            display_name=body.name.strip(),
+        ),
+    )
+    return SignupResponse(
+        access_token=create_access_token(str(user.id), str(tenant.id)), tenant_slug=tenant.slug
+    )
+
+
+async def _user_if_password_matches(
+    db: AsyncSession, tenant_id: UUID, email: str, password: str
+) -> User | None:
+    # users is tenant-owned and RLS-protected; scope the lookup to this tenant.
+    await enter_tenant_context(db, tenant_id)
+    user = await db.scalar(
+        select(User).where(
+            User.tenant_id == tenant_id, User.email == email.lower(), User.is_active.is_(True)
+        )
+    )
+    if user is None or not await verify_password_async(password, user.password_hash):
+        return None
+    return user
 
 
 @router.post("/login", response_model=TokenResponse)
-async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)) -> TokenResponse:
-    tenant = await db.scalar(
-        select(Tenant).where(Tenant.slug == body.tenant_slug, Tenant.is_deleted.is_(False))
-    )
-    if tenant is None:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid credentials")
-    # users is tenant-owned and RLS-protected; scope the lookup to this tenant.
-    await enter_tenant_context(db, tenant.id)
-    user = await db.scalar(
-        select(User).where(
-            User.tenant_id == tenant.id, User.email == body.email.lower(), User.is_active.is_(True)
+async def login(
+    body: LoginRequest, request: Request, db: AsyncSession = Depends(get_db)
+) -> TokenResponse:
+    address = ratelimit.client_address(request)
+    ratelimit.check(f"login:{address}", *LOGIN_LIMIT)
+    ratelimit.check(f"login:{address}:{body.email.lower()}", *LOGIN_EMAIL_LIMIT)
+    invalid = HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid credentials")
+    if body.tenant_slug:
+        tenant = await db.scalar(
+            select(Tenant).where(Tenant.slug == body.tenant_slug, Tenant.is_deleted.is_(False))
         )
-    )
-    if user is None or not await verify_password_async(body.password, user.password_hash):
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid credentials")
-    return TokenResponse(access_token=create_access_token(str(user.id), str(tenant.id)))
+        if tenant is None:
+            raise invalid
+        user = await _user_if_password_matches(db, tenant.id, body.email, body.password)
+        if user is None:
+            raise invalid
+        return TokenResponse(access_token=create_access_token(str(user.id), str(tenant.id)))
+
+    # Email only: the workspace(s) this email and password open.
+    matches: list[tuple[UUID, User]] = []
+    for tenant_id in await _tenants_for_email(db, body.email):
+        found = await _user_if_password_matches(db, tenant_id, body.email, body.password)
+        if found is not None:
+            matches.append((tenant_id, found))
+    if not matches:
+        raise invalid
+    if len(matches) > 1:
+        tenants = (
+            await db.scalars(select(Tenant).where(Tenant.id.in_([t for t, _ in matches])))
+        ).all()
+        raise HTTPException(
+            status.HTTP_409_CONFLICT,
+            {
+                "code": "workspace_required",
+                "message": "This email opens more than one workspace. Choose one.",
+                "workspaces": [{"slug": t.slug, "name": t.name} for t in tenants],
+            },
+        )
+    tenant_id, user = matches[0]
+    return TokenResponse(access_token=create_access_token(str(user.id), str(tenant_id)))

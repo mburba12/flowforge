@@ -74,6 +74,8 @@ services:
       FLOWFORGE_GUSTO_CLIENT_ID: ${FLOWFORGE_GUSTO_CLIENT_ID:-}
       FLOWFORGE_GUSTO_CLIENT_SECRET: ${FLOWFORGE_GUSTO_CLIENT_SECRET:-}
       FLOWFORGE_GUSTO_ENV: ${FLOWFORGE_GUSTO_ENV:-demo}
+      # Public sign-in / sign-up attempt limits (rehearsals set off for the browser tests).
+      FLOWFORGE_RATE_LIMITS: ${FLOWFORGE_RATE_LIMITS:-on}
     volumes:
       - flowforge_support:/data
     ports:

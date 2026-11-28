@@ -92,7 +92,6 @@ test.describe("UI audit", () => {
     const findings: Finding[] = [];
     const viewer = await createViewer();
     await page.goto("/login");
-    await page.locator("#tenant").fill(process.env.E2E_TENANT ?? "");
     await page.locator("#email").fill(viewer.email);
     await page.locator("#password").fill(viewer.password);
     await page.getByRole("button", { name: "Sign in", exact: true }).click();

@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     gusto_client_id: str = ""
     gusto_client_secret: str = ""
     gusto_env: str = "demo"
+    # Limits on public sign-in / sign-up attempts: "on", "off", or "" (= on in production).
+    rate_limits: str = ""
     # Largest uploaded file, in bytes.
     upload_max_bytes: int = 20 * 1024 * 1024
 

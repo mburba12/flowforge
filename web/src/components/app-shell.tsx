@@ -14,7 +14,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  if (path === "/login" || path === "/onboarding" || path.startsWith("/connections/")) return <>{children}</>;
+  if (path === "/login" || path === "/signup" || path === "/onboarding" || path.startsWith("/connections/")) return <>{children}</>;
   const current = path.startsWith("/modules/") ? path.split("/")[2] : "";
   const inMoreTools = navGroups.some((g) => g.collapsed && g.items.some(([slug]) => slug === current));
 

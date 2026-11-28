@@ -16,7 +16,7 @@ const noSubscription = () => () => {};
 export function AuthBoundary({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const publicRoute = pathname === "/login" || pathname === "/onboarding";
+  const publicRoute = pathname === "/login" || pathname === "/signup" || pathname === "/onboarding";
   // undefined while hydrating, null when signed out, the token when signed in.
   const token = useSyncExternalStore(
     noSubscription,

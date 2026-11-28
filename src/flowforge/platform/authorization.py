@@ -463,6 +463,7 @@ POLICY: dict[str, str] = {
 PUBLIC: set[str] = {
     "flowforge.api.routes.auth:bootstrap",
     "flowforge.api.routes.auth:login",
+    "flowforge.api.routes.auth:signup",
     "flowforge.api.routes.health:health",
     "flowforge.support_feedback:submit_problem_report",
 }
