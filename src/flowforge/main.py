@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError
 
@@ -36,6 +36,7 @@ from flowforge.phase4i.router import router as phase4i_router
 from flowforge.phase4j.router import router as phase4j_router
 from flowforge.phase5a.router import router as phase5a_router
 from flowforge.phase5b.router import router as phase5b_router
+from flowforge.platform.authorization import enforce
 from flowforge.resource_contracts.router import router as resource_contract_router
 from flowforge.support_feedback import router as support_feedback_router
 
@@ -45,6 +46,8 @@ app = FastAPI(
     title="FlowForge API",
     version="1.0.0-phase1",
     description="Complete Phase 1 platform foundation",
+    # Role-based access control for every release-scope endpoint (deny by default).
+    dependencies=[Depends(enforce)],
 )
 
 

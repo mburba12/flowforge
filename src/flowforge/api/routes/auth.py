@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import create_access_token, hash_password, verify_password
 from flowforge.db.session import enter_tenant_context, get_db
+from flowforge.platform.authorization import CATALOG, STANDARD_ROLES
 from flowforge.platform.models import Permission, Role, RolePermission, Tenant, User, UserRole
 from flowforge.platform.schemas import BootstrapRequest, LoginRequest, TokenResponse
 from flowforge.platform.services import record_change
@@ -31,31 +32,27 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
     db.add(user)
     await db.flush()
     await enter_tenant_context(db, tenant.id, user.id)
-    role = Role(tenant_id=tenant.id, name="Owner", description="Tenant owner")
-    db.add(role)
-    await db.flush()
-    db.add(UserRole(tenant_id=tenant.id, user_id=user.id, role_id=role.id))
-    for code in [
-        "tenant.manage",
-        "users.manage",
-        "roles.manage",
-        "workflows.manage",
-        "documents.manage",
-        "audit.read",
-        "integrations.manage",
-    ]:
+    # Permission catalog (global) and the tenant's standard roles; the owner gets Owner.
+    permission_ids: dict[str, object] = {}
+    for code, description in CATALOG.items():
         permission = await db.scalar(select(Permission).where(Permission.code == code))
         if permission is None:
-            permission = Permission(code=code, description=code)
+            permission = Permission(code=code, description=description)
             db.add(permission)
             await db.flush()
-        db.add(
-            RolePermission(
-                tenant_id=tenant.id,
-                role_id=role.id,
-                permission_id=permission.id,
+        permission_ids[code] = permission.id
+    for role_name, codes in STANDARD_ROLES.items():
+        role = Role(tenant_id=tenant.id, name=role_name, description=f"Standard {role_name} role")
+        db.add(role)
+        await db.flush()
+        for code in sorted(codes):
+            db.add(
+                RolePermission(
+                    tenant_id=tenant.id, role_id=role.id, permission_id=permission_ids[code]
+                )
             )
-        )
+        if role_name == "Owner":
+            db.add(UserRole(tenant_id=tenant.id, user_id=user.id, role_id=role.id))
     await record_change(db, tenant.id, user.id, "created", "tenant", str(tenant.id))
     try:
         await db.commit()

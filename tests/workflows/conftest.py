@@ -11,7 +11,6 @@ deleted at the end; ON DELETE CASCADE removes all owned rows.
 
 Fixture shortcuts that bypass the API are deliberate and documented, because
 the API offers no way to do them (each is a reported gap):
-  * the second approver user is inserted directly (no user-management API)
   * tax authorities are inserted directly (no tax-authority API)
   * closing an accounting period is done directly (no period-close API)
 """
@@ -27,7 +26,6 @@ import httpx
 import pytest
 from sqlalchemy import text
 
-from flowforge.core.security import hash_password
 from flowforge.db.session import engine
 from flowforge.main import app
 
@@ -265,26 +263,19 @@ async def harness() -> AsyncIterator[Harness]:
             me = (await client.get("/api/v1/me", headers=owner)).json()
             tenant_id = UUID(str(me["tenant_id"]))
 
-            # Fixture shortcut: no user-management API exists (reported gap).
+            # Second user (approver/poster) created through the user-management API.
             approver_email = f"approver-{slug}@example.com"
-            async with engine.begin() as conn:
-                await conn.execute(
-                    text("SELECT set_config('app.current_tenant_id', :t, true)"),
-                    {"t": str(tenant_id)},
-                )
-                await conn.execute(
-                    text(
-                        "INSERT INTO users (id, tenant_id, email, password_hash, display_name,"
-                        " is_active, is_deleted) VALUES (:i, :t, :e, :h, 'Workflow Approver',"
-                        " true, false)"
-                    ),
-                    {
-                        "i": uuid4(),
-                        "t": tenant_id,
-                        "e": approver_email,
-                        "h": hash_password(password),
-                    },
-                )
+            made = await client.post(
+                "/api/v1/users",
+                headers=owner,
+                json={
+                    "email": approver_email,
+                    "display_name": "Workflow Approver",
+                    "password": password,
+                    "roles": ["Manager"],
+                },
+            )
+            assert made.status_code == 201, made.text
             login = await client.post(
                 "/api/v1/auth/login",
                 json={"email": approver_email, "password": password, "tenant_slug": slug},

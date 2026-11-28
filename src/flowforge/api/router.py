@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from flowforge.api.routes import auth, health, platform, tenants
+from flowforge.api.routes import auth, health, platform, tenants, users
 from flowforge.bg08_completion.router import router as bg08_completion_router
 from flowforge.bg08_final.router import router as bg08_final_router
 from flowforge.bg09_final.router import router as bg09_router
@@ -32,6 +32,7 @@ api_router.include_router(health.router)
 api_router.include_router(auth.router)
 api_router.include_router(platform.router)
 api_router.include_router(tenants.router)
+api_router.include_router(users.router)
 api_router.include_router(control_plane_router)
 api_router.include_router(master_data_router)
 api_router.include_router(finance_router)
