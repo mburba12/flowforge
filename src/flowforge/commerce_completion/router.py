@@ -2,11 +2,13 @@ from typing import Annotated, Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
+from flowforge.phase3b.models import Shipment
 
 from .models import LandedCost, Manifest
 from .schemas import *  # noqa: F403, F405
@@ -72,6 +74,19 @@ async def landed(b: LandedCostCreate, s: Annotated[CompletionService, Depends(sv
 
 @router.post("/manifests", status_code=201)
 async def manifest(b: ManifestCreate, s: Annotated[CompletionService, Depends(svc)]):
+    # Only the tenant's own, existing shipments can be put on a manifest.
+    wanted = set(b.shipment_ids)
+    found = set(
+        (
+            await s.db.scalars(
+                select(Shipment.id).where(
+                    Shipment.tenant_id == s.ctx.tenant_id, Shipment.id.in_(wanted)
+                )
+            )
+        ).all()
+    )
+    if found != wanted:
+        raise HTTPException(404, "Shipment not found")
     return await s.save(
         Manifest(
             tenant_id=s.ctx.tenant_id,

@@ -322,7 +322,8 @@ def path_hint(path: str, param: str) -> str:
     return ""
 
 
-async def main() -> None:
+async def main(after_populate: Any = None) -> None:
+    """Populate a fresh tenant; after_populate(client, tenant_id, slug, headers, spec) runs before cleanup."""
     spec = app.openapi()
     slug = f"audit-{uuid4().hex[:10]}"
     transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
@@ -388,6 +389,8 @@ async def main() -> None:
                         continue
                     if path.endswith(("/users/{user_id}",)) and method == "PATCH":
                         continue  # would deactivate the audit owner
+                    if path.endswith("/roles/{role_id}/permissions"):
+                        continue  # would rewrite standard roles the role audit relies on
                     builder = Builder(spec, ids, n, path)
                     url, params = path, {}
                     for p in op.get("parameters", []):
@@ -422,6 +425,8 @@ async def main() -> None:
                     )
                     if status < 300:
                         entry["ok"] = True
+            if after_populate is not None:
+                await after_populate(client, tenant_id, slug, headers, spec)
         finally:
             if tenant_id:
                 async with engine.begin() as conn:
