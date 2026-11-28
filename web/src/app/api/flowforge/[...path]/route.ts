@@ -6,6 +6,8 @@ export const runtime = "nodejs";
 const API_BASE = (process.env.FLOWFORGE_API_BASE_URL || "http://flowforge-phase1-api-1:8000").replace(/\/$/, "");
 
 const REPEATABLE = new Set(["GET", "HEAD", "OPTIONS", "PUT", "DELETE"]);
+// Never leave the browser waiting on a stalled upstream call.
+const UPSTREAM_TIMEOUT_MS = 60_000;
 
 function isConnectionReset(error: unknown): boolean {
   const cause = (error as { cause?: { code?: string } })?.cause;
@@ -27,18 +29,19 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     headers,
     cache: "no-store",
     redirect: "manual",
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
   };
   if (!['GET','HEAD'].includes(request.method)) init.body = await request.arrayBuffer();
 
   try {
     let upstream: Response;
     try {
-      upstream = await fetch(target, init);
+      upstream = await fetch(target, { ...init, signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS) });
     } catch (error) {
       // A pooled keep-alive socket the API just closed fails with ECONNRESET before the
       // request is processed. Retry once, only for methods that are safe to repeat.
       if (!REPEATABLE.has(request.method) || !isConnectionReset(error)) throw error;
-      upstream = await fetch(target, init);
+      upstream = await fetch(target, { ...init, signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS) });
     }
     const responseHeaders = new Headers(upstream.headers);
     responseHeaders.delete("content-encoding");
@@ -46,6 +49,10 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     responseHeaders.delete("transfer-encoding");
     return new NextResponse(upstream.body, { status: upstream.status, headers: responseHeaders });
   } catch (error) {
+    if (error instanceof DOMException && error.name === "TimeoutError") {
+      console.error("FlowForge proxy timeout", { target: target.toString() });
+      return NextResponse.json({ detail: "The FlowForge API did not answer in time. Please try again." }, { status: 504 });
+    }
     console.error("FlowForge proxy failure", { target: target.toString(), error });
     return NextResponse.json({ detail: "FlowForge API is unavailable" }, { status: 502 });
   }

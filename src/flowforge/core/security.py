@@ -1,3 +1,4 @@
+import asyncio
 from datetime import UTC, datetime, timedelta
 from typing import Annotated
 from uuid import UUID
@@ -19,6 +20,16 @@ def hash_password(password: str) -> str:
 
 def verify_password(password: str, encoded: str) -> bool:
     return password_hash.verify(password, encoded)
+
+
+# Argon2 is deliberately slow and CPU-bound: run it in a worker thread so one sign-in
+# never blocks every other request on the event loop.
+async def hash_password_async(password: str) -> str:
+    return await asyncio.to_thread(hash_password, password)
+
+
+async def verify_password_async(password: str, encoded: str) -> bool:
+    return await asyncio.to_thread(verify_password, password, encoded)
 
 
 def create_access_token(subject: str, tenant_id: str) -> str:

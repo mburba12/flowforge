@@ -61,3 +61,15 @@ async def test_gl_post_rejected_outside_period_dates(harness: Harness) -> None:
     journal = await h.post("/api/v2/journals", json=_journal(h, "50.00", "50.00", on="2026-03-01"))
     await h.post(f"/api/v2/journals/{journal['id']}/approve", as_approver=True)
     await h.post(f"/api/v2/journals/{journal['id']}/post", as_approver=True, expect=409)
+
+
+async def test_gl_journal_refuses_accounts_outside_the_ledger(harness: Harness) -> None:
+    from uuid import uuid4
+
+    h = harness
+    foreign = _journal(h, "10.00", "10.00")
+    foreign["lines"][0]["account_id"] = str(uuid4())  # type: ignore[index]
+    # Refused when the journal is created, not later when someone tries to post it.
+    await h.post("/api/v2/journals", json=foreign, expect=409)
+    rows = await h.sql("SELECT count(*) FROM journal_entries WHERE tenant_id = :t", t=h.tenant_id)
+    assert rows[0][0] == 0

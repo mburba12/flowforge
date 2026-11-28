@@ -153,7 +153,7 @@ test.describe.serial("Payroll and tax in the browser", () => {
     await page
       .getByRole("region", { name: "Posting context" })
       .getByLabel("Tax payable account", { exact: true })
-      .selectOption({ label: ledger.account("erTax") });
+      .selectOption({ label: ledger.account("erTax").split(" · ")[1] });
     await selectContaining(page.getByLabel("Reconcile authority"), `IRS${tag}`);
     await page.getByTestId("tax-reconcile").click();
     await expect(page.getByTestId("tax-recon")).toContainText("reconciled");

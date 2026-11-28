@@ -18,11 +18,16 @@ export function useGl(key = "") {
     .filter((p) => p.status === "open")
     .map((p) => ({ value: p.id, label: `${p.period_code} (${p.start_date} to ${p.end_date})` }));
   const calendarOptions: Option[] = (calendars.data ?? []).map((c) => ({ value: String(c.id), label: String(c.name) }));
+  const ledgerCode = (id: unknown): string => String((ledgers.data ?? []).find((l) => l.id === id)?.code ?? "");
   const accountOptions = (type?: string): Option[] =>
     (accounts.data ?? [])
       .filter((a) => !type || a.account_type === type)
       .sort((a, b) => String(a.account_code).localeCompare(String(b.account_code)))
-      .map((a) => ({ value: String(a.id), label: `${a.account_code} ${a.name}` }));
+      .map((a) => ({
+        value: String(a.id),
+        // Accounts belong to one ledger: the label says which ("GL1 · 1000 Cash").
+        label: `${ledgerCode(a.ledger_id)} · ${a.account_code} ${a.name}`,
+      }));
   const accountName = (id: unknown): string => {
     const a = (accounts.data ?? []).find((x) => x.id === id);
     return a ? `${a.account_code} ${a.name}` : String(id ?? "");

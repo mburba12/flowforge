@@ -9,7 +9,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flowforge.core.security import Principal, current_principal, hash_password
+from flowforge.core.security import Principal, current_principal, hash_password_async
 from flowforge.db.session import get_tenant_db
 from flowforge.platform.authorization import CATALOG, STANDARD_ROLES, load_access
 from flowforge.platform.models import Permission, Role, RolePermission, User, UserRole
@@ -102,7 +102,7 @@ async def create_user(body: UserCreate, p: P, db: D) -> dict[str, object]:
     user = User(
         tenant_id=p.tenant_id,
         email=body.email.lower(),
-        password_hash=hash_password(body.password),
+        password_hash=await hash_password_async(body.password),
         display_name=body.display_name,
         is_active=True,
     )

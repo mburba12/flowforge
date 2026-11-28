@@ -3,7 +3,11 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flowforge.core.security import create_access_token, hash_password, verify_password
+from flowforge.core.security import (
+    create_access_token,
+    hash_password_async,
+    verify_password_async,
+)
 from flowforge.db.session import enter_tenant_context, get_db
 from flowforge.platform.authorization import CATALOG, STANDARD_ROLES
 from flowforge.platform.models import Permission, Role, RolePermission, Tenant, User, UserRole
@@ -26,7 +30,7 @@ async def bootstrap(body: BootstrapRequest, db: AsyncSession = Depends(get_db)) 
     user = User(
         tenant_id=tenant.id,
         email=body.email.lower(),
-        password_hash=hash_password(body.password),
+        password_hash=await hash_password_async(body.password),
         display_name=body.display_name,
     )
     db.add(user)
@@ -79,6 +83,6 @@ async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)) -> Token
             User.tenant_id == tenant.id, User.email == body.email.lower(), User.is_active.is_(True)
         )
     )
-    if user is None or not verify_password(body.password, user.password_hash):
+    if user is None or not await verify_password_async(body.password, user.password_hash):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid credentials")
     return TokenResponse(access_token=create_access_token(str(user.id), str(tenant.id)))

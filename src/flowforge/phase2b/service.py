@@ -70,6 +70,11 @@ class LedgerService:
         return item
 
     async def journal(self, data: JournalCreate) -> JournalEntry:
+        # Refuse accounts of another ledger (or closed to posting) now, not at posting time.
+        from .posting import _postable_account
+
+        for line in data.lines:
+            await _postable_account(self.db, self.tenant_id, data.ledger_id, line.account_id)
         item = JournalEntry(
             tenant_id=self.tenant_id,
             ledger_id=data.ledger_id,

@@ -66,9 +66,9 @@ test.describe.serial("General ledger in the browser", () => {
     await form.locator("#journal-form-ledger_id").selectOption({ label: ledgerLabel });
     await form.locator("#journal-form-period_id").selectOption({ label: `${periodCode} (${periodStart} to ${periodEnd})` });
     await form.locator("#journal-form-description").fill(`Capital ${code}`);
-    await form.locator("#journal-form-l0-account_id").selectOption({ label: "1000 Cash" });
+    await form.locator("#journal-form-l0-account_id").selectOption({ label: `${code} · 1000 Cash` });
     await form.locator("#journal-form-l0-debit").fill("100.00");
-    await form.locator("#journal-form-l1-account_id").selectOption({ label: "3000 Owner equity" });
+    await form.locator("#journal-form-l1-account_id").selectOption({ label: `${code} · 3000 Owner equity` });
     await form.locator("#journal-form-l1-credit").fill("90.00");
     await form.getByRole("button", { name: "Create journal" }).click();
     await expect(form.getByRole("alert")).toBeVisible();

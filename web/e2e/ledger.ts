@@ -76,7 +76,7 @@ export async function createLedger(prefix: string): Promise<Ledger> {
     code,
     ledgerLabel: `${code} — ${code} Ledger`,
     periodLabel: `${code}-P (${start} to ${end})`,
-    account: (key) => `${ACCOUNTS[key][0]} ${ACCOUNTS[key][1]} ${code}`,
+    account: (key) => `${code} · ${ACCOUNTS[key][0]} ${ACCOUNTS[key][1]} ${code}`,
   };
 }
 
@@ -86,7 +86,7 @@ export async function setContext(page: Page, ledger: Ledger, accounts: Record<st
   await bar.getByLabel("Ledger", { exact: true }).selectOption({ label: ledger.ledgerLabel });
   await bar.getByLabel("Period", { exact: true }).selectOption({ label: ledger.periodLabel });
   for (const [label, key] of Object.entries(accounts)) {
-    await bar.getByLabel(label, { exact: true }).selectOption({ label: ledger.account(key) });
+    await bar.getByLabel(label, { exact: true }).selectOption({ label: ledger.account(key).split(" · ")[1] }); // the bar lists only this ledger
   }
 }
 

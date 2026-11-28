@@ -22,6 +22,11 @@ from flowforge.core.security import (
 engine = create_async_engine(
     settings.database_url,
     pool_pre_ping=True,
+    # One API process serves every user: keep enough connections for concurrent
+    # requests, and fail fast (503 via the caller) instead of queueing for 30s.
+    pool_size=10,
+    max_overflow=20,
+    pool_timeout=15,
 )
 
 SessionLocal = async_sessionmaker(
