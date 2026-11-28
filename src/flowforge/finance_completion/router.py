@@ -73,6 +73,16 @@ async def payment_item(
     )
 
 
+@router.post("/payment-batches/{bid}/approve")
+async def approve_batch(
+    bid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, Depends(svc)]
+):
+    try:
+        return await s.approve_batch(bid, b.idempotency_key)
+    except (LookupError, ValueError) as e:
+        raise err(e) from e
+
+
 @router.post("/payment-batches/{bid}/release")
 async def release(bid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, Depends(svc)]):
     try:

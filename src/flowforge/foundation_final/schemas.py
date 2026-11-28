@@ -64,3 +64,11 @@ class Decision(BaseModel):
         pattern="^(approve|reject|remediate|complete|revoke|archive|reactivate|verify|deactivate)$"
     )
     reason: str = Field(min_length=3)
+
+
+class QualityRunCreate(BaseModel):
+    """Result of evaluating a data-quality rule against one record."""
+
+    entity_id: UUID
+    passed: bool
+    details: dict[str, Any] = {}

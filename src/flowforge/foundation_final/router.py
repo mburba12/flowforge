@@ -104,6 +104,17 @@ async def stewardship(id: UUID, b: Decision, s: Annotated[FinalFoundationService
     return await s.decide(StewardshipTask, id, b.decision, b.reason)
 
 
+@router.post("/quality-rules/{rule_id}/run", status_code=201)
+async def quality_run(
+    rule_id: UUID, b: QualityRunCreate, s: Annotated[FinalFoundationService, Depends(svc)]
+):
+    # A failed check opens a data-quality issue for stewards to resolve.
+    try:
+        return await s.quality_run(rule_id, b.entity_id, b.passed, b.details)
+    except LookupError as e:
+        raise HTTPException(404, str(e)) from e
+
+
 @router.post("/quality-issues/{id}/resolve")
 async def issue(id: UUID, b: Decision, s: Annotated[FinalFoundationService, Depends(svc)]):
     return await s.decide(DataQualityIssue, id, "remediate", b.reason)

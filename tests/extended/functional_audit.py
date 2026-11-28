@@ -44,6 +44,12 @@ async def _integrity_detail(_: Any, exc: IntegrityError) -> JSONResponse:
 
 app.add_exception_handler(IntegrityError, _integrity_detail)  # type: ignore[arg-type]
 
+if __import__("os").getenv("FLOWFORGE_OPERATION_COVERAGE"):
+    sys.path.insert(0, str(ROOT / "tests"))
+    from conftest import install_coverage_recorder  # noqa: E402
+
+    install_coverage_recorder(app, __import__("os").environ["FLOWFORGE_OPERATION_COVERAGE"])
+
 REPORT = ROOT / "var" / "functional-audit.json"
 PASSES = 16
 DECISION_FIELDS = {"target", "stage", "status", "action", "decision", "to_status"}

@@ -125,6 +125,40 @@ class CompletionService:
         await self.db.commit()
         return await self.execution("period_reopen", cid, key, {"status": "open"})
 
+    async def approve_batch(self, bid: UUID, key: str):
+        """Approve a draft payment batch whose items add up to its total."""
+        b = await self.db.scalar(
+            select(PaymentBatch).where(
+                PaymentBatch.id == bid, PaymentBatch.tenant_id == self.ctx.tenant_id
+            )
+        )
+        if not b:
+            raise LookupError("Payment batch not found")
+        if b.approved_by is not None:
+            raise ValueError("Payment batch is already approved")
+        items = list(
+            (
+                await self.db.scalars(
+                    select(PaymentBatchItem).where(
+                        PaymentBatchItem.batch_id == bid,
+                        PaymentBatchItem.tenant_id == self.ctx.tenant_id,
+                    )
+                )
+            ).all()
+        )
+        total = sum((x.amount for x in items), Decimal("0"))
+        if not items or total != b.total_amount:
+            raise ValueError("Payment batch items do not match header total")
+        b.approved_by = self.ctx.user_id
+        b.status = "approved"
+        await record_change(
+            self.db, self.ctx.tenant_id, self.ctx.user_id, "approved", "payment_batch", str(bid)
+        )
+        await self.db.commit()
+        return await self.execution(
+            "payment_approve", bid, key, {"items": len(items), "total": total}
+        )
+
     async def release_batch(self, bid: UUID, key: str):
         b = await self.db.scalar(
             select(PaymentBatch).where(
