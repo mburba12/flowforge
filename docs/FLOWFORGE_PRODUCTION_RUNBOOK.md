@@ -83,6 +83,44 @@ New schema changes are Alembic revisions under `migrations\versions`. `Start-Flo
 rebuilds the image and the `migrate` service applies them before the API starts.
 Rehearse first with `Invoke-FlowForgeRehearsal.ps1` (disposable stack on ports 3300/8300).
 
+Apply a new release the safe way (rehearsal from a fresh production backup, then the
+update with backup, rollback-tagged images and verification):
+
+```powershell
+.\scripts\production\Invoke-FlowForgeRehearsal.ps1 -FromProductionBackup
+```
+
+```powershell
+.\scripts\production\Update-FlowForge.ps1
+```
+
+## Problem reports
+
+The in-app problem report form sends email when `FLOWFORGE_SUPPORT_SMTP_*` settings are
+configured for the API. Without them (the default), or if the mail server fails, each
+report is saved as a JSON file in the `flowforge_support` volume and the user is told it
+was queued. List and read queued reports:
+
+```powershell
+docker exec flowforge-api-1 ls /data/support-outbox
+```
+
+```powershell
+docker exec flowforge-api-1 cat /data/support-outbox/<reference>.json
+```
+
+## API paths and permissions
+
+* Release APIs keep their paths (`/api/v1`, `/api/v2` ledger, `/api/v3` AP, `/api/v3b` AR,
+  `/api/v4a` payroll, `/api/v4b` tax). Extended domain APIs are served at `/api/v2/<domain>/...`
+  (they were previously reachable only at `/api/v1/api/v2/...`, which no client used).
+* Every operation requires a permission except sign-in, health, problem reports and the
+  static `/phase*/status` diagnostics; an operation without a policy is refused.
+  `GET /api/v1/operations` lists every operation with its permission and workspace.
+* Standard roles receive new permissions automatically at API start (additive only).
+  Custom roles never gain permissions on their own: grant extended-domain permissions
+  to them in Administration → Roles.
+
 ## Cutover history and rollback
 
 The live system moved from the recovered runtime (database container
