@@ -46,6 +46,9 @@ function Step([string]$Id, [string]$Name, [scriptblock]$Body) {
 }
 
 $env:FF_WEB_PORT = "3300"; $env:FF_API_PORT = "8300"; $env:FF_DB_PORT = "5436"
+# Never start the public tunnel for a rehearsal (it would share live traffic): the shell
+# values override COMPOSE_PROFILES / FLOWFORGE_TUNNEL_TOKEN from .env.production.
+$env:COMPOSE_PROFILES = "rehearsal-no-tunnel"; $env:FLOWFORGE_TUNNEL_TOKEN = ""
 try {
     Step "R00" "Script syntax" {
         foreach ($f in Get-ChildItem $PSScriptRoot -Filter *.ps1) {
@@ -146,7 +149,7 @@ try {
     if (-not $KeepStack) {
         try { Invoke-FFCompose -Project $project -Arguments @("down", "-v", "--remove-orphans") -Description "remove rehearsal stack" | Out-Null } catch { Write-Warning $_.Exception.Message }
     }
-    Remove-Item Env:\FF_WEB_PORT, Env:\FF_API_PORT, Env:\FF_DB_PORT -ErrorAction SilentlyContinue
+    Remove-Item Env:\FF_WEB_PORT, Env:\FF_API_PORT, Env:\FF_DB_PORT, Env:\COMPOSE_PROFILES, Env:\FLOWFORGE_TUNNEL_TOKEN -ErrorAction SilentlyContinue
     $results | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $out "results.json") -Encoding UTF8
     $summary = @("FLOWFORGE CUTOVER REHEARSAL $stamp", "") + ($results | ForEach-Object { "{0} {1} {2} ({3}s) {4}" -f $_.status, $_.id, $_.step, $_.seconds, $_.detail })
     $failed = @($results | Where-Object status -eq "FAIL").Count

@@ -6,8 +6,8 @@ by `Install-FlowForge.ps1`; never commit or share it).
 
 | Service | Purpose | Host port |
 |---|---|---|
-| `web` | Next.js app | `3000` |
-| `api` | FastAPI, runs as the restricted role `flowforge_app` (no superuser, no RLS bypass) | `8000` |
+| `web` | Next.js app (Krov WorkAgent) | `127.0.0.1:3000` |
+| `api` | FastAPI, runs as the restricted role `flowforge_app` (no superuser, no RLS bypass) | `127.0.0.1:8000` |
 | `db` | PostgreSQL 16, volume `flowforge_flowforge_pgdata`; forced row-level security on every tenant table | `127.0.0.1:5435` |
 | `migrate` | one-shot `alembic upgrade head` as the database owner, runs before `api` starts | — |
 | `redis`, `azurite`, `mailpit` | supporting services (internal only; the API does not use them yet) | — |
@@ -93,6 +93,38 @@ update with backup, rollback-tagged images and verification):
 ```powershell
 .\scripts\production\Update-FlowForge.ps1
 ```
+
+## Public address (Cloudflare Tunnel)
+
+The app is branded **Krov WorkAgent** (internal names, folders and scripts keep
+"flowforge"). Its web, API and database ports listen on this computer only
+(127.0.0.1). Other computers reach it through Cloudflare Tunnel: the `tunnel` service
+makes an outbound connection to Cloudflare, so no router ports are opened and your home
+IP address stays hidden. HTTPS is provided by Cloudflare.
+
+1. Put your domain on Cloudflare (for example `krovworkagent.com`).
+2. Cloudflare dashboard → Zero Trust → Networks → Tunnels → **Create a tunnel** →
+   Cloudflared → name it → copy the token (the long string after `--token`).
+3. Add a **public hostname**: `app.krovworkagent.com`, service type **HTTP**, URL **web:3000**.
+4. Recommended: Zero Trust → Access → Applications → add the same hostname with a policy
+   that allows only your team's email addresses.
+5. Run (asks for the token with hidden input, then checks the address answers):
+
+```powershell
+.\scripts\production\Set-FlowForgeTunnel.ps1
+```
+
+6. If you use Gusto, change its redirect URL to `https://<your address>/connections/payroll/callback`.
+
+Turn the public address off again (the app stays available on this computer):
+
+```powershell
+.\scripts\production\Set-FlowForgeTunnel.ps1 -Disable
+```
+
+The site is up only while this computer is on, awake and running Docker Desktop. Set
+Windows power options so it never sleeps, and copy backups off this computer regularly.
+Rehearsals never start the tunnel.
 
 ## Problem reports
 

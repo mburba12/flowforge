@@ -10,9 +10,12 @@
 #   FLOWFORGE_DB_OWNER_PASSWORD   database owner (migrations, backups, imports)
 #   FLOWFORGE_APP_DB_PASSWORD     restricted runtime role flowforge_app (API)
 #   FLOWFORGE_JWT_SECRET          token signing key
-# Optional: FF_WEB_PORT (3000), FF_API_PORT (8000), FF_DB_PORT (5435, bound to 127.0.0.1)
+# Optional: FF_WEB_PORT (3000), FF_API_PORT (8000), FF_DB_PORT (5435); all bound to 127.0.0.1,
+#   so only this computer reaches them directly. Other computers use the Cloudflare Tunnel.
 # Optional connections: FLOWFORGE_CREDENTIALS_KEY, FLOWFORGE_PUBLIC_URL,
 #   FLOWFORGE_PLAID_CLIENT_ID / _SECRET / _ENV, FLOWFORGE_GUSTO_CLIENT_ID / _CLIENT_SECRET / _ENV
+# Optional public address (Set-FlowForgeTunnel.ps1): FLOWFORGE_TUNNEL_TOKEN and
+#   COMPOSE_PROFILES=tunnel start the "tunnel" service (Cloudflare Tunnel -> web:3000).
 
 name: flowforge
 
@@ -74,7 +77,7 @@ services:
     volumes:
       - flowforge_support:/data
     ports:
-      - "${FF_API_PORT:-8000}:8000"
+      - "127.0.0.1:${FF_API_PORT:-8000}:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -100,11 +103,25 @@ services:
     environment:
       FLOWFORGE_API_BASE_URL: http://api:8000
     ports:
-      - "${FF_WEB_PORT:-3000}:3000"
+      - "127.0.0.1:${FF_WEB_PORT:-3000}:3000"
     depends_on:
       api:
         condition: service_healthy
     restart: unless-stopped
+
+  # Public address through Cloudflare Tunnel (outbound only; no router ports opened).
+  # Runs only with COMPOSE_PROFILES=tunnel; in the Cloudflare dashboard the tunnel's
+  # public hostname points at http://web:3000. Never started by rehearsals.
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    command: ["tunnel", "--no-autoupdate", "run"]
+    environment:
+      TUNNEL_TOKEN: ${FLOWFORGE_TUNNEL_TOKEN:-}
+    depends_on:
+      web:
+        condition: service_started
+    restart: unless-stopped
+    profiles: ["tunnel"]
 
   # Supporting services from the target architecture. The current API does not
   # call them yet; they are internal-only (no host ports) to avoid clashing with
