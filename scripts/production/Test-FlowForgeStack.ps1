@@ -103,19 +103,21 @@ me = get('/api/v1/me', own)
 catalog = get('/api/v1/business/resources', own)[1] or []
 statuses = [get('/api/v1/business/' + c['resource'], own)[0] for c in catalog]
 jur = get('/api/v1/business/jurisdictions', own)
-users_own = get('/api/v1/business/users', own)[1]; users_foreign = get('/api/v1/business/users', other)[1]
-jur_foreign = get('/api/v1/business/jurisdictions', other)[1]
+users_own = get('/api/v1/business/users', own)[1]; uf = get('/api/v1/business/users', other)
+jf = get('/api/v1/business/jurisdictions', other)
+# A foreign-tenant token must be refused (401/403) or see no rows.
+isolated = lambda r: r[0] in (401, 403) or (r[0] == 200 and (r[1] or {}).get('total') == 0)
 real.write(json.dumps({'me': me[0], 'me_tenant': (me[1] or {}).get('tenant_id'), 'catalog': len(catalog),
   'non_200': [s for s in statuses if s != 200], 'jurisdictions': (jur[1] or {}).get('total'),
-  'users_own': (users_own or {}).get('total'), 'users_foreign': (users_foreign or {}).get('total'),
-  'jurisdictions_foreign': (jur_foreign or {}).get('total')}))
+  'users_own': (users_own or {}).get('total'), 'foreign_status': [uf[0], jf[0]],
+  'foreign_isolated': isolated(uf) and isolated(jf)}))
 "@
     $r = ($py | docker exec -i $api python -) | ConvertFrom-Json
     if ($r.me -ne 200 -or $r.me_tenant -ne $tid) { throw "/me failed" }
     if ($r.non_200.Count -gt 0) { throw "business reads not 200: $($r.non_200 -join ',')" }
     if ($r.jurisdictions -ne $ExpectJurisdictions) { throw "jurisdictions via API=$($r.jurisdictions)" }
-    if ($r.users_foreign -ne 0 -or $r.jurisdictions_foreign -ne 0) { throw "cross-tenant data visible" }
-    "me ok; $($r.catalog) resources 200; jurisdictions=$($r.jurisdictions); own users=$($r.users_own); foreign sees 0"
+    if (-not $r.foreign_isolated) { throw "cross-tenant data visible (foreign token status $($r.foreign_status -join ","))" }
+    "me ok; $($r.catalog) resources 200; jurisdictions=$($r.jurisdictions); own users=$($r.users_own); foreign token isolated (status $($r.foreign_status -join ","))"
 }
 Check "no server errors in API log" {
     $logs = Invoke-FFNative -Description "Read API log" -Command { docker logs --since 15m $api }

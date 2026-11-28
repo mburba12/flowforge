@@ -7,9 +7,12 @@
     backup + restore, API restart, and stop/start persistence. Removes ONLY the
     rehearsal project's containers and volumes at the end (-KeepStack to keep them).
     The live system and the recovered database are only read (import source).
+    -FromProductionBackup: instead of importing from the recovered database, restore a fresh
+    verified backup of the live production database and upgrade it with the new migrations
+    (the update path), then run the same verification and tests.
 #>
 [CmdletBinding()]
-param([switch]$KeepStack)
+param([switch]$KeepStack, [switch]$FromProductionBackup)
 . (Join-Path $PSScriptRoot "FlowForge.Common.ps1")
 $root = Get-FFRoot
 $project = "flowforge-rehearsal"
@@ -54,23 +57,46 @@ try {
     }
     Step "R01" "Secrets file (generated if missing)" { & (Join-Path $PSScriptRoot "Install-FlowForge.ps1") }
     Step "R02" "Build images" { Invoke-FFCompose -Project $project -Arguments @("build") -Description "build" }
-    Step "R03" "Database + migrations from blank" {
-        Invoke-FFCompose -Project $project -Arguments @("up", "-d", "db") -Description "db up"
-        Invoke-FFCompose -Project $project -Arguments @("run", "--rm", "migrate") -Description "migrate"
+    if ($FromProductionBackup) {
+        Step "R03" "Restore live production backup, then upgrade with new migrations" {
+            $source = & (Join-Path $PSScriptRoot "Backup-FlowForge.ps1") -Project "flowforge" -Label "rehearsal-source" | Select-Object -Last 1
+            $before = (docker exec (Get-FFContainer "flowforge" "db") psql -U flowforge_owner -d flowforge -Atc "SELECT version_num FROM alembic_version").Trim()
+            Invoke-FFCompose -Project $project -Arguments @("up", "-d", "--wait", "db") -Description "db up"
+            $db = Get-FFContainer $project "db"
+            Invoke-FFNative -Description "copy backup" -Command { docker cp $source "${db}:/tmp/source.dump" } | Out-Null
+            Invoke-FFNative -Description "pg_restore" -Command { docker exec $db pg_restore -U flowforge_owner -d flowforge --no-owner --exit-on-error /tmp/source.dump } | Out-Null
+            docker exec $db rm -f /tmp/source.dump | Out-Null
+            Invoke-FFCompose -Project $project -Arguments @("run", "--rm", "migrate") -Description "migrate (upgrade)"
+            $after = (docker exec $db psql -U flowforge_owner -d flowforge -Atc "SELECT version_num FROM alembic_version").Trim()
+            "restored production at $before; upgraded to $after"
+        }
+        Step "R04" "Production data present after upgrade" {
+            $db = Get-FFContainer $project "db"
+            $n = (docker exec $db psql -U flowforge_owner -d flowforge -Atc "SELECT count(*) FROM tenants WHERE slug = 'flowforge-production'").Trim()
+            if ($n -ne "1") { throw "production tenant missing after restore" }
+            "production tenant present"
+        }
+    } else {
+        Step "R03" "Database + migrations from blank" {
+            Invoke-FFCompose -Project $project -Arguments @("up", "-d", "db") -Description "db up"
+            Invoke-FFCompose -Project $project -Arguments @("run", "--rm", "migrate") -Description "migrate"
+        }
+        Step "R04" "Import tenant, users and reference data" { & (Join-Path $PSScriptRoot "Import-FlowForgeData.ps1") -TargetPort 5436 }
     }
-    Step "R04" "Import tenant, users and reference data" { & (Join-Path $PSScriptRoot "Import-FlowForgeData.ps1") -TargetPort 5436 }
     Step "R05" "Start api, web and services" {
         Invoke-FFCompose -Project $project -Arguments @("up", "-d") -Description "up"
         Wait-FFHttp "http://127.0.0.1:8300/api/v1/health" 240
         Wait-FFHttp "http://127.0.0.1:3300/login" 240
     }
     Step "R06" "Stack verification" { & (Join-Path $PSScriptRoot "Test-FlowForgeStack.ps1") -Project $project -ApiPort 8300 -WebPort 3300 -ReportPath (Join-Path $out "verification.json") }
+    if (-not $FromProductionBackup) {
     Step "R07" "Import is idempotent (re-run inserts nothing)" {
         $report = (& (Join-Path $PSScriptRoot "Import-FlowForgeData.ps1") -TargetPort 5436 | Out-String)
         $json = $report.Substring($report.IndexOf("{"), $report.LastIndexOf("}") - $report.IndexOf("{") + 1) | ConvertFrom-Json
         $sum = ($json.inserted_this_run.PSObject.Properties | Measure-Object -Property Value -Sum).Sum
         if ($sum -ne 0) { throw "re-import inserted $sum rows" }
         "re-import inserted 0 rows; reconciled=$($json.reconciled)"
+    }
     }
     Step "R08" "Release workflow tests against the rehearsal database" {
         $cfg = Read-FFEnvFile $envFile
