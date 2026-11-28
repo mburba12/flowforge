@@ -46,7 +46,7 @@ async def batch(b: BatchCreate, s: Annotated[CompletionService, Depends(svc)]):
 async def batch_action(id: UUID, b: BatchAction, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.batch_action(id, b.target, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 

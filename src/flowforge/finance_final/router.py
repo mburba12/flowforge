@@ -28,7 +28,7 @@ def wrap(e) -> Any:
 async def recurring(rid: UUID, b: Execute, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.recurring(rid, b.idempotency_key, b.period_id, b.journal_date)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 
@@ -36,7 +36,7 @@ async def recurring(rid: UUID, b: Execute, s: Annotated[FinalFinanceService, Dep
 async def accrual(aid: UUID, b: Execute, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.accrual(aid, b.idempotency_key, b.period_id, b.journal_date)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 
@@ -44,7 +44,7 @@ async def accrual(aid: UUID, b: Execute, s: Annotated[FinalFinanceService, Depen
 async def allocation(b: AllocationExecute, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.allocation(b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 
@@ -52,7 +52,7 @@ async def allocation(b: AllocationExecute, s: Annotated[FinalFinanceService, Dep
 async def apply(bid: UUID, b: PaymentAction, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.payment(bid, b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 
@@ -60,7 +60,7 @@ async def apply(bid: UUID, b: PaymentAction, s: Annotated[FinalFinanceService, D
 async def reverse(bid: UUID, b: PaymentAction, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.payment(bid, b, True)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 
@@ -68,7 +68,7 @@ async def reverse(bid: UUID, b: PaymentAction, s: Annotated[FinalFinanceService,
 async def match(sid: UUID, b: MatchAction, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.match(sid, b.item_ids, b.target_reference)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 
@@ -76,7 +76,7 @@ async def match(sid: UUID, b: MatchAction, s: Annotated[FinalFinanceService, Dep
 async def unmatch(sid: UUID, b: MatchAction, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.match(sid, b.item_ids, b.target_reference, True)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 
@@ -84,7 +84,7 @@ async def unmatch(sid: UUID, b: MatchAction, s: Annotated[FinalFinanceService, D
 async def asset(asset_id: UUID, b: AssetPosting, s: Annotated[FinalFinanceService, Depends(svc)]):
     try:
         return await s.asset_post(asset_id, b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise wrap(e) from e
 
 

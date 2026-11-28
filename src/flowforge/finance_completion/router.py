@@ -43,7 +43,7 @@ async def allocation(b: AllocationCreate, s: Annotated[CompletionService, Depend
 async def recurring(rid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.execute_recurring(rid, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise err(e) from e
 
 
@@ -51,7 +51,7 @@ async def recurring(rid: UUID, b: ExecuteRequest, s: Annotated[CompletionService
 async def close(cid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.close_period(cid, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise err(e) from e
 
 
@@ -59,7 +59,7 @@ async def close(cid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, De
 async def reopen(cid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.reopen_period(cid, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise err(e) from e
 
 
@@ -77,7 +77,7 @@ async def payment_item(
 async def release(bid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.release_batch(bid, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise err(e) from e
 
 
@@ -95,7 +95,7 @@ async def recon_item(
 async def certify(sid: UUID, b: ExecuteRequest, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.certify_reconciliation(sid, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise err(e) from e
 
 

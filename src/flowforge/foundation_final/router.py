@@ -90,7 +90,7 @@ async def sod(b: SodCreate, s: Annotated[FinalFoundationService, Depends(svc)]):
 async def review(id: UUID, b: Decision, s: Annotated[FinalFoundationService, Depends(svc)]):
     try:
         return await s.decide(AccessReview, id, b.decision, b.reason)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -130,5 +130,5 @@ async def reparent(
 ):
     try:
         return await s.hierarchy_reparent(unit_id, parent_id)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e

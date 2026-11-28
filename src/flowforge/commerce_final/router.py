@@ -34,7 +34,7 @@ async def req(b: RequisitionCreate, s: Annotated[CommerceService, Depends(svc)])
 async def req_action(id: UUID, b: Action, s: Annotated[CommerceService, Depends(svc)]):
     try:
         return await s.requisition_action(id, b.target)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -47,7 +47,7 @@ async def transfer(b: TransferCreate, s: Annotated[CommerceService, Depends(svc)
 async def transfer_action(id: UUID, b: Action, s: Annotated[CommerceService, Depends(svc)]):
     try:
         return await s.transfer_action(id, b.target, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -70,7 +70,7 @@ async def ret(b: ReturnCreate, s: Annotated[CommerceService, Depends(svc)]):
 async def return_action(id: UUID, b: Action, s: Annotated[CommerceService, Depends(svc)]):
     try:
         return await s.return_action(id, b.target)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 

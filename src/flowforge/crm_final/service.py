@@ -7,6 +7,7 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.core.errors import AccessDenied
 from flowforge.crm_sales.models import (
     Activity,
     Campaign,
@@ -165,5 +166,5 @@ class CRMFinalService:
             )
         )
         if not row or row.revoked_at or row.expires_at <= datetime.now(UTC):
-            raise PermissionError("Portal token invalid or expired")
+            raise AccessDenied("Portal token invalid or expired")
         return {"party_id": str(row.party_id), "expires_at": row.expires_at}

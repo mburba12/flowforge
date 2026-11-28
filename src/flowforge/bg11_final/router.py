@@ -7,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
+from flowforge.core.serialize import orm_dict
 from flowforge.db.session import get_tenant_db
 
 from .models import ProviderConnection, ProviderOperation, WebhookReceipt
@@ -30,7 +31,8 @@ async def connection(b: ConnectionCreate, p: P, db: D) -> Any:
     )
     db.add(x)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)
 
 
 @router.post("/connections/{id}/status")
@@ -56,7 +58,8 @@ async def status(id: UUID, b: StatusAction, p: P, db: D) -> Any:
     if b.target == "production_approved":
         x.mode = "production"
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)
 
 
 @router.post("/operations", status_code=201)
@@ -80,7 +83,8 @@ async def operation(b: OperationCreate, p: P, db: D) -> Any:
     )
     db.add(x)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)
 
 
 @router.post("/webhooks", status_code=201)
@@ -96,4 +100,5 @@ async def webhook(b: WebhookCreate, p: P, db: D) -> Any:
     )
     db.add(x)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)

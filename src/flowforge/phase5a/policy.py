@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from flowforge.core.errors import AccessDenied
+
 
 @dataclass(frozen=True, slots=True)
 class ProductAccess:
@@ -9,9 +11,9 @@ class ProductAccess:
 
 def authorize(access: ProductAccess, permission: str, module: str) -> None:
     if permission not in access.permissions:
-        raise PermissionError(f"Missing permission: {permission}")
+        raise AccessDenied(f"Missing permission: {permission}")
     if module not in access.entitlements:
-        raise PermissionError(f"Module not entitled: {module}")
+        raise AccessDenied(f"Module not entitled: {module}")
 
 
 def safe_telemetry_dimensions(values: dict[str, object]) -> dict[str, object]:

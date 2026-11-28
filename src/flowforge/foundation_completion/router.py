@@ -31,7 +31,7 @@ async def entitlement(b: EntitlementCreate, s: Annotated[FoundationService, Depe
 async def disable(eid: UUID, s: Annotated[FoundationService, Depends(svc)]):
     try:
         return await s.disable(eid)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise HTTPException(409, str(e)) from e
 
 

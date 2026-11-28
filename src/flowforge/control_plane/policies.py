@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from uuid import UUID
 
+from flowforge.core.errors import RuleViolation
+
 
 @dataclass(frozen=True, slots=True)
 class CommandContext:
@@ -21,11 +23,11 @@ class ProviderWritePolicy:
 
     def assert_allowed(self, *, sandbox: bool, approved: bool) -> None:
         if not self.enabled:
-            raise PermissionError("Provider writes are disabled")
+            raise RuleViolation("Provider writes are disabled")
         if self.sandbox_only and not sandbox:
-            raise PermissionError("Production provider writes are disabled")
+            raise RuleViolation("Production provider writes are disabled")
         if self.approval_required and not approved:
-            raise PermissionError("Provider write approval is required")
+            raise RuleViolation("Provider write approval is required")
 
 
 def new_context(tenant_id: UUID, actor_user_id: UUID, idempotency_key: str) -> CommandContext:

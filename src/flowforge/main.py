@@ -7,6 +7,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import DBAPIError, IntegrityError
 
+import flowforge.core.errors  # noqa: F401 - registers rule violations
 from flowforge.api.router import api_router, extended_router
 from flowforge.integration.router import router as phase1_router
 from flowforge.phase2a.router import router as phase2a_router
@@ -127,7 +128,7 @@ async def data_error_handler(_: Request, exc: DBAPIError) -> JSONResponse:
 async def domain_error_handler(_: Request, exc: Exception) -> JSONResponse:
     # Business-rule errors defined by FlowForge modules are client-correctable conflicts.
     name = type(exc).__name__
-    status = 404 if "NotFound" in name else 409
+    status = getattr(exc, "status_code", None) or (404 if "NotFound" in name else 409)
     return JSONResponse(status_code=status, content={"detail": str(exc)})
 
 

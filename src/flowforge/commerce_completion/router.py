@@ -29,7 +29,7 @@ def fail(e) -> Any:
 async def convert(id: UUID, b: ConvertPO, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.requisition_to_po(id, b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -37,7 +37,7 @@ async def convert(id: UUID, b: ConvertPO, s: Annotated[CompletionService, Depend
 async def reserve(b: Reserve, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.reserve(b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -45,7 +45,7 @@ async def reserve(b: Reserve, s: Annotated[CompletionService, Depends(svc)]):
 async def count(id: UUID, b: Idem, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.approve_count(id, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -53,7 +53,7 @@ async def count(id: UUID, b: Idem, s: Annotated[CompletionService, Depends(svc)]
 async def fulfill(b: Fulfill, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.fulfill(b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -61,7 +61,7 @@ async def fulfill(b: Fulfill, s: Annotated[CompletionService, Depends(svc)]):
 async def receive(id: UUID, b: ReturnReceive, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.receive_return(id, b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -87,7 +87,7 @@ async def manifest(b: ManifestCreate, s: Annotated[CompletionService, Depends(sv
 async def claim(id: UUID, b: ClaimAction, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.claim_action(id, b.target)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 

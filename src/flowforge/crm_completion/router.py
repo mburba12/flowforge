@@ -45,7 +45,7 @@ async def price_item(
 async def pricing(b: PriceRequest, s: Annotated[CRMCompletionService, Depends(svc)]):
     try:
         return await s.price(b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -65,7 +65,7 @@ async def member(
 async def revise(id: UUID, b: QuoteRevise, s: Annotated[CRMCompletionService, Depends(svc)]):
     try:
         return await s.revise_quote(id, b.reason, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -73,7 +73,7 @@ async def revise(id: UUID, b: QuoteRevise, s: Annotated[CRMCompletionService, De
 async def credit(party_id: UUID, s: Annotated[CRMCompletionService, Depends(svc)]):
     try:
         return await s.recompute_credit(party_id)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 

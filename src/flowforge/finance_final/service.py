@@ -16,6 +16,7 @@ from flowforge.finance_completion.models import (
 )
 from flowforge.phase1a.tenancy import TenantContext
 from flowforge.phase2b.models import Account, AccountBalance, JournalEntry, JournalLine
+from flowforge.platform.numbering import next_number
 from flowforge.platform.services import record_change
 
 
@@ -53,6 +54,8 @@ class FinalFinanceService:
             raise ValueError("Generated journal is not balanced")
         j = JournalEntry(
             tenant_id=self.ctx.tenant_id,
+            # Generated journals take the next number in the tenant's journal sequence.
+            journal_number=await next_number(self.db, self.ctx.tenant_id, "journal"),
             ledger_id=ledger_id,
             period_id=period_id,
             journal_date=journal_date,

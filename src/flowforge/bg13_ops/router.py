@@ -8,6 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
+from flowforge.core.serialize import orm_dict
 from flowforge.db.session import get_tenant_db
 
 from .models import OperationalRun
@@ -28,7 +29,8 @@ async def create(b: RunCreate, p: P, db: D) -> Any:
     )
     db.add(x)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)
 
 
 @router.post("/runs/{id}/complete")
@@ -44,4 +46,5 @@ async def complete(id: UUID, b: RunComplete, p: P, db: D) -> Any:
     x.result_json = json.dumps(b.result)
     x.completed_at = datetime.now(UTC)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)

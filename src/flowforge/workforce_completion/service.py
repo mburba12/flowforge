@@ -35,8 +35,10 @@ class CompletionService:
             m.tenant_id == self.ctx.tenant_id,
             m.worker_id == worker,
             or_(m.effective_to.is_(None), m.effective_to >= start),
-            or_(end is None, m.effective_from <= end),  # type: ignore[arg-type]
         ]
+        # An open-ended new record (no end date) overlaps every later record too.
+        if end is not None:
+            cond.append(m.effective_from <= end)
         if exclude:
             cond.append(m.id != exclude)
         if await self.db.scalar(select(m.id).where(*cond)):

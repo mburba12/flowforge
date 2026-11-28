@@ -15,6 +15,7 @@ from flowforge.bg08_final.models import (
     ProjectTime,
     Subscription,
 )
+from flowforge.core.errors import RuleViolation
 from flowforge.finance_final.service import FinalFinanceService
 from flowforge.phase1a.tenancy import TenantContext
 from flowforge.platform.services import record_change
@@ -104,9 +105,9 @@ class CompletionService:
             .with_for_update()
         )
         if not e:
-            raise PermissionError("Entitlement unavailable")
+            raise RuleViolation("Entitlement unavailable")
         if e.limit_value is not None and e.consumed_value + consume > e.limit_value:
-            raise PermissionError("Entitlement limit exceeded")
+            raise RuleViolation("Entitlement limit exceeded")
         e.consumed_value += consume
         await self.db.commit()
         return e

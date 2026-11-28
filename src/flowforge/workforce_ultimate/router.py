@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
+from flowforge.core.serialize import orm_dict
 from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
@@ -47,7 +48,7 @@ async def feedback(id: UUID, b: InterviewFeedback, s: Annotated[UltimateService,
     x.scorecard_json = json.dumps({"scores": b.scores, "notes": b.notes})
     x.status = "completed"
     await s.db.commit()
-    return x
+    return orm_dict(x)
 
 
 @router.post("/onboarding-templates", status_code=201)

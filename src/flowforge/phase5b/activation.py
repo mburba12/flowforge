@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from decimal import Decimal
 from enum import IntEnum, StrEnum
 
+from flowforge.core.errors import RuleViolation
+
 
 class ActivationLevel(IntEnum):
     DISABLED = 0
@@ -41,20 +43,20 @@ class ExecutionContext:
 
 def authorize(ctx: ExecutionContext, required: ActivationLevel) -> None:
     if ctx.incident_locked:
-        raise PermissionError("Tenant is incident locked")
+        raise RuleViolation("Tenant is incident locked")
     if ctx.activation_level < required:
-        raise PermissionError("Activation level insufficient")
+        raise RuleViolation("Activation level insufficient")
     if not ctx.idempotency_key:
         raise ValueError("Idempotency key is required")
     if not ctx.simulation_passed:
-        raise PermissionError("Simulation must pass")
+        raise RuleViolation("Simulation must pass")
     if ctx.amount > ctx.transaction_limit:
-        raise PermissionError("Transaction limit exceeded")
+        raise RuleViolation("Transaction limit exceeded")
     if required == ActivationLevel.HIGH_RISK:
         independent = {user for user in ctx.approver_ids if user != ctx.creator_id}
         if len(independent) < 2:
-            raise PermissionError("Two independent approvers required")
+            raise RuleViolation("Two independent approvers required")
         if not ctx.trusted_beneficiary:
-            raise PermissionError("Trusted beneficiary required")
+            raise RuleViolation("Trusted beneficiary required")
         if not ctx.step_up_complete:
-            raise PermissionError("Step-up authentication required")
+            raise RuleViolation("Step-up authentication required")

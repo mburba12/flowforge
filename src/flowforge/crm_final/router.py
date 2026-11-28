@@ -39,7 +39,7 @@ async def opportunities(s: Annotated[CRMFinalService, Depends(svc)]):
 async def opp(id: UUID, b: OpportunityTransition, s: Annotated[CRMFinalService, Depends(svc)]):
     try:
         return await s.opportunity(id, b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise x(e) from e
 
 
@@ -52,7 +52,7 @@ async def activity(id: UUID, s: Annotated[CRMFinalService, Depends(svc)]):
 async def campaign(id: UUID, b: CampaignTransition, s: Annotated[CRMFinalService, Depends(svc)]):
     try:
         return await s.campaign(id, b.status)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise x(e) from e
 
 
@@ -65,7 +65,7 @@ async def quotes(s: Annotated[CRMFinalService, Depends(svc)]):
 async def convert(id: UUID, b: QuoteConvert, s: Annotated[CRMFinalService, Depends(svc)]):
     try:
         return await s.quote_to_order(id, b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise x(e) from e
 
 
@@ -73,7 +73,7 @@ async def convert(id: UUID, b: QuoteConvert, s: Annotated[CRMFinalService, Depen
 async def exposure(party_id: UUID, b: CreditExposure, s: Annotated[CRMFinalService, Depends(svc)]):
     try:
         return await s.exposure(party_id, b.delta, b.reason)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise x(e) from e
 
 

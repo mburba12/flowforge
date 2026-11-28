@@ -6,6 +6,7 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.core.errors import RuleViolation
 from flowforge.phase1a.tenancy import TenantContext
 from flowforge.platform.services import record_change
 
@@ -68,7 +69,7 @@ class FinanceAdvancedService:
         if v is None:
             raise LookupError("Budget version not found")
         if v.locked:
-            raise PermissionError("Budget version is locked")
+            raise RuleViolation("Budget version is locked")
         return await self.save(
             BudgetLine(tenant_id=self.ctx.tenant_id, version_id=version_id, **d.model_dump()),
             "budget_line",

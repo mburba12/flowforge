@@ -29,7 +29,7 @@ def fail(e) -> Any:
 async def assignment(b: AssignmentCreate, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.assignment(b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -37,7 +37,7 @@ async def assignment(b: AssignmentCreate, s: Annotated[CompletionService, Depend
 async def compensation(b: CompensationCreate, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.compensation(b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -63,7 +63,7 @@ async def time_action(id: UUID, b: Action, s: Annotated[CompletionService, Depen
             b.idempotency_key,
             {"draft": {"submitted"}, "submitted": {"approved", "rejected"}, "rejected": {"draft"}},
         )
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 

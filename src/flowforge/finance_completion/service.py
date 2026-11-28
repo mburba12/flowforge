@@ -8,6 +8,7 @@ from uuid import UUID
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.core.errors import RuleViolation
 from flowforge.finance_advanced.models import (
     CloseRun,
     PaymentBatch,
@@ -90,7 +91,7 @@ class CompletionService:
         if not c:
             raise LookupError("Close run not found")
         if c.created_by == self.ctx.user_id:
-            raise PermissionError("Creator cannot approve close run")
+            raise RuleViolation("Creator cannot approve close run")
         period = await self.db.scalar(
             select(AccountingPeriod).where(
                 AccountingPeriod.id == c.period_id, AccountingPeriod.tenant_id == self.ctx.tenant_id
@@ -146,7 +147,7 @@ class CompletionService:
         if not items or total != b.total_amount:
             raise ValueError("Payment batch items do not match header total")
         if b.approved_by is None:
-            raise PermissionError("Payment batch requires approval")
+            raise RuleViolation("Payment batch requires approval")
         for x in items:
             x.status = "simulated_paid"
             x.provider_reference = f"simulated-{x.id}"

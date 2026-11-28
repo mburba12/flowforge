@@ -35,7 +35,7 @@ async def lead(b: LeadCreate, s: Annotated[CRMService, Depends(svc)]):
 async def convert(id: UUID, s: Annotated[CRMService, Depends(svc)]):
     try:
         return await s.convert_lead(id)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise err(e) from e
 
 
@@ -63,7 +63,7 @@ async def quote(b: QuoteCreate, s: Annotated[CRMService, Depends(svc)]):
 async def quote_transition(id: UUID, b: Transition, s: Annotated[CRMService, Depends(svc)]):
     try:
         return await s.transition_quote(id, b.target, b.reason)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise err(e) from e
 
 

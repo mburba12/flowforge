@@ -36,7 +36,7 @@ async def adjustment(b: AdjustmentCreate, s: Annotated[PayrollTaxService, Depend
 async def adjustment_action(id: UUID, b: Action, s: Annotated[PayrollTaxService, Depends(svc)]):
     try:
         return await s.adjustment_action(id, b.target, b.idempotency_key)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 

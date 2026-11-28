@@ -29,7 +29,7 @@ def fail(e) -> Any:
 async def amend(id: UUID, b: AmendmentCreate, s: Annotated[CompletionService, Depends(svc)]):
     try:
         return await s.amend(id, b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -39,7 +39,7 @@ async def consume(
 ):
     try:
         return await s.enforce(id, code, quantity)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 

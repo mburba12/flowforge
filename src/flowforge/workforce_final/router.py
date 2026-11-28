@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
+from flowforge.core.serialize import orm_dict
 from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
@@ -34,7 +35,7 @@ async def position(b: PositionCreate, s: Annotated[WorkforceService, Depends(svc
 async def candidate(b: CandidateCreate, s: Annotated[WorkforceService, Depends(svc)]):
     try:
         return await s.candidate(b)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -47,7 +48,7 @@ async def application(b: ApplicationCreate, s: Annotated[WorkforceService, Depen
 async def app_action(id: UUID, b: StageAction, s: Annotated[WorkforceService, Depends(svc)]):
     try:
         return await s.application_action(id, b.target, b.reason)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -60,7 +61,7 @@ async def offer(b: OfferCreate, s: Annotated[WorkforceService, Depends(svc)]):
 async def offer_action(id: UUID, b: StageAction, s: Annotated[WorkforceService, Depends(svc)]):
     try:
         return await s.offer_action(id, b.target)
-    except Exception as e:
+    except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
@@ -87,7 +88,7 @@ async def progress(id: UUID, b: GoalProgress, s: Annotated[WorkforceService, Dep
     x.progress = b.progress
     x.status = "completed" if b.progress == 100 else "active"
     await s.db.commit()
-    return x
+    return orm_dict(x)
 
 
 @router.post("/courses", status_code=201)

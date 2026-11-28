@@ -8,6 +8,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
+from flowforge.core.serialize import orm_dict
 from flowforge.db.session import get_tenant_db
 
 from .models import CopilotProposal, InformationRecord
@@ -30,7 +31,8 @@ async def record(b: InfoCreate, p: P, db: D) -> Any:
     )
     db.add(x)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)
 
 
 @router.get("/search")
@@ -67,7 +69,8 @@ async def proposal(b: CopilotCreate, p: P, db: D) -> Any:
     )
     db.add(x)
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)
 
 
 @router.post("/copilot/proposals/{id}/action")
@@ -85,4 +88,5 @@ async def action(id: UUID, b: ProposalAction, p: P, db: D) -> Any:
     if b.target == "approved":
         x.approved_by = p.user_id
     await db.commit()
-    return x
+    await db.refresh(x)
+    return orm_dict(x)
