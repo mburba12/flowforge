@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import secrets
 from datetime import UTC, datetime, timedelta
+from decimal import Decimal
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,7 +19,6 @@ from flowforge.crm_sales.models import (
     QuoteLine,
 )
 from flowforge.phase1a.tenancy import TenantContext
-from flowforge.phase3b.models import SalesOrder, SalesOrderLine
 from flowforge.platform.services import record_change
 
 
@@ -82,32 +82,32 @@ class CRMFinalService:
         if q.converted_order_id:
             raise ValueError("Quote already converted")
         lines = await self.list_quote_lines(q.id)
-        o = SalesOrder(
-            tenant_id=self.ctx.tenant_id,
-            order_number=f"SO-{q.quote_number}",
-            customer_id=b.customer_id,
-            ledger_id=b.ledger_id,
-            period_id=b.period_id,
-            order_date=b.order_date,
-            status="draft",
-            total_amount=q.total,
-            created_by=self.ctx.user_id,
-        )
-        self.db.add(o)
-        await self.db.flush()
-        for quote_line in lines:
-            if quote_line.product_id is None:
-                raise ValueError("All converted quote lines require product_id")
-            self.db.add(
-                SalesOrderLine(
-                    tenant_id=self.ctx.tenant_id,
-                    order_id=o.id,
-                    product_id=quote_line.product_id,
-                    quantity=quote_line.quantity,
-                    unit_price=quote_line.unit_price,
-                    line_total=quote_line.line_total,
-                )
+        if not lines or any(line.product_id is None for line in lines):
+            raise ValueError("All converted quote lines require product_id")
+        # The release order service numbers the order, applies the customer's credit
+        # limit (approved or credit_hold) and records the status history.
+        from flowforge.phase3b.schemas import OrderCreate, OrderLineCreate
+        from flowforge.phase3b.service import CommerceService
+
+        o = await CommerceService(self.db, self.ctx.tenant_id, self.ctx.user_id).order(
+            OrderCreate(
+                customer_id=b.customer_id,
+                ledger_id=b.ledger_id,
+                period_id=b.period_id,
+                order_date=b.order_date,
+                lines=[
+                    OrderLineCreate(
+                        product_id=line.product_id,
+                        quantity=line.quantity,
+                        # Effective price after the quote's discount.
+                        unit_price=(Decimal(line.line_total) / Decimal(line.quantity)).quantize(
+                            Decimal("0.01")
+                        ),
+                    )
+                    for line in lines
+                ],
             )
+        )
         q.status = "converted"
         q.converted_order_id = o.id
         await record_change(

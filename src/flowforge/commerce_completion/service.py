@@ -27,6 +27,7 @@ from flowforge.phase3b.models import (
     SalesOrderLine,
     Shipment,
 )
+from flowforge.platform.numbering import next_number
 from flowforge.platform.services import record_change
 
 from .models import CommerceEvent
@@ -106,9 +107,10 @@ class CompletionService:
         )
         po = PurchaseOrder(
             tenant_id=self.ctx.tenant_id,
-            po_number=f"PO-{r.number}",
+            po_number=await next_number(self.db, self.ctx.tenant_id, "purchase_order"),
             vendor_id=b.vendor_id,
             currency_code=b.currency_code,
+            order_date=b.order_date,
             status="draft",
             created_by=self.ctx.user_id,
             total_amount=r.total_amount,
@@ -124,7 +126,7 @@ class CompletionService:
                     description=line.description,
                     quantity=line.quantity,
                     unit_price=line.unit_price,
-                    expense_account_id=None,
+                    expense_account_id=b.expense_account_id,
                     received_quantity=0,
                     invoiced_quantity=0,
                 )

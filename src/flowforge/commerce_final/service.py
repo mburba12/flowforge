@@ -11,6 +11,7 @@ from flowforge.phase1a.tenancy import TenantContext
 from flowforge.phase3b.models import (
     InventoryBalance,
     InventoryMovement,
+    WarehouseLocation,
 )
 from flowforge.platform.services import record_change
 
@@ -91,6 +92,7 @@ class CommerceService:
             await self._move(x.product_id, x.target_warehouse_id, x.quantity, key + "-in")
         x.status = target
         await self.db.commit()
+        await self.db.refresh(x)
         return x
 
     async def _move(self, pid, wid, qty, key):
@@ -103,6 +105,30 @@ class CommerceService:
             )
             .with_for_update()
         )
+        if not bal and qty > 0:
+            # First stock in this warehouse: open a balance at its first location.
+            location = await self.db.scalar(
+                select(WarehouseLocation.id)
+                .where(
+                    WarehouseLocation.tenant_id == self.ctx.tenant_id,
+                    WarehouseLocation.warehouse_id == wid,
+                )
+                .order_by(WarehouseLocation.code)
+                .limit(1)
+            )
+            if location is None:
+                raise ValueError("The target warehouse has no location to receive stock")
+            bal = InventoryBalance(
+                tenant_id=self.ctx.tenant_id,
+                product_id=pid,
+                warehouse_id=wid,
+                location_id=location,
+                on_hand=0,
+                reserved=0,
+                allocated=0,
+            )
+            self.db.add(bal)
+            await self.db.flush()
         if not bal:
             raise LookupError("Inventory balance not found")
         if bal.on_hand + qty < 0:
@@ -162,6 +188,7 @@ class CommerceService:
         if target == "received":
             x.received_at = datetime.now(UTC)
         await self.db.commit()
+        await self.db.refresh(x)
         return x
 
     async def label(self, b):

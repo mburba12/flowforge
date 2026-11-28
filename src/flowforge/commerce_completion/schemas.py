@@ -1,3 +1,4 @@
+from datetime import date
 from decimal import Decimal
 from uuid import UUID
 
@@ -11,6 +12,9 @@ class Idem(BaseModel):
 class ConvertPO(Idem):
     vendor_id: UUID
     currency_code: str = Field(min_length=3, max_length=3)
+    # Purchase order lines post to an expense account when invoiced.
+    expense_account_id: UUID
+    order_date: date = Field(default_factory=date.today)
 
 
 class Reserve(Idem):

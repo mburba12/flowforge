@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.core.security import Principal, current_principal
+from flowforge.core.serialize import orm_dict
 from flowforge.db.session import get_tenant_db
 from flowforge.phase1a.tenancy import TenantContext
 
@@ -27,61 +28,63 @@ def fail(e) -> Any:
 
 @router.post("/requisitions", status_code=201)
 async def req(b: RequisitionCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.requisition(b)
+    return orm_dict(await s.requisition(b))
 
 
 @router.post("/requisitions/{id}/action")
 async def req_action(id: UUID, b: Action, s: Annotated[CommerceService, Depends(svc)]):
     try:
-        return await s.requisition_action(id, b.target)
+        return orm_dict(await s.requisition_action(id, b.target))
     except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
 @router.post("/transfers", status_code=201)
 async def transfer(b: TransferCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.transfer(b)
+    return orm_dict(await s.transfer(b))
 
 
 @router.post("/transfers/{id}/action")
 async def transfer_action(id: UUID, b: Action, s: Annotated[CommerceService, Depends(svc)]):
     try:
-        return await s.transfer_action(id, b.target, b.idempotency_key)
+        return orm_dict(await s.transfer_action(id, b.target, b.idempotency_key))
     except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
 @router.post("/counts", status_code=201)
 async def count(b: CountCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.count(b)
+    return orm_dict(await s.count(b))
 
 
 @router.post("/counts/{id}/lines", status_code=201)
 async def count_line(id: UUID, b: CountLineCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.count_line(id, b)
+    return orm_dict(await s.count_line(id, b))
 
 
 @router.post("/returns", status_code=201)
 async def ret(b: ReturnCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.return_create(b)
+    return orm_dict(await s.return_create(b))
 
 
 @router.post("/returns/{id}/action")
 async def return_action(id: UUID, b: Action, s: Annotated[CommerceService, Depends(svc)]):
     try:
-        return await s.return_action(id, b.target)
+        return orm_dict(await s.return_action(id, b.target))
     except (LookupError, ValueError) as e:
         raise fail(e) from e
 
 
 @router.post("/shipping/rates", status_code=201)
 async def rate(b: RateCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.save(ShippingRate(tenant_id=s.ctx.tenant_id, **b.model_dump()), "shipping_rate")
+    return orm_dict(
+        await s.save(ShippingRate(tenant_id=s.ctx.tenant_id, **b.model_dump()), "shipping_rate")
+    )
 
 
 @router.post("/shipping/labels", status_code=201)
 async def label(b: LabelCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.label(b)
+    return orm_dict(await s.label(b))
 
 
 @router.post("/shipping/tracking-events", status_code=201)
@@ -93,14 +96,14 @@ async def tracking(b: TrackingCreate, s: Annotated[CommerceService, Depends(svc)
 
 @router.post("/shipping/claims", status_code=201)
 async def claim(b: ClaimCreate, s: Annotated[CommerceService, Depends(svc)]):
-    return await s.claim(b)
+    return orm_dict(await s.claim(b))
 
 
 @router.get("/inventory/lots")
 async def lots(s: Annotated[CommerceService, Depends(svc)]):
-    return await s.list(InventoryLot)
+    return orm_dict(await s.list(InventoryLot))
 
 
 @router.get("/inventory/serials")
 async def serials(s: Annotated[CommerceService, Depends(svc)]):
-    return await s.list(InventorySerial)
+    return orm_dict(await s.list(InventorySerial))
