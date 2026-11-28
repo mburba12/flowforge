@@ -65,11 +65,12 @@ class FinalFinanceService:
         )
         self.db.add(j)
         await self.db.flush()
-        for account_id, d, c in lines:
+        for line_number, (account_id, d, c) in enumerate(lines, start=1):
             self.db.add(
                 JournalLine(
                     tenant_id=self.ctx.tenant_id,
                     journal_id=j.id,
+                    line_number=line_number,
                     account_id=account_id,
                     debit=d,
                     credit=c,

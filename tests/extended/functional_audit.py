@@ -42,7 +42,9 @@ async def _integrity_detail(_: Any, exc: IntegrityError) -> JSONResponse:
 app.add_exception_handler(IntegrityError, _integrity_detail)  # type: ignore[arg-type]
 
 REPORT = ROOT / "var" / "functional-audit.json"
-PASSES = 12
+PASSES = 16
+DECISION_FIELDS = {"target", "stage", "status", "action", "decision", "to_status"}
+SECOND_ACTOR = re.compile(r"creator|own |cannot approve|independent|another user|different user|segregation", re.I)
 
 
 KNOWN: dict[str, Any] = {}  # field name -> value, filled from the live API before the passes
@@ -55,6 +57,7 @@ class Builder:
         self.ids = ids
         self.n = n
         self.path = path
+        self.used: set[str] = set()
 
     def known(self, name: str) -> Any:
         segment = next((s for s in ("commerce", "logistics", "finance", "workforce", "engagement", "payments")
@@ -86,28 +89,37 @@ class Builder:
             schema = self.components[schema["$ref"].split("/")[-1]]
         return schema
 
+    def _pick(self, values: list[str]) -> str:
+        for v in values:
+            if v not in self.used:
+                self.used.add(v)
+                return v
+        return values[0]
+
+    def _table_for(self, stem: str) -> str | None:
+        singular = stem.removesuffix("s")
+        words = set(re.split(r"[/_{}-]+", self.path))
+        scored = []
+        for table in self.ids:
+            norm = table.removesuffix("_final")
+            if norm in (stem, singular) or norm.endswith(("_" + stem, "_" + singular, stem + "s")):
+                shared = len(words & set(table.split("_")))
+                scored.append((-shared, len(table), table))
+        return min(scored)[2] if scored else None
+
     def id_for(self, name: str, hint: str = "") -> str:
-        """An existing id whose table matches the field name or the path segment."""
+        """An existing id: by the URL segment for path ids, else by foreign key or name."""
+        if hint:
+            table = self._table_for(hint.replace("-", "_"))
+            if table:
+                return self._pick(self.ids[table])
         target = FK.get(name)
         if target and self.ids.get(target):
-            return self.ids[target][-1]
-        stems = []
+            return self._pick(self.ids[target])
         if name not in {"id", "record_id"}:
-            stems.append(name.removesuffix("_ids").removesuffix("_id"))
-        if hint:
-            stems.append(hint.replace("-", "_"))
-        for stem in stems:
-            singular = stem.removesuffix("s")
-            best = [
-                t
-                for t in self.ids
-                if t == stem or t == singular or t.endswith("_" + stem) or t.endswith("_" + singular)
-                or t.endswith(stem + "s") or t.endswith(singular + "s")
-            ]
-            if best:
-                best.sort(key=len)
-                values = self.ids[best[0]]
-                return values[-1]
+            table = self._table_for(name.removesuffix("_ids").removesuffix("_id"))
+            if table:
+                return self._pick(self.ids[table])
         return str(uuid4())
 
     def value(self, schema: dict[str, Any], name: str = "", depth: int = 0, hint: str = "") -> Any:
@@ -124,13 +136,15 @@ class Builder:
         if hint_value is not None:
             return hint_value
         if "enum" in schema:
-            return schema["enum"][0]
+            options = schema["enum"]
+            return options[self.n % len(options)] if name in DECISION_FIELDS else options[0]
         if "const" in schema:
             return schema["const"]
         pattern = schema.get("pattern", "")
         m = re.fullmatch(r"\^\(([\w|-]+)\)\$", pattern)
         if m:
-            return m.group(1).split("|")[0]
+            options = m.group(1).split("|")
+            return options[self.n % len(options)] if name in DECISION_FIELDS else options[0]
         if "default" in schema and schema["default"] is not None:
             return schema["default"]
         kind = schema.get("type")
@@ -191,6 +205,9 @@ class Builder:
             return "US"
         if re.search(r"(^|_)(url|uri)$|endpoint", name):
             return "https://example.com/hook"
+        if name in DECISION_FIELDS:
+            states = ["submitted", "approved", "active", "released", "posted", "completed", "closed", "won", "paid"]
+            return states[self.n % len(states)]
         min_len = max(int(schema.get("minLength", 1)), 1)
         max_len = int(schema.get("maxLength", 40))
         base = f"A{self.n}{uuid4().hex[:6]}-{name or 'v'}"
@@ -278,6 +295,10 @@ async def main() -> None:
             headers = {"Authorization": f"Bearer {created.json()['access_token']}"}
             tenant_id = str((await client.get("/api/v1/me", headers=headers)).json()["tenant_id"])
             ops = operations(spec)
+            second_email, second_password = f"manager-{slug}@example.com", f"Audit-{uuid4().hex}"
+            await client.post("/api/v1/users", headers=headers, json={"email": second_email, "display_name": "Audit Manager", "password": second_password, "roles": ["Manager"]})
+            login = await client.post("/api/v1/auth/login", json={"email": second_email, "password": second_password, "tenant_slug": slug})
+            manager = {"Authorization": f"Bearer {login.json()['access_token']}"}
             await load_foreign_keys()
             print('foreign-key columns mapped:', len(FK))
             for seg in ("commerce", "logistics", "finance", "workforce", "engagement"):
@@ -316,6 +337,9 @@ async def main() -> None:
                     try:
                         r = await client.request(method, url, params=params, json=body, headers=headers)
                         status, detail = r.status_code, r.text[:400]
+                        if status in (403, 409) and SECOND_ACTOR.search(detail):
+                            r = await client.request(method, url, params=params, json=body, headers=manager)
+                            status, detail = r.status_code, r.text[:400]
                     except Exception as exc:  # noqa: BLE001
                         status, detail = 599, f"{type(exc).__name__}: {exc}"[:400]
                     entry = results.setdefault(key, {"tags": op.get("tags", []), "ok": False})

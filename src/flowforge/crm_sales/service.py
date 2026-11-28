@@ -6,8 +6,11 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.phase1a.tenancy import TenantContext
-from flowforge.phase2a.models import Organization, Party, PartyRoleAssignment
+from flowforge.phase2a.enums import PartyKind
+from flowforge.phase2a.models import Organization, Party, PartyRoleAssignment, Person
+from flowforge.phase2a.normalization import normalize_name
 from flowforge.phase3b.models import SalesOrder
+from flowforge.platform.numbering import next_number
 from flowforge.platform.services import record_change
 
 from .models import *  # noqa: F403, F405
@@ -103,11 +106,15 @@ class CRMService:
         )
         if not lead or lead.status == "converted":
             raise ValueError("Lead unavailable for conversion")
+        # The customer becomes a master-data party: an organization when the lead names a
+        # company, otherwise a person; numbered from the tenant's party sequence.
+        name = lead.company_name or lead.contact_name
         p = Party(
             tenant_id=self.ctx.tenant_id,
-            party_number=f"CUST-{lead.lead_number}",
-            party_type="organization" if lead.company_name else "person",
-            display_name=lead.company_name or lead.contact_name,
+            party_number=await next_number(self.db, self.ctx.tenant_id, "party"),
+            kind=PartyKind.ORGANIZATION if lead.company_name else PartyKind.PERSON,
+            display_name=name,
+            normalized_name=normalize_name(name),
             status="active",
         )
         self.db.add(p)
@@ -116,6 +123,16 @@ class CRMService:
             self.db.add(
                 Organization(
                     tenant_id=self.ctx.tenant_id, party_id=p.id, legal_name=lead.company_name
+                )
+            )
+        else:
+            given, _, family = lead.contact_name.strip().partition(" ")
+            self.db.add(
+                Person(
+                    tenant_id=self.ctx.tenant_id,
+                    party_id=p.id,
+                    given_name=given or lead.contact_name,
+                    family_name=family or given or lead.contact_name,
                 )
             )
         self.db.add(
