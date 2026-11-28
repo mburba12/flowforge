@@ -56,6 +56,9 @@ def _links(outbox: Path, kind: str) -> list[str]:
 def test_values_and_files_are_sealed_and_keys_rotate(
     monkeypatch: pytest.MonkeyPatch, new_key: str
 ) -> None:
+    # Start from the legacy setup (no dedicated key), whatever the environment has.
+    monkeypatch.setattr(settings, "credentials_key", "")
+    monkeypatch.setattr(settings, "credentials_key_previous", "")
     crypto.reset_keys()
     legacy_text = crypto.encrypt("acct-123456789", "ctx")  # sealed with the JWT-derived key
     legacy_file = crypto.encrypt_bytes(PDF, "file")
