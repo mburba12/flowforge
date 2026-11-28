@@ -1,0 +1,4146 @@
+{
+  "version": 1,
+  "mappings": [
+    {
+      "requirement_id": "FF-PLT-00001",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00002",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00003",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00004",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00005",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00006",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Remaining-Phase4-Build.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-Phase2-Final-Integration.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/acceptance/test_workflow_parallelism.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/acceptance/test_workflow_escalation.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/acceptance/test_webhook_signatures.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/acceptance/test_token_revocation.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/acceptance/test_tenant_isolation_matrix.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/acceptance/test_security_headers.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/acceptance/test_search_tenant_filter.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/acceptance/test_rate_limiting.py",
+          "kind": "test",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00007",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4a_stage2/routes.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4a/routes.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00008",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/workforce/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/support/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/shipping/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/onboarding/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/integrations/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/finance/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/entities/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00009",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Complete-API-Package.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Complete-API-Package-V2.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "migrations/versions/ff_all_apis_delta_001_complete_platform_schema.py",
+          "kind": "migration",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00010",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Dashboard-Buttons.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00011",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00001",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 5
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/Invoke-FlowForgeBG00.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Inventory-History-V2.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Complete-API-Package.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00012",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Problem-Submission.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-AI-Only.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Topbar-Controls.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00013",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-FlowForge-Problem-Submission.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-FlowForge-AI-Only.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/components/global-search.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00003",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/global-search.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/entities/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/audit/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/Invoke-Repair-BG00Authority.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Package-FlowForge-For-Complete-Build.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00014",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "src/flowforge/api/routes/platform.py",
+          "kind": "backend",
+          "score": 3
+        },
+        {
+          "path": "src/flowforge/api/routes/auth.py",
+          "kind": "backend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00004",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/entities/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-Phase2A.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "migrations/versions/ff_all_apis_delta_001_complete_platform_schema.py",
+          "kind": "migration",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-FIN-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/finance/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-FIN-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/finance/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PRT-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 7
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/lib/demo-data.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/global-search.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/dashboard/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-COM-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "web/src/lib/demo-data.ts",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "web/src/components/global-search.tsx",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/lib/navigation.ts",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/lib/modules.ts",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/app-icon.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/AppShell.tsx",
+          "kind": "frontend",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-WFM-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/workforce/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/integrations/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c_stage6/catalog.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-INT-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 5
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/shipping/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/billing/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "tests/phase4b_stage2/test_openapi.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c_stage6/service.py",
+          "kind": "backend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLM-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Accurate-Icons.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Settings-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Topbar-Controls.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PRT-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Remaining-Phase4-Build.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Complete-Remaining-Phase4.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-INT-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/integrations/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "tests/phase5b/test_activation.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase4c_stage7/test_provider.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase4c_stage6/test_provider.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase5b/router.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase5b/activation.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4i/activation.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c_stage7/service.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c_stage7/providers.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c_stage7/models.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c_stage6/service.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c_stage6/providers.py",
+          "kind": "backend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00015",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Complete-API-Package.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Complete-API-Package-V2.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SEC-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/api/routes/auth.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Settings-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Topbar-Controls.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Editable-Security-and-Adaptive-Chart.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00005",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00006",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "tests/requirements/test_refinement.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/requirements/test_authoritative_registry.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/validate_bg00_authority.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/finalize_review.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/README.md",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/documents/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/copilot/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "tests/requirements/test_registry.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/validate_registry.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00007",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "tests/test_phase1_contract.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/test_openapi.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase5b/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase5a/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4j/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4i/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4h/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4g/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4f/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4e/test_models.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4d/test_openapi.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase4d/test_models.py",
+          "kind": "test",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00008",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/validate_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/entities/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/audit/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "tests/requirements/test_registry.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/security_hardening/rls.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/build_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/Invoke-Repair-BG00Authority.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00009",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Accurate-Icons.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-AI-Only.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Dashboard-Buttons.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Topbar-Controls.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00010",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Install-FlowForge-Inventory-History-V2.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Editable-Security-and-Adaptive-Chart.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00011",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SUP-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/topbar.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/audit/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "tests/phase1/events/test_outbox.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase1a/outbox.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase1/notifications/events.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase1/events/webhooks.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase1/events/outbox.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Repair-Phase5B-Bicep.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00012",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 7
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/global-search.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/inventory/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/audit/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Inventory-History-V2.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-FIN-00003",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/finance/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase2B.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "migrations/versions/dee8fe877d63_complete_phase_2b_financial_foundation.py",
+          "kind": "migration",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-AST-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Workspace-Buttons.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Settings-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Dashboard-Buttons.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Clickable-Table-Rows.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-FIN-00004",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-INT-00003",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 8
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 8
+        },
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/inventory/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "tests/phase5b/test_activation.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase4c_stage7/test_provider.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase4c_stage6/test_provider.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/security_hardening/encryption.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/platform/schemas.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/platform/models.py",
+          "kind": "backend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLM-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SRC-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00016",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/documents/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Package-FlowForge-For-Complete-Build.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SEC-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Repair-Phase5B-Bicep.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-Student-Staging-Profile.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "infra/bicep/modules/network.bicep",
+          "kind": "infrastructure",
+          "score": 3
+        },
+        {
+          "path": "src/flowforge/phase4c_stage2/service.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4c/service.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "infra/bicep/modules/data.bicep",
+          "kind": "infrastructure",
+          "score": 2
+        },
+        {
+          "path": "infra/bicep/modules/apps.bicep",
+          "kind": "infrastructure",
+          "score": 2
+        },
+        {
+          "path": "infra/bicep/main.bicep",
+          "kind": "infrastructure",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SEC-00003",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/demo-data.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/inventory/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Inventory-History-V2.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SEC-00004",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-OPS-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00017",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Invoke-FlowForgeUnifiedBuild.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00018",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 5
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Settings-Actions.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Editable-Security-and-Adaptive-Chart.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/ModulePage.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "src/flowforge/api/routes/auth.py",
+          "kind": "backend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Accurate-Icons.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00019",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Run-Remaining-Phase4-Build.ps1",
+          "kind": "script",
+          "score": 7
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Run-Complete-Remaining-Phase4.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Invoke-FlowForgeUnifiedBuild.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Verify-Phase5B.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/Verify-Phase5A.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/Sanitize-FlowForge-Frontend-Encoding.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Clickable-Table-Rows.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-Phase2-Final-Integration.ps1",
+          "kind": "script",
+          "score": 4
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00013",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Settings-Actions.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-OPS-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Repair-Phase5B-Bicep.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-OPS-00003",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "tests/phase5b/test_secrets.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-OPS-00004",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "tests/phase5b/test_secrets.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/phase4h/test_controls.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase5b/secrets.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase4h/controls.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Repair-Phase5B-Bicep.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SEC-00005",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "src/flowforge/api/routes/auth.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SUP-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00020",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Problem-Submission.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SRC-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 10
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 6
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 5
+        },
+        {
+          "path": "web/src/components/topbar.tsx",
+          "kind": "frontend",
+          "score": 5
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 5
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Topbar-Controls.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 5
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00021",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-AI-Only.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/flowforge-ai.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/onboarding/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/billing/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Integrate-Phase3A.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Accurate-Icons.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Workspace-Buttons.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Dashboard-Buttons.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-INT-00004",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/platform/models.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "src/flowforge/phase1a/audit.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SUP-00003",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00022",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "src/flowforge/phase1/operations/disaster_recovery.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00023",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/Invoke-FlowForgeBG00Refinement.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Verify-Phase4D-Complete.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Verify-Phase1.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Test-FlowForgeUnifiedAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Remaining-Phase4-Build.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4C-Stage7-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4C-Stage6-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4C-Stage5-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4C-Stage4-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00024",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "src/flowforge/main.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "migrations/versions/ff_all_apis_delta_001_complete_platform_schema.py",
+          "kind": "migration",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00014",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-Phase2A.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Generate-FlowForge-One-Big-Migration.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "migrations/versions/ff_all_apis_delta_001_complete_platform_schema.py",
+          "kind": "migration",
+          "score": 3
+        },
+        {
+          "path": "migrations/versions/53b65dc8fd4e_complete_phase_2a_enterprise_master_data.py",
+          "kind": "migration",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-FIN-00005",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/finance/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Add-FlowForge-Example-Tax-Data.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-COM-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-WFM-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/lib/navigation.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/lib/modules.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/app-icon.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/AppShell.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/workforce/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-AST-00002",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/billing/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLM-00003",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-AIC-00001",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/documents/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Remaining-Phase4-Build.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Complete-Remaining-Phase4.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00025",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00026",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Upgrade-FlowForge-Cash-Flow-Chart.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/settings/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Remove-FlowForge-User-API-Docs-Link.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-Accurate-Icons.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-FlowForge-AI-Only.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00015",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "src/flowforge/phase4c/service.py",
+          "kind": "backend",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/Invoke-FlowForgeBG00.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00016",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/validate_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "tests/requirements/test_registry.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/requirements/test_refinement.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "tests/requirements/test_authoritative_registry.py",
+          "kind": "test",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/validate_bg00_authority.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/finalize_review.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/build_registry.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00017",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/refine_registry.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/Invoke-FlowForgeBG00.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00027",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Test-FlowForgeUnifiedAcceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Sanitize-FlowForge-Frontend-Encoding.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Invoke-FlowForgeUnifiedBuild.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Integrate-Phase3A.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-DAT-00018",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 6
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/app/documents/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/validate_bg00_authority.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Upgrade-FlowForge-Cash-Flow-Chart.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-AI-Only.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Clean-FlowForge-Payroll-Metrics.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/reports/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00028",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00029",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/workspace-page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/dashboard-actions.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/tax/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/support/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Remaining-Phase4-Build.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Complete-Remaining-Phase4.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Install-Phase4E-Through-4J-Safely.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-OPS-00005",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00030",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00031",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/lib/demo-data.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase2-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00032",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-COM-00003",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-WFM-00003",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-AST-00003",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-MFG-00001",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-AIC-00002",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00033",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-SEC-00006",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00034",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00035",
+      "status": "MISSING_FEATURE",
+      "candidate_artifacts": [],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00036",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 5
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 4
+        },
+        {
+          "path": "scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Install-FlowForge-AI-Only.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "web/src/components/global-search.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Make-FlowForge-Customer-Security-Honest.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Editable-Security-and-Adaptive-Chart.ps1",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-INT-00005",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/dashboard-actions.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/backend-feature-workspace.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "web/src/app/payroll/page.tsx",
+          "kind": "frontend",
+          "score": 3
+        },
+        {
+          "path": "src/flowforge/phase4c_stage2/service.py",
+          "kind": "backend",
+          "score": 3
+        },
+        {
+          "path": "src/flowforge/phase4c/service.py",
+          "kind": "backend",
+          "score": 3
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-All-Module-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Build-FlowForge-Backend-Connected-Frontends.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/components/workspace-page.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/data-table.tsx",
+          "kind": "frontend",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00037",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Install-FlowForge-Global-Search.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/generate_build_queue.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/extract_requirements.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/requirements/crosswalk_repository.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Verify-Phase5B.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Verify-Phase5A.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Sanitize-FlowForge-Frontend-Encoding.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-PLT-00038",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Fix-FlowForge-Workspace-Buttons.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "scripts/Enable-FlowForge-Website-Actions-Fixed.ps1",
+          "kind": "script",
+          "score": 3
+        },
+        {
+          "path": "web/src/lib/generated-api-catalog.ts",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "web/src/components/module-action-controller.tsx",
+          "kind": "frontend",
+          "score": 2
+        },
+        {
+          "path": "scripts/acceptance/Invoke-FlowForgeAcceptance.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Stop-FlowForgeLocal.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Start-FlowForgeLocal.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Run-Phase4-Comprehensive-Live-Test.ps1",
+          "kind": "script",
+          "score": 2
+        },
+        {
+          "path": "scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1",
+          "kind": "script",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "requirement_id": "FF-INT-00006",
+      "status": "PARTIAL",
+      "candidate_artifacts": [
+        {
+          "path": "scripts/Run-Phase1-Final-Acceptance.ps1",
+          "kind": "script",
+          "score": 4
+        },
+        {
+          "path": "tests/phase1/workflow/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/tenancy/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/search/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/notifications/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/integrations/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/identity/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/events/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/documents/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/authorization/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "tests/phase1/analytics/test_service.py",
+          "kind": "test",
+          "score": 3
+        },
+        {
+          "path": "scripts/requirements/rebuild_registry_from_blueprint.py",
+          "kind": "script",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    }
+  ]
+}

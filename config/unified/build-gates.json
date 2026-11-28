@@ -1,0 +1,7 @@
+{
+  "database": ["alembic-head", "upgrade", "disposable-downgrade", "forced-rls", "two-tenant"],
+  "backend": ["ruff", "format", "mypy", "compile", "pytest", "api-integration"],
+  "frontend": ["typecheck", "unit", "build", "playwright"],
+  "security": ["tenant-injection", "idor", "permission", "segregation-of-duties", "webhook-replay", "secret-redaction"],
+  "operations": ["backup", "restore", "rollback", "dead-letter", "provider-outage", "capacity"]
+}

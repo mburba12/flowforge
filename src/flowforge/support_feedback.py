@@ -1,15 +1,21 @@
 from __future__ import annotations
 
 import asyncio
+import json
+import logging
 import os
 import smtplib
 import ssl
+from datetime import UTC, datetime
 from email.message import EmailMessage
+from pathlib import Path
+from uuid import uuid4
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/api/v1/support", tags=["support"])
+logger = logging.getLogger("flowforge.support")
 
 _RECIPIENT = os.getenv("FLOWFORGE_SUPPORT_RECIPIENT", "mackburba12@outlook.com")
 
@@ -66,12 +72,33 @@ def _send(report: ProblemReport) -> None:
         client.send_message(message)
 
 
+def _spool(report: ProblemReport) -> str:
+    """Keep an undelivered report in the support outbox so it is never lost."""
+    outbox = Path(os.getenv("FLOWFORGE_SUPPORT_OUTBOX", "var/support-outbox"))
+    outbox.mkdir(parents=True, exist_ok=True)
+    reference = f"{datetime.now(UTC):%Y%m%dT%H%M%S}-{uuid4().hex[:8]}"
+    record = {
+        "reference": reference,
+        "received_at": datetime.now(UTC).isoformat(),
+        **report.model_dump(),
+    }
+    (outbox / f"{reference}.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
+    return reference
+
+
 @router.post("/problem-reports", status_code=202)
 async def submit_problem_report(report: ProblemReport) -> dict[str, str]:
     try:
         await asyncio.to_thread(_send, report)
     except (OSError, RuntimeError, smtplib.SMTPException) as exc:
-        raise HTTPException(
-            status_code=503, detail="Problem report delivery is unavailable"
-        ) from exc
+        # Delivery is unavailable (not configured or the mail server failed): queue it.
+        reference = await asyncio.to_thread(_spool, report)
+        logger.warning(
+            "Problem report %s queued; delivery failed: %s", reference, type(exc).__name__
+        )
+        return {
+            "status": "queued",
+            "reference": reference,
+            "message": "Thank you. Your report was saved and will be delivered to support.",
+        }
     return {"status": "accepted", "message": "Thank you for helping us improve the website."}

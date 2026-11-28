@@ -1,0 +1,4662 @@
+version: 1
+requirements:
+- id: FF-PLT-00001
+  title: This specification placeholder expands the FlowForge architecture across
+    entities, APIs, schemas,
+  requirement: This specification placeholder expands the FlowForge architecture across
+    entities, APIs, schemas,
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: This specification placeholder expands the FlowForge architecture
+      across entities, APIs, schemas,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 3
+  - path: scripts/Install-FlowForge-Complete-API-Package-V2.ps1
+    kind: script
+    score: 3
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Add-FlowForge-Example-Tax-Data.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/flowforge-ai.tsx
+    kind: frontend
+    score: 2
+- id: FF-PLT-00002
+  title: workflows, permissions, integrations and test catalogs
+  requirement: workflows, permissions, integrations and test catalogs
+  module: PLT
+  risk: low
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: workflows, permissions, integrations and test catalogs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00002
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 4
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/session.test.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: tests/test_phase1_contract.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_service.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_schemas.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_routes.py
+    kind: test
+    score: 2
+- id: FF-PLT-00003
+  title: A complete real implementation would
+  requirement: A complete real implementation would
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: A complete real implementation would
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00003
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Verify-Phase4D-Complete.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00004
+  title: require authoring each artifact in detail
+  requirement: require authoring each artifact in detail
+  module: PLT
+  risk: low
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: require authoring each artifact in detail.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00004
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00005
+  title: This specification placeholder expands the FlowForge
+  requirement: This specification placeholder expands the FlowForge
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: This specification placeholder expands the FlowForge
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00005
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/flowforge-ai.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/data-table.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-AI-Only.ps1
+    kind: script
+    score: 2
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Website-Actions-Fixed.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Clickable-Table-Rows.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00006
+  title: architecture across entities, APIs, schemas, workflows, permissions, integrations
+    and test catalogs
+  requirement: architecture across entities, APIs, schemas, workflows, permissions,
+    integrations and test catalogs
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: architecture across entities, APIs, schemas, workflows, permissions,
+      integrations and test catalogs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00006
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 4
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 4
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 4
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: tests/phase1/integrations/test_schemas.py
+    kind: test
+    score: 3
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 3
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 3
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 3
+- id: FF-PLT-00007
+  title: A complete real implementation would require authoring each artifact in detail
+  requirement: A complete real implementation would require authoring each artifact
+    in detail
+  module: PLT
+  risk: low
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: A complete real implementation would require authoring each artifact
+      in detail.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00007
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 3
+  - path: scripts/Verify-Phase4D-Complete.ps1
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation.py
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py
+    kind: script
+    score: 2
+- id: FF-PLT-00008
+  title: placeholder expands the FlowForge architecture across entities, APIs, schemas,
+    workflows,
+  requirement: placeholder expands the FlowForge architecture across entities, APIs,
+    schemas, workflows,
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: placeholder expands the FlowForge architecture across entities, APIs,
+      schemas, workflows,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00008
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/phase4d/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase4d/routes.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package-V2.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00009
+  title: permissions, integrations and test catalogs
+  requirement: permissions, integrations and test catalogs
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: permissions, integrations and test catalogs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00009
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/session.test.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: tests/phase1/integrations/test_service.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_schemas.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_routes.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_repository.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_models.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_credentials.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_connector.py
+    kind: test
+    score: 2
+  - path: src/flowforge/phase1/integrations/connection_test.py
+    kind: backend
+    score: 2
+- id: FF-PLT-00010
+  title: A complete real implementation would require
+  requirement: A complete real implementation would require
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: A complete real implementation would require
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00010
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Verify-Phase4D-Complete.ps1
+    kind: script
+    score: 2
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00011
+  title: authoring each artifact in detail
+  requirement: authoring each artifact in detail
+  module: PLT
+  risk: low
+  required_for: launch
+  status: MISSING_FEATURE
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: authoring each artifact in detail.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00011
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00012
+  title: This specification placeholder expands the FlowForge architecture
+  requirement: This specification placeholder expands the FlowForge architecture
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: This specification placeholder expands the FlowForge architecture
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00012
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/flowforge-ai.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/data-table.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package-V2.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-AI-Only.ps1
+    kind: script
+    score: 2
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00013
+  title: across entities, APIs, schemas, workflows, permissions, integrations and
+    test catalogs
+  requirement: across entities, APIs, schemas, workflows, permissions, integrations
+    and test catalogs
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: across entities, APIs, schemas, workflows, permissions, integrations
+      and test catalogs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00013
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 4
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 4
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 4
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: tests/phase1/integrations/test_schemas.py
+    kind: test
+    score: 3
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 3
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 3
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Install-FlowForge-Accurate-Icons.ps1
+    kind: script
+    score: 3
+- id: FF-PLT-00014
+  title: real implementation would require authoring each artifact in detail
+  requirement: real implementation would require authoring each artifact in detail
+  module: PLT
+  risk: low
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: real implementation would require authoring each artifact in detail.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00014
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00015
+  title: This specification placeholder
+  requirement: This specification placeholder
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: This specification placeholder
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00015
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/flowforge-ai.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/data-table.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-AI-Only.ps1
+    kind: script
+    score: 2
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Website-Actions-Fixed.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Clickable-Table-Rows.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00016
+  title: expands the FlowForge architecture across entities, APIs, schemas, workflows,
+    permissions,
+  requirement: expands the FlowForge architecture across entities, APIs, schemas,
+    workflows, permissions,
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: expands the FlowForge architecture across entities, APIs, schemas,
+      workflows, permissions,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00016
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/phase4d/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase4d/routes.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package-V2.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 2
+- id: FF-DAT-00001
+  title: integrations and test catalogs
+  requirement: integrations and test catalogs
+  module: DAT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: integrations and test catalogs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-DAT-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: tests/phase1/integrations/test_service.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_schemas.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_routes.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_repository.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_models.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_credentials.py
+    kind: test
+    score: 2
+  - path: tests/phase1/integrations/test_connector.py
+    kind: test
+    score: 2
+  - path: src/flowforge/phase1/integrations/connection_test.py
+    kind: backend
+    score: 2
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Accurate-Icons.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00017
+  title: A complete real implementation would require authoring each artifact
+  requirement: A complete real implementation would require authoring each artifact
+  module: PLT
+  risk: low
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: A complete real implementation would require authoring each artifact
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00017
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 3
+  - path: scripts/Verify-Phase4D-Complete.ps1
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation.py
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py
+    kind: script
+    score: 2
+- id: FF-PLT-00018
+  title: This specification placeholder expands the FlowForge architecture across
+    entities, APIs,
+  requirement: This specification placeholder expands the FlowForge architecture across
+    entities, APIs,
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: This specification placeholder expands the FlowForge architecture
+      across entities, APIs,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00018
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Add-FlowForge-Example-Tax-Data.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/flowforge-ai.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/data-table.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+- id: FF-PLT-00019
+  title: schemas, workflows, permissions, integrations and test catalogs
+  requirement: schemas, workflows, permissions, integrations and test catalogs
+  module: PLT
+  risk: low
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: schemas, workflows, permissions, integrations and test catalogs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00019
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: tests/phase1/integrations/test_schemas.py
+    kind: test
+    score: 3
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 3
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/session.test.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: tests/test_phase1_contract.py
+    kind: test
+    score: 2
+- id: FF-PLT-00020
+  title: A complete real implementation
+  requirement: A complete real implementation
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: A complete real implementation
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00020
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Verify-Phase4D-Complete.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00021
+  title: would require authoring each artifact in detail
+  requirement: would require authoring each artifact in detail
+  module: PLT
+  risk: low
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: would require authoring each artifact in detail.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00021
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00022
+  title: This specification placeholder expands the
+  requirement: This specification placeholder expands the
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: This specification placeholder expands the
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00022
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/flowforge-ai.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/data-table.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Replace-FlowForge-Record-Alert-With-Edit-Form.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-AI-Only.ps1
+    kind: script
+    score: 2
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Website-Actions-Fixed.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Clickable-Table-Rows.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00023
+  title: FlowForge architecture across entities, APIs, schemas, workflows, permissions,
+    integrations and
+  requirement: FlowForge architecture across entities, APIs, schemas, workflows, permissions,
+    integrations and
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: FlowForge architecture across entities, APIs, schemas, workflows,
+      permissions, integrations and
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00023
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 4
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/navigation.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/modules.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/app-icon.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/AppShell.tsx
+    kind: frontend
+    score: 2
+- id: FF-PLT-00024
+  title: specification placeholder expands the FlowForge architecture across entities,
+    APIs, schemas,
+  requirement: specification placeholder expands the FlowForge architecture across
+    entities, APIs, schemas,
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: mega_specification
+    page_or_section: 2
+    heading: Section 1
+    source_text: specification placeholder expands the FlowForge architecture across
+      entities, APIs, schemas,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00024
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/phase4d/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase4d/routes.py
+    kind: backend
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Complete-API-Package-V2.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Accurate-Icons.ps1
+    kind: script
+    score: 2
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00025
+  title: This chapter defines architecture standards, entities, schemas, endpoint
+    patterns, workflow
+  requirement: This chapter defines architecture standards, entities, schemas, endpoint
+    patterns, workflow
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: This chapter defines architecture standards, entities, schemas, endpoint
+      patterns, workflow
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00025
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 3
+  - path: scripts/Install-FlowForge-Complete-API-Package-V2.ps1
+    kind: script
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/tax/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: tests/phase1/workflow/test_schemas.py
+    kind: test
+    score: 2
+  - path: src/flowforge/phase4d/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase4d/routes.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase1/workflow/schemas.py
+    kind: backend
+    score: 2
+- id: FF-PLT-00026
+  title: requirements, permission requirements, integration contracts, tenant boundaries,
+    validation rules,
+  requirement: requirements, permission requirements, integration contracts, tenant
+    boundaries, validation rules,
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: requirements, permission requirements, integration contracts, tenant
+      boundaries, validation rules,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00026
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 3
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/session.test.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/ModulePage.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: tests/requirements/test_registry.py
+    kind: test
+    score: 2
+  - path: src/flowforge/platform/models.py
+    kind: backend
+    score: 2
+- id: FF-PLT-00027
+  title: audit controls, reporting requirements, testing expectations, operational
+    controls and
+  requirement: audit controls, reporting requirements, testing expectations, operational
+    controls and
+  module: PLT
+  risk: high
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: audit controls, reporting requirements, testing expectations, operational
+      controls and
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00027
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/app/reports/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/Run-Phase4-Comprehensive-Live-Test.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-Phase4E-Through-4J-Safely.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00028
+  title: implementation considerations
+  requirement: implementation considerations
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: implementation considerations.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00028
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00029
+  title: Representative entities include Tenant, User, Role, Permission,
+  requirement: Representative entities include Tenant, User, Role, Permission,
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: Representative entities include Tenant, User, Role, Permission,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00029
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 4
+  - path: src/flowforge/platform/models.py
+    kind: backend
+    score: 4
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 4
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Run-Phase4-Comprehensive-Live-Test.ps1
+    kind: script
+    score: 3
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 3
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 3
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 3
+  - path: migrations/versions/4726038422d0_phase_4s1_authorization_tenant_hardening.py
+    kind: migration
+    score: 3
+- id: FF-PLT-00030
+  title: AuditEvent, WorkflowInstance, Document, Connector, Customer, Vendor, Order,
+    Invoice,
+  requirement: AuditEvent, WorkflowInstance, Document, Connector, Customer, Vendor,
+    Order, Invoice,
+  module: PLT
+  risk: high
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: AuditEvent, WorkflowInstance, Document, Connector, Customer, Vendor,
+      Order, Invoice,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00030
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 5
+  - path: web/src/components/global-search.tsx
+    kind: frontend
+    score: 5
+  - path: scripts/Install-FlowForge-Global-Search.ps1
+    kind: script
+    score: 5
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 4
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: src/flowforge/phase3b/service.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/phase3b/routes.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/phase3a/service.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/phase3a/routes.py
+    kind: backend
+    score: 3
+  - path: scripts/Enable-FlowForge-Website-Actions-Fixed.ps1
+    kind: script
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+- id: FF-COM-00001
+  title: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
+    CAPA and
+  requirement: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
+    CAPA and
+  module: COM
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
+      CAPA and
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-COM-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: src/flowforge/phase4a_stage3/service.py
+    kind: backend
+    score: 2
+  - path: scripts/Install-FlowForge-Global-Search.ps1
+    kind: script
+    score: 2
+  - path: scripts/Clean-FlowForge-Payroll-Metrics.ps1
+    kind: script
+    score: 2
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 2
+- id: FF-SRC-00001
+  title: Representative API patterns include CRUD, search, bulk operations, approval
+  requirement: Representative API patterns include CRUD, search, bulk operations,
+    approval
+  module: SRC
+  risk: high
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: Representative API patterns include CRUD, search, bulk operations,
+      approval
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-SRC-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 4
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/global-search.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/backend-feature-workspace.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/inventory/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/audit/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Problem-Submission.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Inventory-History-V2.ps1
+    kind: script
+    score: 2
+- id: FF-BIL-00001
+  title: actions, reporting actions and webhook subscriptions
+  requirement: actions, reporting actions and webhook subscriptions
+  module: BIL
+  risk: low
+  required_for: post_launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: actions, reporting actions and webhook subscriptions.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-BIL-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/reports/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 2
+- id: FF-INT-00001
+  title: Representative tests include unit, integration,
+  requirement: Representative tests include unit, integration,
+  module: INT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: Representative tests include unit, integration,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-INT-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Enable-FlowForge-Website-Actions-Fixed.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: tests/integration/test_tenant_columns.py
+    kind: test
+    score: 2
+  - path: tests/integration/test_openapi_integration.py
+    kind: test
+    score: 2
+  - path: tests/integration/test_models_registered.py
+    kind: test
+    score: 2
+  - path: tests/integration/__init__.py
+    kind: test
+    score: 2
+  - path: scripts/Verify-Phase1-Integration.ps1
+    kind: script
+    score: 2
+  - path: scripts/Integrate-Phase1.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Problem-Submission.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Global-Search.ps1
+    kind: script
+    score: 2
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Fix-FlowForge-Workspace-Buttons.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00031
+  title: security, tenant isolation, audit verification, workflow validation, performance,
+    recovery and
+  requirement: security, tenant isolation, audit verification, workflow validation,
+    performance, recovery and
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: security, tenant isolation, audit verification, workflow validation,
+      performance, recovery and
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00031
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 6
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 5
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 4
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 4
+  - path: scripts/Install-FlowForge-Problem-Submission.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: web/src/components/problem-report-form.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: src/flowforge/phase1a/routes.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 3
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 3
+  - path: scripts/Verify-Phase4-Security.ps1
+    kind: script
+    score: 3
+- id: FF-PLT-00032
+  title: This chapter defines architecture standards, entities, schemas, endpoint
+  requirement: This chapter defines architecture standards, entities, schemas, endpoint
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: This chapter defines architecture standards, entities, schemas, endpoint
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00032
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Install-FlowForge-Complete-API-Package.ps1
+    kind: script
+    score: 3
+  - path: scripts/Install-FlowForge-Complete-API-Package-V2.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/copilot/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/phase4d/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase4d/routes.py
+    kind: backend
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00033
+  title: patterns, workflow requirements, permission requirements, integration contracts,
+    tenant
+  requirement: patterns, workflow requirements, permission requirements, integration
+    contracts, tenant
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: patterns, workflow requirements, permission requirements, integration
+      contracts, tenant
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00033
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 5
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 3
+  - path: scripts/Install-FlowForge-Problem-Submission.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/session.test.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/ModulePage.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: tests/phase1/workflow/test_versions.py
+    kind: test
+    score: 2
+  - path: tests/phase1/workflow/test_service.py
+    kind: test
+    score: 2
+  - path: tests/phase1/workflow/test_schemas.py
+    kind: test
+    score: 2
+  - path: tests/phase1/workflow/test_routes.py
+    kind: test
+    score: 2
+  - path: tests/phase1/workflow/test_repository.py
+    kind: test
+    score: 2
+- id: FF-PLT-00034
+  title: boundaries, validation rules, audit controls, reporting requirements, testing
+    expectations,
+  requirement: boundaries, validation rules, audit controls, reporting requirements,
+    testing expectations,
+  module: PLT
+  risk: high
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: boundaries, validation rules, audit controls, reporting requirements,
+      testing expectations,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00034
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 5
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 4
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: tests/requirements/test_registry.py
+    kind: test
+    score: 2
+  - path: scripts/requirements/validate_registry.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/Run-Phase4-Comprehensive-Live-Test.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00035
+  title: operational controls and implementation considerations
+  requirement: operational controls and implementation considerations
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: operational controls and implementation considerations.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00035
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00036
+  title: Representative entities include Tenant,
+  requirement: Representative entities include Tenant,
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: Representative entities include Tenant,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00036
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/onboarding/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00037
+  title: User, Role, Permission, AuditEvent, WorkflowInstance, Document, Connector,
+    Customer, Vendor,
+  requirement: User, Role, Permission, AuditEvent, WorkflowInstance, Document, Connector,
+    Customer, Vendor,
+  module: PLT
+  risk: high
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: User, Role, Permission, AuditEvent, WorkflowInstance, Document, Connector,
+      Customer, Vendor,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00037
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: src/flowforge/platform/models.py
+    kind: backend
+    score: 5
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 4
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 4
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 4
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: scripts/Install-FlowForge-Global-Search.ps1
+    kind: script
+    score: 4
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 4
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 4
+  - path: web/src/components/global-search.tsx
+    kind: frontend
+    score: 3
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 3
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+- id: FF-COM-00002
+  title: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project, Asset,
+    WorkOrder, CAPA
+  requirement: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project,
+    Asset, WorkOrder, CAPA
+  module: COM
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project,
+      Asset, WorkOrder, CAPA
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-COM-00002
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 5
+  - path: scripts/Install-FlowForge-Global-Search.ps1
+    kind: script
+    score: 4
+  - path: web/src/components/global-search.tsx
+    kind: frontend
+    score: 3
+  - path: src/flowforge/phase3b/service.py
+    kind: backend
+    score: 3
+  - path: scripts/Run-Phase4-Comprehensive-Live-Test.ps1
+    kind: script
+    score: 3
+  - path: scripts/Enable-FlowForge-Website-Actions-Fixed.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: src/flowforge/phase4a_stage3/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase3b/routes.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase3a/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase3a/routes.py
+    kind: backend
+    score: 2
+- id: FF-DAT-00002
+  title: Master architecture, operating model, implementation standards, module catalog,
+    industry packs,
+  requirement: Master architecture, operating model, implementation standards, module
+    catalog, industry packs,
+  module: DAT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 1
+    heading: ''
+    source_text: Master architecture, operating model, implementation standards, module
+      catalog, industry packs,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-DAT-00002
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/validate_registry.py
+    kind: script
+    score: 3
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 3
+  - path: scripts/requirements/build_registry.py
+    kind: script
+    score: 3
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: tests/requirements/test_registry.py
+    kind: test
+    score: 2
+  - path: scripts/requirements/crosswalk_repository.py
+    kind: script
+    score: 2
+  - path: scripts/Install-Student-Staging-Profile.py
+    kind: script
+    score: 2
+- id: FF-SEC-00001
+  title: security model, governance model and build roadmap
+  requirement: security model, governance model and build roadmap
+  module: SEC
+  risk: critical
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 1
+    heading: ''
+    source_text: security model, governance model and build roadmap.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-SEC-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Problem-Submission.ps1
+    kind: script
+    score: 2
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Editable-Security-and-Adaptive-Chart.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00038
+  title: FlowForge is a tenant-isolated, module-driven business operating platform
+  requirement: FlowForge is a tenant-isolated, module-driven business operating platform
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: FlowForge is a tenant-isolated, module-driven business operating
+      platform.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00038
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/layout.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/backend-feature-workspace.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/dashboard/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/billing/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/approvals/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/platform/schemas.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/platform/models.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/api/routes/tenants.py
+    kind: backend
+    score: 2
+- id: FF-QMS-00001
+  title: Every capability is built
+  requirement: Every capability is built
+  module: QMS
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: Every capability is built
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-QMS-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+- id: FF-PLT-00039
+  title: on shared platform services including security, audit, workflow, events,
+    documents and integrations
+  requirement: on shared platform services including security, audit, workflow, events,
+    documents and integrations
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: on shared platform services including security, audit, workflow,
+      events, documents and integrations.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00039
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 7
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 6
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 5
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/navigation.ts
+    kind: frontend
+    score: 3
+  - path: web/src/lib/modules.ts
+    kind: frontend
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/app-icon.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/AppShell.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+- id: FF-PLT-00040
+  title: Each chapter defines design goals, data ownership, permissions, workflows,
+    reporting
+  requirement: Each chapter defines design goals, data ownership, permissions, workflows,
+    reporting
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: Each chapter defines design goals, data ownership, permissions, workflows,
+      reporting
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00040
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 4
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/Upgrade-FlowForge-Cash-Flow-Chart.ps1
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation.py
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py
+    kind: script
+    score: 2
+  - path: scripts/Repair-Phase5B-Bicep.ps1
+    kind: script
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 2
+- id: FF-INT-00002
+  title: requirements, integration points, dependencies, operational controls, scalability
+    considerations and
+  requirement: requirements, integration points, dependencies, operational controls,
+    scalability considerations and
+  module: INT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: requirements, integration points, dependencies, operational controls,
+      scalability considerations and
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-INT-00002
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/validate_registry.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/build_registry.py
+    kind: script
+    score: 2
+- id: FF-FIN-00001
+  title: The architecture is designed to support banks, distributors,
+  requirement: The architecture is designed to support banks, distributors,
+  module: FIN
+  risk: low
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: The architecture is designed to support banks, distributors,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-FIN-00001
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00041
+  title: manufacturers, medical device OEMs, professional services companies, construction
+    firms and
+  requirement: manufacturers, medical device OEMs, professional services companies,
+    construction firms and
+  module: PLT
+  risk: medium
+  required_for: post_launch
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: manufacturers, medical device OEMs, professional services companies,
+      construction firms and
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00041
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00042
+  title: other industries through modular activation and industry packs
+  requirement: other industries through modular activation and industry packs
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: other industries through modular activation and industry packs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00042
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-Phase4E-Through-4J-Safely.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00043
+  title: FlowForge is a tenant-isolated,
+  requirement: FlowForge is a tenant-isolated,
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: FlowForge is a tenant-isolated,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00043
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00044
+  title: including security, audit, workflow, events, documents and integrations
+  requirement: including security, audit, workflow, events, documents and integrations
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: including security, audit, workflow, events, documents and integrations.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00044
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 5
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 4
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 4
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/navigation.ts
+    kind: frontend
+    score: 3
+  - path: web/src/lib/modules.ts
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/app-icon.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/AppShell.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: tests/test_phase1_contract.py
+    kind: test
+    score: 3
+- id: FF-PLT-00045
+  title: design goals, data ownership, permissions, workflows, reporting requirements,
+    integration points,
+  requirement: design goals, data ownership, permissions, workflows, reporting requirements,
+    integration points,
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: design goals, data ownership, permissions, workflows, reporting requirements,
+      integration points,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00045
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 4
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 3
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/audit/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/requirements/validate_registry.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/crosswalk_repository.py
+    kind: script
+    score: 2
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-Phase5B-Bicep.ps1
+    kind: script
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00046
+  title: dependencies, operational controls, scalability considerations and compliance
+    requirements
+  requirement: dependencies, operational controls, scalability considerations and
+    compliance requirements
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: dependencies, operational controls, scalability considerations and
+      compliance requirements.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00046
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/validate_registry.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/build_registry.py
+    kind: script
+    score: 2
+- id: FF-FIN-00002
+  title: architecture is designed to support banks, distributors, manufacturers, medical
+    device OEMs,
+  requirement: architecture is designed to support banks, distributors, manufacturers,
+    medical device OEMs,
+  module: FIN
+  risk: medium
+  required_for: post_launch
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: architecture is designed to support banks, distributors, manufacturers,
+      medical device OEMs,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-FIN-00002
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00047
+  title: professional services companies, construction firms and other industries
+    through modular activation
+  requirement: professional services companies, construction firms and other industries
+    through modular activation
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: professional services companies, construction firms and other industries
+      through modular activation
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00047
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-Phase4E-Through-4J-Safely.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00048
+  title: Every capability is built on shared platform services including security,
+    audit, workflow, events,
+  requirement: Every capability is built on shared platform services including security,
+    audit, workflow, events,
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: Every capability is built on shared platform services including security,
+      audit, workflow, events,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00048
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 5
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 5
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 4
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: src/flowforge/phase1/workflow/events.py
+    kind: backend
+    score: 3
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 3
+  - path: scripts/Generate-FlowForge-One-Big-Migration.ps1
+    kind: script
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/problem-report-form.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/backend-feature-workspace.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/audit/page.tsx
+    kind: frontend
+    score: 2
+- id: FF-PLT-00049
+  title: documents and integrations
+  requirement: documents and integrations
+  module: PLT
+  risk: high
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: documents and integrations.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00049
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/navigation.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/modules.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/app-icon.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/AppShell.tsx
+    kind: frontend
+    score: 2
+  - path: tests/test_phase1_contract.py
+    kind: test
+    score: 2
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 2
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 2
+  - path: scripts/Repair-FlowForge-UI-Then-Enable-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-FlowForge-Accurate-Icons.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00050
+  title: Each chapter defines design goals, data ownership, permissions,
+  requirement: Each chapter defines design goals, data ownership, permissions,
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: Each chapter defines design goals, data ownership, permissions,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00050
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/Upgrade-FlowForge-Cash-Flow-Chart.ps1
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation.py
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py
+    kind: script
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00051
+  title: workflows, reporting requirements, integration points, dependencies, operational
+    controls,
+  requirement: workflows, reporting requirements, integration points, dependencies,
+    operational controls,
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: workflows, reporting requirements, integration points, dependencies,
+      operational controls,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00051
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/app/reports/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 2
+  - path: scripts/requirements/validate_registry.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/build_registry.py
+    kind: script
+    score: 2
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00052
+  title: scalability considerations and compliance requirements
+  requirement: scalability considerations and compliance requirements
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: scalability considerations and compliance requirements.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00052
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00053
+  title: The architecture is designed to support
+  requirement: The architecture is designed to support
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: The architecture is designed to support
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00053
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-FIN-00003
+  title: banks, distributors, manufacturers, medical device OEMs, professional services
+    companies,
+  requirement: banks, distributors, manufacturers, medical device OEMs, professional
+    services companies,
+  module: FIN
+  risk: medium
+  required_for: post_launch
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: banks, distributors, manufacturers, medical device OEMs, professional
+      services companies,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-FIN-00003
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00054
+  title: construction firms and other industries through modular activation and industry
+    packs
+  requirement: construction firms and other industries through modular activation
+    and industry packs
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: construction firms and other industries through modular activation
+      and industry packs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00054
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-Phase4E-Through-4J-Safely.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00055
+  title: a tenant-isolated, module-driven business operating platform
+  requirement: a tenant-isolated, module-driven business operating platform
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: a tenant-isolated, module-driven business operating platform.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00055
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/layout.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/demo-data.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/backend-feature-workspace.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/dashboard/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/billing/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/approvals/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/platform/schemas.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/platform/models.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/api/routes/tenants.py
+    kind: backend
+    score: 2
+- id: FF-QMS-00002
+  title: Every capability is built on shared
+  requirement: Every capability is built on shared
+  module: QMS
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: Every capability is built on shared
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-QMS-00002
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+- id: FF-PLT-00056
+  title: platform services including security, audit, workflow, events, documents
+    and integrations
+  requirement: platform services including security, audit, workflow, events, documents
+    and integrations
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: platform services including security, audit, workflow, events, documents
+      and integrations.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00056
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 7
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 6
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 5
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 4
+  - path: web/src/lib/navigation.ts
+    kind: frontend
+    score: 3
+  - path: web/src/lib/modules.ts
+    kind: frontend
+    score: 3
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/app-icon.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/AppShell.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+- id: FF-INT-00003
+  title: integration points, dependencies, operational controls, scalability considerations
+    and compliance
+  requirement: integration points, dependencies, operational controls, scalability
+    considerations and compliance
+  module: INT
+  risk: medium
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: integration points, dependencies, operational controls, scalability
+      considerations and compliance
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-INT-00003
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-FIN-00004
+  title: The architecture is designed to support banks, distributors, manufacturers,
+    medical
+  requirement: The architecture is designed to support banks, distributors, manufacturers,
+    medical
+  module: FIN
+  risk: medium
+  required_for: post_launch
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: The architecture is designed to support banks, distributors, manufacturers,
+      medical
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-FIN-00004
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00057
+  title: device OEMs, professional services companies, construction firms and other
+    industries through
+  requirement: device OEMs, professional services companies, construction firms and
+    other industries through
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: device OEMs, professional services companies, construction firms
+      and other industries through
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00057
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00058
+  title: modular activation and industry packs
+  requirement: modular activation and industry packs
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: modular activation and industry packs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00058
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00059
+  title: FlowForge is a tenant-isolated, module-driven business
+  requirement: FlowForge is a tenant-isolated, module-driven business
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: FlowForge is a tenant-isolated, module-driven business
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00059
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/layout.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/dashboard/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/billing/page.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/approvals/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/Run-Remaining-Phase4-Build.ps1
+    kind: script
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Force-Fix-FlowForge-Dashboard-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-All-Module-Actions.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00060
+  title: Every capability is built on shared platform services including security,
+    audit,
+  requirement: Every capability is built on shared platform services including security,
+    audit,
+  module: PLT
+  risk: critical
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: Every capability is built on shared platform services including security,
+      audit,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00060
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 4
+  - path: src/flowforge/api/routes/auth.py
+    kind: backend
+    score: 4
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 4
+  - path: scripts/Generate-FlowForge-One-Big-Migration.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/backend-feature-workspace.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/platform/services.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase4a/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase3a/service.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase2b/service.py
+    kind: backend
+    score: 2
+- id: FF-PLT-00061
+  title: workflow, events, documents and integrations
+  requirement: workflow, events, documents and integrations
+  module: PLT
+  risk: high
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: workflow, events, documents and integrations.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00061
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 3
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 3
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/navigation.ts
+    kind: frontend
+    score: 2
+  - path: web/src/lib/modules.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/module-action-controller.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/app-icon.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/components/AppShell.tsx
+    kind: frontend
+    score: 2
+  - path: tests/test_phase1_contract.py
+    kind: test
+    score: 2
+  - path: src/flowforge/phase1/workflow/events.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase1/integrations/events.py
+    kind: backend
+    score: 2
+  - path: src/flowforge/phase1/documents/events.py
+    kind: backend
+    score: 2
+- id: FF-PLT-00062
+  title: Each chapter defines design goals, data ownership,
+  requirement: Each chapter defines design goals, data ownership,
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: Each chapter defines design goals, data ownership,
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00062
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/payroll/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/Upgrade-FlowForge-Cash-Flow-Chart.ps1
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation.py
+    kind: script
+    score: 2
+  - path: scripts/Test-FlowForge-289-Table-Tenant-Isolation-V2.py
+    kind: script
+    score: 2
+  - path: scripts/Build-FlowForge-Complete-Payroll-Frontend.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00063
+  title: permissions, workflows, reporting requirements, integration points, dependencies,
+    operational
+  requirement: permissions, workflows, reporting requirements, integration points,
+    dependencies, operational
+  module: PLT
+  risk: medium
+  required_for: launch
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: permissions, workflows, reporting requirements, integration points,
+      dependencies, operational
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00063
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 3
+  - path: scripts/Fix-FlowForge-Settings-Actions.ps1
+    kind: script
+    score: 3
+  - path: web/src/lib/generated-api-catalog.ts
+    kind: frontend
+    score: 2
+  - path: web/src/components/topbar.tsx
+    kind: frontend
+    score: 2
+  - path: web/src/app/reports/page.tsx
+    kind: frontend
+    score: 2
+  - path: src/flowforge/api/routes/platform.py
+    kind: backend
+    score: 2
+  - path: scripts/requirements/validate_registry.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/extract_requirements.py
+    kind: script
+    score: 2
+  - path: scripts/requirements/build_registry.py
+    kind: script
+    score: 2
+  - path: scripts/Run-Phase1-Final-Acceptance.ps1
+    kind: script
+    score: 2
+  - path: scripts/Enable-FlowForge-Topbar-Controls.ps1
+    kind: script
+    score: 2
+- id: FF-PLT-00064
+  title: controls, scalability considerations and compliance requirements
+  requirement: controls, scalability considerations and compliance requirements
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: controls, scalability considerations and compliance requirements.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00064
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00065
+  title: The architecture is designed to
+  requirement: The architecture is designed to
+  module: PLT
+  risk: low
+  required_for: enterprise_expansion
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: The architecture is designed to
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00065
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-FIN-00005
+  title: support banks, distributors, manufacturers, medical device OEMs, professional
+    services
+  requirement: support banks, distributors, manufacturers, medical device OEMs, professional
+    services
+  module: FIN
+  risk: medium
+  required_for: post_launch
+  status: MISSING_FEATURE
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: support banks, distributors, manufacturers, medical device OEMs,
+      professional services
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-FIN-00005
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts: []
+- id: FF-PLT-00066
+  title: companies, construction firms and other industries through modular activation
+    and industry packs
+  requirement: companies, construction firms and other industries through modular
+    activation and industry packs
+  module: PLT
+  risk: medium
+  required_for: enterprise_expansion
+  status: PARTIAL
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: chapter defines design goals, data ownership, permissions, workflows,
+      reporting requirements,
+    source_text: companies, construction firms and other industries through modular
+      activation and industry packs.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+  parent_requirement_id: FF-PLT-00066
+  review:
+    semantic_review: PENDING
+    artifact_review: PENDING
+    dependency_review: PENDING
+    evidence_review: PENDING
+  candidate_artifacts:
+  - path: web/src/app/settings/page.tsx
+    kind: frontend
+    score: 2
+  - path: scripts/Make-FlowForge-Customer-Security-Honest.ps1
+    kind: script
+    score: 2
+  - path: scripts/Install-Phase4E-Through-4J-Safely.ps1
+    kind: script
+    score: 2

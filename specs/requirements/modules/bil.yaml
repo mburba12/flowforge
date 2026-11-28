@@ -1,0 +1,29 @@
+version: 1
+module: BIL
+requirements:
+- id: FF-BIL-00001
+  title: actions, reporting actions and webhook subscriptions.
+  requirement: actions, reporting actions and webhook subscriptions.
+  module: BIL
+  risk: low
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: actions, reporting actions and webhook subscriptions.
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null

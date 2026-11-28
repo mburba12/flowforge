@@ -1,0 +1,124 @@
+# FlowForge production stack (single authoritative runtime).
+#
+#   docker compose -p flowforge -f compose.production.yml --env-file .env.production up -d
+#
+# Use the scripts in scripts\production (Start/Stop/Status/Backup) rather than
+# calling compose directly. docker-compose.yml remains the ISOLATED TEST stack
+# used by the acceptance scripts; never point acceptance at this project.
+#
+# Required in .env.production (gitignored; created by Install-FlowForge.ps1):
+#   FLOWFORGE_DB_OWNER_PASSWORD   database owner (migrations, backups, imports)
+#   FLOWFORGE_APP_DB_PASSWORD     restricted runtime role flowforge_app (API)
+#   FLOWFORGE_JWT_SECRET          token signing key
+# Optional: FF_WEB_PORT (3000), FF_API_PORT (8000), FF_DB_PORT (5435, bound to 127.0.0.1)
+
+name: flowforge
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: flowforge
+      POSTGRES_USER: flowforge_owner
+      POSTGRES_PASSWORD: ${FLOWFORGE_DB_OWNER_PASSWORD:?set in .env.production}
+      FLOWFORGE_APP_DB_PASSWORD: ${FLOWFORGE_APP_DB_PASSWORD:?set in .env.production}
+    volumes:
+      - flowforge_pgdata:/var/lib/postgresql/data
+      - ./infra/production/db-init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:${FF_DB_PORT:-5435}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flowforge_owner -d flowforge"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  migrate:
+    build: .
+    image: flowforge-api:local
+    command: ["python", "-m", "alembic", "upgrade", "head"]
+    environment:
+      ALEMBIC_DATABASE_URL: postgresql+asyncpg://flowforge_owner:${FLOWFORGE_DB_OWNER_PASSWORD}@db:5432/flowforge
+      FLOWFORGE_DATABASE_URL: postgresql+asyncpg://flowforge_owner:${FLOWFORGE_DB_OWNER_PASSWORD}@db:5432/flowforge
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build: .
+    image: flowforge-api:local
+    environment:
+      FLOWFORGE_ENV: production
+      FLOWFORGE_DATABASE_URL: postgresql+asyncpg://flowforge_app:${FLOWFORGE_APP_DB_PASSWORD}@db:5432/flowforge
+      DATABASE_URL: postgresql+asyncpg://flowforge_app:${FLOWFORGE_APP_DB_PASSWORD}@db:5432/flowforge
+      FLOWFORGE_JWT_SECRET: ${FLOWFORGE_JWT_SECRET:?set in .env.production}
+      FLOWFORGE_ACCESS_TOKEN_MINUTES: "30"
+      # Problem reports are queued here when support email is not configured.
+      FLOWFORGE_SUPPORT_OUTBOX: /data/support-outbox
+    volumes:
+      - flowforge_support:/data
+    ports:
+      - "${FF_API_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=4).status == 200 else 1)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    image: flowforge-web:local
+    environment:
+      FLOWFORGE_API_BASE_URL: http://api:8000
+    ports:
+      - "${FF_WEB_PORT:-3000}:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Supporting services from the target architecture. The current API does not
+  # call them yet; they are internal-only (no host ports) to avoid clashing with
+  # other local stacks.
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - flowforge_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    command: azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --location /data
+    volumes:
+      - flowforge_azurite:/data
+    restart: unless-stopped
+
+  mailpit:
+    image: axllent/mailpit
+    restart: unless-stopped
+
+volumes:
+  flowforge_pgdata:
+  flowforge_support:
+  flowforge_redis:
+  flowforge_azurite:

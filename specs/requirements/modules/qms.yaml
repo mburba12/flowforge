@@ -1,0 +1,56 @@
+version: 1
+module: QMS
+requirements:
+- id: FF-QMS-00001
+  title: Every capability is built
+  requirement: Every capability is built
+  module: QMS
+  risk: low
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: 'Chapter 1: Executive Summary'
+    source_text: Every capability is built
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+- id: FF-QMS-00002
+  title: Every capability is built on shared
+  requirement: Every capability is built on shared
+  module: QMS
+  risk: low
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: enterprise_build_bible
+    page_or_section: 2
+    heading: module-driven business operating platform. Every capability is built
+      on shared platform services
+    source_text: Every capability is built on shared
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null

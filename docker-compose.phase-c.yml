@@ -1,0 +1,19 @@
+# Usage: docker compose --env-file .env.phase-c -f docker-compose.yml -f docker-compose.phase-c.yml ...
+services:
+  web:
+    build:
+      context: ./web
+      args:
+        NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:8000
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:8000
+      FLOWFORGE_API_URL: http://api:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_started
+    restart: unless-stopped
+  api:
+    environment:
+      DATABASE_URL: ${COMPOSE_APP_DATABASE_URL:?run compose with --env-file .env.phase-c}

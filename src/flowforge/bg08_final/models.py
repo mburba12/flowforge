@@ -1,0 +1,209 @@
+from datetime import date, datetime
+from decimal import Decimal
+from uuid import UUID, uuid4
+
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    UniqueConstraint,
+    Uuid,
+    func,
+)
+from sqlalchemy.orm import Mapped, mapped_column
+
+from flowforge.db.base import Base
+
+
+class T:
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    tenant_id: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("tenants.id", ondelete="CASCADE"), index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    version: Mapped[int] = mapped_column(Integer, default=1)
+
+
+class Plan(T, Base):
+    __tablename__ = "billing_plans_final"
+    code: Mapped[str] = mapped_column(String(80))
+    name: Mapped[str] = mapped_column(String(240))
+    billing_interval: Mapped[str] = mapped_column(String(30))
+    price: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    currency_code: Mapped[str] = mapped_column(String(3))
+    trial_days: Mapped[int] = mapped_column(Integer, default=0)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    __table_args__ = (UniqueConstraint("tenant_id", "code", name="uq_billing_plan"),)
+
+
+class Subscription(T, Base):
+    __tablename__ = "billing_subscriptions_final"
+    customer_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("parties.id"))
+    plan_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("billing_plans_final.id"))
+    status: Mapped[str] = mapped_column(String(30), default="trialing")
+    starts_on: Mapped[date]
+    renews_on: Mapped[date | None]
+    ends_on: Mapped[date | None]
+    quantity: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=1)
+    cancel_reason: Mapped[str | None] = mapped_column(Text)
+    __table_args__ = (
+        UniqueConstraint(
+            "tenant_id", "customer_id", "plan_id", "starts_on", name="uq_subscription_start"
+        ),
+    )
+
+
+class Entitlement(T, Base):
+    __tablename__ = "billing_entitlements_final"
+    subscription_id: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("billing_subscriptions_final.id", ondelete="CASCADE")
+    )
+    code: Mapped[str] = mapped_column(String(100))
+    limit_value: Mapped[Decimal | None] = mapped_column(Numeric(20, 6))
+    consumed_value: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    __table_args__ = (
+        UniqueConstraint(
+            "tenant_id", "subscription_id", "code", name="uq_subscription_entitlement"
+        ),
+    )
+
+
+class UsageRecord(T, Base):
+    __tablename__ = "billing_usage_records_final"
+    subscription_id: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("billing_subscriptions_final.id")
+    )
+    meter_code: Mapped[str] = mapped_column(String(100))
+    quantity: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    idempotency_key: Mapped[str] = mapped_column(String(160))
+    __table_args__ = (UniqueConstraint("tenant_id", "idempotency_key", name="uq_usage_idem"),)
+
+
+class BillingRun(T, Base):
+    __tablename__ = "billing_runs_final"
+    run_number: Mapped[str] = mapped_column(String(100))
+    period_start: Mapped[date]
+    period_end: Mapped[date]
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    invoice_count: Mapped[int] = mapped_column(Integer, default=0)
+    total_amount: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    approved_by: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("users.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "run_number", name="uq_billing_run"),)
+
+
+class DunningCase(T, Base):
+    __tablename__ = "billing_dunning_cases_final"
+    customer_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("parties.id"))
+    invoice_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("customer_invoices.id"))
+    stage: Mapped[int] = mapped_column(Integer, default=1)
+    status: Mapped[str] = mapped_column(String(30), default="open")
+    next_action_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    notes: Mapped[str] = mapped_column(Text, default="")
+
+
+class Project(T, Base):
+    __tablename__ = "projects_final"
+    code: Mapped[str] = mapped_column(String(80))
+    name: Mapped[str] = mapped_column(String(240))
+    customer_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("parties.id"))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    starts_on: Mapped[date | None]
+    ends_on: Mapped[date | None]
+    budget: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    billing_method: Mapped[str] = mapped_column(String(40), default="time_materials")
+    manager_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("users.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "code", name="uq_project_code"),)
+
+
+class ProjectTask(T, Base):
+    __tablename__ = "project_tasks_final"
+    project_id: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("projects_final.id", ondelete="CASCADE")
+    )
+    parent_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("project_tasks_final.id"))
+    code: Mapped[str] = mapped_column(String(80))
+    name: Mapped[str] = mapped_column(String(240))
+    status: Mapped[str] = mapped_column(String(30), default="open")
+    budget_hours: Mapped[Decimal] = mapped_column(Numeric(10, 2), default=0)
+    milestone: Mapped[bool] = mapped_column(Boolean, default=False)
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "project_id", "code", name="uq_project_task_code"),
+    )
+
+
+class ProjectTime(T, Base):
+    __tablename__ = "project_time_final"
+    project_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("projects_final.id"))
+    task_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("project_tasks_final.id"))
+    worker_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("worker_profiles.id"))
+    work_date: Mapped[date]
+    hours: Mapped[Decimal] = mapped_column(Numeric(8, 2))
+    billable: Mapped[bool] = mapped_column(Boolean, default=True)
+    rate: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    approved_by: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("users.id"))
+
+
+class ProjectExpense(T, Base):
+    __tablename__ = "project_expenses_final"
+    project_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("projects_final.id"))
+    worker_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("worker_profiles.id"))
+    expense_date: Mapped[date]
+    description: Mapped[str] = mapped_column(String(500))
+    amount: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    billable: Mapped[bool] = mapped_column(Boolean, default=True)
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    approved_by: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("users.id"))
+
+
+class ChangeOrder(T, Base):
+    __tablename__ = "project_change_orders_final"
+    project_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("projects_final.id"))
+    number: Mapped[str] = mapped_column(String(80))
+    description: Mapped[str] = mapped_column(Text)
+    amount_change: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    schedule_days: Mapped[int] = mapped_column(Integer, default=0)
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    approved_by: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("users.id"))
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "project_id", "number", name="uq_change_order"),
+    )
+
+
+class AssetBook(T, Base):
+    __tablename__ = "asset_books_final"
+    asset_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("finance_asset_register.id"))
+    book_code: Mapped[str] = mapped_column(String(80))
+    method: Mapped[str] = mapped_column(String(40))
+    useful_life_periods: Mapped[int]
+    salvage_value: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    accumulated_depreciation: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    __table_args__ = (UniqueConstraint("tenant_id", "asset_id", "book_code", name="uq_asset_book"),)
+
+
+class AssetTransaction(T, Base):
+    __tablename__ = "asset_transactions_final"
+    asset_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("finance_asset_register.id"))
+    book_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("asset_books_final.id"))
+    transaction_type: Mapped[str] = mapped_column(String(40))
+    transaction_date: Mapped[date]
+    amount: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    status: Mapped[str] = mapped_column(String(30), default="posted")
+    journal_id: Mapped[UUID | None] = mapped_column(Uuid, ForeignKey("journal_entries.id"))
+    reason: Mapped[str | None] = mapped_column(Text)
+
+
+class BG08Event(T, Base):
+    __tablename__ = "bg08_events_outbox"
+    event_type: Mapped[str] = mapped_column(String(100))
+    aggregate_type: Mapped[str] = mapped_column(String(60))
+    aggregate_id: Mapped[UUID]
+    payload_json: Mapped[str] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(30), default="pending")
+    attempts: Mapped[int] = mapped_column(Integer, default=0)

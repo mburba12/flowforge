@@ -1,0 +1,61 @@
+version: 1
+module: COM
+requirements:
+- id: FF-COM-00001
+  title: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
+    CAPA and
+  requirement: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
+    CAPA and
+  module: COM
+  risk: critical
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: InventoryItem, Shipment, Employee, PayrollRun, Project, Asset, WorkOrder,
+      CAPA and
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null
+- id: FF-COM-00002
+  title: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project, Asset,
+    WorkOrder, CAPA
+  requirement: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project,
+    Asset, WorkOrder, CAPA
+  module: COM
+  risk: critical
+  required_for: enterprise_expansion
+  status: NOT_STARTED
+  sources:
+  - document: ultimate_master_specification
+    page_or_section: 2
+    heading: 'Chapter 1: Vision'
+    source_text: Order, Invoice, InventoryItem, Shipment, Employee, PayrollRun, Project,
+      Asset, WorkOrder, CAPA
+  dependencies: []
+  implementation:
+    backend: []
+    database: []
+    frontend: []
+    infrastructure: []
+  evidence:
+    unit_tests: []
+    integration_tests: []
+    acceptance_scenarios: []
+    security_tests: []
+  provider_dependency: null
+  owner: null
+  notes: null

@@ -1,0 +1,139 @@
+"""Final BG-00/01/02 lifecycle persistence."""
+
+import sqlalchemy as sa
+from alembic import op
+from sqlalchemy.dialects import postgresql
+
+revision = "ff_foundation_final_001"
+down_revision = "ff_foundation_completion_001"
+branch_labels = None
+depends_on = None
+NT = ["foundation_requirement_dependencies", "foundation_artifact_classifications"]
+TT = [
+    "foundation_delegated_access",
+    "foundation_approval_limits",
+    "foundation_sod_rules",
+    "master_data_import_jobs",
+    "master_data_lineage_edges",
+    "master_data_search_index",
+]
+
+
+def b():
+    return [
+        sa.Column("id", postgresql.UUID(), primary_key=True),
+        sa.Column(
+            "tenant_id",
+            postgresql.UUID(),
+            sa.ForeignKey("tenants.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+    ]
+
+
+def r(t):
+    op.create_index(f"ix_{t}_tenant_id", t, ["tenant_id"])
+    op.execute(sa.text(f'ALTER TABLE "{t}" ENABLE ROW LEVEL SECURITY'))
+    op.execute(sa.text(f'ALTER TABLE "{t}" FORCE ROW LEVEL SECURITY'))
+    op.execute(
+        sa.text(
+            f'''CREATE POLICY "{t}_tenant_isolation" ON "{t}" USING (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid) WITH CHECK (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid)'''
+        )
+    )
+
+
+def upgrade():
+    op.create_table(
+        "foundation_requirement_dependencies",
+        sa.Column("id", postgresql.UUID(), primary_key=True),
+        sa.Column("requirement_id", sa.String(80), nullable=False),
+        sa.Column("depends_on_id", sa.String(80), nullable=False),
+        sa.UniqueConstraint("requirement_id", "depends_on_id", name="uq_requirement_dependency"),
+    )
+    op.create_table(
+        "foundation_artifact_classifications",
+        sa.Column("id", postgresql.UUID(), primary_key=True),
+        sa.Column("artifact_path", sa.String(500), unique=True, nullable=False),
+        sa.Column("classification", sa.String(40), nullable=False),
+        sa.Column("requirement_id", sa.String(80)),
+        sa.Column("reviewed", sa.Boolean(), server_default=sa.false()),
+    )
+    op.create_table(
+        "foundation_delegated_access",
+        *b(),
+        sa.Column("grantor_id", postgresql.UUID(), sa.ForeignKey("users.id"), nullable=False),
+        sa.Column("delegate_id", postgresql.UUID(), sa.ForeignKey("users.id"), nullable=False),
+        sa.Column("scope_json", sa.Text(), nullable=False),
+        sa.Column("starts_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("revoked_at", sa.DateTime(timezone=True)),
+    )
+    op.create_table(
+        "foundation_approval_limits",
+        *b(),
+        sa.Column("user_id", postgresql.UUID(), sa.ForeignKey("users.id"), nullable=False),
+        sa.Column("permission_code", sa.String(120), nullable=False),
+        sa.Column("currency_code", sa.String(3), nullable=False),
+        sa.Column("limit_minor", sa.Integer(), nullable=False),
+        sa.UniqueConstraint(
+            "tenant_id", "user_id", "permission_code", "currency_code", name="uq_approval_limit"
+        ),
+    )
+    op.create_table(
+        "foundation_sod_rules",
+        *b(),
+        sa.Column("code", sa.String(80), nullable=False),
+        sa.Column("permission_a", sa.String(120), nullable=False),
+        sa.Column("permission_b", sa.String(120), nullable=False),
+        sa.Column("active", sa.Boolean(), server_default=sa.true()),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_sod_rule"),
+    )
+    op.create_table(
+        "master_data_import_jobs",
+        *b(),
+        sa.Column("entity_type", sa.String(80), nullable=False),
+        sa.Column("status", sa.String(30), server_default="uploaded"),
+        sa.Column("source_reference", sa.String(500), nullable=False),
+        sa.Column("mapping_json", sa.Text(), server_default="{}"),
+        sa.Column("errors_json", sa.Text(), server_default="[]"),
+        sa.Column("cursor", sa.String(250)),
+        sa.Column("requested_by", postgresql.UUID(), sa.ForeignKey("users.id"), nullable=False),
+    )
+    op.create_table(
+        "master_data_lineage_edges",
+        *b(),
+        sa.Column("source_type", sa.String(80), nullable=False),
+        sa.Column("source_id", postgresql.UUID(), nullable=False),
+        sa.Column("target_type", sa.String(80), nullable=False),
+        sa.Column("target_id", postgresql.UUID(), nullable=False),
+        sa.Column("relationship", sa.String(80), nullable=False),
+        sa.UniqueConstraint(
+            "tenant_id",
+            "source_type",
+            "source_id",
+            "target_type",
+            "target_id",
+            "relationship",
+            name="uq_lineage_edge",
+        ),
+    )
+    op.create_table(
+        "master_data_search_index",
+        *b(),
+        sa.Column("entity_type", sa.String(80), nullable=False),
+        sa.Column("entity_id", postgresql.UUID(), nullable=False),
+        sa.Column("document_json", sa.Text(), nullable=False),
+        sa.Column("version", sa.Integer(), server_default="1"),
+        sa.Column("stale", sa.Boolean(), server_default=sa.false()),
+        sa.UniqueConstraint("tenant_id", "entity_type", "entity_id", name="uq_search_index_entity"),
+    )
+    for t in TT:
+        r(t)
+
+
+def downgrade():
+    for t in reversed(TT):
+        op.execute(sa.text(f'DROP POLICY IF EXISTS "{t}_tenant_isolation" ON "{t}"'))
+        op.drop_table(t)
+    for t in reversed(NT):
+        op.drop_table(t)

@@ -34,6 +34,16 @@ class LocationCreate(BaseModel):
     location_type: str = "standard"
 
 
+class InventoryAccounting(BaseModel):
+    """GL posting for an inventory adjustment (inventory vs. offset account)."""
+
+    ledger_id: UUID
+    period_id: UUID
+    offset_account_id: UUID
+    adjustment_date: date
+    currency_code: str = Field(default="USD", min_length=3, max_length=3)
+
+
 class InventoryAdjust(BaseModel):
     product_id: UUID
     warehouse_id: UUID
@@ -41,6 +51,7 @@ class InventoryAdjust(BaseModel):
     quantity: Decimal
     unit_cost: Decimal = Field(ge=0)
     idempotency_key: str
+    accounting: InventoryAccounting | None = None
 
 
 class OrderLineCreate(BaseModel):

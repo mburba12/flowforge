@@ -1,0 +1,1 @@
+Copy the three authoritative specification PDFs, the AI blueprint PDF, and the newest capability inventory TXT into this directory. The BG-00 orchestrator can also copy them from paths passed as parameters.

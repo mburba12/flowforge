@@ -1,0 +1,215 @@
+FLOWFORGE_ACCEPTANCE_RERUN_AND_SPEC_ASSESSMENT
+DOCUMENT_VERSION=1.0
+GENERATED=2026-11-27
+RUN_ID=20261127-173311
+COMMIT=1d005b4 (branch chore/integration-inventory)
+RUNNER=scripts\acceptance\Invoke-IsolatedAcceptanceRerun.ps1
+EVIDENCE=var\acceptance-rerun\20261127-173311\ (summary.txt, results.json, one log per gate, pytest.xml)
+ISOLATION=compose postgres (flowforge-phase1-postgres-1, :5433, db flowforge, migrated from blank) + isolated API container on :8001
+          connecting as flowforge_app. The recovered forgeflow database and the live API on :8000 were not touched.
+
+================================================================================
+1. SPECIFICATION SOURCES - WHAT CAN AND CANNOT BE MEASURED
+================================================================================
+
+Measured on text extracted with pdftotext (sentence-level de-duplication):
+
+  DOCUMENT                                         PAGES  DISTINCT_TEXT  FINDING
+  FlowForge_Ultimate_Master_Specification.pdf        961  0.56%          80 chapter titles; 4 boilerplate sentences repeated ~5,760x
+  FlowForge_Enterprise_Build_Bible.pdf              1124  0.19%          3 boilerplate sentences repeated 9,180x each
+  FlowForge_Mega_Specification_Volume.pdf           1202  1.2%           self-described "specification placeholder"; "A complete real
+                                                                         implementation would require authoring each artifact in detail" x24,000
+  FlowForge_AI_Completion_and_Deployment_Blueprint    27  99.7%          real: 14 build groups, gates, evidence tiers, completion rule
+
+SPEC_FINDING_001=The Ultimate Master Specification defines scope (80 chapter titles) but contains no testable requirements.
+SPEC_FINDING_002=specs\requirements\master-requirements.yaml (BG-00 project) holds 83 entries, all NOT_STARTED, generated from
+                 sentence fragments of the boilerplate. It cannot serve as a completion yardstick.
+SPEC_FINDING_003=The Blueprint (FF-BLUEPRINT-COMPLETE-001) is the only measurable baseline. Its own estimate on 2026-11-26 at
+                 commit f098377: 42% overall; BG-00 (requirement registry) ~5%. f098377 is an ancestor of this branch.
+SPEC_FINDING_004=Reaching the Blueprint's final rule ("required_without_implementation: 0") requires real requirements to be
+                 written for each of the 80 chapters. Until then, completion is measurable only against Blueprint gates and
+                 the dossier's release scope (AP, AR/order status, Payroll, Tax).
+
+================================================================================
+2. GATE RESULTS (19 PASS / 5 FAIL / 24)
+================================================================================
+
+PASS G01 Migration rehearsal on disposable DB: upgrade head, downgrade -1, re-upgrade, RLS check
+PASS G02 Blank DB -> alembic upgrade head: head=ff_phaseb_rls_001, 690 public tables
+FAIL G03 alembic check: models describe fewer tables than migrations create (autogenerate would drop 388 tables and
+         674 indexes, modify 1 nullable). Schema-first tables without ORM models; not data loss, but "no unexplained
+         drift" fails.
+PASS G04 RLS: 682 tenant tables, 682 policies, 0 tables without forced RLS; flowforge_app is not superuser/bypassrls
+PASS G05 Isolated API starts as flowforge_app
+PASS G06 Runtime probe: flowforge_app | row_security on | not superuser
+PASS G07 Health contract (/api/v1/health, /phase1b/health ready + database + storage)
+FAIL G08 Invoke-FlowForgeAcceptance.ps1: POST /api/v1/auth/bootstrap -> HTTP 500
+         "new row violates row-level security policy for table roles" (see DEFECT_001)
+PASS G09 Python compileall
+PASS G10 Ruff check
+FAIL G11 Ruff format --check: 2 files would be reformatted (includes src\flowforge\main.py)
+PASS G12 MyPy, full src\flowforge
+PASS G13 OpenAPI import (>= 358 paths)
+PASS G14 Backend test suite: 335 passed
+PASS G15 API tenant-isolation tests: 8 passed
+PASS G16 Four-tenant PostgreSQL RLS matrix (each tenant sees only its rows; cross-tenant insert rejected; no/unknown
+         context sees zero rows)
+PASS G17 Backup -> restore into temp DB: 690 tables, revision, tenant count and RLS coverage all match
+PASS G18 Transaction rollback probe + isolated API restart recovery
+FAIL G19 Phase 4 live test: all behavioral checks PASSED (4E-4J engines, reconciliation, upload safety, safety boundaries);
+         failed only on a stale hard-coded assertion "Expected 242 public tables; found 690"
+PASS G20 Frontend typecheck
+FAIL G21 Frontend lint: 2 errors (prefer-const, web\src\app\login\page.tsx:86,88), 8 warnings
+PASS G22 Frontend unit tests (vitest)
+PASS G23 Frontend production build
+PASS G24 Tracked secret scan: 0 real secrets (local dev default flowforge:flowforge@localhost reported separately)
+NOT_RUN  Playwright e2e: playwright.config reuses :3000, which is the live web/API
+
+================================================================================
+3. DEFECTS FOUND
+================================================================================
+
+DEFECT_001 severity=CRITICAL  Bootstrap and login do not work under RLS
+  where=src\flowforge\api\routes\auth.py (bootstrap, login); both use get_db, which never sets app.current_tenant_id
+  evidence=bootstrap 500 reproduced against isolated API as flowforge_app; policies on users/roles/user_roles/
+           role_permissions/audit_entries require tenant_id = current_setting('app.current_tenant_id')
+  consequence=login as flowforge_app would also find no user (401). Auth only works when the API runs as a role that
+              bypasses RLS - which is how the recovered runtime currently runs (superuser forgeflow).
+  fix=after resolving/creating the tenant, set transaction-local app.current_tenant_id (and app.current_user_id once
+      known) before touching tenant-owned tables; add an RLS-role integration test for bootstrap + login.
+  note=main commit 2e5de15 "Fix bootstrap tenant-scoping" is already in this branch; it only reorders arguments.
+
+DEFECT_002 severity=MEDIUM  ORM metadata does not cover 388 migrated tables (G03)
+DEFECT_003 severity=LOW     Stale assertion in scripts\Run-Phase4-Comprehensive-Live-Test.ps1 (242 tables)
+DEFECT_004 severity=LOW     Ruff format (2 files), frontend lint (2 prefer-const errors)
+
+================================================================================
+4. WHAT THIS MEANS FOR COMPLETION
+================================================================================
+
+VERIFIED_NOW (fresh DB, restricted role):
+  migration chain from blank, forced RLS on every tenant table, four-tenant DB isolation, 335 backend tests, type-safety,
+  backup/restore with RLS preserved, restart recovery, frontend typecheck/tests/build, no tracked secrets.
+  -> Blueprint BG-13 gates "Disposable migration passes", "Restore passes", "No plaintext secrets" (tracked) are met
+     locally; BG-14 four-tenant DB matrix passes at the database layer.
+
+NOT_VERIFIED / BLOCKED:
+  any authenticated workflow under RLS (DEFECT_001 blocks bootstrap/login), Playwright e2e, accounting invariants,
+  AP/AR/Payroll/Tax end-to-end, Azure (BG-13 deploy), providers (BG-11), the 80-chapter scope (no requirements exist).
+
+RUNTIME_GAP:
+  The live system (recovered forgeflow DB, superuser, create_all schema, 0 RLS policies) does not reflect the verified
+  foundation above. The verified path is: migrations -> restricted role -> RLS. Moving the live runtime onto that path
+  (plus mapping the ~400 legacy business rows) is the shortest route to a defensible production state.
+
+ASSESSMENT:
+  The Blueprint's 42% is credible for foundation and platform. Release acceptance remains low until DEFECT_001 is fixed and
+  the AP/AR/Payroll/Tax workflows pass end-to-end. A single overall percentage against the master specification is not
+  computable because that document has no requirements.
+
+================================================================================
+5. UPDATE 2026-11-27 (after DEFECT_001 fix) - RUN 20261127-174xxx
+================================================================================
+
+DEFECT_001 status=FIXED
+  change=src\flowforge\db\session.py enter_tenant_context(); src\flowforge\api\routes\auth.py bootstrap + login install
+         transaction-local tenant (then user) context after the tenant is resolved server-side.
+  test=tests\rls\test_auth_under_rls.py (bootstrap 201, /me tenant, login 200, wrong password 401, duplicate 409, cleanup).
+       Skips with a reason unless connected as a non-superuser without BYPASSRLS on a forced-RLS users table.
+       Verified: PASSES with fix; FAILS with the previous auth.py restored.
+  deployed=live API rebuilt and recreated; health ok; unknown user / unknown tenant login -> 401; 0 server errors.
+           Note: the previous live image could not be tagged for rollback (replaced by the rebuild); rebuild from 1d005b4
+           if needed. flowforge-phase1-api:rollback-20261127 (pre-Priority-1) still exists.
+
+PLATFORM GATES (rerun): 19 PASS / 5 FAIL - same five as before (G03 drift, G08, G11 format, G19 stale count, G21 lint).
+  Backend suite now 336 passed. G08 failed in that run only because the isolated container used the pre-fix image.
+
+LIVE WORKFLOWS (isolated API :8001 on rebuilt image, flowforge_app, forced RLS):
+  FAIL W00 Invoke-FlowForgeAcceptance.ps1: alembic current, bootstrap, /me, phase statuses, ruff check all PASS;
+           stops at ruff format --check (DEFECT_004). Bootstrap under RLS now works.
+  PASS W01 Phase 1 platform workflow: bootstrap/login, /me, roles, workflows, documents, notifications, integrations,
+           audit generation (>=4 records), unauthenticated rejection, 336-test regression.
+  PASS W02 Phase 2 general-ledger workflow: currency, fiscal calendar, open period, ledger, accounts; unbalanced journal
+           rejected (422); creator self-approval blocked (409); separate approver approves and posts; trial balance
+           100.00 / 100.00; 13-test regression.
+  Run copies differ from scripts\Run-Phase1/2-Final-Acceptance.ps1 only in API port (8000 -> 8001) and, for Phase 2,
+  the pinned revision check (original pinned ff_all_apis_delta_001; current head ff_phaseb_rls_001).
+
+BROWSER (Playwright, isolated web :3001 -> API :8001): 38 passed, 1 failed.
+  FINDING_E2E_001=The 38 passes do not sign in. The auth boundary renders the sign-in form at the same URL, so
+                  "workspace is reachable" assertions pass on the login screen. Evidence tier E0 (navigation) only.
+  FINDING_E2E_002=The one failure ("sidebar navigation opens Documents") is the only test that expects signed-in chrome;
+                  it fails because no session exists. No browser test exercises a business workflow.
+  FINDING_E2E_003=The production web bundle pre-fills the administrator email on the sign-in form.
+
+ACCEPTANCE-SCRIPT QUALITY
+  FINDING_ACC_001=18 of 20 scripts\Run-Phase*-Acceptance.ps1 only assert GET /phaseX/status == "implemented" (a constant)
+                  and rerun pytest folders already in the main suite. Per the Blueprint, status endpoints are not
+                  completion evidence.
+  FINDING_ACC_002=No live workflow test exists for AP, AR/order status, Payroll, or Tax. Release-scope status: UNKNOWN.
+
+CURRENT LEVEL (evidence tiers per Blueprint Appendix A)
+  Platform/tenancy/RLS ............ E3-E5  (migrations from blank, 682 forced-RLS tables, four-tenant matrix,
+                                            restore, restart, bootstrap/login under RLS)
+  General ledger ................... E4     (live posting workflow with SoD and trial balance)
+  AP / AR / Payroll / Tax ......... E2     (unit tests only; no live workflow)
+  Frontend ......................... E0-E1  (builds, typechecks; no signed-in browser test)
+  Azure / providers ............... not tested
+
+================================================================================
+6. UPDATE 2026-11-27 - RELEASE WORKFLOWS + CLEANUPS - RUN 20261127-181008
+================================================================================
+
+RESULT=25 PASS / 1 FAIL / 26 gates (commit 57f0dbd + step-2 changes)
+  PASS G08  main acceptance script end to end (was failing on bootstrap, then on ruff format)
+  PASS G11  ruff format (catalog\router.py formatted)
+  PASS G14  backend suite (includes tests\workflows)
+  PASS G14W release workflows AP/AR/Payroll/Tax/GL: 18 passed (see FLOWFORGE_RELEASE_WORKFLOWS_20261127.txt)
+  PASS G19  Phase 4 live test: stale "exactly 242 / 238 tables" assertions replaced by invariants
+            (>= 242 public tables; forced RLS on every tenant table); runner supplies two throwaway tenants
+  PASS G21  frontend lint: 0 errors (prefer-const in login page). 8 warnings remain (unused vars,
+            hook dependency rules, window.location.assign) - left because hook changes alter behaviour.
+  PASS G25  browser acceptance, signed in: 41 passed. Tests now sign in through the real form with a
+            throwaway tenant from global setup, assert the signed-in shell (sidebar + Log out, no sign-in
+            heading), the AP workspace reads live data with no error notice, and log-out protects routes.
+            playwright.config targets an isolated web (:3100, never reusing a server) and API (:8001) and
+            refuses :8000 unless E2E_ALLOW_LIVE=1.
+  FAIL G03  alembic check: ORM metadata still lacks 388 schema-first tables (out of scope; needs schema
+            consolidation into canonical models).
+
+PRIVACY_FIX=sign-in form no longer pre-fills the administrator email.
+LIVE_RUNTIME=deployed afterwards on owner approval (section 7).
+
+================================================================================
+7. LIVE DEPLOYMENT 2026-11-27 23:18 UTC (owner approved)
+================================================================================
+
+DEPLOYED_COMMIT=117ffea (API and web)
+STEPS:
+  1. Rollback images: flowforge-phase1-web:rollback-predeploy-20261127-181623 (docker commit of the running web);
+     flowforge-phase1-api:rollback-0628e0a (built from git commit 0628e0a, the code that was live; docker commit
+     of the running API was impossible because its image layers had been garbage-collected).
+  2. Database backup: var\backups\forgeflow-predeploy-20261127-181800.dump (custom format, 1,153,390 bytes,
+     370 table-data entries verified with pg_restore -l, SHA-256 prefix AE7C807D53A9A8C4, gitignored).
+  3. API rebuilt and recreated with docker-compose.yml + compose.recovered-database.yml (unchanged config,
+     still the recovered forgeflow database).
+  4. Web rebuilt and recreated with the same docker run settings (network flowforge-phase1_default, port 3000,
+     restart unless-stopped, FLOWFORGE_API_BASE_URL=http://flowforge-phase1-api-1:8000).
+  5. Live database: inserted 19 standard units of measure (ON CONFLICT DO NOTHING). No other data changed;
+     tenants=1, users=1 before and after.
+VERIFIED (read-only; no business records written to the live tenant):
+  health ok; unknown-user and unknown-tenant login 401; unauthenticated business read 401; /me returns the
+  production tenant; 31/31 catalogued business resources 200; foreign-tenant token sees 0 users (own 1);
+  web /login 200, proxy health 200, administrator email absent from the web bundle; 0 API 5xx, 0 web errors.
+NOT_VERIFIED_LIVE: posting workflows (they would create real accounting records); verified on the isolated
+  stack instead (G14W, G25). The live database still runs as superuser without RLS policies.
+ROLLBACK:
+  API: docker tag flowforge-phase1-api:rollback-0628e0a flowforge-phase1-api:latest, then
+       docker compose --env-file .env.recovered-database -f docker-compose.yml -f compose.recovered-database.yml
+       up -d --no-deps --force-recreate api
+  Web: docker rm -f flowforge-phase1-web-1, then docker run -d --name flowforge-phase1-web-1
+       --network flowforge-phase1_default -p 3000:3000 --restart unless-stopped
+       -e FLOWFORGE_API_BASE_URL=http://flowforge-phase1-api-1:8000 flowforge-phase1-web:rollback-predeploy-20261127-181623
+  Data: the only data change is the units-of-measure rows; restore the backup above only if required.
+
+END_OF_REPORT

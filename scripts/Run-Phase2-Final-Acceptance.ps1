@@ -1,13 +1,34 @@
 $ErrorActionPreference = "Stop"
+$Root = Split-Path -Parent $PSScriptRoot
+Set-Location $Root
+$Python = Join-Path $Root ".venv\Scripts\python.exe"
+
+if (-not (Test-Path -LiteralPath $Python -PathType Leaf)) {
+    throw "Python executable not found: $Python"
+}
+
 $Base = "http://127.0.0.1:8000"
 $Slug = "phase2-final-$(Get-Date -Format 'yyyyMMddHHmmss')"
-$Password = "FlowForge-Phase2-Final-2026!Secure"
+$Password = $env:FLOWFORGE_TEST_PASSWORD
 function Pass($Name) { Write-Host "PASSED: $Name" -ForegroundColor Green }
 function Gate($Name, $Action) { Write-Host "RUNNING: $Name" -ForegroundColor Cyan; & $Action; Pass $Name }
 
 Gate "Database revision" {
     $r = docker compose exec -T postgres psql -U flowforge -d flowforge -tAc "SELECT version_num FROM alembic_version;"
-    if ($r.Trim() -ne "dee8fe877d63") { throw "Unexpected revision: $r" }
+    if ($r.Trim() -ne "ff_all_apis_delta_001") {
+    throw "Unexpected current revision: $r"
+}
+
+$history = & $Python -m alembic history 2>&1
+$historyCode = $LASTEXITCODE
+
+if ($historyCode -ne 0) {
+    throw "Unable to inspect Alembic history. Exit code: $historyCode"
+}
+
+if (($history | Out-String) -notmatch "dee8fe877d63") {
+    throw "Historical Phase 2 revision dee8fe877d63 is missing from the migration chain."
+}
 }
 Gate "Phase 2 statuses" {
     if ((Invoke-RestMethod "$Base/phase2a/status").status -ne "implemented") { throw "2A status failed" }
@@ -54,9 +75,27 @@ Gate "Creator approval blocked" {
 Gate "Database-backed separate approver" {
     $tenantId = (Invoke-RestMethod -Uri "$Base/api/v1/me" -Headers $OwnerHeaders).tenant_id
     $approverId = [guid]::NewGuid().ToString()
-    $hash = & ".\.venv\Scripts\python.exe" -c "from flowforge.core.security import hash_password; print(hash_password('Approver-2026!Secure'))"
+    $env:FLOWFORGE_APPROVER_PASSWORD_FOR_HASH = $Password
+
+try {
+    $hash = & $Python -c "import os; from flowforge.core.security import hash_password; print(hash_password(os.environ['FLOWFORGE_APPROVER_PASSWORD_FOR_HASH']))"
+    $hashExitCode = $LASTEXITCODE
+
+    if ($hashExitCode -ne 0) {
+        throw "Approver password hashing failed. Exit code: $hashExitCode"
+    }
+
+    $hash = ($hash | Out-String).Trim()
+
+    if ([string]::IsNullOrWhiteSpace($hash) -or $hash.Length -lt 20) {
+        throw "Approver password hash is missing or invalid."
+    }
+}
+finally {
+    Remove-Item Env:\FLOWFORGE_APPROVER_PASSWORD_FOR_HASH -ErrorAction SilentlyContinue
+}
     docker compose exec -T postgres psql -U flowforge -d flowforge -v ON_ERROR_STOP=1 -c "INSERT INTO users (id,tenant_id,email,password_hash,display_name,is_active,is_deleted) VALUES ('$approverId','$tenantId','approver-$Slug@example.com','$hash','Phase 2 Approver',true,false);" | Out-Null
-    $login=@{tenant_slug=$Slug;email="approver-$Slug@example.com";password="Approver-2026!Secure"}|ConvertTo-Json
+    $login=@{tenant_slug=$Slug;email="approver-$Slug@example.com";password = $Password}|ConvertTo-Json
     $a=Invoke-RestMethod -Method Post -Uri "$Base/api/v1/auth/login" -ContentType "application/json" -Body $login
     $script:ApproverHeaders=@{Authorization="Bearer $($a.access_token)"}
 }

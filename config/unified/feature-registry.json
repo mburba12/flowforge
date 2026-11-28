@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "defaultMode": "local",
+  "modules": [
+    "identity", "tenancy", "audit", "workflow", "tasks", "notifications", "files", "jobs", "outbox",
+    "gl", "ap", "ar", "orders", "reconciliation", "inventory", "manufacturing", "shipping",
+    "workforce", "payroll", "benefits", "retirement", "banking", "treasury", "tax",
+    "documents", "search", "reports", "forecasting", "ai", "quality", "projects", "assets",
+    "customer_portal", "vendor_portal", "worker_portal", "auditor_portal", "billing", "support"
+  ],
+  "consequentialModules": ["payments", "payroll_release", "tax_filing", "shipping_label_purchase", "ai_actions"],
+  "requiredExternalProviders": [
+    "Microsoft Entra ID", "Microsoft Graph", "Microsoft Azure", "payroll provider", "banking provider",
+    "tax provider", "shipping carrier", "Stripe", "DocuSign or Adobe Acrobat Sign", "Microsoft Copilot or Azure AI"
+  ]
+}

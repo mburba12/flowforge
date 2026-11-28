@@ -1,4 +1,4 @@
-﻿param(
+param(
     [switch]$CreateCheckpoints
 )
 
@@ -277,4 +277,3 @@ if ($CreateCheckpoints) {
     if ($LASTEXITCODE -ne 0) { throw "Final Phase 4 tag failed" }
 }
 Write-Host "FLOWFORGE PHASE 4E-4J CONTINUOUS INSTALLATION PASSED" -ForegroundColor Green
-

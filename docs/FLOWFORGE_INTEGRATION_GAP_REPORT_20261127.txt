@@ -1,0 +1,169 @@
+FLOWFORGE_INTEGRATION_GAP_REPORT
+DOCUMENT_VERSION=1.0
+GENERATED=2026-11-27
+SOURCE_INVENTORY=artifacts\inventory\20261127-165157\inventory-report.txt (+ routes.csv, tables.csv, frontend_resources.csv)
+GENERATOR=scripts\inventory\Get-FlowForgeIntegrationInventory.ps1 (read-only; DB session forced READ ONLY; 0 mutating HTTP requests)
+DOSSIER_STEPS_COVERED=NEXT_001..NEXT_005, NEXT_007, NEXT_008. NEXT_006 (authenticated GET status codes) = UNKNOWN until rerun with credentials.
+CHANGES_TO_RUNTIME=NONE
+
+================================================================================
+0. HEADLINE
+================================================================================
+
+HEADLINE_001=The "No readable <X> endpoint" message on every business page is caused by ONE backend bug, not by missing routes:
+             src\flowforge\resource_contracts\router.py:70 calls metadata.reflect(bind=db.sync_session.connection()) inside async
+             code -> sqlalchemy.exc.MissingGreenlet -> HTTP 500 on every /api/v1/business/* request (confirmed in API logs).
+             web\src\components\business-workspace.tsx swallows the 500 (empty catch), probes six legacy prefixes, then shows the
+             generic message. Evidence state: CONFIRMED (logs), not inferred.
+HEADLINE_002=Fixing that bug alone will NOT make the pages useful: 34 of 71 frontend resources map to table names that do not
+             exist (-> 404), and the 37 that resolve point at current public.* tables that hold 0 rows. The business data lives
+             only in the legacy schemas (ap, ar, inventory, payroll, tax, procurement, payments).
+HEADLINE_003=Tenant isolation and RBAC are not enforced at the database or route level in this runtime (Section 3). The generic
+             business router is therefore also a cross-tenant read AND write path. It must be fixed or removed before any
+             second tenant exists.
+HEADLINE_004=Router registration is NOT a gap: all 85 APIRouter objects in src are mounted; the live route walk equals OpenAPI
+             exactly (383 operations, 0 mismatches). ISSUE_ROUTER_REGISTRATION_UNKNOWN -> resolved as "all mounted",
+             replaced by ISSUE_ROUTE_SURFACE_SPRAWL below.
+
+================================================================================
+1. MEASURED FACTS (new, from this inventory)
+================================================================================
+
+API
+  OPENAPI_OPERATIONS=383 (GET 94, POST 286, PATCH 2, PUT 1) over 368 paths
+  ROUTE_PREFIXES=/api/v1 250 (of which 210 are double-prefixed /api/v1/api/v2/...), /api/v4c 28, /api/v4a 21, /api/v3 11,
+                 /api/v4b 11, /api/v4 10, /api/v3b 9, plus 29 /phaseN* routes (27 of them status endpoints)
+  DOUBLE_PREFIX_PATHS=210 (e.g. /api/v1/api/v2/crm/leads) -> v2 routers include an /api/v2 prefix and are mounted under /api/v1
+  GENERIC_CRUD_ROUTERS=3 overlapping: /api/v1/business/{resource}, /api/v1/platform/{resource}, /api/v1/resources/{resource}
+  SOURCE_ROUTERS=85 mounted, 0 unmounted, 0 module import errors
+  ROUTES_WITHOUT_AUTH_DEPENDENCY=36 (27 status endpoints + support/problem-reports, ai/uploads/inspect,
+                                  reconciliations/amount, reconciliations/commerce-to-cash, 5x */providers)
+  MUTATING_ROUTES=289; handlers with any permission check = ~9 (heuristic). require_permission() is defined
+                  (phase1a\rbac.py) and called NOWHERE in src.
+  PRINCIPAL=core\security.py: JWT carries only sub + tenant_id. No permissions, no session lookup, no user-active check.
+            Consequence: logout/revocation cannot work; a disabled user keeps access until token expiry (30 min).
+
+DATABASE (forgeflow @ forgeflow-v4-phase0-postgres-1)
+  TABLES=370; ALEMBIC_VERSION=20261124_0009 (legacy chain; does not describe the 319 create_all tables)
+  APP_DB_ROLE=forgeflow, SUPERUSER=true, BYPASSRLS=true
+  RLS_ENABLED_TABLES=0; POLICIES=0   (IMPLEMENTATION_STATUS.md claims "forced-RLS schema" - not true for this DB)
+  PUBLIC_SCHEMA=320 tables, 9 non-empty, 21 rows total - only identity/bootstrap rows (1 tenant, 1 user, 1 role,
+                7 permissions, 7 role_permissions, 1 audit_entry, 1 domain_event)
+  LEGACY_SCHEMAS (non-empty rows): identity 95, tax 156, payroll 80, audit 31, inventory 19, ar 10, procurement 4,
+                payments 4, ap 3, documents 0, platform 0
+  LEGACY_IDENTITY=17 organizations, 19 users, 17 roles, 8 permission codes (different vocabulary from current catalog)
+  CURRENT_PERMISSION_CATALOG=7 codes: audit.read, documents.manage, integrations.manage, roles.manage, tenant.manage,
+                             users.manage, workflows.manage   -> no finance/AP/AR/payroll/tax permissions exist at all
+  ADMIN_PRINCIPAL=flowforge-production, role Owner, 7 permissions
+  NUMERIC_HYGIENE=0 float-typed money-like columns; 0 tables without PK (good)
+
+FRONTEND
+  PAGES=54. Five different workspace components in use: DomainWorkspace (ap, ar, orders, inventory, finance, banking,
+        reconciliation, payroll, tax, workforce), ServiceWorkspace, BackendFeatureWorkspace, Workspace (enterprise/*),
+        BusinessWorkspace (modules/[slug]); plus 10 part2a/part2b pages and billing/shipping/onboarding pages.
+  BUSINESS_RESOURCES=71 across 21 modules (business-modules.ts)
+    resolves to an existing table = 37 (all with 0 rows for the tenant)
+    alias -> nonexistent table (404 after fix) = 34, incl. release-critical: vendors, customers, ap/payments, ar/aging,
+            journals, trial-balance, payroll/exceptions
+  LIKELY_REAL_TABLES_FOR_MISSING_ALIASES (unverified, needs domain decision):
+    vendors -> vendor_profiles | customers -> customer_profiles or commerce_customers | workers -> worker_profiles or
+    workforce_workers | journals -> journal_entries | reconciliations -> finance_reconciliation_sessions |
+    organizations/people -> party_organizations/party_people | audit -> audit_entries
+
+================================================================================
+2. ISSUE STATUS UPDATES (against dossier Section 4)
+================================================================================
+
+ISSUE_FRONTEND_ENDPOINT_DISCOVERY      status=ROOT_CAUSE_FOUND  (HEADLINE_001 + HEADLINE_002)
+ISSUE_ROUTER_REGISTRATION_UNKNOWN      status=CLOSED_AS_NOT_A_GAP (all mounted; see new sprawl issue)
+ISSUE_PERMISSION_COVERAGE_UNKNOWN      status=CONFIRMED_GAP (no route-level RBAC; 7-code catalog; Principal has no permissions)
+ISSUE_CURRENT_TABLE_DATA_EMPTY         status=CONFIRMED (public business tables 0 rows; legacy holds ~400 business rows)
+ISSUE_AUTH_SCHEMA_HISTORY_MISMATCH     status=CONFIRMED (alembic 20261124_0009 vs 370 tables)
+ISSUE_DUPLICATE_PHASE_IMPLEMENTATIONS  status=CONFIRMED and quantified: 60 route-owning packages; e.g. workforce has
+                                       completion/final/ultimate + phase4a* + phase4c_stage6; CRM has crm_sales/completion/final.
+ISSUE_COMPOSE_FRAGMENTATION            status=CONFIRMED. Running: 2 postgres (flowforge-phase1-postgres-1 :5433 unused by API,
+                                       forgeflow-v4-phase0-postgres-1 :5432 authoritative), redis from the forgeflow-v4 project,
+                                       Start-FlowForge.ps1 uses docker-compose.yml + compose.recovered-database.yml which define
+                                       no web/redis/azurite/mailpit services.
+ISSUE_SECURITY_RECOVERY_SHORTCUTS      status=CONFIRMED + new item: docker-compose.phase-c.yml (tracked, modified) contains a
+                                       plaintext DB password in DATABASE_URL. Rotate it and move to .env.
+
+NEW ISSUES
+ISSUE_TENANT_ISOLATION_NOT_ENFORCED   severity=CRITICAL
+  evidence=0 RLS policies; app connects as superuser (bypasses RLS even if added); get_tenant_db only sets session.info.
+           Services with explicit tenant_id filters (229 occurrences in src) are protected; anything relying on RLS is not.
+           resource_contracts router has no tenant filter on SELECT or UPDATE.
+  fix=Explicit tenant_id predicate in every generic/shared query now; then a non-superuser, NOBYPASSRLS app role +
+      RLS policies via Alembic; tenant isolation tests (GATE_05).
+ISSUE_GENERIC_WRITE_BYPASS             severity=CRITICAL
+  evidence=PATCH /api/v1/business/{resource}/{id} updates any non-id column of any tenant table (users, roles, journals...)
+           for any authenticated user: no permission check, no audit, no tenant predicate, no state-machine validation.
+  fix=Remove the PATCH (or restrict to an allow-list of master-data resources with permission + audit) immediately.
+ISSUE_ROUTE_SURFACE_SPRAWL             severity=HIGH
+  evidence=210 double-prefixed paths, 7 API version prefixes, 3 generic CRUD routers, 27 phase status routes.
+  fix=Part of P2/P5: canonical package per capability, single /api/v1 namespace, delete status/demo routes.
+ISSUE_NO_SESSION_REVOCATION            severity=HIGH (GATE_04)
+  evidence=stateless JWT, no session table lookup in current_principal.
+
+================================================================================
+3. PRIORITIZED FIX ORDER (non-destructive first)
+================================================================================
+
+PRIORITY_1 Stop the bleeding in the generic router (small, contained, today)
+  1a. Replace sync reflect with an async-safe version (await db.run_sync(...) or reflect once at startup).
+  1b. Add WHERE tenant_id = principal.tenant_id to list/get.
+  1c. Remove PATCH, or gate it behind a permission + audit for an explicit allow-list.
+  1d. business-workspace.tsx: surface status code + detail instead of empty catch; delete the six-prefix probing loop.
+  acceptance=GET /api/v1/business/<each of 37 resolvable resources> returns 200 with total=0; others return 404 with a
+             visible message; no 5xx in API log.
+  NOTE=This only turns "error" into "empty". It is not feature completion.
+  STATUS_2026-11-27=DONE (1a-1d) on branch chore/integration-inventory; API and web images rebuilt and containers recreated
+    (rollback images: flowforge-phase1-api:rollback-20261127, flowforge-phase1-web:rollback-20261127).
+    Verified: 37 resources 200 / 34 resources 404 with detail / 0 server errors; users+roles return 1 row for
+    flowforge-production and 0 for a foreign-tenant token; unauthenticated 401; bad record id 404.
+    Not verified: signed-in browser rendering of the new error text.
+
+PRIORITY_2 One Compose stack (P1) - before any further feature work
+  Single compose file set owning web, api, redis, azurite, mailpit, and an external reference to the recovered DB network
+  (or a planned move of the volume). Migrations + alembic.ini in the API image. Retire flowforge-phase1-postgres-1 only
+  after confirming nothing uses it (do NOT delete its volume).
+
+PRIORITY_3 Canonical domain selection (P2) for release scope only: AP, AR/orders, GL, payroll, tax
+  For each: pick one package (router+service+tables) from the overlapping phase/completion/final sets, record an ADR, and
+  re-point the frontend to that package's typed routes. Replaces the generic CRUD router for these domains.
+
+PRIORITY_4 RBAC (P6)
+  Expand permission catalog to per-domain codes (ap.vendor.read/write, ap.bill.post, ar.invoice.post, payroll.run.approve,
+  tax.return.file, gl.journal.post ...). Load permissions into Principal; enforce with a route dependency; allow/deny tests.
+
+PRIORITY_5 Tenant enforcement in the database
+  New app DB role (LOGIN, NOSUPERUSER, NOBYPASSRLS); RLS policies via Alembic on tenant tables; keep superuser for
+  migrations only. Requires P3 baseline first.
+
+PRIORITY_6 Schema baseline (P3) then legacy data migration (P4)
+  Rehearse on a restored clone. Legacy volumes are small (~400 business rows), so domain-by-domain mapping with
+  reconciliation totals is tractable. Order: identity/tenant map (17 legacy orgs -> 1 current tenant? decision needed),
+  reference data (57 tax jurisdictions), AP, AR, inventory, payroll, tax.
+
+================================================================================
+4. DECISIONS NEEDED FROM THE OWNER
+================================================================================
+
+DECISION_001=Legacy tenancy: 17 legacy organizations vs 1 current tenant. Which legacy orgs are real business data to
+             migrate into flowforge-production, which become separate tenants, and which are test fixtures to archive?
+DECISION_002=Generic business router: keep as a read-only browsing tool (fixed) or remove in favor of typed domain routes?
+DECISION_003=Canonical package per release domain (Priority 3) - agent can propose with evidence, owner approves.
+DECISION_004=Authoritative Postgres: keep forgeflow-v4-phase0 container/volume as permanent, or plan a controlled move
+             into the flowforge compose project.
+
+================================================================================
+5. UNKNOWN / NOT YET MEASURED
+================================================================================
+
+UNKNOWN_001=Authenticated status codes for all 94 GET routes (rerun inventory with credentials; GET-only).
+UNKNOWN_002=Whether the 229 explicit tenant filters cover every service query (needs per-service review/tests).
+UNKNOWN_003=Behaviour of DomainWorkspace/ServiceWorkspace/Workspace pages (they use other endpoint logic than
+            BusinessWorkspace; not yet traced).
+UNKNOWN_004=Backend test suite results (pytest not in API image).
+
+END_OF_REPORT

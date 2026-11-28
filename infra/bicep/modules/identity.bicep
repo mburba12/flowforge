@@ -1,4 +1,4 @@
-﻿param location string
+param location string
 param environmentName string
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {

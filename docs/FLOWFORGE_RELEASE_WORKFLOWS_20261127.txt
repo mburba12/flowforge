@@ -1,0 +1,137 @@
+FLOWFORGE_RELEASE_SCOPE_WORKFLOW_VERIFICATION
+DOCUMENT_VERSION=1.0
+GENERATED=2026-11-27
+SCOPE=Dossier release scope (AP, AR with order status, Payroll, Tax) + the shared general-ledger posting rules
+TESTS=tests\workflows\ (18 tests) - real FastAPI app in-process, real PostgreSQL, restricted role flowforge_app,
+      forced RLS. Each test bootstraps its own tenant, owner and second approver, ledger, open period and chart of
+      accounts, and deletes the tenant afterwards.
+RUN=pytest tests\workflows with FLOWFORGE_DATABASE_URL pointing at the isolated database as flowforge_app.
+    Skipped (with the reason) when connected as a superuser or without forced RLS.
+EVIDENCE_TIER=E3/E4 per Blueprint Appendix A (service + database integration through the live API surface).
+
+================================================================================
+1. WORKFLOWS AND CONTROLS VERIFIED
+================================================================================
+
+AP  test_ap_procure_to_pay
+    vendor -> PO (draft) -> approve-before-submit rejected -> submit -> creator approval rejected (SoD)
+    -> second user approves -> over-receipt rejected -> full receipt -> invoice -> 3-way match "matched"
+    -> post (once; re-post rejected) -> open item 300.00 -> pay 0 / 300.01 rejected -> pay 100 + 200
+    -> pay again rejected -> open item paid -> AP reconcile "reconciled" (subledger 0 = GL 0)
+    -> audit entries for PO, receipt, invoice.
+    GL asserted after posting and after payment: every journal balanced; trial balance equals posted
+    journal lines; AP control -300.00 then 0.00; expense 300.00; cash -300.00.
+AP  test_ap_price_variance_blocks_posting: invoice price 27.00 vs PO 25.00 -> "exception/price_variance";
+    posting rejected; no open item.
+AP  test_ap_posting_rejected_in_closed_period: posting into a closed period rejected; no journal; no open item.
+
+AR  test_ar_order_to_cash
+    inventory adjust idempotent (duplicate key rejected), negative stock rejected -> order 20 @ 10.00 "approved"
+    -> ship before reserve rejected -> reserve (once) -> over-reservation rejected -> ship + invoice (once)
+    -> stock 50 -> 30, reserved 0 -> order "invoiced" -> receipt over-allocation rejected -> 150 partial
+    -> 50 final -> open item paid -> further receipt rejected.
+    GL: AR 200 then 0; revenue -200; COGS 120; cash 200; trial balance equals posted lines.
+AR  test_ar_credit_limit_holds_order: order over credit limit -> "credit_hold"; reservation rejected.
+AR  test_ar_invoice_rejected_in_closed_period: ship/invoice rejected; no new journal; stock unchanged.
+AR  test_ar_inventory_valuation_reconciles_to_gl: GL inventory account == on-hand x cost (30 x 6.00 = 180.00).
+AR  test_ar_inventory_adjustment_rejected_in_closed_period: adjustment rejected; stock unchanged.
+
+PAY test_payroll_gross_to_net_to_gl
+    negative net pay rejected -> calculate (once) -> gross 2680.00, employee tax 263.00, employer tax 201.20
+    (half-up), deductions 70.00, net 2347.00 (hand-computed) -> post before approval rejected -> creator
+    approval rejected -> second user approves -> post (once) -> GL: wages 2680.00, employer tax expense 201.20,
+    payables -263.00 / -201.20 / -70.00 / -2347.00 -> pay net -> net pay payable 0, cash -2347.00
+    -> payroll reconcile "reconciled".
+PAY test_payroll_post_rejected_in_closed_period
+PAY test_payroll_calculation_is_reproducible: identical inputs in two runs give identical results.
+PAY test_payroll_payment_cannot_exceed_net_pay: payment settles the net-pay liability; second payment rejected.
+
+TAX test_tax_calculation_rules: 6.2% on 1000.00 = 62.00; wage-base cap 168600 x 6.2% = 10453.20; additional
+    withholding added; exempt = 0; rule for an unknown jurisdiction rejected.
+TAX test_tax_liability_return_remittance: liability 263.00 from posted payroll -> reconcile before remittance
+    "reconciled" -> remit before approval rejected -> creator approval rejected -> second user approves
+    -> remit 263.01 rejected -> remit 263.00 -> further remittance rejected -> liability paid -> employee tax
+    payable 0 in GL -> reconcile after remittance "reconciled" (0 = 0).
+TAX test_tax_remittance_rejected_in_closed_period: rejected; no journal; liability still open.
+
+GL  test_gl_journal_approve_post_and_trial_balance: unbalanced journal 422; post before approval 409;
+    creator approval 409; approve + post; re-post 409; trial balance 100.00/100.00.
+GL  test_gl_post_rejected_in_closed_period: 409 (previously an unhandled error -> 500).
+GL  test_gl_post_rejected_outside_period_dates: journal dated outside the period rejected.
+
+================================================================================
+2. DEFECTS FOUND AND FIXED
+================================================================================
+
+DEFECT-POST-01 severity=CRITICAL  Subledger postings never reached the general ledger balances
+  evidence=before fix: AP posted 300.00/300.00 in journal lines but trial balance 0/0; payroll 2881.20 vs 0/0;
+           tax 3144.20 vs 0/0. Eight call sites (AP invoice, AP payment, AR COGS, AR invoice, AR receipt,
+           payroll posting, payroll payment, tax remittance) inserted status="posted" journals directly,
+           bypassing PostingEngine, so AccountBalance (and the trial balance) never moved.
+  fix=phase2b\posting.py post_system_journal(): one validated path for subledger journals - open period,
+      journal date inside the period, active postable accounts belonging to the ledger, one-sided non-negative
+      lines, balanced and non-zero, then AccountBalance updated. All eight call sites use it; PostingEngine
+      shares the same validation and balance update. Business document and journal commit together, so a
+      rejected posting leaves neither behind.
+
+DEFECT-POST-02 severity=CRITICAL  Closed accounting periods accepted subledger postings
+  evidence=before fix: AP invoice, payroll and tax remittance posted into a closed period (HTTP 200/201).
+  fix=covered by post_system_journal (period must be open; date within period). Verified for AP, AR, inventory,
+      payroll, tax and manual GL journals.
+
+DEFECT-POST-03 severity=HIGH  Manual GL post route returned HTTP 500 on ledger rule violations
+  fix=main.py maps PostingError to 409 with the rule message.
+
+DEFECT-REF-01 severity=HIGH  No units of measure on a fresh database; products could not be created
+  evidence=products.base_uom -> units_of_measure(code); the migration chain seeded none and no API creates them;
+           the failure surfaced as HTTP 500 (foreign-key violation).
+  fix=migration ff_seed_uom_001 seeds 19 standard units idempotently; main.py maps IntegrityError to a
+      generic 409 without exposing database internals.
+
+DEFECT-AR-01 severity=MEDIUM  Shipment COGS used the first product's accounts for every line
+  fix=COGS and inventory credits are aggregated per product account pair.
+
+DEFECT-PAY-01 severity=HIGH  Payroll payments were not limited to net pay and did not settle the liability
+  evidence=the same run could be paid repeatedly; payroll_liabilities.open_amount never decreased.
+  fix=payment must belong to a worker in the run, cannot exceed that worker's unpaid net pay or the open
+      net-pay liability; the liability is reduced and the run marked paid when settled.
+
+DEFECT-PAY-02 severity=MEDIUM  Payroll journals were dated "today" instead of the pay date
+  fix=posting and payment journals use the pay period's pay_date (validated to fall in the accounting period).
+
+DEFECT-INV-01 severity=HIGH  Inventory adjustments never posted to the GL
+  fix=InventoryAdjust accepts an optional "accounting" block (ledger, period, offset account, date); when given,
+      the adjustment posts a validated journal (inventory vs offset). Valuation now reconciles to the GL.
+  open_decision=Adjustments without the accounting block are still accepted (backward compatible) and do not
+      reach the GL. Decide whether unposted adjustments should be forbidden.
+
+================================================================================
+3. GAPS FOUND (NOT FIXED - NEED DECISIONS OR NEW FEATURES)
+================================================================================
+
+GAP-01 No user-management API. A second (approver) user cannot be created through the API; tests insert one.
+GAP-02 No tax-authority API. Liabilities and returns need tax_authorities rows; tests insert one.
+GAP-03 No accounting-period close/reopen API on /api/v2 (close-runs exist only in the double-prefixed
+       /api/v1/api/v2/finance/completion router). Tests close the period directly.
+GAP-04 Subledger journals are recorded with approved_by = the acting user. The business document carries the
+       approval (PO, payroll run and tax return enforce a second approver; AP invoice posting, AR shipment and
+       receipts do not require one). Decide whether invoice posting / receipts need their own approval step.
+GAP-05 Tax calculation ignores rule effective dates and versions (TaxCalculate has no date); "both"
+       responsibility charges the full rate to employee and employer.
+GAP-06 Tax liabilities are created manually; they are not derived from posted payroll tax lines.
+GAP-07 No API reads order status or status history; AR open items and AP open items have no read API either.
+       Customer-visible order status (dossier FEATURE_AR_002) is not exposed.
+GAP-08 RBAC is not enforced on any of these routes (any authenticated user of the tenant can call them);
+       segregation of duties is limited to "creator cannot approve".
+
+================================================================================
+4. RESULT
+================================================================================
+
+tests\workflows: 18 passed (0 expected failures) against the isolated database as flowforge_app.
+Full backend suite: 354 passed. ruff, ruff format (changed files), mypy (582 files) clean.
+Release-scope status: AP, AR, Payroll and Tax workflows now pass end to end at the API + database level with
+balanced, period-controlled postings that reach the trial balance. Browser-level workflow acceptance and the
+gaps above remain.
+
+END_OF_REPORT

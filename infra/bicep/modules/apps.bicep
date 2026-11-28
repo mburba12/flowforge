@@ -1,4 +1,4 @@
-﻿param location string
+param location string
 param environmentName string
 param imageTag string
 param apiImage string

@@ -1,117 +1,34 @@
 export const modules = [
-  {
-    "slug": "dashboard",
-    "label": "Dashboard",
-    "permission": "dashboard.view"
-  },
-  {
-    "slug": "finance",
-    "label": "Finance",
-    "permission": "finance.view"
-  },
-  {
-    "slug": "ap",
-    "label": "Accounts Payable",
-    "permission": "ap.view"
-  },
-  {
-    "slug": "ar",
-    "label": "Accounts Receivable",
-    "permission": "ar.view"
-  },
-  {
-    "slug": "orders",
-    "label": "Orders",
-    "permission": "orders.view"
-  },
-  {
-    "slug": "inventory",
-    "label": "Inventory",
-    "permission": "inventory.view"
-  },
-  {
-    "slug": "shipping",
-    "label": "Shipping",
-    "permission": "shipping.view"
-  },
-  {
-    "slug": "payroll",
-    "label": "Payroll",
-    "permission": "payroll.view"
-  },
-  {
-    "slug": "workforce",
-    "label": "Workforce",
-    "permission": "workforce.view"
-  },
-  {
-    "slug": "tax",
-    "label": "Tax & Compliance",
-    "permission": "tax.view"
-  },
-  {
-    "slug": "banking",
-    "label": "Banking & Treasury",
-    "permission": "banking.view"
-  },
-  {
-    "slug": "documents",
-    "label": "Documents",
-    "permission": "documents.view"
-  },
-  {
-    "slug": "reconciliation",
-    "label": "Reconciliation",
-    "permission": "reconciliation.view"
-  },
-  {
-    "slug": "entities",
-    "label": "Canonical Entities",
-    "permission": "entities.view"
-  },
-  {
-    "slug": "copilot",
-    "label": "Copilot",
-    "permission": "copilot.use"
-  },
-  {
-    "slug": "approvals",
-    "label": "Approvals",
-    "permission": "approvals.view"
-  },
-  {
-    "slug": "work-queue",
-    "label": "Work Queue",
-    "permission": "work_queue.view"
-  },
-  {
-    "slug": "integrations",
-    "label": "Integrations",
-    "permission": "integrations.view"
-  },
-  {
-    "slug": "reports",
-    "label": "Reports",
-    "permission": "reports.view"
-  },
-  {
-    "slug": "audit",
-    "label": "Audit",
-    "permission": "audit.view"
-  },
-  {
-    "slug": "billing",
-    "label": "Billing & Entitlements",
-    "permission": "billing.view"
-  },
-  {
-    "slug": "settings",
-    "label": "Settings",
-    "permission": "settings.view"
-  },
-  {
-    "slug": "support",
-    "label": "Help & Support",
-    "permission": "support.view"
-  }
+  ["dashboard", "Dashboard"],
+  ["finance", "Finance & ledger"],
+  ["finance-advanced", "Close, budgets & assets"],
+  ["ap", "Accounts payable"],
+  ["ar", "Accounts receivable"],
+  ["orders", "Orders"],
+  ["inventory", "Inventory"],
+  ["commerce", "Procurement & logistics"],
+  ["crm", "CRM & sales"],
+  ["billing", "Subscriptions & projects"],
+  ["banking", "Banking"],
+  ["reconciliation", "Reconciliation"],
+  ["tax", "Tax"],
+  ["payroll", "Payroll"],
+  ["payroll-tax", "Payroll & tax operations"],
+  ["workforce", "Workforce"],
+  ["talent", "HR & talent"],
+  ["manufacturing", "Manufacturing & quality"],
+  ["master-data", "Master data"],
+  ["entities", "Entities"],
+  ["documents", "Documents"],
+  ["approvals", "Approvals"],
+  ["work-queue", "Work queue"],
+  ["reports", "Reports"],
+  ["copilot", "Knowledge & copilot"],
+  ["operations", "Operations runs"],
+  ["integrations", "Integrations"],
+  ["governance", "Governance & controls"],
+  ["audit", "Audit"],
+  ["settings", "Administration"],
+  ["support", "Support"],
 ] as const;
+export const tagMap:Record<string,string[]>={dashboard:["health","phase1","phase5a","phase5b"],ap:["phase3a","phase3a-integration","phase3a-final"],ar:["phase3b"],orders:["phase3b","phase4c-commerce"],inventory:["phase3a","phase3b"],finance:["phase2b","phase4c-finance"],banking:["phase4c-banking","phase4c-payments"],reconciliation:["phase4e-reconciliation","phase3-final"],workforce:["phase4a","phase4a-time","phase4c-workforce"],payroll:["phase4a-payroll"],tax:["phase4b-tax","phase4b-filing"],integrations:["platform","phase4c-banking","phase4c-payments","phase4c-commerce","phase4c-logistics","phase4c-finance","phase4c-workforce","phase4c-engagement"],documents:["platform","phase4f-ai"],entities:["phase2a","phase4d-entities"],approvals:["phase2b","phase3a","phase4a-time","phase4a-payroll","phase4b-filing","phase4d-entities"],"work-queue":["platform","support"],audit:["platform"],reports:["phase2b","phase3-final"],settings:["platform","tenants","auth"],support:["support"],copilot:["phase4f-ai"]};

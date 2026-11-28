@@ -1,0 +1,26 @@
+version: 1
+domains:
+  - {code: PLT, name: platform}
+  - {code: DAT, name: data_platform}
+  - {code: MDM, name: master_data}
+  - {code: FIN, name: finance}
+  - {code: CRM, name: crm}
+  - {code: COM, name: commerce}
+  - {code: WFM, name: workforce}
+  - {code: PAY, name: payroll}
+  - {code: TAX, name: tax}
+  - {code: BIL, name: billing}
+  - {code: PRJ, name: projects}
+  - {code: AST, name: assets}
+  - {code: MFG, name: manufacturing}
+  - {code: PLM, name: plm}
+  - {code: QMS, name: quality}
+  - {code: CMP, name: compliance}
+  - {code: RPT, name: reporting}
+  - {code: SRC, name: search}
+  - {code: AIC, name: copilot}
+  - {code: PRT, name: portals}
+  - {code: SUP, name: support}
+  - {code: INT, name: integrations}
+  - {code: OPS, name: operations}
+  - {code: SEC, name: security}

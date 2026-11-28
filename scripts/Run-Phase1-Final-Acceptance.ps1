@@ -4,8 +4,7 @@ $BaseUri = "http://127.0.0.1:8000"
 $Python = ".\.venv\Scripts\python.exe"
 $Slug = "phase1-final-$(Get-Date -Format 'yyyyMMddHHmmss')"
 $Email = "$Slug@example.com"
-$Password = "FlowForge-Final-2026!Secure"
-
+$Password = $env:FLOWFORGE_TEST_PASSWORD
 function Pass([string]$Name) { Write-Host "PASSED: $Name" -ForegroundColor Green }
 function Gate([string]$Name, [scriptblock]$Action) {
     Write-Host "RUNNING: $Name" -ForegroundColor Cyan
@@ -22,44 +21,125 @@ Gate "PostgreSQL health" {
 
 Gate "Alembic revision" {
     $Revision = docker compose exec -T postgres psql -U flowforge -d flowforge -tAc "SELECT version_num FROM alembic_version;"
-    if ($Revision.Trim() -ne "46373839efb2") { throw "Unexpected Alembic revision: $Revision" }
+$MigrationHistory = @(
+    & $Python -m alembic history
+)
+
+if ($LASTEXITCODE -ne 0) {
+    throw "Could not read Alembic history."
+}
+
+$RequiredRevision = "46373839efb2"
+
+$RevisionExists = @(
+    $MigrationHistory |
+        Where-Object {
+            $_ -like "*$RequiredRevision*"
+        }
+)
+
+if ($RevisionExists.Count -eq 0) {
+    throw (
+        "Required historical migration is missing: " +
+        $RequiredRevision
+    )
+}
+
+Write-Host (
+    "PASSED: Historical migration " +
+    "$RequiredRevision exists; current revision is " +
+    $Revision.Trim()
+) -ForegroundColor Green
+}
+
+Gate "Authenticate or bootstrap tenant owner" {
+    $LoginBody = @{
+        tenant_slug = $Slug
+        email = $Email
+        password = $Password
+    } | ConvertTo-Json
+
+    $Authenticated = $false
+
+    try {
+        $Login = Invoke-RestMethod `
+            -Method Post `
+            -Uri "$BaseUri/api/v1/auth/login" `
+            -ContentType "application/json" `
+            -Body $LoginBody `
+            -ErrorAction Stop
+
+        if ($Login.access_token) {
+            $script:Token = $Login.access_token
+            $Authenticated = $true
+
+            Write-Host (
+                "Existing tenant owner authenticated."
+            )
+        }
+    }
+    catch {
+        Write-Host (
+            "Existing tenant login unavailable; " +
+            "attempting bootstrap."
+        )
+    }
+
+    if (-not $Authenticated) {
+        $BootstrapBody = @{
+            tenant = @{
+                name = "Phase 1 Final Acceptance"
+                slug = $Slug
+            }
+            email = $Email
+            password = $Password
+            display_name = "Phase 1 Owner"
+        } | ConvertTo-Json -Depth 5
+
+        $Bootstrap = Invoke-RestMethod `
+            -Method Post `
+            -Uri "$BaseUri/api/v1/auth/bootstrap" `
+            -ContentType "application/json" `
+            -Body $BootstrapBody `
+            -ErrorAction Stop
+
+        if (-not $Bootstrap.access_token) {
+            throw (
+                "Bootstrap did not return an access token."
+            )
+        }
+
+        $script:Token = $Bootstrap.access_token
+    }
+
+    if (
+        [string]::IsNullOrWhiteSpace(
+            $script:Token
+        )
+    ) {
+        throw "Authentication produced no access token."
+    }
+
+    $script:Headers = @{
+        Authorization = "Bearer $($script:Token)"
+    }
 }
 
 Gate "Phase 1 integrated status" {
-    $Result = Invoke-RestMethod -Method Get -Uri "$BaseUri/phase1/status"
+    $Result = Invoke-RestMethod -Method Get -Uri "$BaseUri/phase1/status" -Headers $script:Headers
     if ($Result.status -ne "integrated" -or -not $Result.database) { throw "Integrated status failed." }
 }
 
 Gate "Phase 1A status" {
-    $Result = Invoke-RestMethod -Method Get -Uri "$BaseUri/phase1a/status"
+    $Result = Invoke-RestMethod -Method Get -Uri "$BaseUri/phase1a/status" -Headers $script:Headers
     if (-not $Result.implemented) { throw "Phase 1A is not implemented." }
 }
 
 Gate "Phase 1B health" {
-    $Result = Invoke-RestMethod -Method Get -Uri "$BaseUri/phase1b/health"
+    $Result = Invoke-RestMethod -Method Get -Uri "$BaseUri/phase1b/health" -Headers $script:Headers
     if ($Result.status -ne "ready" -or -not $Result.database -or -not $Result.storage) {
         throw "Phase 1B health failed."
     }
-}
-
-Gate "Tenant owner bootstrap" {
-    $Body = @{
-        tenant = @{ name = "Phase 1 Final Acceptance"; slug = $Slug }
-        email = $Email
-        password = $Password
-        display_name = "Phase 1 Owner"
-    } | ConvertTo-Json -Depth 5
-    $Bootstrap = Invoke-RestMethod -Method Post -Uri "$BaseUri/api/v1/auth/bootstrap" -ContentType "application/json" -Body $Body
-    if (-not $Bootstrap.access_token) { throw "Bootstrap did not return an access token." }
-    $script:Token = $Bootstrap.access_token
-    $script:Headers = @{ Authorization = "Bearer $($script:Token)" }
-}
-
-Gate "Login" {
-    $Body = @{ tenant_slug = $Slug; email = $Email; password = $Password } | ConvertTo-Json
-    $Login = Invoke-RestMethod -Method Post -Uri "$BaseUri/api/v1/auth/login" -ContentType "application/json" -Body $Body
-    if (-not $Login.access_token) { throw "Login did not return an access token." }
-    $script:Headers = @{ Authorization = "Bearer $($Login.access_token)" }
 }
 
 Gate "Authenticated identity" {

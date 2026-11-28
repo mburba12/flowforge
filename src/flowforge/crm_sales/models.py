@@ -1,0 +1,141 @@
+from datetime import date, datetime
+from decimal import Decimal
+from uuid import UUID, uuid4
+
+from sqlalchemy import (
+    Date,
+    DateTime,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    UniqueConstraint,
+    func,
+)
+from sqlalchemy.orm import Mapped, mapped_column
+
+from flowforge.db.base import Base
+
+
+class T:
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    tenant_id: Mapped[UUID] = mapped_column(
+        ForeignKey("tenants.id", ondelete="CASCADE"), index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class Lead(T, Base):
+    __tablename__ = "crm_leads_final"
+    lead_number: Mapped[str] = mapped_column(String(80))
+    company_name: Mapped[str | None] = mapped_column(String(240))
+    contact_name: Mapped[str] = mapped_column(String(240))
+    email: Mapped[str | None] = mapped_column(String(320))
+    phone: Mapped[str | None] = mapped_column(String(80))
+    source: Mapped[str | None] = mapped_column(String(100))
+    status: Mapped[str] = mapped_column(String(30), default="new")
+    owner_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    score: Mapped[int] = mapped_column(Integer, default=0)
+    converted_party_id: Mapped[UUID | None] = mapped_column(ForeignKey("parties.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "lead_number", name="uq_crm_lead_number"),)
+
+
+class Opportunity(T, Base):
+    __tablename__ = "crm_opportunities_final"
+    opportunity_number: Mapped[str] = mapped_column(String(80))
+    name: Mapped[str] = mapped_column(String(240))
+    party_id: Mapped[UUID | None] = mapped_column(ForeignKey("parties.id"))
+    lead_id: Mapped[UUID | None] = mapped_column(ForeignKey("crm_leads_final.id"))
+    stage: Mapped[str] = mapped_column(String(40), default="qualification")
+    probability: Mapped[int] = mapped_column(Integer, default=10)
+    amount: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    currency_code: Mapped[str] = mapped_column(String(3), default="USD")
+    expected_close_date: Mapped[date | None] = mapped_column(Date)
+    owner_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    lost_reason: Mapped[str | None] = mapped_column(Text)
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "opportunity_number", name="uq_crm_opportunity_number"),
+    )
+
+
+class Activity(T, Base):
+    __tablename__ = "crm_activities_final"
+    entity_type: Mapped[str] = mapped_column(String(40))
+    entity_id: Mapped[UUID]
+    activity_type: Mapped[str] = mapped_column(String(40))
+    subject: Mapped[str] = mapped_column(String(300))
+    notes: Mapped[str] = mapped_column(Text, default="")
+    due_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    owner_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+
+
+class Campaign(T, Base):
+    __tablename__ = "crm_campaigns_final"
+    code: Mapped[str] = mapped_column(String(80))
+    name: Mapped[str] = mapped_column(String(240))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    starts_on: Mapped[date | None] = mapped_column(Date)
+    ends_on: Mapped[date | None] = mapped_column(Date)
+    budget: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    actual_cost: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    __table_args__ = (UniqueConstraint("tenant_id", "code", name="uq_crm_campaign_code"),)
+
+
+class Quote(T, Base):
+    __tablename__ = "crm_quotes_final"
+    quote_number: Mapped[str] = mapped_column(String(80))
+    party_id: Mapped[UUID] = mapped_column(ForeignKey("parties.id"))
+    opportunity_id: Mapped[UUID | None] = mapped_column(ForeignKey("crm_opportunities_final.id"))
+    status: Mapped[str] = mapped_column(String(30), default="draft")
+    currency_code: Mapped[str] = mapped_column(String(3))
+    subtotal: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    discount_total: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    tax_total: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    total: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    valid_until: Mapped[date | None] = mapped_column(Date)
+    approved_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    converted_order_id: Mapped[UUID | None] = mapped_column(ForeignKey("sales_orders.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "quote_number", name="uq_crm_quote_number"),)
+
+
+class QuoteLine(T, Base):
+    __tablename__ = "crm_quote_lines_final"
+    quote_id: Mapped[UUID] = mapped_column(ForeignKey("crm_quotes_final.id", ondelete="CASCADE"))
+    product_id: Mapped[UUID | None] = mapped_column(ForeignKey("products.id"))
+    description: Mapped[str] = mapped_column(String(500))
+    quantity: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    unit_price: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+    discount_bps: Mapped[int] = mapped_column(Integer, default=0)
+    line_total: Mapped[Decimal] = mapped_column(Numeric(20, 6))
+
+
+class CreditProfile(T, Base):
+    __tablename__ = "crm_credit_profiles_final"
+    party_id: Mapped[UUID] = mapped_column(ForeignKey("parties.id"))
+    credit_limit: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    current_exposure: Mapped[Decimal] = mapped_column(Numeric(20, 6), default=0)
+    status: Mapped[str] = mapped_column(String(30), default="active")
+    hold_reason: Mapped[str | None] = mapped_column(Text)
+    approved_by: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    __table_args__ = (UniqueConstraint("tenant_id", "party_id", name="uq_crm_credit_party"),)
+
+
+class Communication(T, Base):
+    __tablename__ = "crm_communications_final"
+    party_id: Mapped[UUID | None] = mapped_column(ForeignKey("parties.id"))
+    channel: Mapped[str] = mapped_column(String(30))
+    direction: Mapped[str] = mapped_column(String(20))
+    subject: Mapped[str | None] = mapped_column(String(300))
+    body: Mapped[str] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(30), default="recorded")
+    external_reference: Mapped[str | None] = mapped_column(String(300))
+
+
+class PortalToken(T, Base):
+    __tablename__ = "crm_portal_tokens_final"
+    party_id: Mapped[UUID] = mapped_column(ForeignKey("parties.id"))
+    token_hash: Mapped[str] = mapped_column(String(128), unique=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

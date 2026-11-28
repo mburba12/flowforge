@@ -1,2 +1,0 @@
-"use client";import {useEffect,useState} from "react";import {apiGet,endpoints} from "@/lib/api";
-export function StatusBanner(){const [status,setStatus]=useState("Checking API...");useEffect(()=>{apiGet<{status:string}>(endpoints.phase5b).then(x=>setStatus(x.status==="implemented"?"API connected":"API unavailable")).catch(()=>setStatus("Demo mode - API unavailable"))},[]);return <span className={`status ${status.includes("connected")?"positive":"warning"}`}>{status}</span>}

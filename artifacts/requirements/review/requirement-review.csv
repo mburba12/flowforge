@@ -1,0 +1,101 @@
+id,module,risk,required_for,status,semantic_review,artifact_review,dependency_review,evidence_review,requirement,source_page
+FF-PLT-00001,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,FlowForge_Mega_Specification_Volume.pdf,1
+FF-PLT-00002,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,FlowForge_Ultimate_Master_Specification.pdf,1
+FF-PLT-00003,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,FlowForge_Enterprise_Build_Bible.pdf,1
+FF-PLT-00004,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,FLOWFORGE_CURRENT_CAPABILITIES_20261126-141832.txt,1
+FF-PLT-00005,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,operating_rule: REUSE > REPAIR > COMPLETE > BUILD_NEW,1
+FF-PLT-00006,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"ordering, exit criteria, build gates, and final acceptance conditions are intended to be machine-extractable",1
+FF-PLT-00007,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,branch: post-acceptance-work,2
+FF-PLT-00008,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Status Meaning Counts as complete?,2
+FF-PLT-00009,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Never create a parallel foundation when an existing system can be repaired or extended,2
+FF-PLT-00010,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Critical invariants are checked during construction; comprehensive acceptance is deferred until the assembled build,2
+FF-PLT-00011,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Migration strategy: retain historical phase packages during construction. Introduce stable domain facades and compatibility imports,3
+FF-DAT-00001,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,document: <source_pdf>,3
+FF-DAT-00002,DAT,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Every existing table, API, page, test, script, and provider adapter maps to one or more requirements or is classified obsolete",4
+FF-PLT-00012,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,3. Build groups and current position,5
+FF-PLT-00013,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,ID Build group Current State Target,5
+FF-DAT-00003,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,~5% NEXT Create authoritative backlog and evidence graph,5
+FF-PLT-00014,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-01 Platform control plane ~78% PARTIAL Complete lifecycle, scoped auth, workflow, documents, events, jobs",5
+FF-DAT-00004,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-02 Data platform and master data ~52% PARTIAL Complete APIs, stewardship, merge, lineage, quality, governance",5
+FF-FIN-00001,FIN,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,BG-03 Complete finance GL ~80%; wider,5
+FF-FIN-00002,FIN,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"PARTIAL Complete AP, AR, banking, close, consolidations, budgets",5
+FF-PRT-00001,PRT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-04 CRM, sales, portals ~36% PARTIAL Build lead/opportunity/activity/portal behavior and quote-to-order",5
+FF-COM-00001,COM,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-05 Commerce, supply chain, shipping ~50% PARTIAL Complete procurement, inventory, fulfillment, logistics, reconciliation",5
+FF-WFM-00001,WFM,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-06 Workforce and talent ~46% PARTIAL Complete recruiting, performance, learning, benefits, retirement",5
+FF-INT-00001,INT,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-07 Payroll and tax ~53% PARTIAL Complete lifecycle, provider migration, rules, liabilities, returns",5
+FF-PLM-00001,PLM,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-09 Manufacturing, PLM, MRP, quality 20-25% EARLY Largest concentrated domain build",5
+FF-PRT-00002,PRT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-10 Reporting, search, portals, Copilot 20-50% PARTIAL Complete governed metrics, portals, grounded AI, evaluations",5
+FF-INT-00002,INT,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,BG-11 Integrations and provider activation ~37%; prod <10% EARLY Implement adapters and sandbox certification,5
+FF-PLT-00015,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,BG-12 Frontend operational depth ~15% EARLY Convert workspace shells into full transaction workflows,5
+FF-SEC-00001,SEC,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"BG-13 Azure, security, recovery ~30% EARLY Deploy and prove production topology, restore, rollback, security",5
+FF-DAT-00005,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Required build scope,6
+FF-DAT-00006,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Extract all atomic requirements from three PDFs,6
+FF-DAT-00007,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Map 561 tables, 271 models, 145 OpenAPI paths, 26 pages, 280 tests",6
+FF-DAT-00008,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Create dependency graph and risk-based evidence policy,6
+FF-DAT-00009,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Generate machine-readable missing-work backlog,6
+FF-DAT-00010,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Minimal build-time gates,6
+FF-DAT-00011,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Execution record schema,6
+FF-SUP-00001,SUP,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Events, outbox, jobs, scheduler, notifications, webhooks, support access",7
+FF-DAT-00012,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Data quality, classification, catalog, warehouse/lake export contracts, search indexing",8
+FF-FIN-00003,FIN,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,BG-03: Complete Financial System,9
+FF-AST-00001,AST,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Period close/reopen, fixed assets, project accounting",9
+FF-FIN-00004,FIN,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Subledgers reconcile to GL,9
+FF-INT-00003,INT,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Provider migration, history import, parallel comparison, cutover/rollback",13
+FF-PLM-00002,PLM,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, WIP/inventory reconcile,15
+FF-SRC-00001,SRC,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Reports reconcile,16
+FF-PLT-00016,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Accessibility and complete Playwright business scenarios,18
+FF-SEC-00002,SEC,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Bicep for Container Apps, PostgreSQL, Blob, Service Bus, Key Vault, ACR, Entra, Monitor",19
+FF-SEC-00003,SEC,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," Backup, point-in-time recovery, restore and DR rehearsal",19
+FF-SEC-00004,SEC,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Restore and rollback pass,19
+FF-OPS-00001,OPS,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Backup/restore and deployment rollback,20
+FF-PLT-00017,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,4. Minimal test policy during construction,21
+FF-PLT-00018,PLT,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Every build group One two-tenant isolation smoke; permission denial; audit evidence,21
+FF-PLT-00019,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Release candidate Full backend regression; frontend typecheck/tests/build; migration,21
+FF-DAT-00013,DAT,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,Post-build certification All comprehensive suites and requirement verification. Only externally blocked provider/legal items,21
+FF-OPS-00002,OPS,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,telemetry: Application Insights + Log Analytics + Azure Monitor,21
+FF-OPS-00003,OPS,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,tests; no secrets; backup/restore,21
+FF-OPS-00004,OPS,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,DP-B Azure development Deploy all Azure resources; managed identities; Key Vault refs; migration job,21
+FF-SEC-00005,SEC,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"security, restore, rollback",21
+FF-SUP-00002,SUP,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"DP-F General availability Signed artifact; staging acceptance; support, backup, DR, incident response",21
+FF-PLT-00020,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,7. Comprehensive post-build verification,22
+FF-SRC-00002,SRC,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,B Normal tenant with known Tenant A IDs Attempt cross-tenant read/search/update/delete/approve/export/download,22
+FF-PLT-00021,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,C Limited modules Verify entitlement enforcement and hidden routes/actions,22
+FF-INT-00004,INT,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,D Suspended Verify login/job/provider/action denial while preserving history,22
+FF-SUP-00003,SUP,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, support-to-resolution,22
+FF-PLT-00022,PLT,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, backup restore and disaster recovery,22
+FF-PLT-00023,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,final_banner: FLOWFORGE COMPLETE PRODUCT ACCEPTANCE PASSED: <run-id>,23
+FF-PLT-00024,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,M1 Shared platform complete PARTIAL,24
+FF-DAT-00014,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,M2 Master data and data platform complete PARTIAL,24
+FF-FIN-00005,FIN,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,M3 Finance complete PARTIAL,24
+FF-COM-00002,COM,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,M4 CRM and commerce complete PARTIAL,24
+FF-WFM-00002,WFM,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"M5 Workforce, payroll, tax complete PARTIAL",24
+FF-AST-00002,AST,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"M6 Billing, projects, assets complete EARLY",24
+FF-PLM-00003,PLM,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"M7 Manufacturing, PLM, MRP, quality complete EARLY",24
+FF-AIC-00001,AIC,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,"M8 Reporting, portals, Copilot complete PARTIAL",24
+FF-PLT-00025,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,M10 Frontend operationally complete EARLY,24
+FF-PLT-00026,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,after each build group,24
+FF-DAT-00015,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,record commit/tag in requirement registry,24
+FF-DAT-00016,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,1: create specs/requirements and extraction pipeline,25
+FF-DAT-00017,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,2: generate requirement IDs and source crosswalk,25
+FF-PLT-00027,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,3: map current database/models/routes/pages/tests/scripts,25
+FF-DAT-00018,DAT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,4: classify each requirement REUSE|REPAIR|COMPLETE|BUILD|VERIFY|BLOCK|DEFER,25
+FF-PLT-00028,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,5: generate dependency-safe backlog,25
+FF-PLT-00029,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,7: create local release candidate,25
+FF-OPS-00005,OPS,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,8: deploy Azure development,25
+FF-PLT-00030,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,10: run BG-14 comprehensive certification,25
+FF-PLT-00031,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,13: approve general availability,25
+FF-PLT-00032,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> master_data_and_data_platform,25
+FF-COM-00003,COM,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> crm_and_commerce,25
+FF-WFM-00003,WFM,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> workforce_payroll_tax,25
+FF-AST-00003,AST,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> billing_projects_assets,25
+FF-MFG-00001,MFG,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> manufacturing_quality,25
+FF-AIC-00002,AIC,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> reporting_portals_copilot,25
+FF-PLT-00033,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> frontend_completion,25
+FF-SEC-00006,SEC,critical,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> azure_and_security,25
+FF-PLT-00034,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> comprehensive_acceptance,25
+FF-PLT-00035,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,> general_availability,25
+FF-PLT-00036,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Run only the minimal gates defined for the current build group unless a critical invariant requires broader checks,25
+FF-INT-00005,INT,high,launch,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING, Retain provider simulation and deny production writes until provider-specific sandbox acceptance,25
+FF-PLT-00037,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING," At build completion, run comprehensive tests and fix failures in dependency order",25
+FF-PLT-00038,PLT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,E2 Unit test Local rule,25
+FF-INT-00006,INT,medium,enterprise_expansion,NOT_STARTED,APPROVED,PENDING,PENDING,PENDING,E3 Integration test Service + database/component,25

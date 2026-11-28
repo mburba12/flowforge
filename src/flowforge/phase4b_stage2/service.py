@@ -1,4 +1,3 @@
-from datetime import UTC, datetime
 from decimal import Decimal
 from uuid import UUID
 
@@ -9,6 +8,7 @@ from flowforge.phase2b.models import (
     JournalEntry,
     JournalLine,
 )
+from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
 
 from .models import (
     TaxLiability,
@@ -148,52 +148,37 @@ class TaxFilingService:
         self.db.add(remittance)
         await self.db.flush()
 
-        journal = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=data.ledger_id,
-            period_id=data.accounting_period_id,
-            journal_number=(f"TAX-{str(remittance.id)[:8]}"),
-            journal_date=data.payment_date,
-            description="Tax remittance",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-            posted_at=datetime.now(UTC),
-        )
-        self.db.add(journal)
-        await self.db.flush()
+        try:
+            journal = await post_system_journal(
+                self.db,
+                tenant_id=self.tenant_id,
+                user_id=self.user_id,
+                ledger_id=data.ledger_id,
+                period_id=data.accounting_period_id,
+                journal_number=f"TAX-{str(remittance.id)[:8]}",
+                journal_date=data.payment_date,
+                description="Tax remittance",
+                currency_code=data.currency_code,
+                lines=[
+                    PostingLine(
+                        data.tax_payable_account_id, data.amount, Decimal("0"), "Clear tax payable"
+                    ),
+                    PostingLine(
+                        data.cash_account_id, Decimal("0"), data.amount, "Tax payment cash"
+                    ),
+                ],
+            )
+        except PostingError as exc:
+            raise TaxFilingError(str(exc)) from exc
 
-        self.db.add_all(
-            [
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=1,
-                    account_id=(data.tax_payable_account_id),
-                    description="Clear tax payable",
-                    debit=data.amount,
-                    credit=Decimal("0"),
-                    currency_code=data.currency_code,
-                ),
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=2,
-                    account_id=data.cash_account_id,
-                    description="Tax payment cash",
-                    debit=Decimal("0"),
-                    credit=data.amount,
-                    currency_code=data.currency_code,
-                ),
-                TaxRemittanceAllocation(
-                    tenant_id=self.tenant_id,
-                    remittance_id=remittance.id,
-                    liability_id=liability.id,
-                    amount=data.amount,
-                ),
-            ]
+        self.db.add(
+            TaxRemittanceAllocation(
+                tenant_id=self.tenant_id,
+                remittance_id=remittance.id,
+                liability_id=liability.id,
+                amount=data.amount,
+            )
         )
-
         remittance.journal_id = journal.id
         liability.open_amount -= data.amount
 

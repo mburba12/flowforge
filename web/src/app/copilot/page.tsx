@@ -1,2 +1,6 @@
-"use client";import {useState} from "react";const prompts=["Explain overdue receivables","Summarize cash risk","Find inventory exceptions","Review payroll variance"];
-export default function Page(){const [q,setQ]=useState("");const [answer,setAnswer]=useState("");function ask(){if(q) setAnswer(`I found three records related to "${q}". The largest current risk is a $28,400 overdue invoice from Riverbend Medical. This demo response will be replaced by grounded Copilot citations when the production endpoint is configured.`)}return <><div className="pagehead"><div><div className="eyebrow">Microsoft Copilot</div><h1>Business Copilot</h1><p>Ask grounded questions across financial, operational, workforce, and document records.</p></div></div><div className="copilot"><h2>What would you like to understand?</h2><textarea value={q} onChange={e=>setQ(e.target.value)} placeholder="Ask a business question..."/><div className="actions" style={{marginTop:10}}><button className="btn primary" onClick={ask}>Ask Copilot</button></div><div className="quick">{prompts.map(p=><button className="chip" onClick={()=>setQ(p)} key={p}>{p}</button>)}</div></div>{answer&&<section className="panel"><div className="panelhead"><h2>Answer</h2><span className="status">Demo mode</span></div><div className="panelbody"><p>{answer}</p><div className="featurecard"><h3>Sources</h3><p>INV-2098 - AR Aging - Last refreshed 4 minutes ago</p></div></div></section>}</>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/copilot" as never);
+}

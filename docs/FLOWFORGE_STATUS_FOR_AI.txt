@@ -1,0 +1,84 @@
+FLOWFORGE_STATUS_FOR_AI
+DOCUMENT_VERSION=2.0
+WRITTEN=2026-11-27T23:15 local (UTC-5)
+AUDIENCE=An AI software agent taking over or auditing this project. Every statement below is VERIFIED with
+         the evidence named, unless marked otherwise.
+PROJECT_ROOT=C:\Users\mackb\Downloads\Download the FlowForge Phase 1 scaffold\flowforge-phase1
+SHELL=Windows PowerShell 5.1 (native stderr becomes an error under ErrorActionPreference=Stop; use Continue and
+      judge by exit codes; write files with [IO.File]::WriteAllText + UTF8Encoding($false))
+GIT_BRANCH=chore/integration-inventory (local only; nothing pushed; owner decides pushing/merging).
+DEPLOYED_COMMIT=e425bfd (live since update 20261127-230808).
+OVERALL_STATUS=COMPLETE. All completion criteria in section 3 PASS.
+
+================================================================================
+1. SYSTEM LAYOUT
+================================================================================
+LIVE=docker compose project "flowforge", compose.production.yml, secrets .env.production (gitignored; never print).
+  db (postgres:16, volume flowforge_flowforge_pgdata, 127.0.0.1:5435), migrate (alembic head as flowforge_owner),
+  api (:8000, runs as flowforge_app NOSUPERUSER NOBYPASSRLS; volume flowforge_flowforge_support at /data holds the
+  problem-report outbox), web (:3000 Next.js, proxies /api/flowforge/* to api), redis, azurite, mailpit.
+TEST=docker-compose.yml project flowforge-phase1, postgres on :5433 (app role URL in .env.phase-c key
+  COMPOSE_APP_DATABASE_URL; replace host with localhost:5433). Test API: run uvicorn from .venv on :8001 against it.
+REHEARSAL=scripts\production\Invoke-FlowForgeRehearsal.ps1 -FromProductionBackup (project flowforge-rehearsal,
+  ports 3300/8300/5436, disposable). Release = rehearsal PASSED, then scripts\production\Update-FlowForge.ps1.
+DOCS=docs\FLOWFORGE_PRODUCTION_RUNBOOK.md, docs\FLOWFORGE_RELEASE_NOTES.md (user guide incl. extended workspaces).
+
+================================================================================
+2. ARCHITECTURE FACTS AN AGENT NEEDS
+================================================================================
+- FastAPI includes routers lazily (_IncludedRouter): route.path lacks outer prefixes. Use
+  flowforge.platform.authorization.iter_routes_with_paths(app.routes) for (route, served_path).
+- RBAC (platform/authorization.py): POLICY (explicit, release modules) + EXTENDED_POLICY (derived at startup by
+  build_extended_policy: GET->domain.read, decision path segments->domain.approve, generic action/transition
+  -> write, escalated to approve when the body target is a decision value) + PUBLIC (sign-in, health, problem
+  reports, /phase*/status diagnostics). enforce() denies any endpoint without a policy. 85 permission codes;
+  migration ff_rbac_002 (head) seeds them; sync_standard_roles() at startup grants standard roles additively.
+- Error mapping (main.py): PostingError/IntegrityError/ValueError/domain errors -> 409, LookupError and *NotFound*
+  -> 404, SQLSTATE 22 -> 422. Every exception class defined in a flowforge module is registered.
+- UI reachability: GET /api/v1/operations returns every non-public operation with workspace, permission, params
+  and inlined body schema. web/src/release/operations.tsx renders a typed form per operation. Workspace slugs:
+  release (web/src/release/slugs.ts RELEASE_SLUGS) and extended (EXTENDED_WORKSPACES, must equal backend
+  release/operations_routes.py EXTENDED_WORKSPACES values; enforced by tests/workflows/test_ui_reachability.py).
+- Retired on purpose (do not restore): /api/v1/catalog, /api/v1/resources, /api/v1/platform/* generic browsers
+  (leaked password hashes, raw table updates); /api/v1/api/v2/* double-prefixed paths; stub pages under
+  /enterprise, /part2a, /part2b, /billing, /shipping (now redirects to /modules/*).
+
+================================================================================
+3. COMPLETION CRITERIA (all PASS)
+================================================================================
+C1 RBAC_ALL            PASS  398 endpoints: 101 explicit, 264 derived, 33 public, 0 unmapped
+                             (tests/workflows/test_rbac.py incl. extended allow/deny paths).
+C2 CANONICAL_PATHS     PASS  226 extended paths at /api/v2/...; 0 double-prefixed; no collisions.
+C3 UI_REACHABILITY     PASS  366 operations each assigned to a workspace served and listed in the sidebar
+                             (test_ui_reachability.py); browser tests for all 13 extended workspaces incl.
+                             create-then-read via generated form (web/e2e/extended.spec.ts).
+C4 NO_SERVER_ERRORS    PASS  tests/extended/test_no_server_errors.py: 398 operations, 1188 calls, 0 failures
+                             (DELETE operations are not called by the scanner).
+C5 REGRESSION          PASS  backend 380 tests; browser 59/59 (isolated stack); ruff + mypy clean.
+C6 DEPLOYED_LIVE       PASS  rehearsal 20261127-230138 PASSED (R00-R12) from a fresh production backup;
+                             update 20261127-230808: pre-update backup verified, rollback images tagged
+                             rollback-20261127-230808, verification 10/10, migration ff_rbac_002.
+C7 DOCS                PASS  runbook, release notes, this file.
+
+================================================================================
+4. KNOWN LIMITATIONS (accepted, documented in release notes)
+================================================================================
+- Extended workspaces use generated forms; record ids are entered by hand (copy from the Records tab).
+- Extended domains separate duties by role (Clerk vs Approver), not creator-vs-approver per document.
+- Banking, reconciliation, documents, approvals, work queue, reports, support: read-only browsers + operations.
+- Problem reports queue in /data/support-outbox unless FLOWFORGE_SUPPORT_SMTP_* is configured.
+- Root cause of the first rehearsal's single stalled sign-in was not proven (containers were gone); the plausible
+  causes were fixed (Argon2 off the event loop, larger DB pool, 60 s proxy timeout) and the re-rehearsal passed.
+
+================================================================================
+5. CONSTRAINTS THE NEXT AGENT MUST KEEP
+================================================================================
+- Never docker compose down -v on project flowforge; never delete volumes; back up before schema changes.
+- Never handle the owner's password; never print secrets from .env.production / .env.phase-c.
+- Tests only against the isolated stack (5433/8001) or the disposable rehearsal (3300/8300).
+- Migrations are immutable once applied; add new revisions.
+- Commit locally with messages ending in the Co-Authored-By line; do not push without the owner.
+- Owner follow-ups: delete the retired container forgeflow-v4-phase0-postgres-1 after ~2026-12-27; remove the
+  plaintext password line from release-20261127-154058\release-manifest.txt if not done.
+
+END_OF_STATUS

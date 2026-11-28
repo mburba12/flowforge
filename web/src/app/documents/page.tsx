@@ -1,1 +1,6 @@
-"use client";import {useState} from "react";export default function Page(){const [files,setFiles]=useState<string[]>([]);return <><div className="pagehead"><div><div className="eyebrow">Intelligence</div><h1>Documents</h1><p>Upload, classify, extract, validate, and review business documents before record creation.</p></div></div><label className="copilot" style={{display:"block",cursor:"pointer"}}><h2>Drop documents here</h2><p>PDF, Office, CSV, images, email, EDI, and bounded archives.</p><input type="file" multiple hidden onChange={e=>setFiles(Array.from(e.target.files??[]).map(f=>f.name))}/></label><section className="panel"><div className="panelhead"><h2>Processing queue</h2><span className="status">{files.length} new</span></div><div className="panelbody">{files.length?files.map((f,i)=><div className="activity" key={f}><span className="dot"/><div><strong>{f}</strong><p>{i%2?"Queued for extraction":"Validation complete - Awaiting review"}</p></div></div>):<div className="empty">No documents uploaded in this session</div>}</div></section></>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/documents" as never);
+}

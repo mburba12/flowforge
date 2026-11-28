@@ -79,6 +79,7 @@ export function GlobalSearch() {
     return () => window.removeEventListener("keydown", shortcut);
   }, []);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setActive(0), [query]);
 
   function select(item: SearchItem) {

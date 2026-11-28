@@ -1,0 +1,124 @@
+"""BG-03 completion execution, accrual, allocation, payment item, and reconciliation item tables."""
+
+import sqlalchemy as sa
+from alembic import op
+from sqlalchemy.dialects import postgresql
+
+revision = "ff_bg03_completion_001"
+down_revision = "ff_bg03_advanced_002"
+branch_labels = None
+depends_on = None
+TABLES = [
+    "finance_executions",
+    "finance_accrual_definitions",
+    "finance_allocation_definitions",
+    "finance_payment_batch_items",
+    "finance_reconciliation_items",
+]
+
+
+def b():
+    return [
+        sa.Column("id", postgresql.UUID(), primary_key=True),
+        sa.Column(
+            "tenant_id",
+            postgresql.UUID(),
+            sa.ForeignKey("tenants.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+    ]
+
+
+def rls(t):
+    op.create_index(f"ix_{t}_tenant_id", t, ["tenant_id"])
+    op.execute(sa.text(f'ALTER TABLE "{t}" ENABLE ROW LEVEL SECURITY'))
+    op.execute(sa.text(f'ALTER TABLE "{t}" FORCE ROW LEVEL SECURITY'))
+    op.execute(
+        sa.text(
+            f'''CREATE POLICY "{t}_tenant_isolation" ON "{t}" USING (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid) WITH CHECK (tenant_id=NULLIF(current_setting('app.current_tenant_id',true),'')::uuid)'''
+        )
+    )
+
+
+def upgrade():
+    op.create_table(
+        "finance_executions",
+        *b(),
+        sa.Column("execution_type", sa.String(40), nullable=False),
+        sa.Column("source_id", postgresql.UUID(), nullable=False),
+        sa.Column("idempotency_key", sa.String(160), nullable=False),
+        sa.Column("status", sa.String(30), nullable=False, server_default="started"),
+        sa.Column("result_json", sa.Text(), nullable=False, server_default="{}"),
+        sa.Column("actor_user_id", postgresql.UUID(), sa.ForeignKey("users.id"), nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
+        sa.UniqueConstraint(
+            "tenant_id", "execution_type", "idempotency_key", name="uq_finance_execution_idem"
+        ),
+    )
+    op.create_table(
+        "finance_accrual_definitions",
+        *b(),
+        sa.Column("code", sa.String(60), nullable=False),
+        sa.Column("ledger_id", postgresql.UUID(), sa.ForeignKey("ledgers.id"), nullable=False),
+        sa.Column(
+            "debit_account_id", postgresql.UUID(), sa.ForeignKey("accounts.id"), nullable=False
+        ),
+        sa.Column(
+            "credit_account_id", postgresql.UUID(), sa.ForeignKey("accounts.id"), nullable=False
+        ),
+        sa.Column("amount", sa.Numeric(20, 6), nullable=False),
+        sa.Column("status", sa.String(30), server_default="active"),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_accrual_code"),
+    )
+    op.create_table(
+        "finance_allocation_definitions",
+        *b(),
+        sa.Column("code", sa.String(60), nullable=False),
+        sa.Column(
+            "source_account_id", postgresql.UUID(), sa.ForeignKey("accounts.id"), nullable=False
+        ),
+        sa.Column("target_json", sa.Text(), nullable=False),
+        sa.Column("status", sa.String(30), server_default="active"),
+        sa.UniqueConstraint("tenant_id", "code", name="uq_allocation_code"),
+    )
+    op.create_table(
+        "finance_payment_batch_items",
+        *b(),
+        sa.Column(
+            "batch_id",
+            postgresql.UUID(),
+            sa.ForeignKey("finance_payment_batches.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+        sa.Column("source_type", sa.String(30), nullable=False),
+        sa.Column("source_id", postgresql.UUID(), nullable=False),
+        sa.Column("amount", sa.Numeric(20, 6), nullable=False),
+        sa.Column("status", sa.String(30), server_default="pending"),
+        sa.Column("provider_reference", sa.String(200)),
+        sa.UniqueConstraint(
+            "tenant_id", "batch_id", "source_type", "source_id", name="uq_payment_item_source"
+        ),
+    )
+    op.create_table(
+        "finance_reconciliation_items",
+        *b(),
+        sa.Column(
+            "session_id",
+            postgresql.UUID(),
+            sa.ForeignKey("finance_reconciliation_sessions.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+        sa.Column("source_reference", sa.String(200), nullable=False),
+        sa.Column("target_reference", sa.String(200)),
+        sa.Column("amount", sa.Numeric(20, 6), nullable=False),
+        sa.Column("status", sa.String(30), server_default="unmatched"),
+        sa.Column("match_group", postgresql.UUID()),
+    )
+    for t in TABLES:
+        rls(t)
+
+
+def downgrade():
+    for t in reversed(TABLES):
+        op.execute(sa.text(f'DROP POLICY IF EXISTS "{t}_tenant_isolation" ON "{t}"'))
+        op.drop_table(t)

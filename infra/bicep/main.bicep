@@ -1,4 +1,4 @@
-﻿targetScope = 'resourceGroup'
+targetScope = 'resourceGroup'
 
 param location string = resourceGroup().location
 param environmentName string

@@ -1,8 +1,9 @@
 from uuid import UUID
 
-from sqlalchemy import func, or_, select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.platform.numbering import next_number
 from flowforge.platform.services import record_change
 
 from .models import (
@@ -46,16 +47,10 @@ class WorkforceService:
         self,
         data: WorkerCreate,
     ) -> WorkerProfile:
-        count_statement = (
-            select(func.count())
-            .select_from(WorkerProfile)
-            .where(WorkerProfile.tenant_id == self.tenant_id)
-        )
-        count = await self.db.scalar(count_statement)
 
         worker = WorkerProfile(
             tenant_id=self.tenant_id,
-            worker_number=(f"W-{int(count or 0) + 1:08d}"),
+            worker_number=await next_number(self.db, self.tenant_id, "worker"),
             **data.model_dump(),
         )
         self.db.add(worker)

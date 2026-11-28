@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from uuid import UUID
 
 from sqlalchemy import select
@@ -130,6 +131,14 @@ class TaxEngineService:
 
         if rule is None:
             raise TaxEngineError("Active tax rule was not found")
+
+        as_of = data.as_of or datetime.now(UTC).date()
+        if as_of < rule.effective_from or (
+            rule.effective_to is not None and as_of > rule.effective_to
+        ):
+            raise TaxEngineError(
+                f"Tax rule {rule.code} v{rule.version} is not in effect on {as_of.isoformat()}"
+            )
 
         result = calculate_tax(
             taxable_wages=data.taxable_wages,

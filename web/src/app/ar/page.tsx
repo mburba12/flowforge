@@ -1,1 +1,6 @@
-import {WorkspacePage} from "@/components/workspace-page";import {workspaces} from "@/lib/demo-data";export default function Page(){return <WorkspacePage config={workspaces.ar}/>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/ar" as never);
+}

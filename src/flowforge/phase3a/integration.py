@@ -1,11 +1,10 @@
-from datetime import UTC, datetime
 from decimal import Decimal
 from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flowforge.phase2b.models import JournalEntry, JournalLine
+from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
 
 from .matching import MatchInput, MatchPolicy, evaluate
 from .models import (
@@ -112,52 +111,37 @@ class APIntegrationService:
         line_statement = select(VendorInvoiceLine).where(VendorInvoiceLine.invoice_id == invoice.id)
         lines = list((await self.db.scalars(line_statement)).all())
 
-        journal = JournalEntry(
-            tenant_id=self.tenant_id,
-            ledger_id=ledger_id,
-            period_id=period_id,
-            journal_number=f"AP-{str(invoice.id)[:8]}",
-            journal_date=invoice.invoice_date,
-            description=f"Vendor invoice {invoice.invoice_number}",
-            status="posted",
-            created_by=self.user_id,
-            approved_by=self.user_id,
-            posted_at=datetime.now(UTC),
-        )
-        self.db.add(journal)
-        await self.db.flush()
-
-        line_number = 1
-
-        for invoice_line in lines:
-            amount = invoice_line.quantity * invoice_line.unit_price
-
-            self.db.add(
-                JournalLine(
-                    tenant_id=self.tenant_id,
-                    journal_id=journal.id,
-                    line_number=line_number,
-                    account_id=invoice_line.account_id,
-                    description=invoice_line.description,
-                    debit=amount,
-                    credit=Decimal("0"),
-                    currency_code=invoice.currency_code,
-                )
-            )
-            line_number += 1
-
-        self.db.add(
-            JournalLine(
+        try:
+            journal = await post_system_journal(
+                self.db,
                 tenant_id=self.tenant_id,
-                journal_id=journal.id,
-                line_number=line_number,
-                account_id=ap_account_id,
-                description="Accounts payable",
-                debit=Decimal("0"),
-                credit=invoice.total_amount,
+                user_id=self.user_id,
+                ledger_id=ledger_id,
+                period_id=period_id,
+                journal_number=f"AP-{str(invoice.id)[:8]}",
+                journal_date=invoice.invoice_date,
+                description=f"Vendor invoice {invoice.invoice_number}",
                 currency_code=invoice.currency_code,
+                lines=[
+                    *(
+                        PostingLine(
+                            account_id=line.account_id,
+                            debit=line.quantity * line.unit_price,
+                            credit=Decimal("0"),
+                            description=line.description,
+                        )
+                        for line in lines
+                    ),
+                    PostingLine(
+                        account_id=ap_account_id,
+                        debit=Decimal("0"),
+                        credit=invoice.total_amount,
+                        description="Accounts payable",
+                    ),
+                ],
             )
-        )
+        except PostingError as exc:
+            raise ValueError(str(exc)) from exc
 
         self.db.add(
             APOpenItem(

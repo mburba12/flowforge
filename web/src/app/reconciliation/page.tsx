@@ -1,1 +1,6 @@
-"use client";import {useState} from "react";const items=[{id:"REC-184",flow:"Commerce to cash",expected:"$42,681",actual:"$41,992",variance:"$689",severity:"high"},{id:"REC-183",flow:"Payroll to bank",expected:"$284,920",actual:"$284,920",variance:"$0",severity:"low"},{id:"REC-182",flow:"Inventory to ledger",expected:"$1.84M",actual:"$1.82M",variance:"$21,440",severity:"critical"}];export default function Page(){const [resolved,setResolved]=useState<string[]>([]);return <><div className="pagehead"><div><div className="eyebrow">Controls</div><h1>Reconciliation</h1><p>Compare expected and actual outcomes across cash, commerce, payroll, and inventory.</p></div><button className="btn primary">Run reconciliation</button></div><section className="panel"><div className="tablewrap"><table className="data"><thead><tr><th>Run</th><th>Flow</th><th className="right">Expected</th><th className="right">Actual</th><th className="right">Variance</th><th>Action</th></tr></thead><tbody>{items.map(i=><tr key={i.id}><td>{i.id}</td><td><span className={`severity ${i.severity}`}/>{i.flow}</td><td className="right">{i.expected}</td><td className="right">{i.actual}</td><td className="right">{i.variance}</td><td><button className="btn" onClick={()=>setResolved(v=>[...v,i.id])}>{resolved.includes(i.id)?"Resolved":"Review"}</button></td></tr>)}</tbody></table></div></section></>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/reconciliation" as never);
+}
