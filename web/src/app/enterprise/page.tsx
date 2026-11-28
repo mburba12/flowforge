@@ -1,21 +1,6 @@
-import { workspaces } from "@/modules/blueprint/workspaces";
+import { redirect } from "next/navigation";
 
-export default function EnterprisePage() {
-  return (
-    <main>
-      <h1>FlowForge Enterprise</h1>
-
-      <nav aria-label="Enterprise workspaces">
-        <ul>
-          {workspaces.map((workspace) => (
-            <li key={workspace.slug}>
-              <a href={`/enterprise/${workspace.slug}`}>
-                {workspace.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </main>
-  );
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/dashboard" as never);
 }

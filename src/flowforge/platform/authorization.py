@@ -271,6 +271,7 @@ RELEASE_MODULES = {
     "flowforge.resource_contracts.router",
     "flowforge.release.read_routes",
     "flowforge.release.admin_routes",
+    "flowforge.release.operations_routes",
 }
 
 AUTHENTICATED = ""  # mapped, but any active user of the tenant may call it
@@ -388,6 +389,8 @@ POLICY: dict[str, str] = {
     "flowforge.release.read_routes:get_payroll_run": "payroll.read",
     "flowforge.release.read_routes:list_tax_liabilities": "tax.read",
     "flowforge.release.read_routes:list_tax_returns": "tax.read",
+    # operation catalog for the UI (each operation keeps its own permission)
+    "flowforge.release.operations_routes:list_operations": AUTHENTICATED,
 }
 
 # Endpoints anyone may call without signing in.
@@ -417,15 +420,30 @@ def endpoint_key(endpoint: Any) -> str:
     return f"{getattr(endpoint, '__module__', '')}:{getattr(endpoint, '__qualname__', '')}"
 
 
-def iter_api_routes(routes: list[Any]) -> list[APIRoute]:
-    """All API routes, including those inside lazily included routers."""
-    found: list[APIRoute] = []
+def iter_routes_with_paths(routes: list[Any], prefix: str = "") -> list[tuple[APIRoute, str]]:
+    """All API routes with their served path, including lazily included routers.
+
+    A lazily included router keeps its routes' own paths; its include context holds
+    the prefix added by the router(s) it is included in.
+    """
+    found: list[tuple[APIRoute, str]] = []
     for route in routes:
         if isinstance(route, APIRoute):
-            found.append(route)
+            found.append((route, prefix + route.path))
         elif type(route).__name__ == "_IncludedRouter":
-            found.extend(iter_api_routes(route.original_router.routes))
+            base = prefix + route.include_context.prefix
+            child = route.original_router
+            for sub in child.routes:
+                if isinstance(sub, APIRoute):
+                    found.append((sub, base + sub.path))
+                else:
+                    found.extend(iter_routes_with_paths([sub], prefix))
     return found
+
+
+def iter_api_routes(routes: list[Any]) -> list[APIRoute]:
+    """All API routes, including those inside lazily included routers."""
+    return [route for route, _ in iter_routes_with_paths(routes)]
 
 
 def extended_domain(module: str) -> str | None:
@@ -444,13 +462,13 @@ def build_extended_policy(app: Any) -> dict[str, str]:
     """
     EXTENDED_POLICY.clear()
     DECISIONS.clear()
-    for route in iter_api_routes(list(app.routes)):
+    for route, path in iter_routes_with_paths(list(app.routes)):
         module = route.endpoint.__module__
         key = endpoint_key(route.endpoint)
         methods = route.methods or set()
         if module in RELEASE_MODULES or key in PUBLIC:
             continue
-        if methods <= {"GET", "HEAD"} and _DIAGNOSTIC_PATH.match(route.path):
+        if methods <= {"GET", "HEAD"} and _DIAGNOSTIC_PATH.match(path):
             PUBLIC.add(key)
             continue
         if key in EXTENDED_OVERRIDES:
@@ -460,7 +478,7 @@ def build_extended_policy(app: Any) -> dict[str, str]:
         if domain is None:
             continue
         read, write, approve = DOMAIN_CODES[domain]
-        segments = [s for s in route.path.split("/") if s and not s.startswith("{")]
+        segments = [s for s in path.split("/") if s and not s.startswith("{")]
         last = segments[-1] if segments else ""
         if methods <= {"GET", "HEAD"}:
             EXTENDED_POLICY[key] = read

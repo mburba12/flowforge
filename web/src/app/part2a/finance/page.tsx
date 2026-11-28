@@ -1,1 +1,6 @@
-export default function Page(){return <main><h1>Banking, ledger, and reconciliation</h1></main>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/finance" as never);
+}

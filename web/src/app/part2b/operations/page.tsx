@@ -1,1 +1,6 @@
-export default function Page(){return <main><h1>Operations</h1><p>Work queue, approvals, and search.</p></main>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/work-queue" as never);
+}

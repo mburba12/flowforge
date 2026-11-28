@@ -1,1 +1,6 @@
-export default function Page(){return <main><h1>Workforce, payroll, and tax</h1></main>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/workforce" as never);
+}

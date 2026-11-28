@@ -42,6 +42,7 @@ from flowforge.platform.authorization import (
     sync_standard_roles,
 )
 from flowforge.release.admin_routes import router as release_admin_router
+from flowforge.release.operations_routes import router as operations_router
 from flowforge.release.read_routes import router as release_read_router
 from flowforge.resource_contracts.router import router as resource_contract_router
 from flowforge.support_feedback import router as support_feedback_router
@@ -152,6 +153,7 @@ def register_domain_errors(application: FastAPI) -> list[str]:
 # Release-scope completion routes first, so their GET paths take precedence.
 app.include_router(release_admin_router)
 app.include_router(release_read_router)
+app.include_router(operations_router)
 app.include_router(api_router)
 app.include_router(extended_router)
 app.include_router(phase1_router)

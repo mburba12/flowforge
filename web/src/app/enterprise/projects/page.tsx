@@ -1,1 +1,6 @@
-import {Workspace} from "@/components/blueprint/Workspace";export default function Page(){return <Workspace title="Projects" endpoint="/api/v2/bg08/final/projects"/>}
+import { redirect } from "next/navigation";
+
+// Legacy route: the connected workspace lives under /modules.
+export default function Page() {
+  redirect("/modules/billing" as never);
+}

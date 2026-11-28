@@ -37,7 +37,8 @@ test.describe("FlowForge workspace navigation (signed in)", () => {
       const response = await page.goto(workspace.path, { waitUntil: "domcontentloaded" });
       expect(response?.status(), `${workspace.path} returned an HTTP error`).toBeLessThan(400);
       // Legacy top-level routes redirect to their connected /modules workspace.
-      const expected = ["/shipping", "/billing"].includes(workspace.path) ? workspace.path : `/modules${workspace.path}`;
+      const moved: Record<string, string> = { "/shipping": "/modules/commerce" };
+      const expected = moved[workspace.path] ?? `/modules${workspace.path}`;
       await expect(page).toHaveURL(new RegExp(`${expected.replaceAll("/", "\\/")}\\/?$`));
       await expectSignedInShell(page);
 
