@@ -82,3 +82,19 @@ C7 DOCS                PASS  runbook, release notes, this file.
   plaintext password line from release-20261127-154058\release-manifest.txt if not done.
 
 END_OF_STATUS
+
+================================================================================
+UPDATE 2026-11-28 — END-TO-END AUDIT (supersedes counts above)
+================================================================================
+AUDIT_REPORT=docs\FLOWFORGE_AUDIT_20261128.md (15 defects found and fixed, all with regression tests).
+TOOLS=tests\extended\functional_audit.py, tests\extended\isolation_audit.py, tests\extended\operation_coverage.py
+      (+ tests\conftest.py recorder: FLOWFORGE_OPERATION_COVERAGE=<file>), web\e2e\ui-audit.spec.ts.
+RESULTS (isolated stack): backend 403 passed; browser 62 passed; 400/401 operations proven working (create tenant
+  is platform-only by design); 0 server errors; cross-tenant references refused (migration ff_security_001, trigger
+  ff_same_tenant on 272 tables, head = ff_security_001); Viewer refused on all 294 mapped write operations; UI: 368
+  forms open for owner, no errors for owner/approver/viewer.
+REHEARSAL 20261128-032432 from a fresh production backup: PASSED (R00-R12).
+LIVE: NOT YET UPDATED. Live still runs commit 6c3c90b (update 20261127-233151). The live update was blocked by the
+  session's permission policy; the owner runs: .\scripts\production\Update-FlowForge.ps1
+  Then verify: alembic head ff_security_001 and 272 ff_same_tenant triggers.
+NOT THE AGENT'S: repo-root package.json, playwright.config.ts, tests\*.spec.ts (owner's own audit files) — untracked, untouched.
