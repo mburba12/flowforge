@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { get, type Row } from "../client";
 import { useLoad, usePermissions } from "../hooks";
-import { Amount, Badge, Card, Grid, Table, Workspace } from "../ui";
+import { Amount, Badge, Card, Grid, RequiresPermission, Table, Workspace } from "../ui";
 
 type Aging = { total_open: string; buckets: Record<string, string> };
 
@@ -61,9 +61,19 @@ export function DashboardWorkspace() {
 
 /** Audit trail (latest 100 entries). */
 export function AuditWorkspace() {
-  const audit = useLoad(() => get<Row[]>("/api/v1/audit"), "audit");
   return (
     <Workspace title="Audit trail" description="Every consequential change, with the acting user, newest first." accent="#64748b">
+      <RequiresPermission permission="audit.read" area="The audit trail">
+        <AuditEntries />
+      </RequiresPermission>
+    </Workspace>
+  );
+}
+
+function AuditEntries() {
+  const audit = useLoad(() => get<Row[]>("/api/v1/audit"), "audit");
+  return (
+    <>
       <Card title="Latest 100 audit entries">
         <Table
           testId="audit-table"
@@ -77,6 +87,6 @@ export function AuditWorkspace() {
           ]}
         />
       </Card>
-    </Workspace>
+    </>
   );
 }

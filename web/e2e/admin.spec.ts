@@ -34,7 +34,9 @@ test.describe.serial("Administration and permissions in the browser", () => {
     await expect(form).toContainText("Requires permission ap.po.write");
     await expect(form.getByRole("button", { name: "Create purchase order" })).toBeDisabled();
     await page.goto("/modules/settings");
-    await expect(page.locator(".rwNotice.error").first()).toContainText(/permission/i);
+    // Administration explains the missing permission instead of failing.
+    await expect(page.locator(".rwNotice.info").first()).toContainText("needs the permission users.manage");
+    await expect(page.locator(".rwNotice.error")).toHaveCount(0);
   });
 
   test("owner deactivates the Viewer, whose session then ends", async ({ browser, page }) => {

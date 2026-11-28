@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { del, get, patch, post, put } from "../client";
 import { resetPermissions, useLoad } from "../hooks";
-import { ActionButton, Badge, Card, Form, Grid, Notice, Table, Tabs, Workspace, useActionLog } from "../ui";
+import { ActionButton, Badge, Card, Form, Grid, Notice, RequiresPermission, Table, Tabs, Workspace, useActionLog } from "../ui";
 
 type User = { id: string; email: string; display_name: string; is_active: boolean; roles: string[] } & Record<string, unknown>;
 type Role = { id: string; name: string; description: string | null; standard: boolean; permissions: string[] } & Record<string, unknown>;
@@ -16,6 +16,16 @@ const TABS = [
 ];
 
 export function AdminWorkspace() {
+  return (
+    <Workspace title="Administration" description="Users, roles and permissions for your organisation. Changes take effect on the user's next request." accent="#334155">
+      <RequiresPermission permission="users.manage" area="Administration">
+        <AdminContent />
+      </RequiresPermission>
+    </Workspace>
+  );
+}
+
+function AdminContent() {
   const [tab, setTab] = useState("users");
   const [version, setVersion] = useState(0);
   const refresh = () => {
@@ -25,11 +35,11 @@ export function AdminWorkspace() {
   const users = useLoad(() => get<User[]>("/api/v1/users"), `users:${version}`);
   const roles = useLoad(() => get<Role[]>("/api/v1/roles"), `roles:${version}`);
   return (
-    <Workspace title="Administration" description="Users, roles and permissions for your organisation. Changes take effect on the user's next request." accent="#334155">
+    <>
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === "users" ? <Users users={users} roles={roles} refresh={refresh} /> : null}
       {tab === "roles" ? <Roles roles={roles} refresh={refresh} /> : null}
-    </Workspace>
+    </>
   );
 }
 

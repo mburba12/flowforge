@@ -77,6 +77,20 @@ export function Amount(props: { value: unknown }) {
   return <span className="rwAmount">{money(props.value)}</span>;
 }
 
+/** Renders children only for users holding `permission`; otherwise explains the access. */
+export function RequiresPermission(props: { permission: string; area: string; children: ReactNode }) {
+  const { can, loaded } = usePermissions();
+  if (!loaded) return <p className="rwMuted">Loading…</p>;
+  if (!can(props.permission)) {
+    return (
+      <Notice kind="info">
+        {props.area} needs the permission {props.permission}. Ask an owner or manager to grant it to your role.
+      </Notice>
+    );
+  }
+  return <>{props.children}</>;
+}
+
 // ------------------------------------------------------------------ table
 export type Column<T> = { key: string; label: string; render?: (row: T) => ReactNode; align?: "right" };
 
