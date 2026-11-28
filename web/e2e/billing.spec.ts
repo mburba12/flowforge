@@ -41,6 +41,7 @@ test.describe.serial("Billing & usage and screen customization", () => {
     await expect(custom.getByTestId("show-nav:settings")).toBeDisabled(); // Settings always stays
     await custom.getByTestId("show-nav:crm").uncheck();
     await custom.getByTestId("show-home:quick").uncheck();
+    await expect(custom.getByTestId("customize-status")).toHaveText("All changes saved.");
     await expect(page.locator(".side")).not.toContainText("Customers & deals");
 
     await page.locator(".side").getByRole("link", { name: "Home" }).click();

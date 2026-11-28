@@ -40,7 +40,7 @@ type ConnectionStatus = { banks: number; carriers: number; shipments: number; pa
 /** Where each outside service connects, with its current state. */
 /** Each person chooses what they see: sidebar sections and Home page parts. */
 function Customize() {
-  const { loaded, isHidden, setHidden, showAll } = useHidden();
+  const { loaded, saving, isHidden, setHidden, showAll } = useHidden();
   const [error, setError] = useState("");
   const toggle = (key: string, shown: boolean) => {
     setError("");
@@ -63,6 +63,9 @@ function Customize() {
       }
     >
       <p className="rwMuted small">Untick anything you do not use to hide it. Only your own screen changes; everything stays included and you can show it again here any time.</p>
+      <p className="rwMuted small" data-testid="customize-status" aria-live="polite">
+        {saving ? "Saving…" : loaded ? "All changes saved." : ""}
+      </p>
       {error ? <Notice kind="error">{error}</Notice> : null}
       <div className="rwCustomize">
         {navGroups.map((group, index) => (

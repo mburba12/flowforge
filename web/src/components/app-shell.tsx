@@ -8,7 +8,7 @@ import { AppIcon } from "@/components/app-icon";
 import { ALWAYS_SHOWN, labelOf, navGroups } from "@/lib/modules";
 import { clearSession } from "@/lib/session";
 import { SectionFiles } from "@/release/files";
-import { useHidden } from "@/release/hooks";
+import { useHidden, waitForPreferenceSaves } from "@/release/hooks";
 
 /** Signed-in chrome: grouped sidebar (specialist tools folded away) and a slim top bar. */
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -72,7 +72,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <SectionFiles key={current} section={current} />
           <button
             type="button"
-            onClick={() => {
+            onClick={async () => {
+              await waitForPreferenceSaves(); // finish saving screen choices first
               clearSession();
               router.replace("/login" as never);
               router.refresh();
