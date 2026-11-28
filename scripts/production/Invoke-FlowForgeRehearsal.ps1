@@ -53,6 +53,15 @@ $env:COMPOSE_PROFILES = "rehearsal-no-tunnel"; $env:FLOWFORGE_TUNNEL_TOKEN = ""
 $env:FLOWFORGE_RATE_LIMITS = "off"
 # Never bill, email or charge anyone from a rehearsal copy of production.
 $env:FLOWFORGE_BILLING = "off"; $env:FLOWFORGE_STRIPE_SECRET_KEY = ""; $env:FLOWFORGE_SMTP_HOST = ""
+# The browser tests create their own workspace and owner (no authenticator app, no inbox).
+$env:FLOWFORGE_REQUIRE_OWNER_MFA = "off"; $env:FLOWFORGE_REQUIRE_VERIFIED_EMAIL = "off"; $env:FLOWFORGE_ALLOW_BOOTSTRAP = "on"
+$env:FLOWFORGE_TURNSTILE_SITE_KEY = ""; $env:FLOWFORGE_TURNSTILE_SECRET = ""
+# Rehearse moving every stored secret to a brand-new dedicated key (R07b); the
+# production key settings are kept as the "previous" keys so old values stay readable.
+$rehearsalCfg = Read-FFEnvFile $envFile
+$previousKeys = @($rehearsalCfg["FLOWFORGE_CREDENTIALS_KEY"], $rehearsalCfg["FLOWFORGE_CREDENTIALS_KEY_PREVIOUS"]) | Where-Object { $_ }
+$env:FLOWFORGE_CREDENTIALS_KEY = New-FFKey
+$env:FLOWFORGE_CREDENTIALS_KEY_PREVIOUS = ($previousKeys -join ",")
 try {
     Step "R00" "Script syntax" {
         foreach ($f in Get-ChildItem $PSScriptRoot -Filter *.ps1) {
@@ -70,7 +79,9 @@ try {
             $before = (docker exec (Get-FFContainer "flowforge" "db") psql -U flowforge_owner -d flowforge -Atc "SELECT version_num FROM alembic_version").Trim()
             Invoke-FFCompose -Project $project -Arguments @("up", "-d", "--wait", "db") -Description "db up"
             $db = Get-FFContainer $project "db"
-            Invoke-FFNative -Description "copy backup" -Command { docker cp $source "${db}:/tmp/source.dump" } | Out-Null
+            $sourcePlain = Get-FFPlainBackup $source
+            try { Invoke-FFNative -Description "copy backup" -Command { docker cp $sourcePlain "${db}:/tmp/source.dump" } | Out-Null }
+            finally { if ($sourcePlain -ne $source) { Remove-Item -LiteralPath $sourcePlain -Force -Confirm:$false -ErrorAction SilentlyContinue } }
             Invoke-FFNative -Description "pg_restore" -Command { docker exec $db pg_restore -U flowforge_owner -d flowforge --no-owner --exit-on-error /tmp/source.dump } | Out-Null
             docker exec $db rm -f /tmp/source.dump | Out-Null
             Invoke-FFCompose -Project $project -Arguments @("run", "--rm", "migrate") -Description "migrate (upgrade)"
@@ -105,6 +116,10 @@ try {
         "re-import inserted 0 rows; reconciled=$($json.reconciled)"
     }
     }
+    Step "R07b" "Move every stored secret and file to a new encryption key" {
+        Invoke-FFCompose -Project $project -Arguments @("run", "--rm", "migrate", "python", "-m", "flowforge.accounts.reencrypt") -Description "re-encrypt"
+        Invoke-FFCompose -Project $project -Arguments @("run", "--rm", "migrate", "python", "-m", "flowforge.accounts.reencrypt", "--check") -Description "re-encrypt check"
+    }
     Step "R08" "Release workflow tests against the rehearsal database" {
         $cfg = Read-FFEnvFile $envFile
         $env:FLOWFORGE_DATABASE_URL = "postgresql+asyncpg://flowforge_app:$($cfg['FLOWFORGE_APP_DB_PASSWORD'])@127.0.0.1:5436/flowforge"
@@ -120,7 +135,10 @@ try {
     Step "R10" "Backup and restore round trip" {
         $backup = & (Join-Path $PSScriptRoot "Backup-FlowForge.ps1") -Project $project -Label "rehearsal" | Select-Object -Last 1
         $db = Get-FFContainer $project "db"
-        docker cp $backup "${db}:/tmp/restore.dump" | Out-Null
+        if ($backup.EndsWith(".enc")) { "backup is encrypted: $backup" } elseif ((Read-FFEnvFile $envFile)["FLOWFORGE_BACKUP_KEY"]) { throw "backup was not encrypted" }
+        $backupPlain = Get-FFPlainBackup $backup
+        try { docker cp $backupPlain "${db}:/tmp/restore.dump" | Out-Null }
+        finally { if ($backupPlain -ne $backup) { Remove-Item -LiteralPath $backupPlain -Force -Confirm:$false -ErrorAction SilentlyContinue } }
         Invoke-FFNative -Description "createdb" -Command { docker exec $db createdb -U flowforge_owner restore_check }
         try {
             Invoke-FFNative -Description "pg_restore" -Command { docker exec $db pg_restore -U flowforge_owner -d restore_check --no-owner /tmp/restore.dump }
@@ -153,7 +171,7 @@ try {
     if (-not $KeepStack) {
         try { Invoke-FFCompose -Project $project -Arguments @("down", "-v", "--remove-orphans") -Description "remove rehearsal stack" | Out-Null } catch { Write-Warning $_.Exception.Message }
     }
-    Remove-Item Env:\FF_WEB_PORT, Env:\FF_API_PORT, Env:\FF_DB_PORT, Env:\COMPOSE_PROFILES, Env:\FLOWFORGE_TUNNEL_TOKEN, Env:\FLOWFORGE_RATE_LIMITS, Env:\FLOWFORGE_BILLING, Env:\FLOWFORGE_STRIPE_SECRET_KEY, Env:\FLOWFORGE_SMTP_HOST -ErrorAction SilentlyContinue
+    Remove-Item Env:\FF_WEB_PORT, Env:\FF_API_PORT, Env:\FF_DB_PORT, Env:\COMPOSE_PROFILES, Env:\FLOWFORGE_TUNNEL_TOKEN, Env:\FLOWFORGE_RATE_LIMITS, Env:\FLOWFORGE_BILLING, Env:\FLOWFORGE_STRIPE_SECRET_KEY, Env:\FLOWFORGE_SMTP_HOST, Env:\FLOWFORGE_REQUIRE_OWNER_MFA, Env:\FLOWFORGE_REQUIRE_VERIFIED_EMAIL, Env:\FLOWFORGE_ALLOW_BOOTSTRAP, Env:\FLOWFORGE_TURNSTILE_SITE_KEY, Env:\FLOWFORGE_TURNSTILE_SECRET, Env:\FLOWFORGE_CREDENTIALS_KEY, Env:\FLOWFORGE_CREDENTIALS_KEY_PREVIOUS -ErrorAction SilentlyContinue
     $results | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $out "results.json") -Encoding UTF8
     $summary = @("FLOWFORGE CUTOVER REHEARSAL $stamp", "") + ($results | ForEach-Object { "{0} {1} {2} ({3}s) {4}" -f $_.status, $_.id, $_.step, $_.seconds, $_.detail })
     $failed = @($results | Where-Object status -eq "FAIL").Count

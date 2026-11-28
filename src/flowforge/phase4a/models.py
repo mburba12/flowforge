@@ -5,6 +5,7 @@ from uuid import UUID, uuid4
 from sqlalchemy import Boolean, Date, DateTime, ForeignKey, Numeric, String, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column
 
+from flowforge.core.encrypted_types import EncryptedText
 from flowforge.db.base import Base
 
 
@@ -81,9 +82,14 @@ class WorkerBankAccount(Base):
         ForeignKey("tenants.id", ondelete="CASCADE"), index=True
     )
     worker_id: Mapped[UUID] = mapped_column(ForeignKey("worker_profiles.id", ondelete="CASCADE"))
-    account_token: Mapped[str] = mapped_column(String(500))
+    # Bank account and routing numbers: encrypted at rest.
+    account_token: Mapped[str] = mapped_column(
+        EncryptedText("worker_bank_accounts.account_token", 500)
+    )
     account_last4: Mapped[str] = mapped_column(String(4))
-    routing_token: Mapped[str | None] = mapped_column(String(500))
+    routing_token: Mapped[str | None] = mapped_column(
+        EncryptedText("worker_bank_accounts.routing_token", 500)
+    )
     account_type: Mapped[str] = mapped_column(String(30))
     active: Mapped[bool] = mapped_column(Boolean, default=True)
 

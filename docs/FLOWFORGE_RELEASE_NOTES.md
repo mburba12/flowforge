@@ -5,6 +5,22 @@ Sign in at **http://127.0.0.1:3000**. Every workspace is under the left-hand men
 permission they need; every business rule is enforced by the server, so the UI can
 never bypass it.
 
+## New: security
+
+* **Two-step sign-in.** Settings → Your sign-in security → Set up: scan the setup key into an
+  authenticator app, enter its code, save the 10 recovery codes. Required for owners and
+  anyone who manages people or billing; they are asked to set it up at sign-in.
+* **Forgot your password?** on the sign-in page emails a link that works once for 30 minutes.
+  Changing or resetting a password signs you out everywhere else. **Log out** now ends the
+  session on the server.
+* **Email confirmation** for new sign-ups before adding a card, connecting a bank or inviting
+  people (a banner offers to resend the link).
+* **Robot check** on sign-up and password reset when Cloudflare Turnstile keys are set.
+* **Encryption:** worker bank and routing numbers, tax registration numbers, uploaded files and
+  authenticator secrets are now encrypted in the database, alongside the bank, Gusto and
+  carrier credentials, with a dedicated, rotatable key. Backups are encrypted and copied off
+  the computer daily.
+
 ## New: Krov WorkAgent, sign up from the website, pay for what you use
 
 **Krov WorkAgent.** The product is now called Krov WorkAgent, with the Krov logo.

@@ -9,7 +9,9 @@
 param(
     [Parameter(Mandatory)][string]$Email,
     [string]$TenantSlug = "flowforge-production",
-    [string]$Project = "flowforge"
+    [string]$Project = "flowforge",
+    # Already-entered password (Complete-FlowForgeSecurity.ps1); prompts when omitted.
+    [SecureString]$Password
 )
 . (Join-Path $PSScriptRoot "FlowForge.Common.ps1")
 
@@ -20,11 +22,21 @@ function Read-Plain([string]$Prompt) {
     finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }
 }
 
-$first = Read-Plain "New password for $Email"
-$second = Read-Plain "Repeat new password"
-if ($first -ne $second) { throw "Passwords do not match." }
+function ConvertFrom-Secure([SecureString]$Secure) {
+    $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secure)
+    try { return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr) }
+    finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }
+}
+
+if ($Password) {
+    $first = ConvertFrom-Secure $Password
+} else {
+    $first = Read-Plain "New password for $Email"
+    $second = Read-Plain "Repeat new password"
+    if ($first -ne $second) { throw "Passwords do not match." }
+    $second = $null
+}
 if ($first.Length -lt 12) { throw "Use at least 12 characters." }
-$second = $null
 
 $api = Get-FFContainer $Project "api"
 $db = Get-FFContainer $Project "db"
@@ -34,9 +46,9 @@ if ($LASTEXITCODE -ne 0 -or $hash -notmatch '^\$argon2[a-z]*\$[A-Za-z0-9$+/=,.-]
 
 $emailSql = $Email.ToLowerInvariant().Replace("'", "''")
 $slugSql = $TenantSlug.Replace("'", "''")
-$sql = "UPDATE users SET password_hash = '$hash', updated_at = now() WHERE lower(email) = '$emailSql' AND tenant_id = (SELECT id FROM tenants WHERE slug = '$slugSql');"
+$sql = "UPDATE users SET password_hash = '$hash', password_changed_at = now(), updated_at = now() WHERE lower(email) = '$emailSql' AND tenant_id = (SELECT id FROM tenants WHERE slug = '$slugSql');"
 $result = ($sql | docker exec -i $db psql -U flowforge_owner -d flowforge -v ON_ERROR_STOP=1 -At)
 $hash = $null; $sql = $null
 if ($LASTEXITCODE -ne 0) { throw "Password update failed." }
 if (($result -join "") -notmatch "UPDATE 1") { throw "No matching user for $Email in $TenantSlug (nothing changed)." }
-Write-Host "PASSWORD UPDATED for $Email ($TenantSlug). Existing tokens expire within 30 minutes." -ForegroundColor Green
+Write-Host "PASSWORD UPDATED for $Email ($TenantSlug). Every existing sign-in has ended." -ForegroundColor Green

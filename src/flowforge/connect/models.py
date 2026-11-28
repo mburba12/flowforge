@@ -14,7 +14,6 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Integer,
-    LargeBinary,
     Numeric,
     String,
     Text,
@@ -23,6 +22,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, deferred, mapped_column
 
+from flowforge.core.encrypted_types import EncryptedBytes
 from flowforge.db.base import Base
 
 
@@ -46,7 +46,8 @@ class Attachment(_Tenant, Base):
     size_bytes: Mapped[int] = mapped_column(Integer)
     checksum: Mapped[str] = mapped_column(String(64))
     note: Mapped[str | None] = mapped_column(String(500))
-    content: Mapped[bytes] = deferred(mapped_column(LargeBinary))
+    # Encrypted at rest (AES-256-GCM); decrypted when read.
+    content: Mapped[bytes] = deferred(mapped_column(EncryptedBytes("attachments.content")))
     uploaded_by: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
 

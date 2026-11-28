@@ -211,7 +211,7 @@ async def test_plaid_connection_syncs_and_keeps_token_encrypted(
     assert connected["transactions_added"] == 2
     stored = await h.sql("SELECT encrypted_access_token FROM bank_connections WHERE id = :i",
                          i=connected["connection_id"])
-    assert stored[0][0].startswith("ffc1:") and access_token not in stored[0][0]
+    assert stored[0][0].startswith("ffc2:") and access_token not in stored[0][0]
 
     tx = await h.call("GET", "/api/v1/banking/transactions")
     assert {t["description"]: (t["money_out"], t["money_in"]) for t in tx} == {
@@ -292,7 +292,7 @@ async def test_carriers_connect_and_track(harness: Harness, mock_providers: Any)
         account = await h.post("/api/v1/shipping/accounts", json={"carrier": carrier, "credentials": creds})
         assert account["status"] == "connected"
     stored = await h.sql("SELECT encrypted_credentials, account_number_mask FROM carrier_accounts WHERE carrier = 'fedex'")
-    assert stored[0][0].startswith("ffc1:") and "510087020" not in stored[0][0] and stored[0][1].endswith("7020")
+    assert stored[0][0].startswith("ffc2:") and "510087020" not in stored[0][0] and stored[0][1].endswith("7020")
 
     refreshed = await h.post(f"/api/v1/shipping/shipments/{waiting['id']}/refresh")
     assert refreshed["status"] == "in_transit" and refreshed["estimated_delivery"] == "2026-11-30"

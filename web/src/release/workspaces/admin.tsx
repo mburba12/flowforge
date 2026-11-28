@@ -7,6 +7,7 @@ import { del, get, patch, post, put } from "../client";
 import { ALWAYS_SHOWN, HOME_SECTIONS, navGroups } from "@/lib/modules";
 
 import { resetPermissions, useHidden, useLoad } from "../hooks";
+import { SecurityCard } from "../security";
 import { ActionButton, Badge, Card, Form, Grid, Notice, RequiresPermission, Table, Tabs, Workspace, useActionLog } from "../ui";
 
 type User = { id: string; email: string; display_name: string; is_active: boolean; roles: string[] } & Record<string, unknown>;
@@ -26,6 +27,7 @@ const approvesOwn = (u: User, roles: Role[]) =>
 export function AdminWorkspace() {
   return (
     <Workspace title="Settings" description="Your connections, the people who can sign in and what each role may do." accent="#334155">
+      <SecurityCard />
       <Customize />
       <Connections />
       <RequiresPermission permission="users.manage" area="Managing users and roles">

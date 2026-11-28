@@ -170,3 +170,11 @@ a.rwBtn { display: inline-flex; align-items: center; text-decoration: none; just
 .rwInlineForm { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
 .rwInlineForm label { display: grid; gap: 4px; min-width: 160px; }
 .rwBig { font-size: 28px; font-weight: 800; margin: 12px 0 6px; }
+
+/* Account security */
+.recoveryCodes { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; padding: 0; list-style: none; }
+.recoveryCodes code, [data-testid="mfa-secret"] { font-size: 15px; letter-spacing: 0.06em; background: var(--panel2, #0b1a2e); padding: 4px 8px; border-radius: 6px; }
+.mfaSteps { padding-left: 20px; line-height: 1.8; }
+.verifyBanner { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 14px; padding: 10px 14px; border-radius: 12px; border: 1px solid #b4882e; background: rgba(250, 204, 21, 0.08); font-size: 14px; }
+.botCheck:empty { display: none; }
+#security-card h3, [data-testid="security-card"] h3 { margin: 16px 0 6px; font-size: 15px; }

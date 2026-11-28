@@ -32,6 +32,8 @@ Write-FFLog "2 ROLLBACK IMAGES TAGGED rollback-$stamp" $log
 
 try {
     Invoke-FFCompose -Project $Project -Arguments @("build") -Description "Build" | Out-Null
+    # The API now runs as an unprivileged account (uid 10001): give it its data volume.
+    Invoke-FFCompose -Project $Project -Arguments @("run", "--rm", "--no-deps", "--user", "0", "--entrypoint", "chown", "api", "-R", "10001:10001", "/data") -Description "Volume ownership" | Out-Null
     Invoke-FFCompose -Project $Project -Arguments @("up", "-d") -Description "Up" | Out-Null
     Wait-FFHttp "http://127.0.0.1:$($cfg['FF_API_PORT'])/api/v1/health" 240
     Wait-FFHttp "http://127.0.0.1:$($cfg['FF_WEB_PORT'])/login" 240

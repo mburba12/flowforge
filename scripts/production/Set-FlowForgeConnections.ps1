@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS  Turn on Plaid (bank feeds), Gusto (payroll switch), Stripe (card billing) and invoice email.
 .DESCRIPTION
-    Asks for the keys with hidden input, writes them to .env.production (never printed),
+    Asks for the keys with hidden input, writes them to .env.production (never printed, no copies kept),
     and restarts the API so it picks them up. Run it once per provider; press Enter to
     skip a provider you are not setting up yet.
 
@@ -47,19 +47,8 @@ function Read-Choice([string]$Prompt, [string[]]$Allowed, [string]$Default) {
 }
 
 function Set-EnvValues([hashtable]$Values) {
-    $lines = [System.Collections.Generic.List[string]]::new()
-    if (Test-Path $EnvFile) { foreach ($l in Get-Content -LiteralPath $EnvFile) { $lines.Add($l) } }
-    foreach ($key in $Values.Keys) {
-        if ($Values[$key] -match '[\r\n]') { throw "$key contains a line break." }
-        $entry = "$key=$($Values[$key])"
-        $index = -1
-        for ($i = 0; $i -lt $lines.Count; $i++) { if ($lines[$i] -match "^\s*$([regex]::Escape($key))=") { $index = $i } }
-        if ($index -ge 0) { $lines[$index] = $entry } else { $lines.Add($entry) }
-    }
-    $backup = "$EnvFile.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
-    Copy-Item -LiteralPath $EnvFile -Destination $backup
-    [IO.File]::WriteAllLines($EnvFile, $lines, [Text.UTF8Encoding]::new($false))
-    Write-Host "Saved to $EnvFile (previous copy: $backup)."
+    Set-FFEnvValues -EnvFile $EnvFile -Values $Values
+    Write-Host "Saved to $EnvFile."
 }
 
 $cfg = Read-FFEnvFile $EnvFile

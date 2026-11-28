@@ -27,7 +27,7 @@ def _endpoint_keys(modules: set[str] | None = None) -> set[str]:
 
 def test_every_release_endpoint_has_a_policy() -> None:
     endpoints = _endpoint_keys(RELEASE_MODULES)
-    assert endpoints - set(POLICY) == set(), "release endpoints without a policy"
+    assert endpoints - set(POLICY) - PUBLIC == set(), "release endpoints without a policy"
     assert set(POLICY) - endpoints == set(), "policy entries for endpoints that do not exist"
 
 
@@ -37,7 +37,14 @@ def test_every_endpoint_is_public_or_has_a_policy() -> None:
     assert not unmapped, sorted(unmapped)
     assert {code for code in EXTENDED_POLICY.values() if code} <= set(CATALOG)
     # Public endpoints are sign-in, health, problem reports and static diagnostics only.
-    for key in PUBLIC:
+    signin_steps = {
+        "flowforge.accounts.routes:auth_config",
+        "flowforge.accounts.routes:mfa_verify",
+        "flowforge.accounts.routes:forgot_password",
+        "flowforge.accounts.routes:reset_password",
+        "flowforge.accounts.routes:verify_email",
+    }
+    for key in PUBLIC - signin_steps:
         module, name = key.split(":")
         assert module.endswith((".auth", ".health", "support_feedback")) or name in {
             "status",

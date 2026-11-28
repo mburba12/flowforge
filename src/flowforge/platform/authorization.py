@@ -13,6 +13,7 @@
   without a policy is denied (deny by default).
 """
 
+import hashlib
 import re
 from typing import Annotated, Any
 
@@ -21,6 +22,12 @@ from fastapi.routing import APIRoute
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import text
 
+from flowforge.accounts.policy import (
+    ENROLLMENT_MARKER,
+    MFA_REQUIRED_FOR,
+    enrollment_allows,
+    owner_mfa_required,
+)
 from flowforge.core.security import Principal, current_principal
 from flowforge.platform.approval import SELF_APPROVE, SELF_APPROVE_ROLE, set_request_permissions
 
@@ -307,6 +314,7 @@ RELEASE_MODULES = {
     "flowforge.connect.shipping",
     "flowforge.connect.status",
     "flowforge.billing.routes",
+    "flowforge.accounts.routes",
 }
 
 AUTHENTICATED = ""  # mapped, but any active user of the tenant may call it
@@ -470,6 +478,14 @@ POLICY: dict[str, str] = {
     "flowforge.billing.routes:pay_now": "account.billing.manage",
     "flowforge.billing.routes:get_preferences": AUTHENTICATED,
     "flowforge.billing.routes:put_preferences": AUTHENTICATED,
+    # account security (each person manages their own)
+    "flowforge.accounts.routes:logout": AUTHENTICATED,
+    "flowforge.accounts.routes:security_status": AUTHENTICATED,
+    "flowforge.accounts.routes:mfa_setup": AUTHENTICATED,
+    "flowforge.accounts.routes:mfa_enable": AUTHENTICATED,
+    "flowforge.accounts.routes:mfa_disable": AUTHENTICATED,
+    "flowforge.accounts.routes:resend_verification": AUTHENTICATED,
+    "flowforge.accounts.routes:change_password": AUTHENTICATED,
 }
 
 # Endpoints anyone may call without signing in.
@@ -477,6 +493,11 @@ PUBLIC: set[str] = {
     "flowforge.api.routes.auth:bootstrap",
     "flowforge.api.routes.auth:login",
     "flowforge.api.routes.auth:signup",
+    "flowforge.accounts.routes:auth_config",
+    "flowforge.accounts.routes:mfa_verify",
+    "flowforge.accounts.routes:forgot_password",
+    "flowforge.accounts.routes:reset_password",
+    "flowforge.accounts.routes:verify_email",
     "flowforge.api.routes.health:health",
     "flowforge.support_feedback:submit_problem_report",
 }
@@ -588,18 +609,31 @@ async def load_access(principal: Principal) -> set[str] | None:
     async with SessionLocal() as session:
         session.info["tenant_id"] = principal.tenant_id
         session.info["user_id"] = principal.user_id
+        jti_hash = hashlib.sha256((principal.jti or "").encode()).hexdigest()
         active = (
             await session.execute(
                 text(
-                    "SELECT 1 FROM users u JOIN tenants t ON t.id = u.tenant_id"
+                    "SELECT u.password_changed_at,"
+                    " EXISTS (SELECT 1 FROM user_mfa m WHERE m.user_id = u.id"
+                    "  AND m.tenant_id = u.tenant_id AND m.enabled_at IS NOT NULL),"
+                    " EXISTS (SELECT 1 FROM revoked_tokens r WHERE r.jti_hash = :j)"
+                    " FROM users u JOIN tenants t ON t.id = u.tenant_id"
                     " WHERE u.id = :u AND u.tenant_id = :t AND u.is_active AND NOT u.is_deleted"
                     " AND NOT t.is_deleted AND t.status = 'active'"
                 ),
-                {"u": principal.user_id, "t": principal.tenant_id},
+                {"u": principal.user_id, "t": principal.tenant_id, "j": jti_hash},
             )
         ).first()
         if active is None:
             return None
+        changed_at, mfa_enabled, revoked = active
+        if revoked:
+            return None  # signed out
+        if changed_at is not None and principal.issued_at is not None:
+            if changed_at > principal.issued_at:
+                return None  # issued before the password was changed
+        if mfa_enabled and not principal.mfa:
+            return None  # issued without the two-step code
         rows = await session.execute(
             text(
                 "SELECT DISTINCT p.code FROM user_roles ur"
@@ -612,7 +646,10 @@ async def load_access(principal: Principal) -> set[str] | None:
             ),
             {"u": principal.user_id, "t": principal.tenant_id},
         )
-        return {row[0] for row in rows}
+        codes = {row[0] for row in rows}
+        if not mfa_enabled and not principal.mfa and owner_mfa_required() and codes & MFA_REQUIRED_FOR:
+            codes.add(ENROLLMENT_MARKER)
+        return codes
 
 
 async def enforce(
@@ -634,6 +671,11 @@ async def enforce(
     granted = await load_access(principal)
     if granted is None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Account or tenant is not active")
+    if ENROLLMENT_MARKER in granted and not enrollment_allows(request.url.path):
+        raise HTTPException(
+            status.HTTP_403_FORBIDDEN,
+            {"code": "mfa_enrollment_required", "message": "Set up two-step sign-in to continue."},
+        )
     if key in DECISIONS and await _decision_requested(request):
         required = DECISIONS[key][1]
     if required and required not in granted:

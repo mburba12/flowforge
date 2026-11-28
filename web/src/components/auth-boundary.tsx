@@ -5,6 +5,9 @@ import { useEffect, useSyncExternalStore } from "react";
 
 import { readSession } from "@/lib/session";
 
+/** Pages that work without signing in. */
+export const PUBLIC_ROUTES = new Set(["/login", "/signup", "/onboarding", "/forgot-password", "/reset-password", "/verify-email"]);
+
 const noSubscription = () => () => {};
 
 /**
@@ -16,7 +19,7 @@ const noSubscription = () => () => {};
 export function AuthBoundary({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const publicRoute = pathname === "/login" || pathname === "/signup" || pathname === "/onboarding";
+  const publicRoute = PUBLIC_ROUTES.has(pathname);
   // undefined while hydrating, null when signed out, the token when signed in.
   const token = useSyncExternalStore(
     noSubscription,

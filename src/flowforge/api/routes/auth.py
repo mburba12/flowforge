@@ -2,6 +2,7 @@
 
 import re
 import secrets
+from typing import Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
@@ -9,8 +10,12 @@ from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.accounts.models import UserMfa
+from flowforge.accounts.policy import bootstrap_allowed
+from flowforge.accounts.service import check_bot, send_verification
 from flowforge.core.security import (
     create_access_token,
+    create_mfa_challenge,
     hash_password_async,
     verify_password_async,
 )
@@ -90,6 +95,8 @@ async def _create_workspace(db: AsyncSession, body: BootstrapRequest) -> tuple[T
 async def bootstrap(
     body: BootstrapRequest, request: Request, db: AsyncSession = Depends(get_db)
 ) -> TokenResponse:
+    if not bootstrap_allowed():
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Not found")  # sign up at /signup
     ratelimit.check(f"signup:{ratelimit.client_address(request)}", *SIGNUP_LIMIT)
     tenant, user = await _create_workspace(db, body)
     return TokenResponse(access_token=create_access_token(str(user.id), str(tenant.id)))
@@ -111,7 +118,9 @@ async def signup(
     body: SignupRequest, request: Request, db: AsyncSession = Depends(get_db)
 ) -> SignupResponse:
     """Public sign-up: a new workspace with this person as its owner, signed in."""
-    ratelimit.check(f"signup:{ratelimit.client_address(request)}", *SIGNUP_LIMIT)
+    address = ratelimit.client_address(request)
+    ratelimit.check(f"signup:{address}", *SIGNUP_LIMIT)
+    await check_bot(body.turnstile_token, address)
     if await _tenants_for_email(db, body.email):
         raise HTTPException(
             status.HTTP_409_CONFLICT,
@@ -130,6 +139,9 @@ async def signup(
             display_name=body.name.strip(),
         ),
     )
+    await enter_tenant_context(db, tenant.id, user.id)
+    await send_verification(db, user)
+    await db.commit()
     return SignupResponse(
         access_token=create_access_token(str(user.id), str(tenant.id)), tenant_slug=tenant.slug
     )
@@ -150,10 +162,27 @@ async def _user_if_password_matches(
     return user
 
 
-@router.post("/login", response_model=TokenResponse)
+async def _signed_in(db: AsyncSession, tenant_id: UUID, user: User) -> dict[str, Any]:
+    """A sign-in token, or (when two-step sign-in is on) a challenge for the code."""
+    await enter_tenant_context(db, tenant_id)
+    enabled = await db.scalar(
+        select(UserMfa.enabled_at).where(UserMfa.tenant_id == tenant_id, UserMfa.user_id == user.id)
+    )
+    if enabled is not None:
+        return {
+            "mfa_required": True,
+            "challenge": create_mfa_challenge(str(user.id), str(tenant_id)),
+        }
+    return {
+        "access_token": create_access_token(str(user.id), str(tenant_id)),
+        "token_type": "bearer",
+    }
+
+
+@router.post("/login")
 async def login(
     body: LoginRequest, request: Request, db: AsyncSession = Depends(get_db)
-) -> TokenResponse:
+) -> dict[str, Any]:
     address = ratelimit.client_address(request)
     ratelimit.check(f"login:{address}", *LOGIN_LIMIT)
     ratelimit.check(f"login:{address}:{body.email.lower()}", *LOGIN_EMAIL_LIMIT)
@@ -167,7 +196,7 @@ async def login(
         user = await _user_if_password_matches(db, tenant.id, body.email, body.password)
         if user is None:
             raise invalid
-        return TokenResponse(access_token=create_access_token(str(user.id), str(tenant.id)))
+        return await _signed_in(db, tenant.id, user)
 
     # Email only: the workspace(s) this email and password open.
     matches: list[tuple[UUID, User]] = []
@@ -190,4 +219,4 @@ async def login(
             },
         )
     tenant_id, user = matches[0]
-    return TokenResponse(access_token=create_access_token(str(user.id), str(tenant_id)))
+    return await _signed_in(db, tenant_id, user)

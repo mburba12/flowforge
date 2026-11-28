@@ -93,7 +93,7 @@ Check "signed-in reads and tenant isolation" {
 import json, sys, io, urllib.request, urllib.error, uuid
 real = sys.stdout; sys.stdout = io.StringIO()
 from flowforge.core.security import create_access_token
-own = create_access_token('$uid', '$tid'); other = create_access_token('$uid', str(uuid.uuid4()))
+own = create_access_token('$uid', '$tid', mfa=True); other = create_access_token('$uid', str(uuid.uuid4()), mfa=True)
 def get(path, tok):
     req = urllib.request.Request('http://127.0.0.1:8000' + path, headers={'Authorization': 'Bearer ' + tok})
     try:

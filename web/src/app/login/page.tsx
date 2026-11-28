@@ -18,6 +18,8 @@ export default function LoginPage() {
   const [workspace, setWorkspace] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [challenge, setChallenge] = useState("");
+  const [code, setCode] = useState("");
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -60,6 +62,11 @@ export default function LoginPage() {
       }
       if (response.status === 401) throw new Error("The email or password is not right.");
       if (!response.ok) throw new Error(messageFrom(payload, `Sign-in failed (${response.status}).`));
+      if (payload.mfa_required && typeof payload.challenge === "string") {
+        setChallenge(payload.challenge); // two-step sign-in: ask for the code next
+        setPassword("");
+        return;
+      }
       await finishSignIn(payload);
       router.replace("/modules/dashboard" as never);
       router.refresh();
@@ -68,6 +75,58 @@ export default function LoginPage() {
     } finally {
       setBusy(false);
     }
+  }
+
+  async function submitCode(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      const response = await postJson("/api/v1/auth/mfa", { challenge, code: code.trim() });
+      const payload = await readJson(response);
+      if (response.status === 401 && /expired/i.test(messageFrom(payload, ""))) {
+        setChallenge("");
+        setCode("");
+        throw new Error("That took too long. Please sign in again.");
+      }
+      if (!response.ok) throw new Error(messageFrom(payload, "That code is not right."));
+      await finishSignIn(payload);
+      router.replace("/modules/dashboard" as never);
+      router.refresh();
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Unable to sign in.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (challenge) {
+    return (
+      <main className="loginPage">
+        <section className="loginCard" aria-labelledby="code-title">
+          <div className="loginBrand">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/krov-workagent-logo.svg" alt="Krov WorkAgent" width={230} height={40} />
+          </div>
+          <h1 id="code-title">Enter your code</h1>
+          <p>Open your authenticator app and type the 6-digit code for Krov WorkAgent. Lost your phone? Type one of your recovery codes instead.</p>
+          <form onSubmit={submitCode} noValidate data-testid="mfa-form">
+            <label htmlFor="code">Code</label>
+            <input id="code" inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} required disabled={busy} autoFocus />
+            {error ? <div className="loginError" role="alert" aria-live="assertive">{error}</div> : null}
+            <button type="submit" disabled={busy || code.trim().length < 6}>
+              {busy ? "Checking..." : "Continue"}
+            </button>
+          </form>
+          <p className="loginAlt">
+            <button type="button" className="rwLink" onClick={() => { setChallenge(""); setCode(""); setError(""); }}>
+              Back to sign in
+            </button>
+          </p>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -110,6 +169,9 @@ export default function LoginPage() {
             {busy ? "Signing in..." : "Sign in"}
           </button>
         </form>
+        <p className="loginAlt">
+          <Link href={"/forgot-password" as never}>Forgot your password?</Link>
+        </p>
         <p className="loginAlt">
           New to Krov WorkAgent? <Link href={"/signup" as never}>Create an account</Link>
         </p>

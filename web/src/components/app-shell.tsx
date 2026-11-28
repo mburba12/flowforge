@@ -5,10 +5,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { AppIcon } from "@/components/app-icon";
+import { PUBLIC_ROUTES } from "@/components/auth-boundary";
 import { ALWAYS_SHOWN, labelOf, navGroups } from "@/lib/modules";
 import { clearSession } from "@/lib/session";
 import { SectionFiles } from "@/release/files";
+import { post } from "@/release/client";
 import { useHidden, waitForPreferenceSaves } from "@/release/hooks";
+import { AccountGate, resetSecurity } from "@/release/security";
 
 /** Signed-in chrome: grouped sidebar (specialist tools folded away) and a slim top bar. */
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -16,7 +19,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const { isHidden } = useHidden();
-  if (path === "/login" || path === "/signup" || path === "/onboarding" || path.startsWith("/connections/")) return <>{children}</>;
+  if (PUBLIC_ROUTES.has(path) || path.startsWith("/connections/")) return <>{children}</>;
   const current = path.startsWith("/modules/") ? path.split("/")[2] : "";
   const inMoreTools = navGroups.some((g) => g.collapsed && g.items.some(([slug]) => slug === current));
 
@@ -74,6 +77,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             type="button"
             onClick={async () => {
               await waitForPreferenceSaves(); // finish saving screen choices first
+              await post("/api/v1/auth/logout").catch(() => undefined); // end it on the server too
+              resetSecurity();
               clearSession();
               router.replace("/login" as never);
               router.refresh();
@@ -82,7 +87,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             Log out
           </button>
         </header>
-        {children}
+        <AccountGate>{children}</AccountGate>
       </div>
       {open ? <div className="navScrim" onClick={() => setOpen(false)} /> : null}
     </div>

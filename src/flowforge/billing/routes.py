@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.accounts.service import require_verified_email
 from flowforge.core.config import settings
 from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
@@ -101,6 +102,7 @@ class CardSetup(BaseModel):
 async def add_card(body: CardSetup, db: D, p: P) -> dict[str, str]:
     if not body.authorize_automatic_charges:
         raise HTTPException(422, "Please agree to automatic monthly charges to save a card.")
+    await require_verified_email(db, p.user_id)
     if not stripe.configured():
         raise HTTPException(409, "Card payments are not set up on this server yet.")
     tenant = await db.get(Tenant, p.tenant_id)

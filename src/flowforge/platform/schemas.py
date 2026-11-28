@@ -37,6 +37,7 @@ class SignupRequest(BaseModel):
     email: EmailStr
     password: str = Field(min_length=12, max_length=200)
     plan: str | None = Field(default=None, max_length=40)
+    turnstile_token: str | None = Field(default=None, max_length=4000)
 
 
 class SignupResponse(BaseModel):

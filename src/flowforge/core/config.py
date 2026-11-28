@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     # Encrypts stored connection credentials (bank, payroll and carrier tokens).
     # 32 random bytes, base64. When unset a key is derived from jwt_secret.
     credentials_key: str = ""
+    # Older keys still accepted for reading (comma-separated, base64) during rotation.
+    credentials_key_previous: str = ""
     # Public address of the web app (OAuth redirects come back here).
     public_url: str = "http://localhost:3000"
     # Bank connections through Plaid (https://dashboard.plaid.com): sandbox or production.
@@ -20,6 +22,13 @@ class Settings(BaseSettings):
     gusto_client_id: str = ""
     gusto_client_secret: str = ""
     gusto_env: str = "demo"
+    # Account security switches: "on", "off", or "" (= production default, see accounts.policy).
+    require_owner_mfa: str = ""
+    require_verified_email: str = ""
+    allow_bootstrap: str = ""
+    # Cloudflare Turnstile (bot check on sign-up and password reset); off when empty.
+    turnstile_site_key: str = ""
+    turnstile_secret: str = ""
     # Limits on public sign-in / sign-up attempts: "on", "off", or "" (= on in production).
     rate_limits: str = ""
     # --- Usage billing (docs/KROV_PRICING.md) ---------------------------------------

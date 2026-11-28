@@ -49,9 +49,9 @@ class CompensationCreate(BaseModel):
 
 
 class BankAccountCreate(BaseModel):
-    account_token: str = Field(min_length=8)
+    account_token: str = Field(min_length=8, max_length=200)
     account_last4: str = Field(min_length=4, max_length=4)
-    routing_token: str | None = None
+    routing_token: str | None = Field(default=None, max_length=200)
     account_type: str
 
 

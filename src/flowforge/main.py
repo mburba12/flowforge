@@ -2,12 +2,16 @@ import logging
 import sys
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import DBAPIError, IntegrityError
 
 import flowforge.core.errors  # noqa: F401 - registers rule violations
+from flowforge.accounts.routes import me as account_me_router
+from flowforge.accounts.routes import public as account_public_router
+from flowforge.accounts.routes import signout as account_signout_router
 from flowforge.api.router import api_router, extended_router
 from flowforge.billing import router as billing_router
 from flowforge.billing import scheduler as billing_scheduler
@@ -75,6 +79,24 @@ app = FastAPI(
     # Role-based access control for every release-scope endpoint (deny by default).
     dependencies=[Depends(enforce)],
 )
+
+
+SECURITY_HEADERS = {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "no-referrer",
+    "Cross-Origin-Resource-Policy": "same-origin",
+    # Business data is never stored by browsers or proxies.
+    "Cache-Control": "no-store",
+}
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next: Any) -> Any:
+    response = await call_next(request)
+    for name, value in SECURITY_HEADERS.items():
+        response.headers.setdefault(name, value)
+    return response
 
 
 @app.exception_handler(PostingError)
@@ -162,6 +184,9 @@ app.include_router(release_read_router)
 app.include_router(operations_router)
 app.include_router(connect_router)
 app.include_router(billing_router)
+app.include_router(account_public_router)
+app.include_router(account_signout_router)
+app.include_router(account_me_router)
 app.include_router(api_router)
 app.include_router(extended_router)
 app.include_router(phase1_router)

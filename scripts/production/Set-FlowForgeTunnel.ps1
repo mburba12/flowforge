@@ -2,7 +2,7 @@
 .SYNOPSIS  Put Krov WorkAgent on the internet through Cloudflare Tunnel (or take it off).
 .DESCRIPTION
     Asks for the tunnel token (hidden) and the public address, writes them to
-    .env.production (a backup copy is kept), starts the "tunnel" service and checks that
+    .env.production (no copies kept), starts the "tunnel" service and checks that
     the address answers. Nothing is opened on your router: the tunnel connects out.
 
     Before you run it, in the Cloudflare dashboard (your domain must be on Cloudflare):
@@ -32,19 +32,8 @@ function Read-Hidden([string]$Prompt) {
 }
 
 function Set-EnvValues([hashtable]$Values) {
-    $lines = [System.Collections.Generic.List[string]]::new()
-    foreach ($l in Get-Content -LiteralPath $EnvFile) { $lines.Add($l) }
-    foreach ($key in $Values.Keys) {
-        if ($Values[$key] -match '[\r\n]') { throw "$key contains a line break." }
-        $entry = "$key=$($Values[$key])"
-        $index = -1
-        for ($i = 0; $i -lt $lines.Count; $i++) { if ($lines[$i] -match "^\s*$([regex]::Escape($key))=") { $index = $i } }
-        if ($index -ge 0) { $lines[$index] = $entry } else { $lines.Add($entry) }
-    }
-    $backup = "$EnvFile.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
-    Copy-Item -LiteralPath $EnvFile -Destination $backup
-    [IO.File]::WriteAllLines($EnvFile, $lines, [Text.UTF8Encoding]::new($false))
-    Write-Host "Saved to $EnvFile (previous copy: $backup)."
+    Set-FFEnvValues -EnvFile $EnvFile -Values $Values
+    Write-Host "Saved to $EnvFile."
 }
 
 if ($Disable) {

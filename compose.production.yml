@@ -46,6 +46,10 @@ services:
     environment:
       ALEMBIC_DATABASE_URL: postgresql+asyncpg://flowforge_owner:${FLOWFORGE_DB_OWNER_PASSWORD}@db:5432/flowforge
       FLOWFORGE_DATABASE_URL: postgresql+asyncpg://flowforge_owner:${FLOWFORGE_DB_OWNER_PASSWORD}@db:5432/flowforge
+      # Keys for `python -m flowforge.accounts.reencrypt` (moves stored values to the current key).
+      FLOWFORGE_JWT_SECRET: ${FLOWFORGE_JWT_SECRET:?set in .env.production}
+      FLOWFORGE_CREDENTIALS_KEY: ${FLOWFORGE_CREDENTIALS_KEY:-}
+      FLOWFORGE_CREDENTIALS_KEY_PREVIOUS: ${FLOWFORGE_CREDENTIALS_KEY_PREVIOUS:-}
     depends_on:
       db:
         condition: service_healthy
@@ -67,6 +71,13 @@ services:
       # each business's own carrier keys all work; live bank feeds and direct Gusto
       # sign-in are switched off.
       FLOWFORGE_CREDENTIALS_KEY: ${FLOWFORGE_CREDENTIALS_KEY:-}
+      FLOWFORGE_CREDENTIALS_KEY_PREVIOUS: ${FLOWFORGE_CREDENTIALS_KEY_PREVIOUS:-}
+      # Account security (empty = production default: on; see src/flowforge/accounts/policy.py).
+      FLOWFORGE_REQUIRE_OWNER_MFA: ${FLOWFORGE_REQUIRE_OWNER_MFA:-}
+      FLOWFORGE_REQUIRE_VERIFIED_EMAIL: ${FLOWFORGE_REQUIRE_VERIFIED_EMAIL:-}
+      FLOWFORGE_ALLOW_BOOTSTRAP: ${FLOWFORGE_ALLOW_BOOTSTRAP:-}
+      FLOWFORGE_TURNSTILE_SITE_KEY: ${FLOWFORGE_TURNSTILE_SITE_KEY:-}
+      FLOWFORGE_TURNSTILE_SECRET: ${FLOWFORGE_TURNSTILE_SECRET:-}
       FLOWFORGE_PUBLIC_URL: ${FLOWFORGE_PUBLIC_URL:-http://localhost:3000}
       FLOWFORGE_PLAID_CLIENT_ID: ${FLOWFORGE_PLAID_CLIENT_ID:-}
       FLOWFORGE_PLAID_SECRET: ${FLOWFORGE_PLAID_SECRET:-}

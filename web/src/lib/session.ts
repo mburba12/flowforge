@@ -28,3 +28,8 @@ export function tenantHeaders(
     Authorization: `Bearer ${session.accessToken}`,
   };
 }
+/** Keep the session but switch to a new sign-in token (after two-step setup or a password change). */
+export function replaceAccessToken(token: string): void {
+  const current = readSession();
+  if (current) writeSession({ ...current, accessToken: token });
+}

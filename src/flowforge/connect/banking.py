@@ -21,6 +21,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.accounts.service import require_verified_email
 from flowforge.core.config import settings
 from flowforge.core.security import Principal, current_principal
 from flowforge.db.session import get_tenant_db
@@ -721,6 +722,7 @@ async def start_bank_link(db: D, p: P, body: LinkRequest) -> dict[str, Any]:
     """Start connecting a bank: returns the Plaid Link token (or a demo token)."""
     if body.provider == "demo":
         return {"provider": "demo", "link_token": "demo-link"}
+    await require_verified_email(db, p.user_id)
     return {"provider": "plaid", "link_token": await Plaid().link_token(p.tenant_id, p.user_id)}
 
 

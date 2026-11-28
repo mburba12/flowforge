@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { BotCheck } from "@/components/bot-check";
 import { readSession } from "@/lib/session";
 import { clearFragment, finishSignIn, fragmentValues, messageFrom, postJson, readJson } from "@/lib/signin";
 
@@ -17,6 +18,7 @@ export default function SignupPage() {
   const [confirm, setConfirm] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [bot, setBot] = useState("");
 
   useEffect(() => {
     if (readSession()?.accessToken) {
@@ -49,6 +51,7 @@ export default function SignupPage() {
         email: email.trim().toLowerCase(),
         password,
         plan: "usage",
+        turnstile_token: bot || null,
       });
       const payload = await readJson(response);
       if (!response.ok) throw new Error(messageFrom(payload, `Sign-up failed (${response.status}).`));
@@ -87,6 +90,7 @@ export default function SignupPage() {
           <label htmlFor="confirm">Repeat password</label>
           <input id="confirm" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} autoComplete="new-password" required disabled={busy} />
 
+          <BotCheck onToken={setBot} />
           {error ? <div className="loginError" role="alert" aria-live="assertive">{error}</div> : null}
           <button type="submit" disabled={busy}>
             {busy ? "Creating your workspace..." : "Create account"}

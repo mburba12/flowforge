@@ -5,6 +5,7 @@ from uuid import UUID, uuid4
 from sqlalchemy import Boolean, Date, ForeignKey, Numeric, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
+from flowforge.core.encrypted_types import EncryptedText
 from flowforge.db.base import Base
 
 
@@ -40,7 +41,10 @@ class TaxRegistration(Base):
         ForeignKey("tenants.id", ondelete="CASCADE"), index=True
     )
     authority_id: Mapped[UUID] = mapped_column(ForeignKey("tax_authorities.id"))
-    registration_token: Mapped[str] = mapped_column(String(500))
+    # Tax registration number: encrypted at rest.
+    registration_token: Mapped[str] = mapped_column(
+        EncryptedText("tax_registrations.registration_token", 500)
+    )
     effective_from: Mapped[date] = mapped_column(Date)
     effective_to: Mapped[date | None] = mapped_column(Date)
 

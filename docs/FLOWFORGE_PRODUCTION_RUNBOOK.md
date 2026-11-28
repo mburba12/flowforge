@@ -62,20 +62,66 @@ still works until you run this. Run it, then delete the plaintext password line 
 
 ## Backup and restore
 
-Backup (verified, written to `var\backups`, gitignored):
+Backups are verified, **encrypted** (AES-256-GCM with `FLOWFORGE_BACKUP_KEY`) and, when
+`FLOWFORGE_BACKUP_OFFSITE_DIR` is set, copied off this computer. A daily backup runs at
+2:30 AM (Windows Task Scheduler, "Krov WorkAgent daily backup"); daily backups are kept 30
+days. Keep the backup key in your password manager: without it no backup can be opened.
 
 ```powershell
-.\scripts\production\Backup-FlowForge.ps1 -Label daily
+.\scripts\production\Backup-FlowForge.ps1 -Label manual
 ```
 
-Restore into a scratch database to inspect a backup (never over production without
-a fresh backup first):
+Restore into a scratch database to inspect a backup (never over production without a fresh
+backup first). Decrypt it first; `$env:FLOWFORGE_BACKUP_KEY` must hold the backup key:
 
 ```powershell
-docker cp <backup.dump> flowforge-db-1:/tmp/restore.dump
+.\.venv\Scripts\python.exe scripts\production\ffcrypt.py decrypt <backup.dump.enc> var\tmp\restore.dump
+```
+
+```powershell
+docker cp var\tmp\restore.dump flowforge-db-1:/tmp/restore.dump
 docker exec flowforge-db-1 createdb -U flowforge_owner restore_check
 docker exec flowforge-db-1 pg_restore -U flowforge_owner -d restore_check --no-owner /tmp/restore.dump
 ```
+
+Delete `var\tmp\restore.dump` and `/tmp/restore.dump` when done.
+
+## Security
+
+Switch everything on (run once after the security release is live; asks for your new admin
+password last):
+
+```powershell
+.\scripts\production\Complete-FlowForgeSecurity.ps1
+```
+
+What is protected and how:
+
+| What | Protection |
+|---|---|
+| Passwords | Argon2 hashes; never stored or logged in plain text |
+| Bank, Gusto and carrier credentials; worker bank and routing numbers; tax registration numbers; uploaded files; authenticator secrets | Encrypted in the database (AES-256-GCM, `FLOWFORGE_CREDENTIALS_KEY`), bound to their row or column |
+| Card details | Never reach the server (Stripe); only Stripe ids, brand, last 4 and expiry |
+| Recovery codes, reset and confirmation links | Stored only as SHA-256 hashes; links expire (30 minutes / 7 days) and work once |
+| Backups and old exports | Encrypted files; plain copies removed after checking |
+| Settings file and backup folders | Readable only by your Windows account |
+| Database and Docker's disk | Windows device encryption / BitLocker (turn it on: Settings > Privacy & security > Device encryption) |
+| Traffic | HTTPS end to end through Cloudflare; ports listen on this computer only |
+
+Sign-in: owners and anyone who manages users or billing must use two-step sign-in (an
+authenticator app; 10 one-time recovery codes). Signing out ends the session on the server;
+changing or resetting a password ends every other session. Sign-in, sign-up, code entry and
+password reset are rate-limited; sign-up and reset can require Cloudflare Turnstile
+(`FLOWFORGE_TURNSTILE_SITE_KEY` / `_SECRET`). New sign-ups confirm their email before they
+can add a card, connect a bank or invite people. The API and web containers run as
+unprivileged accounts. Switches (`on` / `off`, empty = on in production):
+`FLOWFORGE_REQUIRE_OWNER_MFA`, `FLOWFORGE_REQUIRE_VERIFIED_EMAIL`; the old open
+`/auth/bootstrap` endpoint is off in production (`FLOWFORGE_ALLOW_BOOTSTRAP`).
+
+Rotating the encryption key later: put the current key in `FLOWFORGE_CREDENTIALS_KEY_PREVIOUS`,
+a new one in `FLOWFORGE_CREDENTIALS_KEY`, restart, then run
+`docker compose -p flowforge -f compose.production.yml --env-file .env.production run --rm migrate python -m flowforge.accounts.reencrypt`
+and remove the previous key once `--check` reports everything on the current key.
 
 ## Migrations
 

@@ -9,6 +9,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from flowforge.accounts.service import require_verified_email
 from flowforge.core.security import Principal, current_principal, hash_password_async
 from flowforge.db.session import get_tenant_db
 from flowforge.platform.authorization import CATALOG, STANDARD_ROLES, load_access
@@ -98,6 +99,7 @@ async def list_users(p: P, db: D) -> list[dict[str, object]]:
 
 @router.post("/users", status_code=201)
 async def create_user(body: UserCreate, p: P, db: D) -> dict[str, object]:
+    await require_verified_email(db, p.user_id)
     roles = [await _role_by_name(db, p.tenant_id, name) for name in dict.fromkeys(body.roles)]
     user = User(
         tenant_id=p.tenant_id,
