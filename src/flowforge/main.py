@@ -37,6 +37,8 @@ from flowforge.phase4j.router import router as phase4j_router
 from flowforge.phase5a.router import router as phase5a_router
 from flowforge.phase5b.router import router as phase5b_router
 from flowforge.platform.authorization import enforce
+from flowforge.release.admin_routes import router as release_admin_router
+from flowforge.release.read_routes import router as release_read_router
 from flowforge.resource_contracts.router import router as resource_contract_router
 from flowforge.support_feedback import router as support_feedback_router
 
@@ -69,6 +71,9 @@ async def integrity_error_handler(_: Request, exc: IntegrityError) -> JSONRespon
     )
 
 
+# Release-scope completion routes first, so their GET paths take precedence.
+app.include_router(release_admin_router)
+app.include_router(release_read_router)
 app.include_router(api_router)
 app.include_router(phase1_router)
 app.include_router(phase2a_router)

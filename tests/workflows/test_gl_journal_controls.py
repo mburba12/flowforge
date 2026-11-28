@@ -44,11 +44,16 @@ async def test_gl_journal_approve_post_and_trial_balance(harness: Harness) -> No
 
 async def test_gl_post_rejected_in_closed_period(harness: Harness) -> None:
     h = harness
-    journal = await h.post("/api/v2/journals", json=_journal(h, "50.00", "50.00"))
-    await h.post(f"/api/v2/journals/{journal['id']}/approve", as_approver=True)
+    pending = await h.post("/api/v2/journals", json=_journal(h, "50.00", "50.00"))
+    await h.post(f"/api/v2/journals/{pending['id']}/approve", as_approver=True)
+    # An approved but unposted journal blocks closing the period.
+    await h.post(f"/api/v2/accounting-periods/{h.period_id}/close", expect=409)
+    await h.post(f"/api/v2/journals/{pending['id']}/post", as_approver=True)
     await h.close_period()
-    await h.post(f"/api/v2/journals/{journal['id']}/post", as_approver=True, expect=409)
-    assert await h.trial_balance() == (Decimal("0"), Decimal("0"))
+    late = await h.post("/api/v2/journals", json=_journal(h, "20.00", "20.00"))
+    await h.post(f"/api/v2/journals/{late['id']}/approve", as_approver=True)
+    await h.post(f"/api/v2/journals/{late['id']}/post", as_approver=True, expect=409)
+    assert await h.trial_balance() == (Decimal("50.00"), Decimal("50.00"))
 
 
 async def test_gl_post_rejected_outside_period_dates(harness: Harness) -> None:

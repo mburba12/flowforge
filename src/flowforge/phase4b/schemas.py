@@ -40,3 +40,5 @@ class TaxCalculate(BaseModel):
     taxable_wages: Decimal = Field(ge=0)
     additional_withholding: Decimal = Field(default=Decimal("0"), ge=0)
     exempt: bool = False
+    # Date the wages are paid; the rule must be in effect on it (defaults to today).
+    as_of: date | None = None

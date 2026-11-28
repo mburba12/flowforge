@@ -6,6 +6,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flowforge.phase2b.posting import PostingError, PostingLine, post_system_journal
+from flowforge.release.models import record_order_status
 
 from .models import (
     AROpenItem,
@@ -229,6 +230,8 @@ class CommerceService:
         self.db.add(order)
         await self.db.flush()
 
+        await record_order_status(self.db, self.tenant_id, order.id, order_status, self.user_id)
+
         for line in data.lines:
             self.db.add(
                 SalesOrderLine(
@@ -312,6 +315,7 @@ class CommerceService:
             )
 
         order.status = "reserved"
+        await record_order_status(self.db, self.tenant_id, order.id, "reserved", self.user_id)
 
         await self.db.commit()
         await self.db.refresh(order)
@@ -438,6 +442,14 @@ class CommerceService:
             )
         )
         o.status = "invoiced"
+        await record_order_status(
+            self.db,
+            self.tenant_id,
+            o.id,
+            "invoiced",
+            self.user_id,
+            f"shipment {shipment.shipment_number}",
+        )
         await self.db.commit()
         await self.db.refresh(inv)
         return inv

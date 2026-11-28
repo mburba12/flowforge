@@ -242,6 +242,23 @@ POLICY: dict[str, str] = {
     "flowforge.phase4b_stage2.routes:create_notice": "tax.notice.manage",
     "flowforge.phase4b_stage2.routes:resolve_notice": "tax.notice.manage",
     "flowforge.phase4b_stage2.routes:reconcile_tax": "tax.reconcile",
+    # release completion: period close, tax authorities, liabilities from payroll
+    "flowforge.release.admin_routes:list_periods": "gl.read",
+    "flowforge.release.admin_routes:close_period": "gl.period.manage",
+    "flowforge.release.admin_routes:reopen_period": "gl.period.manage",
+    "flowforge.release.admin_routes:list_authorities": "tax.read",
+    "flowforge.release.admin_routes:create_authority": "tax.setup",
+    "flowforge.release.admin_routes:liabilities_from_payroll": "tax.liability.write",
+    # release completion: read models
+    "flowforge.release.read_routes:list_orders": "ar.read",
+    "flowforge.release.read_routes:get_order": "ar.read",
+    "flowforge.release.read_routes:ar_open_items": "ar.read",
+    "flowforge.release.read_routes:ar_aging": "ar.read",
+    "flowforge.release.read_routes:ap_open_items": "ap.read",
+    "flowforge.release.read_routes:ap_aging": "ap.read",
+    "flowforge.release.read_routes:get_payroll_run": "payroll.read",
+    "flowforge.release.read_routes:list_tax_liabilities": "tax.read",
+    "flowforge.release.read_routes:list_tax_returns": "tax.read",
 }
 
 _optional_bearer = HTTPBearer(auto_error=False)

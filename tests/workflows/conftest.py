@@ -9,10 +9,7 @@ Every test gets its own tenant, owner and second approver, general ledger
 (currency, calendar, open period, ledger, chart of accounts). The tenant is
 deleted at the end; ON DELETE CASCADE removes all owned rows.
 
-Fixture shortcuts that bypass the API are deliberate and documented, because
-the API offers no way to do them (each is a reported gap):
-  * tax authorities are inserted directly (no tax-authority API)
-  * closing an accounting period is done directly (no period-close API)
+All setup goes through the public API (users, periods, authorities included).
 """
 
 from collections.abc import AsyncIterator
@@ -216,24 +213,14 @@ class Harness:
         return str(party["id"])
 
     async def close_period(self) -> None:
-        # Fixture shortcut: no API closes an accounting period (reported gap).
-        await self.sql(
-            "UPDATE accounting_periods SET status = 'closed' WHERE id = :p", p=self.period_id
-        )
+        await self.post(f"/api/v2/accounting-periods/{self.period_id}/close")
 
     async def tax_authority(self, jurisdiction_id: str, code: str) -> str:
-        # Fixture shortcut: no API creates tax authorities (reported gap).
-        authority_id = uuid4()
-        await self.sql(
-            "INSERT INTO tax_authorities (id, tenant_id, jurisdiction_id, code, name)"
-            " VALUES (:i, :t, :j, :c, :n)",
-            i=authority_id,
-            t=self.tenant_id,
-            j=jurisdiction_id,
-            c=code,
-            n=f"{code} Authority",
+        authority = await self.post(
+            "/api/v4b/authorities",
+            json={"jurisdiction_id": jurisdiction_id, "code": code, "name": f"{code} Authority"},
         )
-        return str(authority_id)
+        return str(authority["id"])
 
 
 @pytest.fixture
