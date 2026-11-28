@@ -2,7 +2,7 @@
 
 import { clearSession, readSession } from "@/lib/session";
 
-/** Typed client for the FlowForge API through the web proxy (/api/flowforge). */
+/** Typed client for the Krov WorkAgent API through the web proxy (/api/flowforge). */
 
 export class ApiError extends Error {
   constructor(

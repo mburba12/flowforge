@@ -40,7 +40,7 @@ def _send(report: ProblemReport) -> None:
         raise RuntimeError("Support email delivery is not configured")
 
     message = EmailMessage()
-    message["Subject"] = f"[FlowForge problem report] {report.kind}: {report.subject}"
+    message["Subject"] = f"[Krov WorkAgent problem report] {report.kind}: {report.subject}"
     message["From"] = sender
     message["To"] = _RECIPIENT
     if report.reporter_email:

@@ -43,7 +43,7 @@ test.describe.serial("Approvals, audit export and record pickers", () => {
     const rows = await page.getByTestId("audit-table").locator("tbody tr").count();
     expect(rows).toBeLessThanOrEqual(100);
     const [download] = await Promise.all([page.waitForEvent("download"), page.getByTestId("audit-export").click()]);
-    expect(download.suggestedFilename()).toMatch(/^flowforge-audit-\d{4}-\d{2}-\d{2}\.csv$/);
+    expect(download.suggestedFilename()).toMatch(/^krov-workagent-audit-\d{4}-\d{2}-\d{2}\.csv$/);
     const path = await download.path();
     const text = (await import("node:fs")).readFileSync(path, "utf-8");
     expect(text).toContain("occurred_at,user,action,record_type,record_id,details");

@@ -225,7 +225,7 @@ export function BankingWorkspace() {
                   className="rwBtn"
                   disabled={!!busy}
                   onClick={() => {
-                    if (!window.confirm(`Disconnect ${a.institution}? Its transactions stay in FlowForge.`)) return;
+                    if (!window.confirm(`Disconnect ${a.institution}? Its transactions stay in Krov WorkAgent.`)) return;
                     void act("disconnect", async () => {
                       await del(`/api/v1/banking/connections/${a.connection_id}`);
                       return `${a.institution} disconnected.`;

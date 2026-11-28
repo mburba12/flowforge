@@ -69,7 +69,7 @@ export function ProblemReportForm({ open, onClose }: Props) {
           </div>
         ) : (
           <>
-            <header><div><small>FLOWFORGE SUPPORT</small><h2 id="problem-title">Report a problem</h2><p>Share what happened so the FlowForge team can investigate.</p></div><button type="button" className="iconbtn" onClick={onClose}>X</button></header>
+            <header><div><small>KROV WORKAGENT SUPPORT</small><h2 id="problem-title">Report a problem</h2><p>Share what happened so the Krov WorkAgent team can investigate.</p></div><button type="button" className="iconbtn" onClick={onClose}>X</button></header>
             <form onSubmit={submit}>
               <div className="problem-body">
                 <div className="problem-grid">

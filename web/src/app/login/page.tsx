@@ -33,7 +33,7 @@ async function readJson(response: Response): Promise<JsonObject> {
   try {
     return JSON.parse(text) as JsonObject;
   } catch {
-    throw new Error(`FlowForge returned an invalid response (${response.status}).`);
+    throw new Error(`Krov WorkAgent returned an invalid response (${response.status}).`);
   }
 }
 
@@ -98,10 +98,13 @@ export default function LoginPage() {
   return (
     <main className="loginPage">
       <section className="loginCard" aria-labelledby="login-title">
-        <div className="loginBrand">FlowForge</div>
+        <div className="loginBrand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/krov-workagent-logo.svg" alt="Krov WorkAgent" width={230} height={40} />
+        </div>
         <span className="loginTag">One platform. Every business operation.</span>
         <h1 id="login-title">Sign in</h1>
-        <p>Access the FlowForge Production workspace.</p>
+        <p>Sign in to your Krov WorkAgent workspace.</p>
         <form onSubmit={submit} noValidate>
           <label htmlFor="tenant">Workspace</label>
           <input id="tenant" value={tenantSlug} onChange={(e) => setTenantSlug(e.target.value)} autoComplete="organization" required disabled={busy} />

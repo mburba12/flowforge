@@ -46,7 +46,7 @@ export function DashboardWorkspace() {
   const s = status.data;
   const checklist = [
     { done: (s?.banks ?? 0) > 0, label: "Connect your bank", detail: "See balances and transactions without logging in to the bank.", href: "/modules/banking", permission: "banking.connect" },
-    { done: (s?.payroll_imports ?? 0) > 0, label: "Move your payroll to FlowForge", detail: "Bring employees, pay rates and this year's totals from ADP, Gusto, Paychex and others.", href: "/modules/payroll", permission: "payroll.migrate" },
+    { done: (s?.payroll_imports ?? 0) > 0, label: "Move your payroll to Krov WorkAgent", detail: "Bring employees, pay rates and this year's totals from ADP, Gusto, Paychex and others.", href: "/modules/payroll", permission: "payroll.migrate" },
     { done: (s?.carriers ?? 0) > 0, label: "Connect FedEx, UPS, USPS or DHL", detail: "Track every package in one list.", href: "/modules/shipping", permission: "shipping.connect" },
     { done: (s?.files ?? 0) > 0, label: "Upload your first invoice or receipt", detail: "Every section has an Upload button; everything also lands in Files.", href: "/modules/documents", permission: "documents.upload" },
   ].filter((item) => can(item.permission));
@@ -170,7 +170,7 @@ function AuditEntries() {
           permission="audit.read"
           testId="audit-export"
           onDone={onDone}
-          run={() => openFile("/api/v1/audit/export", `flowforge-audit-${new Date().toISOString().slice(0, 10)}.csv`, false)}
+          run={() => openFile("/api/v1/audit/export", `krov-workagent-audit-${new Date().toISOString().slice(0, 10)}.csv`, false)}
         />
       }
     >

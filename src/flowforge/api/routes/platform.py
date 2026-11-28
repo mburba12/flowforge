@@ -104,7 +104,7 @@ async def audit_export(p: P, db: D) -> Response:
     return Response(
         content=buffer.getvalue().encode("utf-8-sig"),
         media_type="text/csv; charset=utf-8",
-        headers={"Content-Disposition": f'attachment; filename="flowforge-audit-{stamp}.csv"'},
+        headers={"Content-Disposition": f'attachment; filename="krov-workagent-audit-{stamp}.csv"'},
     )
 
 

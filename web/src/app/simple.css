@@ -148,3 +148,8 @@ a.rwBtn { display: inline-flex; align-items: center; text-decoration: none; just
 .rwRef { display: flex; gap: 8px; align-items: center; min-width: 0; }
 .rwRef select, .rwRef input { flex: 1 1 auto; min-width: 0; }
 .rwLink { background: none; border: 0; padding: 0; color: var(--accent, #2563eb); font-size: 12.5px; cursor: pointer; white-space: nowrap; text-decoration: underline; }
+
+/* Krov WorkAgent logo in the sidebar and on the sign-in page. */
+.brandLogo { display: block; height: 30px; width: auto; max-width: 100%; }
+.loginBrand::before { content: none; }
+.loginBrand img { display: block; height: 40px; width: auto; max-width: 100%; }

@@ -33,5 +33,5 @@ export function AuthBoundary({ children }: { children: React.ReactNode }) {
   if (publicRoute || token) {
     return <>{children}</>;
   }
-  return <div className="authLoading">Loading FlowForge...</div>;
+  return <div className="authLoading">Loading Krov WorkAgent...</div>;
 }

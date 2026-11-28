@@ -50,11 +50,11 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     return new NextResponse(upstream.body, { status: upstream.status, headers: responseHeaders });
   } catch (error) {
     if (error instanceof DOMException && error.name === "TimeoutError") {
-      console.error("FlowForge proxy timeout", { target: target.toString() });
-      return NextResponse.json({ detail: "The FlowForge API did not answer in time. Please try again." }, { status: 504 });
+      console.error("Krov WorkAgent proxy timeout", { target: target.toString() });
+      return NextResponse.json({ detail: "The Krov WorkAgent API did not answer in time. Please try again." }, { status: 504 });
     }
-    console.error("FlowForge proxy failure", { target: target.toString(), error });
-    return NextResponse.json({ detail: "FlowForge API is unavailable" }, { status: 502 });
+    console.error("Krov WorkAgent proxy failure", { target: target.toString(), error });
+    return NextResponse.json({ detail: "Krov WorkAgent API is unavailable" }, { status: 502 });
   }
 }
 

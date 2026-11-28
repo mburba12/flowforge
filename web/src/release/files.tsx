@@ -321,7 +321,7 @@ export function FilesWorkspace() {
   return (
     <Workspace
       title="Files"
-      description="Every invoice, receipt, statement and document uploaded anywhere in FlowForge."
+      description="Every invoice, receipt, statement and document uploaded anywhere in Krov WorkAgent."
       accent="#57d3ff"
     >
       <Card title="Upload">

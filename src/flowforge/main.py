@@ -65,7 +65,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(
     lifespan=lifespan,
-    title="FlowForge API",
+    title="Krov WorkAgent API",
     version="1.0.0-phase1",
     description="Complete Phase 1 platform foundation",
     # Role-based access control for every release-scope endpoint (deny by default).

@@ -113,7 +113,7 @@ PROVIDERS: dict[str, PayrollProvider] = {
         PayrollProvider(
             "other",
             "Another provider or spreadsheet",
-            "Export employees with pay rates (and year-to-date totals if you have them) as CSV, or fill in the FlowForge template.",
+            "Export employees with pay rates (and year-to-date totals if you have them) as CSV, or fill in the Krov WorkAgent template.",
         ),
     )
 }

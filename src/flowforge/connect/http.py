@@ -17,7 +17,7 @@ def client(base_url: str = "", **kwargs: Any) -> httpx.AsyncClient:
         base_url=base_url,
         timeout=httpx.Timeout(25.0, connect=10.0),
         transport=TRANSPORT,
-        headers={"User-Agent": "FlowForge/1.0"},
+        headers={"User-Agent": "KrovWorkAgent/1.0"},
         **kwargs,
     )
 

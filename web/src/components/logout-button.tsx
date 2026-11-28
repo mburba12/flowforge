@@ -25,7 +25,7 @@ export function LogoutButton() {
     <button
       type="button"
       onClick={logout}
-      aria-label="Log out of FlowForge"
+      aria-label="Log out of Krov WorkAgent"
       style={{
         position: "fixed",
         top: "16px",

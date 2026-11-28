@@ -49,7 +49,7 @@ export function PayrollWorkspace({ initialTab = "runs" }: { initialTab?: string 
         <Notice kind="info">
           No employees yet. Coming from ADP, Gusto, Paychex, QuickBooks or another provider?{" "}
           <button type="button" className="linkish" onClick={() => setTab("switch")}>
-            Move your payroll to FlowForge
+            Move your payroll to Krov WorkAgent
           </button>
         </Notice>
       ) : null}

@@ -101,7 +101,7 @@ CARRIERS: dict[str, CarrierInfo] = {
         "Demo carrier (sample data)",
         "",
         (),
-        "Sample tracking data to try FlowForge. Tracking numbers start with DEMO.",
+        "Sample tracking data to try Krov WorkAgent. Tracking numbers start with DEMO.",
     ),
 }
 

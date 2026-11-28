@@ -22,8 +22,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className={open ? "shell navOpen" : "shell"}>
       <aside className="side">
         <Link className="brand" href={"/modules/dashboard" as never} onClick={() => setOpen(false)}>
-          <span className="brandMark" aria-hidden="true">F</span>
-          FlowForge
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="brandLogo" src="/krov-workagent-logo.svg" alt="Krov WorkAgent" width={172} height={30} />
         </Link>
         <nav aria-label="Main">
           {navGroups.map((group, index) => {
@@ -64,7 +64,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button type="button" className="navToggle" aria-label="Menu" onClick={() => setOpen((o) => !o)}>
             ☰
           </button>
-          <b className="topTitle">{current ? labelOf(current) : "FlowForge"}</b>
+          <b className="topTitle">{current ? labelOf(current) : "Krov WorkAgent"}</b>
           <SectionFiles key={current} section={current} />
           <button
             type="button"

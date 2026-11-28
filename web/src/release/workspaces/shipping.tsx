@@ -212,8 +212,8 @@ export function ShippingWorkspace() {
         ) : null}
       >
         <p className="rwMuted">
-          FlowForge reads tracking straight from each carrier with your own carrier account, so every package — including ones you didn&apos;t ship
-          through FlowForge — shows up here.
+          Krov WorkAgent reads tracking straight from each carrier with your own carrier account, so every package — including ones you didn&apos;t ship
+          through Krov WorkAgent — shows up here.
         </p>
         {connecting && carriers.data ? (
           <ConnectCarrier
@@ -367,7 +367,7 @@ function ConnectCarrier(props: { carriers: Carrier[]; onDone: (message: string) 
           </p>
           <div className="rwFields">
             <label>
-              <span>Name in FlowForge</span>
+              <span>Name in Krov WorkAgent</span>
               <input value={label} onChange={(e) => setLabel(e.target.value)} placeholder={`${carrier.name} (main account)`} />
             </label>
             {carrier.fields.map((f) =>

@@ -13,7 +13,7 @@ test.describe.serial("Connections and uploads in the browser", () => {
     await signIn(page);
     const checklist = page.getByTestId("setup-checklist");
     await expect(checklist).toContainText("Connect your bank");
-    await expect(checklist).toContainText("Move your payroll to FlowForge");
+    await expect(checklist).toContainText("Move your payroll to Krov WorkAgent");
     await expect(checklist).toContainText("Connect FedEx, UPS, USPS or DHL");
     await expect(page.getByRole("navigation", { name: "Quick actions" }).getByRole("link", { name: "Track a package" })).toBeVisible();
   });

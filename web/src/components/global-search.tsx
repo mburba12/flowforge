@@ -30,7 +30,7 @@ const actions: SearchItem[] = [
   { id: "action-create", title: "Create a record", description: "Open the dashboard creation workflow", category: "Action", href: "/dashboard", keywords: "create add new record" },
   { id: "action-approvals", title: "Review approvals", description: "Open pending approvals", category: "Action", href: "/approvals", keywords: "review approve reject pending" },
   { id: "action-work", title: "View my work", description: "Open priority tasks and exceptions", category: "Action", href: "/work-queue", keywords: "work queue task exception assigned" },
-  { id: "action-ai", title: "Open FlowForge AI", description: "Use the minimized AI launcher in the lower-right corner", category: "Action", keywords: "ai assistant chatbot flowforge" },
+  { id: "action-ai", title: "Open Krov WorkAgent AI", description: "Use the minimized AI launcher in the lower-right corner", category: "Action", keywords: "ai assistant chatbot flowforge" },
 ];
 
 const pages: SearchItem[] = navigation.map((item) => ({

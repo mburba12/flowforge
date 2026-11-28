@@ -38,7 +38,7 @@ type Migration = {
 
 const STEPS = ["Choose your provider", "Upload your export", "Check and import"];
 
-/** Switch payroll to FlowForge: bring employees, pay rates and year-to-date totals over. */
+/** Switch payroll to Krov WorkAgent: bring employees, pay rates and year-to-date totals over. */
 export function PayrollSwitch() {
   const { can } = usePermissions();
   const catalog = useLoad(() => get<Catalog>("/api/v1/payroll-migration/providers"), "payroll-providers");
@@ -80,7 +80,7 @@ export function PayrollSwitch() {
       const m = await upload<Migration>("/api/v1/payroll-migration/file", form);
       setMessage({
         ok: true,
-        text: `Done: ${m.summary.employees_created ?? 0} employees added, ${m.summary.employees_updated ?? 0} updated, ${m.summary.pay_rates_set ?? 0} pay rates set, ${m.summary.ytd_balances ?? 0} year-to-date balances carried over. Your next payroll can run in FlowForge.`,
+        text: `Done: ${m.summary.employees_created ?? 0} employees added, ${m.summary.employees_updated ?? 0} updated, ${m.summary.pay_rates_set ?? 0} pay rates set, ${m.summary.ytd_balances ?? 0} year-to-date balances carried over. Your next payroll can run in Krov WorkAgent.`,
       });
       setPreview(null);
       setFile(null);
@@ -110,17 +110,17 @@ export function PayrollSwitch() {
     const url = URL.createObjectURL(new Blob([`${header}\n${sample}\n`], { type: "text/csv" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = "flowforge-payroll-import-template.csv";
+    a.download = "krov-workagent-payroll-import-template.csv";
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 30_000);
   }
 
   return (
     <div className="rwStack" data-testid="payroll-switch">
-      <Card title="Move your payroll to FlowForge">
+      <Card title="Move your payroll to Krov WorkAgent">
         <p className="rwMuted">
           Bring your employees, pay rates, tax settings and this year&apos;s totals over from your current provider. Nothing changes at your old
-          provider — cancel it after your first FlowForge payroll.
+          provider — cancel it after your first Krov WorkAgent payroll.
         </p>
         <ol className="stepper">
           {STEPS.map((s, i) => (
@@ -154,7 +154,7 @@ export function PayrollSwitch() {
             {chosen.code === "gusto" ? (
               <div className="choice">
                 <b>Connect Gusto directly</b>
-                <span className="rwMuted">Sign in to Gusto and FlowForge copies everything over for you.</span>
+                <span className="rwMuted">Sign in to Gusto and Krov WorkAgent copies everything over for you.</span>
                 <button type="button" className="rwBtn primary" disabled={!chosen.direct_connection || !!busy} onClick={connectGusto}>
                   {busy === "gusto" ? "Opening Gusto…" : "Sign in to Gusto"}
                 </button>
@@ -169,7 +169,7 @@ export function PayrollSwitch() {
               <span className="rwMuted small">
                 Combine employees and year-to-date totals in one CSV, or upload the employee list first and the totals report after.{" "}
                 <button type="button" className="linkish" onClick={downloadTemplate}>
-                  Download the FlowForge template
+                  Download the Krov WorkAgent template
                 </button>
               </span>
               <input ref={input} type="file" accept=".csv,.txt" hidden data-testid="payroll-file" onChange={(e) => e.target.files?.[0] && void check(e.target.files[0])} />

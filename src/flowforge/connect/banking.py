@@ -74,7 +74,7 @@ class Plaid:
         result = await self.call(
             "/link/token/create",
             {
-                "client_name": "FlowForge",
+                "client_name": "Krov WorkAgent",
                 "user": {
                     "client_user_id": hashlib.sha256(f"{tenant_id}:{user_id}".encode()).hexdigest()
                 },
